@@ -75,8 +75,13 @@ drops a practitioner out of nearby results.
 
 ## Notes
 
-- All images still load from the Squarespace CDN. They will stop working if
-  that subscription lapses. Download the originals and change the `SS`
-  constant in `build.py` when you migrate.
+- The hero photograph is hosted locally in `public/assets/img`, in three
+  widths as both WebP and JPEG (the browser picks the smallest that fits;
+  the largest WebP is 116 KB). To swap it: `python3 make_hero.py photo.jpg`,
+  then `python3 build.py`.
+- The remaining images — logo, discipline tiles, the About photograph, two
+  provider logos — still load from the Squarespace CDN and will stop working
+  if that subscription lapses. Download them and change the `SS` constant in
+  `build.py` when you migrate.
 - The join form has no backend; it assembles a mailto. Point it at a form
   service to collect submissions directly.

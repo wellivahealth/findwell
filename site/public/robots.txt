@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://findwelldirectory.com/sitemap.xml

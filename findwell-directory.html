@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FindWell Directory — trusted holistic practitioners</title>
+<meta name="description" content="A searchable directory of vetted holistic and integrative practitioners. Filter by discipline, city, or distance. Licensure, training, years in practice, and pricing shown on every record.">
+<link rel="icon" type="image/png" href="https://images.squarespace-cdn.com/content/v1/6877e1d8fb99bd2e2af8e1ed/c4a2dd29-37ea-438e-aa6c-12715a6a508a/findwell-logo-trans.png?format=300w">
+<link rel="apple-touch-icon" href="https://images.squarespace-cdn.com/content/v1/6877e1d8fb99bd2e2af8e1ed/c4a2dd29-37ea-438e-aa6c-12715a6a508a/findwell-logo-trans.png?format=500w">
+<meta property="og:site_name" content="FindWell Directory">
+<meta property="og:title" content="FindWell Directory">
+<meta property="og:type" content="website">
+<meta property="og:description" content="A searchable directory of vetted holistic and integrative practitioners. Licensure, training, years in practice, and pricing on every record.">
+<meta property="og:image" content="https://images.squarespace-cdn.com/content/v1/6877e1d8fb99bd2e2af8e1ed/c4a2dd29-37ea-438e-aa6c-12715a6a508a/findwell-logo-trans.png?format=1500w">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FindWell Directory">
+<meta name="twitter:image" content="https://images.squarespace-cdn.com/content/v1/6877e1d8fb99bd2e2af8e1ed/c4a2dd29-37ea-438e-aa6c-12715a6a508a/findwell-logo-trans.png?format=1500w">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   FindWell Directory — design tokens
+   Palette derived from Sonoran foliage (agave / creosote) with a
+   prickly-pear accent. Deliberately not the wellness-beige lane.
+   ============================================================ */
+:root{
+  --bg:            #f7fafa;
+  --bg:            oklch(0.982 0.007 190);
+  --surface:       #ffffff;
+  --surface:       oklch(1 0 0);
+  --surface-sunk:  #eff4f4;
+  --surface-sunk:  oklch(0.962 0.010 190);
+  --ink:           #17302f;
+  --ink:           oklch(0.245 0.035 195);
+  --ink-soft:      #4a5f5f;
+  --ink-soft:      oklch(0.415 0.028 195);
+  --muted:         #5f7473;
+  --muted:         oklch(0.505 0.024 195);
+  --line:          #dbe3e3;
+  --line:          oklch(0.885 0.014 190);
+  --line-strong:   #c0cccc;
+  --line-strong:   oklch(0.800 0.020 190);
+
+  --brand:         #2e5f5c;
+  --brand:         oklch(0.430 0.075 183);
+  --brand-deep:    #1a3634;
+  --brand-deep:    oklch(0.268 0.048 190);
+  --brand-deeper:  #132a29;
+  --brand-deeper:  oklch(0.218 0.040 192);
+  --on-brand:      #eef6f5;
+  --on-brand:      oklch(0.965 0.015 185);
+  --on-brand-soft: #b9cecc;
+  --on-brand-soft: oklch(0.820 0.030 185);
+  --brand-line:    #2a504e;
+  --brand-line:    oklch(0.380 0.055 188);
+
+  --accent:        #c23a4b;
+  --accent:        oklch(0.545 0.170 10);
+  --accent-soft:   #fbe9ec;
+  --accent-soft:   oklch(0.945 0.030 10);
+
+  --ok:            #3f7d5c;
+  --ok:            oklch(0.520 0.100 155);
+
+  --ff-display: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --ff-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ff-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --r-sm: 3px;
+  --r-md: 6px;
+  --r-lg: 10px;
+
+  --z-base: 1;
+  --z-sticky: 100;
+  --z-dropdown: 200;
+  --z-modal: 400;
+  --z-toast: 600;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --wrap: 1180px;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--ff-sans); font-size:16px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+img{ max-width:100%; display:block; }
+a{ color:inherit; }
+button,input,select,textarea{ font:inherit; color:inherit; }
+h1,h2,h3,h4{ margin:0; font-family:var(--ff-display); font-weight:500; letter-spacing:-0.018em; text-wrap:balance; }
+p{ margin:0 0 1em; text-wrap:pretty; }
+p:last-child{ margin-bottom:0; }
+
+:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; border-radius:2px; }
+.band :focus-visible{ outline-color:oklch(0.80 0.13 15); }
+
+.skip{
+  position:absolute; left:-9999px; top:0; background:var(--surface); color:var(--ink);
+  padding:.6rem 1rem; z-index:var(--z-toast); border-radius:0 0 var(--r-md) 0;
+}
+.skip:focus{ left:0; }
+
+.wrap{ width:100%; max-width:var(--wrap); margin-inline:auto; padding-inline:clamp(1.1rem, 4vw, 2.5rem); }
+.sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+
+/* ---------- masthead ---------- */
+.band{ background:var(--brand-deep); color:var(--on-brand); }
+.masthead{
+  position:sticky; top:0; z-index:var(--z-sticky);
+  background:var(--surface); border-bottom:1px solid var(--line);
+}
+.masthead-in{ display:flex; align-items:center; gap:1.25rem; min-height:74px; }
+.mark{ display:flex; align-items:center; margin-right:auto; text-decoration:none; }
+.mark img{ height:38px; width:auto; }
+@media (max-width:520px){ .mark img{ height:30px; } }
+.nav{ display:flex; align-items:center; gap:.15rem; }
+.nav a{
+  text-decoration:none; color:var(--ink-soft); font-size:.875rem; font-weight:500;
+  padding:.5rem .7rem; border-radius:var(--r-md);
+  transition:color .18s var(--ease), background .18s var(--ease);
+}
+.nav a:hover{ color:var(--brand); background:var(--surface-sunk); }
+.nav a[aria-current="page"]{ color:var(--ink); background:var(--surface-sunk); }
+.nav .cta{ margin-left:.4rem; background:var(--accent); color:oklch(0.99 0 0); padding:.5rem .95rem; }
+.nav .cta:hover{ background:oklch(0.60 0.175 10); color:oklch(1 0 0); }
+.burger{
+  display:none; background:none; border:1px solid var(--line-strong); color:var(--ink);
+  border-radius:var(--r-md); padding:.45rem .7rem; font-size:.85rem; cursor:pointer;
+}
+@media (max-width:900px){
+  .burger{ display:block; }
+  .nav{
+    display:none; position:absolute; top:100%; left:0; right:0; flex-direction:column;
+    align-items:stretch; gap:0; background:var(--surface);
+    border-bottom:1px solid var(--line); padding:.5rem clamp(1.1rem,4vw,2.5rem) 1rem;
+    box-shadow:0 18px 30px -24px oklch(0.20 0.05 195 / .6);
+  }
+  .nav.open{ display:flex; }
+  .nav a{ padding:.7rem .25rem; border-bottom:1px solid var(--line); border-radius:0; }
+  .nav .cta{ margin:.7rem 0 0; text-align:center; border-radius:var(--r-md); border-bottom:0; }
+}
+
+/* Dark masthead variant: add class="masthead dark" on <header>.
+   The logo is filtered to solid white so it reads on the deep band. */
+.masthead.dark{ background:var(--brand-deeper); border-bottom-color:var(--brand-line); }
+.masthead.dark .mark img{ filter:brightness(0) invert(1); }
+.masthead.dark .nav a{ color:var(--on-brand-soft); }
+.masthead.dark .nav a:hover{ color:var(--on-brand); background:oklch(1 0 0 / .07); }
+.masthead.dark .nav a[aria-current="page"]{ color:var(--on-brand); background:oklch(1 0 0 / .10); }
+.masthead.dark .burger{ color:var(--on-brand); border-color:var(--brand-line); }
+@media (max-width:900px){
+  .masthead.dark .nav{ background:var(--brand-deeper); border-bottom-color:var(--brand-line); }
+  .masthead.dark .nav a{ border-bottom-color:oklch(1 0 0 / .07); }
+}
+
+/* ---------- hero ---------- */
+.hero{ position:relative; background:var(--brand-deep); color:var(--on-brand); overflow:hidden; isolation:isolate; }
+.hero-bg{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  z-index:-2; opacity:.55;
+}
+.hero::before{
+  content:""; position:absolute; inset:0; z-index:-1;
+  background:linear-gradient(102deg,
+    oklch(0.268 0.048 190 / .97) 0%,
+    oklch(0.268 0.048 190 / .93) 38%,
+    oklch(0.268 0.048 190 / .68) 100%);
+}
+.hero-in{ position:relative; padding:clamp(2.6rem,6vw,4.4rem) 0 clamp(2.4rem,5vw,3.4rem); }
+
+/* ---------- search console (signature) ---------- */
+.console{
+  background:var(--surface); color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  box-shadow:0 -1px 0 oklch(1 0 0 / .3), 0 24px 60px -30px oklch(0.20 0.05 195 / .55);
+  padding:clamp(1.1rem,2.6vw,1.6rem);
+}
+.console-hd{
+  display:flex; align-items:baseline; justify-content:space-between; gap:1rem;
+  padding-bottom:.85rem; margin-bottom:1rem; border-bottom:1px solid var(--line);
+}
+.console-hd h2{ font-size:1.12rem; letter-spacing:-0.01em; }
+.console-count{ font-family:var(--ff-mono); font-size:.78rem; color:var(--muted); white-space:nowrap; }
+.console-count b{ color:var(--accent); font-weight:600; font-size:.95rem; }
+.console-grid{ display:grid; grid-template-columns:1.15fr 1fr auto; gap:.9rem; align-items:end; }
+@media (max-width:820px){ .console-grid{ grid-template-columns:1fr; } }
+
+.field label, .lbl{
+  display:block; font-family:var(--ff-mono); font-size:.68rem; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:.4rem;
+}
+.control{
+  width:100%; background:var(--surface); border:1px solid var(--line-strong);
+  border-radius:var(--r-md); padding:.72rem .8rem; font-size:.95rem;
+  transition:border-color .16s var(--ease), box-shadow .16s var(--ease);
+}
+.control::placeholder{ color:oklch(0.545 0.020 195); }
+.control:focus{ border-color:var(--brand); box-shadow:0 0 0 3px oklch(0.43 0.075 183 / .16); outline:none; }
+select.control{ appearance:none; background-image:linear-gradient(45deg,transparent 50%,var(--ink-soft) 50%),linear-gradient(135deg,var(--ink-soft) 50%,transparent 50%); background-position:calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size:5px 5px,5px 5px; background-repeat:no-repeat; padding-right:2.2rem; }
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  border:1px solid transparent; border-radius:var(--r-md); padding:.75rem 1.25rem;
+  font-size:.92rem; font-weight:600; cursor:pointer; text-decoration:none; white-space:nowrap;
+  transition:background .18s var(--ease), color .18s var(--ease), border-color .18s var(--ease), transform .12s var(--ease);
+}
+.btn:active{ transform:translateY(1px); }
+.btn-primary{ background:var(--accent); color:oklch(0.995 0 0); }
+.btn-primary:hover{ background:oklch(0.60 0.175 10); }
+.btn-dark{ background:var(--brand-deep); color:var(--on-brand); }
+.btn-dark:hover{ background:var(--brand); }
+.btn-ghost{ background:transparent; border-color:var(--line-strong); color:var(--ink); }
+.btn-ghost:hover{ border-color:var(--brand); color:var(--brand); }
+.btn-sm{ padding:.5rem .85rem; font-size:.84rem; }
+
+.chips{ display:flex; flex-wrap:wrap; gap:.4rem; margin-top:1rem; }
+.chip{
+  font-family:var(--ff-mono); font-size:.76rem; letter-spacing:.01em;
+  border:1px solid var(--line-strong); background:var(--surface); color:var(--ink-soft);
+  border-radius:100px; padding:.34rem .78rem; cursor:pointer;
+  transition:background .16s var(--ease), color .16s var(--ease), border-color .16s var(--ease);
+}
+.chip:hover{ border-color:var(--brand); color:var(--brand); }
+.chip[aria-pressed="true"]{ background:var(--brand-deep); border-color:var(--brand-deep); color:var(--on-brand); }
+.chip .n{ opacity:.55; margin-left:.35rem; }
+
+/* ---------- page furniture ---------- */
+main{ display:block; }
+.section{ padding:clamp(3rem,6vw,4.8rem) 0; }
+.section-tight{ padding:clamp(2rem,4vw,3rem) 0; }
+.section h2{ font-size:clamp(1.6rem,3.2vw,2.3rem); letter-spacing:-0.025em; }
+.lede{ color:var(--ink-soft); max-width:68ch; font-size:1.04rem; }
+
+.rule{ border:0; border-top:1px solid var(--line); margin:0; }
+
+.steps{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:clamp(1.5rem,3vw,2.6rem); margin-top:2.2rem; counter-reset:s; }
+.step{ counter-increment:s; }
+.step::before{
+  content:counter(s,decimal-leading-zero); display:block; font-family:var(--ff-mono);
+  font-size:.78rem; color:var(--accent); border-top:2px solid var(--accent);
+  padding-top:.6rem; margin-bottom:.7rem; width:2.2rem;
+}
+.step h3{ font-size:1.22rem; margin-bottom:.45rem; }
+.step p{ color:var(--ink-soft); font-size:.95rem; }
+
+/* ---------- index lists (practice types / locations) ---------- */
+.index-list{ list-style:none; margin:2rem 0 0; padding:0; border-top:1px solid var(--line); }
+.index-list li{ border-bottom:1px solid var(--line); }
+.index-row{
+  display:grid; grid-template-columns:auto 1fr auto; gap:1rem 1.4rem; align-items:center;
+  padding:1.15rem .4rem; text-decoration:none; position:relative;
+  transition:background .18s var(--ease), padding-left .18s var(--ease);
+}
+.index-row:hover{ background:var(--surface-sunk); padding-left:.9rem; }
+.index-key{ font-family:var(--ff-mono); font-size:.74rem; color:var(--muted); width:2.4rem; }
+.index-name{ font-family:var(--ff-display); font-size:1.35rem; letter-spacing:-0.02em; }
+.index-sub{ display:block; font-family:var(--ff-sans); font-size:.85rem; color:var(--muted); letter-spacing:0; margin-top:.1rem; }
+.index-n{ font-family:var(--ff-mono); font-size:.8rem; color:var(--ink-soft); white-space:nowrap; }
+.index-n::after{ content:" →"; color:var(--accent); }
+@media (max-width:640px){
+  .index-row{ grid-template-columns:auto 1fr; }
+  .index-n{ grid-column:2; }
+}
+
+/* ---------- discipline tiles ---------- */
+.tiles{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(248px,1fr));
+  gap:clamp(1.4rem,2.6vw,2.2rem); margin-top:2.4rem; list-style:none; padding:0;
+}
+.tile{ display:flex; flex-direction:column; text-decoration:none; height:100%; }
+.tile-frame{
+  position:relative; overflow:hidden; border-radius:var(--r-md);
+  background:var(--surface-sunk); aspect-ratio:4/3;
+}
+.tile-frame img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  transition:transform .6s var(--ease), filter .4s var(--ease);
+}
+.tile:hover .tile-frame img{ transform:scale(1.045); filter:saturate(1.06); }
+.tile-frame.blank{
+  display:grid; place-items:center; border:1px dashed var(--line-strong);
+  font-family:var(--ff-display); font-size:1.5rem; color:var(--muted); text-align:center; padding:1rem;
+}
+.tile h3{ font-size:1.32rem; margin:.95rem 0 .25rem; }
+.tile p{ font-size:.88rem; color:var(--muted); margin:0; }
+.tile-go{
+  margin-top:auto; padding-top:.9rem; font-family:var(--ff-mono); font-size:.76rem; color:var(--brand);
+  display:flex; align-items:center; gap:.5rem;
+}
+.tile-go .n{ color:var(--muted); }
+.tile:hover .tile-go{ color:var(--accent); }
+
+/* ---------- split feature (home / about) ---------- */
+.split{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(1.8rem,4vw,3.6rem); align-items:center; }
+@media (max-width:820px){ .split{ grid-template-columns:1fr; } }
+.split img{ width:100%; border-radius:var(--r-lg); aspect-ratio:4/3; object-fit:cover; }
+.split ul{ list-style:none; padding:0; margin:1.4rem 0 0; }
+.split li{ padding:.9rem 0; border-top:1px solid var(--line); color:var(--ink-soft); font-size:.97rem; }
+
+/* ---------- provider marks ---------- */
+.record-head{ display:flex; gap:1rem; align-items:flex-start; }
+.avatar{
+  width:64px; height:64px; flex:none; border-radius:var(--r-md); object-fit:contain;
+  background:var(--surface); border:1px solid var(--line); padding:5px;
+}
+.avatar-mono{
+  display:grid; place-items:center; padding:0; background:var(--surface-sunk);
+  font-family:var(--ff-display); font-size:1.35rem; letter-spacing:-0.02em; color:var(--brand);
+}
+.avatar-lg{ width:92px; height:92px; margin-bottom:1rem; }
+.avatar-lg.avatar-mono{ font-size:1.9rem; }
+
+/* ---------- directory layout ---------- */
+.dir{ display:grid; grid-template-columns:264px 1fr; gap:clamp(1.5rem,3vw,3rem); align-items:start; }
+@media (max-width:920px){ .dir{ grid-template-columns:1fr; } }
+.rail{ position:sticky; top:86px; }
+@media (max-width:920px){
+  .rail{ position:static; border:1px solid var(--line); border-radius:var(--r-lg); background:var(--surface); }
+  .rail-body{ display:none; padding:0 1rem 1rem; }
+  .rail.open .rail-body{ display:block; }
+  .rail-toggle{ display:flex !important; }
+}
+.rail-toggle{
+  display:none; width:100%; align-items:center; justify-content:space-between;
+  background:none; border:0; padding:.9rem 1rem; cursor:pointer; font-weight:600; font-size:.92rem;
+}
+.rail fieldset{ border:0; padding:0; margin:0 0 1.6rem; }
+.rail legend{
+  font-family:var(--ff-mono); font-size:.68rem; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--muted); padding:0 0 .6rem; border-bottom:1px solid var(--line); width:100%; margin-bottom:.7rem;
+}
+.check{ display:flex; align-items:center; gap:.55rem; padding:.28rem 0; font-size:.9rem; cursor:pointer; }
+.check input{ accent-color:var(--brand); width:15px; height:15px; flex:none; }
+.check .n{ margin-left:auto; font-family:var(--ff-mono); font-size:.74rem; color:var(--muted); }
+.check:hover{ color:var(--brand); }
+
+.results-bar{
+  display:flex; flex-wrap:wrap; gap:.75rem 1rem; align-items:center;
+  padding-bottom:.9rem; border-bottom:1px solid var(--line-strong); margin-bottom:.25rem;
+}
+.results-count{ font-family:var(--ff-mono); font-size:.82rem; color:var(--ink-soft); margin-right:auto; }
+.results-count b{ color:var(--ink); }
+.sort{ display:flex; align-items:center; gap:.5rem; font-size:.84rem; color:var(--muted); }
+.sort select{ padding:.4rem 2rem .4rem .6rem; font-size:.84rem; }
+
+.active-filters{ display:flex; flex-wrap:wrap; gap:.4rem; margin:.9rem 0 0; }
+.tagx{
+  display:inline-flex; align-items:center; gap:.45rem; font-family:var(--ff-mono); font-size:.74rem;
+  background:var(--surface-sunk); border:1px solid var(--line); border-radius:100px; padding:.3rem .55rem .3rem .75rem;
+}
+.tagx button{ background:none; border:0; cursor:pointer; color:var(--muted); font-size:1rem; line-height:1; padding:0 .15rem; }
+.tagx button:hover{ color:var(--accent); }
+
+/* ---------- record (signature) ---------- */
+.records{ list-style:none; margin:0; padding:0; }
+.record{ border-bottom:1px solid var(--line); }
+.record-in{
+  display:grid; grid-template-columns:1fr 1fr; gap:1rem 2.2rem;
+  padding:1.6rem 0 1.7rem; position:relative;
+}
+@media (max-width:700px){ .record-in{ grid-template-columns:1fr; gap:1.1rem; } }
+.record-name{ font-family:var(--ff-display); font-size:1.5rem; letter-spacing:-0.022em; margin-bottom:.15rem; }
+.record-name a{ text-decoration:none; background-image:linear-gradient(var(--accent),var(--accent)); background-size:0 1px; background-repeat:no-repeat; background-position:0 100%; transition:background-size .3s var(--ease); }
+.record-name a:hover{ background-size:100% 1px; }
+.record-person{ font-size:.95rem; color:var(--ink-soft); margin-bottom:.6rem; }
+.record-person b{ font-weight:600; color:var(--ink); }
+.record-where{ font-family:var(--ff-mono); font-size:.78rem; color:var(--muted); }
+.record-tags{ display:flex; flex-wrap:wrap; gap:.35rem; margin-top:.75rem; }
+.tag{
+  font-family:var(--ff-mono); font-size:.7rem; letter-spacing:.02em; text-decoration:none;
+  border:1px solid var(--line-strong); border-radius:var(--r-sm); padding:.2rem .45rem; color:var(--ink-soft);
+}
+.tag:hover{ border-color:var(--brand); color:var(--brand); }
+.tag-tele{ border-color:oklch(0.78 0.06 155); color:var(--ok); background:oklch(0.96 0.025 155); }
+
+.fields{ display:grid; grid-template-columns:auto 1fr; gap:.42rem 1rem; align-content:start; font-size:.88rem; }
+.fields dt{ font-family:var(--ff-mono); font-size:.68rem; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); padding-top:.18rem; }
+.fields dd{ margin:0; color:var(--ink); }
+.fields dd.na{ color:var(--muted); }
+
+.record-actions{ grid-column:1/-1; display:flex; flex-wrap:wrap; gap:.5rem; }
+
+.empty{
+  border:1px dashed var(--line-strong); border-radius:var(--r-lg); padding:2.4rem 1.6rem;
+  text-align:center; background:var(--surface);
+}
+.empty h3{ font-size:1.3rem; margin-bottom:.4rem; }
+.empty p{ color:var(--ink-soft); max-width:44ch; margin-inline:auto; }
+
+/* ---------- provider detail ---------- */
+.crumb{ font-family:var(--ff-mono); font-size:.76rem; color:var(--muted); padding:1.6rem 0 0; }
+.crumb a{ color:var(--ink-soft); text-decoration:none; }
+.crumb a:hover{ color:var(--accent); }
+.detail{ display:grid; grid-template-columns:1.5fr 1fr; gap:clamp(1.6rem,4vw,3.4rem); align-items:start; padding-bottom:4rem; }
+@media (max-width:860px){ .detail{ grid-template-columns:1fr; } }
+.detail h1{ font-size:clamp(2rem,4.6vw,2.9rem); letter-spacing:-0.03em; margin:.6rem 0 .3rem; }
+.detail-person{ font-size:1.08rem; color:var(--ink-soft); margin-bottom:1.2rem; }
+.detail-bio{ font-size:1.05rem; color:var(--ink-soft); max-width:66ch; }
+.panel{ background:var(--surface); border:1px solid var(--line); border-radius:var(--r-lg); padding:1.3rem; }
+.panel + .panel{ margin-top:1rem; }
+.panel h3{ font-size:1.05rem; margin-bottom:.9rem; padding-bottom:.6rem; border-bottom:1px solid var(--line); }
+.contact-row{ display:flex; gap:.7rem; padding:.5rem 0; font-size:.92rem; align-items:baseline; }
+.contact-row .k{ font-family:var(--ff-mono); font-size:.68rem; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); width:4.6rem; flex:none; }
+.contact-row a{ color:var(--brand); text-decoration:none; overflow-wrap:anywhere; }
+.contact-row a:hover{ text-decoration:underline; }
+.detail-fields{ margin-top:2rem; }
+.detail-fields .fields{ font-size:.95rem; gap:.75rem 1.4rem; }
+
+/* ---------- forms ---------- */
+.form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1.1rem; }
+@media (max-width:700px){ .form-grid{ grid-template-columns:1fr; } }
+.form-grid .full{ grid-column:1/-1; }
+textarea.control{ min-height:110px; resize:vertical; }
+.hint{ font-size:.82rem; color:var(--muted); margin-top:.35rem; }
+.err{ color:var(--accent); font-size:.82rem; margin-top:.35rem; display:none; }
+.control[aria-invalid="true"]{ border-color:var(--accent); }
+.control[aria-invalid="true"] + .err{ display:block; }
+.notice{
+  border:1px solid var(--line); border-left:1px solid var(--line); background:var(--surface-sunk);
+  border-radius:var(--r-md); padding:1rem 1.1rem; font-size:.9rem; color:var(--ink-soft);
+}
+.notice b{ color:var(--ink); }
+
+/* ---------- footer ---------- */
+.foot{ background:var(--brand-deeper); color:var(--on-brand-soft); padding:3.2rem 0 2.4rem; margin-top:auto; }
+.foot-in{ display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:2rem; }
+@media (max-width:760px){ .foot-in{ grid-template-columns:1fr 1fr; } }
+.foot-mark{ display:inline-block; margin-bottom:1.1rem; }
+.foot-mark img{ height:40px; width:auto; filter:brightness(0) invert(1); opacity:.9; }
+.foot h4{ font-family:var(--ff-mono); font-weight:500; font-size:.68rem; letter-spacing:.09em; text-transform:uppercase; color:oklch(0.68 0.03 185); margin-bottom:.9rem; }
+.foot a{ color:var(--on-brand-soft); text-decoration:none; display:block; padding:.22rem 0; font-size:.9rem; }
+.foot a:hover{ color:var(--on-brand); }
+.foot-blurb{ color:oklch(0.72 0.03 185); font-size:.92rem; max-width:34ch; }
+.foot-legal{ margin-top:2.4rem; padding-top:1.2rem; border-top:1px solid var(--brand-line); font-size:.78rem; color:oklch(0.66 0.03 185); display:flex; flex-wrap:wrap; gap:.6rem 1.4rem; }
+
+/* ---------- motion ---------- */
+@keyframes rise{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:none; } }
+.rise{ animation:rise .7s var(--ease) both; }
+.rise-1{ animation-delay:.05s; } .rise-2{ animation-delay:.13s; } .rise-3{ animation-delay:.21s; }
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
+}
+body{ min-height:100vh; display:flex; flex-direction:column; }
+#app{ flex:1; }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="wrap masthead-in">
+    <a class="mark" href="#/" aria-label="FindWell Directory — home">
+      <img src="https://images.squarespace-cdn.com/content/v1/6877e1d8fb99bd2e2af8e1ed/c4a2dd29-37ea-438e-aa6c-12715a6a508a/findwell-logo-trans.png?format=750w"
+           srcset="https://images.squarespace-cdn.com/content/v1/6877e1d8fb99bd2e2af8e1ed/c4a2dd29-37ea-438e-aa6c-12715a6a508a/findwell-logo-trans.png?format=500w 500w,
+                   https://images.squarespace-cdn.com/content/v1/6877e1d8fb99bd2e2af8e1ed/c4a2dd29-37ea-438e-aa6c-12715a6a508a/findwell-logo-trans.png?format=750w 750w"
+           sizes="126px" width="646" height="195" alt="FindWell Directory">
+    </a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#/directory">All providers</a>
+      <a href="#/practice-types">By discipline</a>
+      <a href="#/locations">By location</a>
+      <a href="#/about">Who we are</a>
+      <a class="cta" href="#/join">Join the directory</a>
+    </nav>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-in">
+      <div>
+        <span class="foot-mark"><img src="https://images.squarespace-cdn.com/content/v1/6877e1d8fb99bd2e2af8e1ed/c4a2dd29-37ea-438e-aa6c-12715a6a508a/findwell-logo-trans.png?format=750w" width="646" height="195" alt="FindWell Directory" loading="lazy" decoding="async"></span>
+        <p class="foot-blurb">A network of holistic and integrative practitioners. No commissions, no listing fees, no lead-selling.</p>
+      </div>
+      <div>
+        <h4>Find care</h4>
+        <a href="#/directory">All providers</a>
+        <a href="#/practice-types">By discipline</a>
+        <a href="#/locations">By location</a>
+      </div>
+      <div>
+        <h4>Practitioners</h4>
+        <a href="#/join">Join the directory</a>
+        <a href="#/about">Who we are</a>
+        <a href="mailto:info@example.org">info@example.org</a>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <span>Demo build — listings are sample data.</span>
+      <span>Listings are informational and are not a referral, endorsement, or medical advice.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   1. DATA
+   Swap this array for a fetch() to your CMS/API. Every field is
+   optional except id, slug, name, categories, city, state.
+   ============================================================ */
+/* Image assets. These point at the existing Squarespace CDN, which serves
+   resized variants via ?format=NNNw. After migrating off Squarespace, change
+   SS to your own image host — nothing else needs to change. */
+const SS = 'https://images.squarespace-cdn.com/content/v1/6877e1d8fb99bd2e2af8e1ed/';
+const IMG = {
+  logo:  SS + 'c4a2dd29-37ea-438e-aa6c-12715a6a508a/findwell-logo-trans.png',
+  hero:  SS + '5453e7ab-6288-4564-a1f5-f6928006829b/shutterstock_2466396447.jpg',
+  about: SS + '194a0c8a-39fa-48a9-b260-2af2acae618b/Leonardo_Phoenix_10_Create_an_image_of_a_diverse_group_of_heal_1+%281%29.jpg'
+};
+const src    = (u, w) => u + (u.includes('?') ? '&' : '?') + 'format=' + w + 'w';
+const srcset = (u, ws = [500, 750, 1000, 1500]) => ws.map(w => `${src(u, w)} ${w}w`).join(', ');
+
+const DISCIPLINES = [
+  { key:"Ayurveda",       label:"Ayurveda",              note:"Ayurvedic medicine clinicians & educators. NAMA credentialed; no state licensure exists.",
+    img: SS + '1755277939973-CMBB3T6JXU1IHOVFEOSH/unsplash-image-77vZsyvV0bg.jpg' },
+  { key:"Acupuncture",    label:"Acupuncture",           note:"Licensed professionals — L.Ac.",
+    img: SS + '1755277990849-EKKNDADU9C6IGG4FCL8D/unsplash-image-QgcdtM9rA5s.jpg' },
+  { key:"TCM",            label:"TCM",                   note:"Traditional Chinese Medicine — Dipl. O.M.",
+    img: SS + '1755278047472-9EZGRJW7AO109Q8GK2D5/unsplash-image-ur2zmbseUIA.jpg' },
+  { key:"Naturopathy",    label:"Licensed naturopaths",  note:"ND or NMD — licensed in Arizona.",
+    img: SS + '1755278249101-I8FZPKRHUBB5G4P677O0/unsplash-image-KERVbxLVLiY.jpg' },
+  { key:"Counseling",     label:"Counselors",            note:"Licensed Professional Counselor (LPC), LCSW, LMFT.",
+    img: SS + '1757903674176-QK99BMSR1DQHPNWYLO3E/unsplash-image-F9DFuJoS9EU.jpg' },
+  { key:"Bodywork",       label:"Body work",             note:"CranioSacral, tuina, structural integration. State licensed.",
+    img: SS + '1755278329164-ATSTUR14YXFQDGE3ZFGI/unsplash-image-AV0KNliGvQc.jpg' },
+  { key:"EnergyMedicine", label:"Energy healers",        note:"Reiki, kundalini, biofield therapies. Training shown; no licensure exists.",
+    img: SS + '1755278519443-A0U3QGXU0WZX58E0VMA6/unsplash-image-QD7K3E9UTwI.jpg' },
+  { key:"Chiropractic",   label:"Chiropractic",          note:"Doctor of Chiropractic — D.C., NBCE.",
+    img: SS + '1755990861680-X13BU084AZ5IQFMMC1DT/unsplash-image-8qwYA4INVCk.jpg' },
+  { key:"Herbalism",      label:"Herbology",             note:"Registered Herbalist (RH) and educators.",
+    img: SS + '0362a0ef-8a7e-4341-80ff-30549e3acff8/shutterstock_2299524247.jpg' },
+  { key:"Nutrition",      label:"Functional nutrition",  note:"RD, CNS, NTP.",
+    img: null },
+  { key:"Farms",          label:"Local farmers",         note:"Growers and CSAs. Associations and credentials TBA.",
+    img: SS + '1757901505698-RG39FAHW9EKTGN0RON06/unsplash-image-GYF0GAsUkYI.jpg' },
+  { key:"Grocers",        label:"Local grocers",         note:"Locally owned and co-oped retail stores.",
+    img: SS + '1757901575208-HKDJVCSSRJIJ8BLA3OAV/unsplash-image-WOxddhzhC1w.jpg' }
+];
+
+const PROVIDERS = [
+  /* --- Live listings carried over from the existing site --- */
+  { id:1, slug:"ananda-ayurveda-yogalish", name:"Ananda Ayurveda & Yogalish", person:"Tanja Bungardt-Price",
+    logo: SS + '1758690526106-4QQ77VKMG8LITYP4QJ26/Ananda%252BLogo.jpg',
+    categories:["Ayurveda","Herbalism"], city:"Tucson", state:"AZ", zip:"85716",
+    address:"3501 E Kleindale Rd, Tucson, AZ 85716", lat:32.2540, lng:-110.9200,
+    telehealth:true, phone:"(520) 289-0238", email:"YogalishAnanda@gmail.com", website:"http://www.yogalish.com",
+    credentials:"NAMA Board Certified Ayurvedic Practitioner; Certified E-RYT 500 Yoga Teacher; Certified Qigong Teacher",
+    licensure:"No state licensure exists for Ayurveda in AZ",
+    training:"Ayurvedic Health Counselor and Ayurvedic Practitioner, Kanyakumari (WI); Yoga Teacher Training, Moksha Yoga (IL)",
+    since:2013, affiliations:"NAMA",
+    pricing:"Ayurvedic consultation, 2-meeting package $240 · Follow-up $120 · Panchakarma quoted as consultation plus per treatment",
+    payments:"Cash, credit, debit, Venmo, Zelle", insurance:"Not accepted",
+    social:["https://www.facebook.com/AnandaAyurvedaWellness","https://www.instagram.com/ananda_ayurveda_yogalish/"],
+    blurb:"Ayurvedic consultation and panchakarma alongside yoga and qigong instruction. Telehealth available." },
+
+  { id:2, slug:"amitaayurveda", name:"AmitaAyurveda", person:"Amita Nathwani, MA",
+    logo: SS + '1755282033154-A91OF7ETP49IX8QO83FV/amitaayurveda-logo-square-stack-notag-300dpi.png',
+    categories:["Ayurveda"], city:"Tucson", state:"AZ", zip:"85712",
+    address:"2980 N Swan Rd Ste 225, Tucson, AZ 85712", lat:32.2620, lng:-110.9060,
+    telehealth:true, phone:"", email:"info@suryawellbeing.com", website:"https://AmitaAyurveda.com",
+    credentials:"Masters in Ayurvedic Medicine",
+    licensure:"No state licensure exists for Ayurveda in AZ",
+    training:"MA, Maharishi International University",
+    since:2000, affiliations:"Ayurveda Professionals of Arizona",
+    pricing:"New patient $250 · Follow-up $135",
+    payments:"Cash, check, all major credit cards, Venmo, Zelle, PayPal, HSA", insurance:"Not accepted",
+    social:["Facebook","Instagram","YouTube","LinkedIn"],
+    blurb:"Ayurvedic assessment, dietary and lifestyle protocols, and herbal support. Virtual visits available." },
+
+  /* --- Sample listings, for layout demonstration --- */
+  { id:2, slug:"rincon-acupuncture", name:"Rincon Acupuncture", person:"Daniel Ortiz, L.Ac., Dipl. O.M.",
+    categories:["Acupuncture","TCM","Herbalism"], city:"Tucson", state:"AZ", zip:"85711",
+    address:"5151 E Broadway Blvd, Tucson, AZ 85711", lat:32.2213, lng:-110.8845,
+    telehealth:false, phone:"(520) 555-0164", email:"front@example.org", website:"https://example.org",
+    credentials:"L.Ac. (AZ #AC-4821); Dipl. O.M. (NCCAOM)", licensure:"Arizona Acupuncture Board of Examiners",
+    training:"MSOM, Pacific College of Health and Science",
+    since:2009, affiliations:"NCCAOM; Arizona Society of Oriental Medicine",
+    pricing:"Initial $145 · Follow-up $95 · Community room $45",
+    payments:"Cash, credit, HSA/FSA", insurance:"BCBS AZ, Aetna, Cigna (verify benefits)",
+    blurb:"Pain, perimenopause, digestive complaints, and adjunctive oncology support. Raw and granular herbal dispensary on site." },
+
+  { id:3, slug:"catalina-naturopathic", name:"Catalina Naturopathic Medicine", person:"Priya Raman, NMD",
+    categories:["Naturopathy","Nutrition"], city:"Tucson", state:"AZ", zip:"85704",
+    address:"6080 N Oracle Rd, Tucson, AZ 85704", lat:32.3271, lng:-110.9760,
+    telehealth:true, phone:"(520) 555-0192", email:"office@example.org", website:"https://example.org",
+    credentials:"NMD; licensed by AZ Naturopathic Physicians Medical Board (#NMD-2287)",
+    licensure:"Arizona — full prescriptive authority",
+    training:"NMD, Sonoran University of Health Sciences; residency in integrative endocrinology",
+    since:2014, affiliations:"AzNMA; AANP",
+    pricing:"Initial 75 min $325 · Follow-up 30 min $145 · Labs billed separately",
+    payments:"Cash, credit, HSA/FSA", insurance:"Out-of-network; superbills provided",
+    blurb:"Thyroid and metabolic care, GI workups, and co-management with endocrinology and gastroenterology. Orders standard serology and imaging." },
+
+  { id:4, slug:"old-pueblo-chiropractic", name:"Old Pueblo Chiropractic", person:"Marcus Lee, D.C.",
+    categories:["Chiropractic","Bodywork"], city:"Tucson", state:"AZ", zip:"85705",
+    address:"1122 N Stone Ave, Tucson, AZ 85705", lat:32.2412, lng:-110.9720,
+    telehealth:false, phone:"(520) 555-0117", email:"desk@example.org", website:"https://example.org",
+    credentials:"D.C.; NBCE Parts I–IV; Certified Chiropractic Sports Physician",
+    licensure:"Arizona Board of Chiropractic Examiners (#DC-9043)",
+    training:"D.C., Palmer College of Chiropractic",
+    since:2007, affiliations:"ACA; Arizona Association of Chiropractic",
+    pricing:"Exam $110 · Adjustment $65 · Soft-tissue add-on $35",
+    payments:"Cash, credit, HSA/FSA", insurance:"Most major plans; Medicare accepted",
+    blurb:"Musculoskeletal assessment, diversified adjusting, and rehab programming. Refers out for imaging and red-flag presentations." },
+
+  { id:5, slug:"desert-bloom-counseling", name:"Desert Bloom Counseling", person:"Alena Novak, LPC",
+    categories:["Counseling"], city:"Tucson", state:"AZ", zip:"85719",
+    address:"1201 E Speedway Blvd, Tucson, AZ 85719", lat:32.2360, lng:-110.9490,
+    telehealth:true, phone:"(520) 555-0155", email:"intake@example.org", website:"https://example.org",
+    credentials:"LPC; EMDR-trained; Certified Clinical Trauma Professional",
+    licensure:"AZ Board of Behavioral Health Examiners (#LPC-14432)",
+    training:"MS Clinical Mental Health Counseling, University of Arizona",
+    since:2016, affiliations:"ACA",
+    pricing:"Intake $190 · 50-min session $150 · Sliding scale slots available",
+    payments:"Cash, credit, HSA/FSA", insurance:"BCBS AZ, UHC, Aetna",
+    blurb:"Trauma, anxiety, and chronic-illness adjustment. Coordinates with prescribers when medication management is part of the plan." },
+
+  { id:6, slug:"four-winds-energy", name:"Four Winds Energy Medicine", person:"Joanne Meyers",
+    categories:["EnergyMedicine"], city:"Sedona", state:"AZ", zip:"86336",
+    address:"320 Jordan Rd, Sedona, AZ 86336", lat:34.8697, lng:-111.7610,
+    telehealth:true, phone:"(928) 555-0173", email:"contact@example.org", website:"https://example.org",
+    credentials:"Reiki Master Teacher (Usui/Holy Fire III); Healing Touch Certified Practitioner",
+    licensure:"No licensure exists for this discipline in AZ",
+    training:"Healing Touch Program Level 5; 900 hrs supervised practice",
+    since:2012, affiliations:"Healing Touch Professional Association",
+    pricing:"60 min $110 · 90 min $155 · Distance session $85",
+    payments:"Cash, credit, Venmo", insurance:"Not accepted",
+    blurb:"Biofield and relaxation work offered as supportive care alongside medical treatment, not in place of it." },
+
+  { id:7, slug:"agave-herbals", name:"Agave Herbals", person:"Rosa Delgado, RH (AHG)",
+    categories:["Herbalism","Nutrition"], city:"Bisbee", state:"AZ", zip:"85603",
+    address:"26 Main St, Bisbee, AZ 85603", lat:31.4482, lng:-109.9284,
+    telehealth:true, phone:"(520) 555-0129", email:"shop@example.org", website:"https://example.org",
+    credentials:"Registered Herbalist, American Herbalists Guild",
+    licensure:"None required in AZ", training:"Clinical herbalism, Bastyr University certificate program; 6-yr apprenticeship",
+    since:2004, affiliations:"American Herbalists Guild; United Plant Savers",
+    pricing:"Consult $130 · Follow-up $70 · Custom formula $28–$60",
+    payments:"Cash, credit", insurance:"Not accepted",
+    blurb:"Southwest materia medica, custom tincture and tea formulation. Screens for herb–drug interactions and will send an interaction summary to your prescriber." },
+
+  { id:8, slug:"copper-state-nutrition", name:"Copper State Functional Nutrition", person:"Hana Kim, MS, RD, CNS",
+    categories:["Nutrition"], city:"Phoenix", state:"AZ", zip:"85016",
+    address:"3200 E Camelback Rd, Phoenix, AZ 85018", lat:33.5093, lng:-112.0120,
+    telehealth:true, phone:"(602) 555-0146", email:"hello@example.org", website:"https://example.org",
+    credentials:"RD (CDR); CNS; IFM Certified Practitioner",
+    licensure:"AZ dietitian licensure not required; RD credential current",
+    training:"MS Human Nutrition, Arizona State University",
+    since:2013, affiliations:"Academy of Nutrition and Dietetics; IFM",
+    pricing:"Initial 60 min $210 · Follow-up $110 · 3-visit package $390",
+    payments:"Cash, credit, HSA/FSA", insurance:"Some plans; MNT codes billed",
+    blurb:"Cardiometabolic risk reduction, GI protocols, and perioperative nutrition. Works from your labs and imaging, not proprietary panels." },
+
+  { id:9, slug:"north-valley-acupuncture", name:"North Valley Acupuncture & Herbs", person:"Wei Chen, L.Ac.",
+    categories:["Acupuncture","TCM"], city:"Scottsdale", state:"AZ", zip:"85251",
+    address:"7373 E Doubletree Ranch Rd, Scottsdale, AZ 85258", lat:33.5730, lng:-111.9210,
+    telehealth:false, phone:"(480) 555-0181", email:"clinic@example.org", website:"https://example.org",
+    credentials:"L.Ac. (AZ #AC-5507); Dipl. Ac. & Ch. Herb. (NCCAOM)",
+    licensure:"Arizona Acupuncture Board of Examiners",
+    training:"DAOM, Yo San University", since:2006, affiliations:"NCCAOM",
+    pricing:"Initial $165 · Follow-up $105", payments:"Cash, credit, HSA/FSA",
+    insurance:"UHC, Cigna, ASH network",
+    blurb:"Orthopedic acupuncture, fertility support in coordination with REI clinics, and classical herbal prescribing." },
+
+  { id:10, slug:"ponderosa-bodywork", name:"Ponderosa Bodywork", person:"Sam Whitfield, LMT, CST-D",
+    categories:["Bodywork"], city:"Flagstaff", state:"AZ", zip:"86001",
+    address:"14 N San Francisco St, Flagstaff, AZ 86001", lat:35.1990, lng:-111.6510,
+    telehealth:false, phone:"(928) 555-0108", email:"book@example.org", website:"https://example.org",
+    credentials:"LMT; Diplomate, Upledger CranioSacral Therapy",
+    licensure:"AZ Massage Therapy Board (#MT-8812)",
+    training:"1,000-hr program, Southwest Institute of Healing Arts",
+    since:2010, affiliations:"AMTA",
+    pricing:"60 min $105 · 90 min $145", payments:"Cash, credit, HSA/FSA",
+    insurance:"MVA and workers' comp with referral",
+    blurb:"CranioSacral therapy, myofascial release, and post-surgical scar work on physician referral." },
+
+  { id:11, slug:"mesa-naturopathic-family", name:"Mesa Naturopathic Family Care", person:"Grace Oduya, ND",
+    categories:["Naturopathy","Herbalism"], city:"Mesa", state:"AZ", zip:"85201",
+    address:"1201 S Alma School Rd, Mesa, AZ 85210", lat:33.3870, lng:-111.8580,
+    telehealth:true, phone:"(480) 555-0193", email:"care@example.org", website:"https://example.org",
+    credentials:"ND; licensed AZ (#NMD-3390)", licensure:"Arizona Naturopathic Physicians Medical Board",
+    training:"ND, National University of Natural Medicine", since:2018,
+    affiliations:"AzNMA", pricing:"Initial $285 · Follow-up $130 · Pediatric visit $110",
+    payments:"Cash, credit, HSA/FSA", insurance:"Out-of-network; superbills provided",
+    blurb:"Family practice with an emphasis on pediatric and prenatal care. Vaccinates on the standard schedule." },
+
+  { id:12, slug:"santa-cruz-farm", name:"Santa Cruz Valley Farm", person:"Elena Marquez",
+    categories:["Farms"], city:"Tucson", state:"AZ", zip:"85745",
+    address:"4001 W Ajo Way, Tucson, AZ 85746", lat:32.1690, lng:-111.0320,
+    telehealth:false, phone:"(520) 555-0122", email:"csa@example.org", website:"https://example.org",
+    credentials:"Certified Organic (USDA/AZ)", licensure:"AZ Dept. of Agriculture registered",
+    training:"—", since:1998, affiliations:"Local First Arizona; Community Food Bank of Southern Arizona",
+    pricing:"CSA share $28/wk · Market stand pricing varies",
+    payments:"Cash, credit, SNAP/EBT, Double Up Food Bucks", insurance:"—",
+    blurb:"Year-round CSA and Saturday market stand. Heirloom Sonoran desert varieties, tepary beans, and citrus." },
+
+  { id:13, slug:"barrio-food-co-op", name:"Barrio Food Co-op", person:"Member-owned",
+    categories:["Grocers"], city:"Tucson", state:"AZ", zip:"85701",
+    address:"320 S 4th Ave, Tucson, AZ 85701", lat:32.2180, lng:-110.9660,
+    telehealth:false, phone:"(520) 555-0170", email:"info@example.org", website:"https://example.org",
+    credentials:"Member-owned cooperative", licensure:"—", training:"—", since:1976,
+    affiliations:"National Co+op Grocers",
+    pricing:"Retail · Member equity $100 (payable in installments)",
+    payments:"Cash, credit, SNAP/EBT", insurance:"—",
+    blurb:"Full grocery with a bulk herb wall, local produce sourcing, and a member discount on wellness goods." },
+
+  { id:14, slug:"high-desert-energy", name:"High Desert Kundalini & Sound", person:"Ravi Anand",
+    categories:["EnergyMedicine"], city:"Phoenix", state:"AZ", zip:"85004",
+    address:"1010 N 3rd St, Phoenix, AZ 85004", lat:33.4610, lng:-112.0680,
+    telehealth:true, phone:"(602) 555-0111", email:"studio@example.org", website:"https://example.org",
+    credentials:"KRI Certified Kundalini Yoga Teacher (Level 2); sound healing certificate",
+    licensure:"No licensure exists for this discipline in AZ",
+    training:"KRI Level 1 & 2; 500 hrs teaching practicum", since:2015,
+    affiliations:"Kundalini Research Institute",
+    pricing:"Group class $22 · Private session $120", payments:"Cash, credit, Venmo",
+    insurance:"Not accepted",
+    blurb:"Breath, movement, and sound sessions offered as complementary practice. No diagnostic or treatment claims made." }
+];
+
+/* Rough centroids for ZIP search. Replace with a geocoding call in production. */
+const ZIPS = {
+  "85701":[32.2180,-110.9660],"85704":[32.3271,-110.9760],"85705":[32.2412,-110.9720],
+  "85712":[32.2620,-110.9060],"85716":[32.2540,-110.9200],"85718":[32.3080,-110.9270],
+  "85719":[32.2360,-110.9490],"85745":[32.2290,-111.0230],"85746":[32.1690,-111.0320],
+  "85004":[33.4610,-112.0680],"85016":[33.5093,-112.0120],"85018":[33.4980,-111.9840],
+  "85201":[33.4290,-111.8330],"85210":[33.3870,-111.8580],"85251":[33.4940,-111.9260],
+  "85258":[33.5730,-111.9210],"86001":[35.1990,-111.6510],"86336":[34.8697,-111.7610],
+  "85603":[31.4482,-109.9284]
+};
+
+/* ============================================================
+   2. HELPERS
+   ============================================================ */
+const app  = document.getElementById('app');
+const esc  = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const disc = k => DISCIPLINES.find(d => d.key === k) || { key:k, label:k, note:'' };
+const YEAR = new Date().getFullYear();
+
+const CITIES = [...new Set(PROVIDERS.map(p => p.city))].sort();
+
+function countBy(getter){
+  const m = new Map();
+  PROVIDERS.forEach(p => [].concat(getter(p)).forEach(v => m.set(v, (m.get(v)||0) + 1)));
+  return m;
+}
+const CAT_COUNTS  = countBy(p => p.categories);
+const CITY_COUNTS = countBy(p => p.city);
+
+function milesBetween(a, b, c, d){
+  const R = 3958.8, rad = x => x * Math.PI / 180;
+  const dLat = rad(c - a), dLng = rad(d - b);
+  const h = Math.sin(dLat/2)**2 + Math.cos(rad(a)) * Math.cos(rad(c)) * Math.sin(dLng/2)**2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
+
+/* ============================================================
+   3. STATE + URL
+   Filters live in the URL so results are shareable and the back
+   button behaves the way people expect.
+   ============================================================ */
+const state = { q:'', cats:[], city:'', tele:false, sort:'name', near:null, radius:50 };
+
+function readURL(params){
+  state.q    = params.get('q') || '';
+  state.cats = (params.get('cat') || '').split(',').filter(Boolean);
+  state.city = params.get('city') || '';
+  state.tele = params.get('tele') === '1';
+  state.sort = params.get('sort') || 'name';
+  state.radius = Number(params.get('radius') || 50);
+  const near = params.get('near');
+  if (near){
+    const [lat, lng, ...label] = near.split(',');
+    state.near = { lat:Number(lat), lng:Number(lng), label: label.join(',') || 'your location' };
+  } else state.near = null;
+}
+
+function toQuery(){
+  const p = new URLSearchParams();
+  if (state.q) p.set('q', state.q);
+  if (state.cats.length) p.set('cat', state.cats.join(','));
+  if (state.city) p.set('city', state.city);
+  if (state.tele) p.set('tele', '1');
+  if (state.sort !== 'name') p.set('sort', state.sort);
+  if (state.near) { p.set('near', `${state.near.lat},${state.near.lng},${state.near.label}`); p.set('radius', state.radius); }
+  const s = p.toString();
+  return s ? '?' + s : '';
+}
+
+function go(hash){ location.hash = hash; }
+function applyFilters(){ go('#/directory' + toQuery()); }
+
+/* ============================================================
+   4. QUERY ENGINE
+   ============================================================ */
+function search(){
+  const q = state.q.trim().toLowerCase();
+  let rows = PROVIDERS.filter(p => {
+    if (state.cats.length && !p.categories.some(c => state.cats.includes(c))) return false;
+    if (state.city && p.city !== state.city) return false;
+    if (state.tele && !p.telehealth) return false;
+    if (q){
+      const hay = [p.name, p.person, p.city, p.state, p.zip, p.credentials, p.training,
+                   p.blurb, p.affiliations, ...p.categories.map(c => disc(c).label)]
+                   .join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  if (state.near){
+    rows = rows.map(p => ({ ...p, miles: milesBetween(state.near.lat, state.near.lng, p.lat, p.lng) }))
+               .filter(p => p.miles <= state.radius);
+  }
+
+  const by = {
+    name:     (a,b) => a.name.localeCompare(b.name),
+    years:    (a,b) => (a.since||9999) - (b.since||9999),
+    distance: (a,b) => (a.miles ?? 1e9) - (b.miles ?? 1e9)
+  };
+  return rows.sort(by[state.near && state.sort === 'name' ? 'distance' : state.sort] || by.name);
+}
+
+/* ============================================================
+   5. COMPONENTS
+   ============================================================ */
+function tagsHTML(p){
+  return `<div class="record-tags">
+    ${p.categories.map(c => `<a class="tag" href="#/directory?cat=${encodeURIComponent(c)}">${esc(disc(c).label)}</a>`).join('')}
+    ${p.telehealth ? '<span class="tag tag-tele">Telehealth</span>' : ''}
+  </div>`;
+}
+
+function initials(name){
+  return name.replace(/[^A-Za-z ]/g,'').split(/\s+/).filter(Boolean).slice(0,2).map(w => w[0].toUpperCase()).join('');
+}
+function avatarHTML(p, big){
+  const cls = 'avatar' + (big ? ' avatar-lg' : '');
+  return p.logo
+    ? `<img class="${cls}" src="${src(p.logo,500)}" alt="${esc(p.name)} logo" loading="lazy" decoding="async">`
+    : `<div class="${cls} avatar-mono" aria-hidden="true">${esc(initials(p.name))}</div>`;
+}
+
+function recordHTML(p){
+  const years = p.since ? `${YEAR - p.since} yrs (since ${p.since})` : '—';
+  return `<li class="record"><article class="record-in">
+    <div class="record-head">
+      ${avatarHTML(p)}
+      <div>
+        <h3 class="record-name"><a href="#/provider/${p.slug}">${esc(p.name)}</a></h3>
+        <p class="record-person"><b>${esc(p.person)}</b></p>
+        <p class="record-where">${esc(p.city)}, ${esc(p.state)} ${esc(p.zip)}${
+          p.miles != null ? ` · ${p.miles.toFixed(1)} mi` : ''}</p>
+        ${tagsHTML(p)}
+      </div>
+    </div>
+    <dl class="fields">
+      <dt>Credential</dt><dd>${esc(p.credentials || '—')}</dd>
+      <dt>Licensure</dt><dd class="${p.licensure && p.licensure !== '—' ? '' : 'na'}">${esc(p.licensure || '—')}</dd>
+      <dt>In practice</dt><dd>${esc(years)}</dd>
+      <dt>Fees</dt><dd>${esc(p.pricing || '—')}</dd>
+      <dt>Insurance</dt><dd class="${/not accepted|out-of-network|—/i.test(p.insurance||'') ? 'na' : ''}">${esc(p.insurance || '—')}</dd>
+    </dl>
+    <div class="record-actions">
+      <a class="btn btn-ghost btn-sm" href="#/provider/${p.slug}">Full record</a>
+      ${p.phone ? `<a class="btn btn-ghost btn-sm" href="tel:${p.phone.replace(/[^0-9+]/g,'')}">${esc(p.phone)}</a>` : ''}
+      ${p.email ? `<a class="btn btn-ghost btn-sm" href="mailto:${esc(p.email)}">Email</a>` : ''}
+    </div>
+  </article></li>`;
+}
+
+function consoleHTML(){
+  return `<form class="console" id="console">
+    <div class="console-hd">
+      <h2>Search the directory</h2>
+      <p class="console-count" aria-live="polite" id="live-count"><b>${PROVIDERS.length}</b> practitioners listed</p>
+    </div>
+    <div class="console-grid">
+      <div class="field">
+        <label for="c-q">What are you looking for</label>
+        <input class="control" id="c-q" name="q" type="search" placeholder="Ayurveda, thyroid, herbalist, a name…" value="${esc(state.q)}">
+      </div>
+      <div class="field">
+        <label for="c-loc">Where</label>
+        <input class="control" id="c-loc" name="loc" type="text" placeholder="City or ZIP" value="${esc(state.city)}" list="city-list">
+        <datalist id="city-list">${CITIES.map(c => `<option value="${esc(c)}">`).join('')}</datalist>
+      </div>
+      <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+    <div class="chips" role="group" aria-label="Filter by discipline">
+      ${DISCIPLINES.slice(0,7).map(d => `<button type="button" class="chip" data-chip="${d.key}" aria-pressed="${state.cats.includes(d.key)}">${esc(d.label)}<span class="n">${CAT_COUNTS.get(d.key)||0}</span></button>`).join('')}
+      <button type="button" class="chip" data-near="1">Use my location</button>
+    </div>
+  </form>`;
+}
+
+/* ============================================================
+   6. VIEWS
+   ============================================================ */
+const views = {};
+
+views['/'] = () => `
+  <section class="hero">
+    <img class="hero-bg" src="${src(IMG.hero, 1500)}" srcset="${srcset(IMG.hero)}" sizes="100vw" alt="" aria-hidden="true" fetchpriority="high">
+    <div class="wrap hero-in">
+      <h1 class="rise rise-1">Find holistic practitioners whose <em>credentials you can read</em> before you call.</h1>
+      <p class="hero-lede rise rise-2">Every listing shows licensure, where they trained, how long they have practiced, what a visit costs, and whether they bill insurance. No commissions, no paid placement, no lead selling.</p>
+      <p class="hero-stats rise rise-2">
+        <span><b>${PROVIDERS.length}</b> practitioners</span>
+        <span><b>${DISCIPLINES.length}</b> disciplines</span>
+        <span><b>${CITIES.length}</b> cities</span>
+        <span><b>${PROVIDERS.filter(p=>p.telehealth).length}</b> offer telehealth</span>
+      </p>
+      <div class="rise rise-3">${consoleHTML()}</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <div class="steps">
+        <div class="step"><h3>Search by discipline or distance</h3><p>Filter by practice type, city, ZIP radius, or telehealth availability. Combine as many filters as you need.</p></div>
+        <div class="step"><h3>Read the record</h3><p>State license number where one exists, training institution, years in practice, fee schedule, and insurance status — on the same line for every practitioner.</p></div>
+        <div class="step"><h3>Contact them directly</h3><p>Phone, email, and website go straight to the practice. Nothing routes through us and no one pays for your contact details.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section class="section">
+    <div class="wrap split">
+      <img src="${src(IMG.about, 1000)}" srcset="${srcset(IMG.about)}" sizes="(max-width:820px) 92vw, 520px"
+           alt="Practitioners from a range of holistic disciplines" loading="lazy" decoding="async">
+      <div>
+        <h2>About the directory</h2>
+        <p class="lede" style="margin-top:1rem">There is no centralized system for non-insurance-based care, which makes a first appointment a guess. We collect the same facts from every practitioner and publish them in the same shape, so the comparison is yours to make.</p>
+        <ul>
+          <li>Every listing carries state licensure where it applies, years in practice, pricing structure, insurance status, and direct contact details.</li>
+          <li>For disciplines with no licensure route — Ayurveda, herbalism, energy medicine — we publish training, hours, and voluntary certification instead, and say plainly that no license exists.</li>
+          <li>No middlemen, no commissions, no listing fees. Nothing routes through us and no one pays for placement.</li>
+        </ul>
+        <p style="margin-top:1.8rem"><a class="btn btn-dark" href="#/directory">Find a provider</a></p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section class="section">
+    <div class="wrap" style="max-width:72ch">
+      <h2>A note on licensure</h2>
+      <p class="lede" style="margin-top:1rem">Disciplines here differ enormously in how they are regulated. Naturopathic physicians, acupuncturists, chiropractors, counselors, and massage therapists hold Arizona licenses, and their license numbers appear on each record. Ayurveda, herbalism, and energy medicine have no state licensure, so those records show the training program and any voluntary certification instead. We publish the difference rather than smoothing it over — it is the thing you most need to know.</p>
+      <p class="lede" style="margin-top:1rem">Listings are informational. They are not a referral, an endorsement, or a substitute for medical care.</p>
+    </div>
+  </section>`;
+
+views['/directory'] = () => {
+  const rows = search();
+  return `
+  <div class="wrap">
+    <p class="crumb"><a href="#/">Home</a> / Directory</p>
+    <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin:.6rem 0 1.4rem">Provider directory</h1>
+    <div class="dir">
+      <aside class="rail" id="rail">
+        <button class="rail-toggle" id="rail-toggle" aria-expanded="false">Filters<span>▾</span></button>
+        <div class="rail-body">
+          <div class="field" style="margin-bottom:1.6rem">
+            <label for="f-q">Keyword</label>
+            <input class="control" id="f-q" type="search" value="${esc(state.q)}" placeholder="Name, condition, credential">
+          </div>
+
+          <fieldset>
+            <legend>Discipline</legend>
+            ${DISCIPLINES.map(d => `<label class="check"><input type="checkbox" data-cat="${d.key}" ${state.cats.includes(d.key)?'checked':''}> ${esc(d.label)} <span class="n">${CAT_COUNTS.get(d.key)||0}</span></label>`).join('')}
+          </fieldset>
+
+          <fieldset>
+            <legend>City</legend>
+            <select class="control" id="f-city">
+              <option value="">All cities</option>
+              ${CITIES.map(c => `<option value="${esc(c)}" ${state.city===c?'selected':''}>${esc(c)} (${CITY_COUNTS.get(c)})</option>`).join('')}
+            </select>
+          </fieldset>
+
+          <fieldset>
+            <legend>Distance</legend>
+            <input class="control" id="f-zip" type="text" inputmode="numeric" placeholder="ZIP code" value="${state.near && /^\d{5}$/.test(state.near.label) ? esc(state.near.label) : ''}">
+            <label class="lbl" for="f-radius" style="margin-top:.7rem">Within ${state.radius} miles</label>
+            <input id="f-radius" type="range" min="5" max="250" step="5" value="${state.radius}" style="width:100%;accent-color:var(--brand)">
+            <button class="btn btn-ghost btn-sm" id="f-near" style="width:100%;margin-top:.6rem">Use my location</button>
+            <p class="hint" id="geo-msg"></p>
+          </fieldset>
+
+          <fieldset>
+            <legend>Format</legend>
+            <label class="check"><input type="checkbox" id="f-tele" ${state.tele?'checked':''}> Offers telehealth</label>
+          </fieldset>
+
+          <button class="btn btn-ghost btn-sm" id="f-clear" style="width:100%">Clear all filters</button>
+        </div>
+      </aside>
+
+      <section>
+        <div class="results-bar">
+          <p class="results-count" aria-live="polite"><b>${rows.length}</b> ${rows.length===1?'practitioner':'practitioners'}${state.near?` within ${state.radius} mi of ${esc(state.near.label)}`:''}</p>
+          <div class="sort">
+            <label for="f-sort">Sort</label>
+            <select class="control" id="f-sort">
+              <option value="name" ${state.sort==='name'?'selected':''}>Name</option>
+              <option value="years" ${state.sort==='years'?'selected':''}>Years in practice</option>
+              <option value="distance" ${state.sort==='distance'?'selected':''} ${state.near?'':'disabled'}>Distance</option>
+            </select>
+          </div>
+        </div>
+        ${activeFiltersHTML()}
+        ${rows.length
+          ? `<ul class="records">${rows.map(recordHTML).join('')}</ul>`
+          : `<div class="empty" style="margin-top:2rem">
+               <h3>No practitioners match those filters</h3>
+               <p>Try widening the distance, removing a discipline, or searching a nearby city. Telehealth listings serve the whole state.</p>
+               <p style="margin-top:1.2rem"><button class="btn btn-dark btn-sm" id="empty-clear">Clear filters</button></p>
+             </div>`}
+      </section>
+    </div>
+  </div>
+  <div style="height:4rem"></div>`;
+};
+
+function activeFiltersHTML(){
+  const bits = [];
+  if (state.q)    bits.push(['q', `“${state.q}”`]);
+  state.cats.forEach(c => bits.push(['cat:'+c, disc(c).label]));
+  if (state.city) bits.push(['city', state.city]);
+  if (state.tele) bits.push(['tele', 'Telehealth']);
+  if (state.near) bits.push(['near', `${state.radius} mi of ${state.near.label}`]);
+  if (!bits.length) return '';
+  return `<div class="active-filters">${bits.map(([k,l]) =>
+    `<span class="tagx">${esc(l)}<button data-drop="${esc(k)}" aria-label="Remove ${esc(l)} filter">×</button></span>`).join('')}</div>`;
+}
+
+views['/practice-types'] = () => `
+  <div class="wrap">
+    <p class="crumb"><a href="#/">Home</a> / Disciplines</p>
+    <div class="section-tight">
+      <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Choose the type of practice</h1>
+      <p class="lede">Licensure varies by discipline. Where Arizona licenses a profession, the license number appears on the record. Where it does not, we publish training and certification instead.</p>
+      <ul class="tiles">
+        ${DISCIPLINES.map(d => {
+          const n = CAT_COUNTS.get(d.key) || 0;
+          return `<li><a class="tile" href="#/directory?cat=${encodeURIComponent(d.key)}">
+            ${d.img
+              ? `<div class="tile-frame"><img src="${src(d.img,750)}" srcset="${srcset(d.img,[500,750,1000])}" sizes="(max-width:700px) 92vw, 320px" alt="" loading="lazy" decoding="async"></div>`
+              : `<div class="tile-frame blank">${esc(d.label)}</div>`}
+            <h3>${esc(d.label)}</h3>
+            <p>${esc(d.note)}</p>
+            <span class="tile-go">View providers <span class="n">${n}</span> →</span>
+          </a></li>`;
+        }).join('')}
+      </ul>
+    </div>
+  </div>
+  <div style="height:3rem"></div>`;
+
+views['/locations'] = () => `
+  <div class="wrap">
+    <p class="crumb"><a href="#/">Home</a> / Locations</p>
+    <div class="section-tight">
+      <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Browse by location</h1>
+      <p class="lede">Pick a city, or search by ZIP radius from the directory. ${PROVIDERS.filter(p=>p.telehealth).length} listings also offer telehealth statewide.</p>
+      <ul class="index-list">
+        ${CITIES.map(c => {
+          const inCity = PROVIDERS.filter(p => p.city === c);
+          const kinds = [...new Set(inCity.flatMap(p => p.categories))].map(k => disc(k).label).join(' · ');
+          return `<li><a class="index-row" href="#/directory?city=${encodeURIComponent(c)}">
+            <span class="index-key">${esc(inCity[0].state)}</span>
+            <span class="index-name">${esc(c)}<span class="index-sub">${esc(kinds)}</span></span>
+            <span class="index-n">${inCity.length}</span>
+          </a></li>`;
+        }).join('')}
+      </ul>
+    </div>
+  </div>
+  <div style="height:3rem"></div>`;
+
+views['/provider'] = (slug) => {
+  const p = PROVIDERS.find(x => x.slug === slug);
+  if (!p) return `<div class="wrap section"><div class="empty"><h3>That record is not in the directory</h3><p>The listing may have been removed or the link may be out of date.</p><p style="margin-top:1.2rem"><a class="btn btn-dark btn-sm" href="#/directory">Back to the directory</a></p></div></div>`;
+  const years = p.since ? `${YEAR - p.since} years (since ${p.since})` : '—';
+  const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.address || p.name)}`;
+  return `
+  <div class="wrap">
+    <p class="crumb"><a href="#/">Home</a> / <a href="#/directory">Directory</a> / ${esc(p.name)}</p>
+    <div class="detail">
+      <div>
+        ${avatarHTML(p, true)}
+        <h1>${esc(p.name)}</h1>
+        <p class="detail-person">${esc(p.person)}</p>
+        ${tagsHTML(p)}
+        <p class="detail-bio" style="margin-top:1.6rem">${esc(p.blurb)}</p>
+
+        <div class="detail-fields">
+          <h3 style="font-family:var(--ff-display);font-size:1.15rem;margin-bottom:1rem;padding-bottom:.6rem;border-bottom:1px solid var(--line)">Practice record</h3>
+          <dl class="fields">
+            <dt>Credentials</dt><dd>${esc(p.credentials || '—')}</dd>
+            <dt>Licensure</dt><dd>${esc(p.licensure || '—')}</dd>
+            <dt>Training</dt><dd>${esc(p.training || '—')}</dd>
+            <dt>In practice</dt><dd>${esc(years)}</dd>
+            <dt>Affiliations</dt><dd>${esc(p.affiliations || '—')}</dd>
+            <dt>Fees</dt><dd>${esc(p.pricing || '—')}</dd>
+            <dt>Payment</dt><dd>${esc(p.payments || '—')}</dd>
+            <dt>Insurance</dt><dd>${esc(p.insurance || '—')}</dd>
+            <dt>Telehealth</dt><dd>${p.telehealth ? 'Yes' : 'In person only'}</dd>
+          </dl>
+        </div>
+      </div>
+
+      <div>
+        <div class="panel">
+          <h3>Contact the practice</h3>
+          ${p.phone   ? `<div class="contact-row"><span class="k">Phone</span><a href="tel:${p.phone.replace(/[^0-9+]/g,'')}">${esc(p.phone)}</a></div>` : ''}
+          ${p.email   ? `<div class="contact-row"><span class="k">Email</span><a href="mailto:${esc(p.email)}">${esc(p.email)}</a></div>` : ''}
+          ${p.website ? `<div class="contact-row"><span class="k">Web</span><a href="${esc(p.website)}" target="_blank" rel="noopener">${esc(p.website.replace(/^https?:\/\//,''))}</a></div>` : ''}
+          ${p.address ? `<div class="contact-row"><span class="k">Address</span><a href="${maps}" target="_blank" rel="noopener">${esc(p.address)}</a></div>` : ''}
+          ${(p.social || []).filter(u => /^https?:/.test(u)).map(u =>
+            `<div class="contact-row"><span class="k">Social</span><a href="${esc(u)}" target="_blank" rel="noopener">${esc(u.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,''))}</a></div>`).join('')}
+          <p class="hint" style="margin-top:1rem">FindWell takes no commission and receives nothing when you book.</p>
+        </div>
+        <div class="panel">
+          <h3>Nearby in ${esc(p.city)}</h3>
+          ${PROVIDERS.filter(x => x.city === p.city && x.id !== p.id).slice(0,4).map(x =>
+            `<div class="contact-row"><span class="k">${esc(disc(x.categories[0]).label.split(' ')[0])}</span><a href="#/provider/${x.slug}">${esc(x.name)}</a></div>`).join('') || '<p class="hint">No other listings in this city yet.</p>'}
+        </div>
+      </div>
+    </div>
+  </div>`;
+};
+
+views['/join'] = () => `
+  <div class="wrap">
+    <p class="crumb"><a href="#/">Home</a> / Join</p>
+    <div class="section-tight" style="max-width:900px">
+      <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Join the directory</h1>
+      <p class="lede">Listings are free. We verify license numbers against the issuing board before publishing, and we publish exactly what you send — including the absence of a license where none exists for your discipline.</p>
+
+      <form id="join-form" style="margin-top:2.2rem" novalidate>
+        <div class="form-grid">
+          <div class="field"><label for="j-practice">Practice name *</label><input class="control" id="j-practice" required><p class="err">Enter the name your patients see.</p></div>
+          <div class="field"><label for="j-name">Practitioner name *</label><input class="control" id="j-name" required><p class="err">Enter the practitioner's full name.</p></div>
+          <div class="field"><label for="j-email">Email *</label><input class="control" id="j-email" type="email" required><p class="err">Enter a working email address.</p></div>
+          <div class="field"><label for="j-phone">Phone</label><input class="control" id="j-phone" type="tel"></div>
+          <div class="field full"><label for="j-cats">Discipline *</label>
+            <div class="chips" id="j-cats">${DISCIPLINES.map(d => `<button type="button" class="chip" data-jcat="${d.key}" aria-pressed="false">${esc(d.label)}</button>`).join('')}</div>
+            <p class="hint">Select every discipline you practice.</p>
+          </div>
+          <div class="field"><label for="j-city">City *</label><input class="control" id="j-city" required><p class="err">Enter your practice city.</p></div>
+          <div class="field"><label for="j-zip">ZIP</label><input class="control" id="j-zip" inputmode="numeric"></div>
+          <div class="field full"><label for="j-cred">Credentials and license number</label><input class="control" id="j-cred" placeholder="e.g. L.Ac., AZ #AC-0000 — or 'no licensure exists for this discipline'"></div>
+          <div class="field"><label for="j-since">Practicing since</label><input class="control" id="j-since" inputmode="numeric" placeholder="2014"></div>
+          <div class="field"><label for="j-tele">Telehealth</label>
+            <select class="control" id="j-tele"><option value="No">In person only</option><option value="Yes">Telehealth available</option></select>
+          </div>
+          <div class="field full"><label for="j-training">Training and school</label><textarea class="control" id="j-training"></textarea></div>
+          <div class="field full"><label for="j-fees">Fee schedule and insurance</label><textarea class="control" id="j-fees" placeholder="Initial visit, follow-up, packages. Which plans you bill, or 'cash pay, superbills on request'."></textarea></div>
+        </div>
+        <div style="display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.6rem;align-items:center">
+          <button class="btn btn-primary" type="submit">Send listing</button>
+          <span class="hint" id="join-msg"></span>
+        </div>
+      </form>
+
+      <div class="notice" id="join-done" style="display:none;margin-top:2rem">
+        <b>Listing ready to send.</b> This demo has no server, so your details were assembled into an email instead. In production, point the form handler at your CMS, Airtable, Formspree, or an API route.
+        <p style="margin-top:.8rem"><a class="btn btn-dark btn-sm" id="join-mail" href="#">Open in email</a></p>
+      </div>
+      <div class="notice" style="margin-top:1.6rem">
+        <b>Before you submit:</b> we publish fee ranges. If your pricing changes seasonally, send a range rather than a single figure.
+      </div>
+    </div>
+  </div>
+  <div style="height:3rem"></div>`;
+
+views['/about'] = () => `
+  <div class="wrap">
+    <p class="crumb"><a href="#/">Home</a> / Who we are</p>
+    <div class="section-tight" style="max-width:70ch">
+      <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:1.2rem">Who we are</h1>
+      <p class="lede">FindWell is a directory, not a marketplace. We do not take commissions, sell leads, charge listing fees, or rank practitioners by who pays. What we do is collect the information people actually need before a first appointment and publish it in the same shape for everyone.</p>
+      <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">What we verify</h2>
+      <p class="lede">For licensed professions we check the license number against the issuing Arizona board and record the check date. For unlicensed disciplines there is no board to check, so we record the training program, hours, and any voluntary certification, and we say plainly that no licensure exists.</p>
+      <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">What we don't do</h2>
+      <p class="lede">We don't evaluate clinical claims, host reviews, or vouch for outcomes. A listing here means the credentials are as stated — nothing more. Complementary care works best alongside medical care, and this directory is built on the assumption that you have a physician too.</p>
+      <p style="margin-top:2.2rem"><a class="btn btn-dark" href="#/directory">Browse the directory</a></p>
+    </div>
+  </div>
+  <div style="height:3rem"></div>`;
+
+/* ============================================================
+   7. ROUTER
+   ============================================================ */
+function render(){
+  const raw = location.hash.replace(/^#/, '') || '/';
+  const [path, qs] = raw.split('?');
+  readURL(new URLSearchParams(qs || ''));
+
+  const seg = path.split('/').filter(Boolean);
+  let html;
+  if (seg[0] === 'provider') html = views['/provider'](seg[1]);
+  else html = (views['/' + (seg[0] || '')] || views['/'])();
+
+  app.innerHTML = html;
+
+  const top = '#/' + (seg[0] || '');
+  document.querySelectorAll('.nav a').forEach(a =>
+    a.getAttribute('href').startsWith(top) && top !== '#/'
+      ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
+
+  document.getElementById('nav').classList.remove('open');
+  document.getElementById('burger').setAttribute('aria-expanded', 'false');
+  window.scrollTo(0, 0);
+  bind();
+}
+
+/* ============================================================
+   8. EVENT BINDING
+   ============================================================ */
+function setNear(lat, lng, label){
+  state.near = { lat, lng, label };
+  state.sort = 'distance';
+  applyFilters();
+}
+
+function locateMe(msgEl){
+  if (!navigator.geolocation){ if (msgEl) msgEl.textContent = 'This browser cannot share a location. Enter a ZIP instead.'; return; }
+  if (msgEl) msgEl.textContent = 'Locating…';
+  navigator.geolocation.getCurrentPosition(
+    pos => setNear(+pos.coords.latitude.toFixed(4), +pos.coords.longitude.toFixed(4), 'your location'),
+    ()  => { if (msgEl) msgEl.textContent = 'Location unavailable — enter a ZIP code instead.'; },
+    { timeout:8000 }
+  );
+}
+
+function bind(){
+  const $ = id => document.getElementById(id);
+
+  // Home search console
+  const cons = $('console');
+  if (cons){
+    cons.addEventListener('submit', e => {
+      e.preventDefault();
+      state.q = $('c-q').value.trim();
+      const loc = $('c-loc').value.trim();
+      state.city = ''; state.near = null;
+      if (/^\d{5}$/.test(loc) && ZIPS[loc]) { state.near = { lat:ZIPS[loc][0], lng:ZIPS[loc][1], label:loc }; state.sort = 'distance'; }
+      else if (loc) { const hit = CITIES.find(c => c.toLowerCase() === loc.toLowerCase()); if (hit) state.city = hit; else state.q = (state.q + ' ' + loc).trim(); }
+      applyFilters();
+    });
+    cons.addEventListener('click', e => {
+      const chip = e.target.closest('[data-chip]');
+      if (chip){
+        const k = chip.dataset.chip;
+        state.cats = state.cats.includes(k) ? state.cats.filter(c => c !== k) : [...state.cats, k];
+        state.q = $('c-q').value.trim();
+        applyFilters();
+      }
+      if (e.target.closest('[data-near]')) locateMe($('live-count'));
+    });
+  }
+
+  // Directory rail
+  const rail = $('rail');
+  if (rail){
+    $('rail-toggle').addEventListener('click', e => {
+      rail.classList.toggle('open');
+      e.currentTarget.setAttribute('aria-expanded', rail.classList.contains('open'));
+    });
+
+    let t;
+    $('f-q').addEventListener('input', e => { clearTimeout(t); const v = e.target.value; t = setTimeout(() => { state.q = v.trim(); applyFilters(); }, 350); });
+
+    rail.querySelectorAll('[data-cat]').forEach(cb => cb.addEventListener('change', () => {
+      const k = cb.dataset.cat;
+      state.cats = cb.checked ? [...state.cats, k] : state.cats.filter(c => c !== k);
+      applyFilters();
+    }));
+
+    $('f-city').addEventListener('change', e => { state.city = e.target.value; applyFilters(); });
+    $('f-tele').addEventListener('change', e => { state.tele = e.target.checked; applyFilters(); });
+    $('f-sort').addEventListener('change', e => { state.sort = e.target.value; applyFilters(); });
+    const rLabel = document.querySelector('label[for="f-radius"]');
+    $('f-radius').addEventListener('input', e => { if (rLabel) rLabel.textContent = `Within ${e.target.value} miles`; });
+    $('f-radius').addEventListener('change', e => { state.radius = Number(e.target.value); if (state.near) applyFilters(); });
+    $('f-near').addEventListener('click', () => locateMe($('geo-msg')));
+    $('f-zip').addEventListener('change', e => {
+      const z = e.target.value.trim();
+      if (ZIPS[z]) setNear(ZIPS[z][0], ZIPS[z][1], z);
+      else $('geo-msg').textContent = 'No coordinates for that ZIP in the demo dataset. Try 85716, 85004, or 86001.';
+    });
+    $('f-clear').addEventListener('click', () => go('#/directory'));
+
+    document.querySelectorAll('[data-drop]').forEach(b => b.addEventListener('click', () => {
+      const k = b.dataset.drop;
+      if (k === 'q') state.q = '';
+      else if (k === 'city') state.city = '';
+      else if (k === 'tele') state.tele = false;
+      else if (k === 'near') { state.near = null; state.sort = 'name'; }
+      else if (k.startsWith('cat:')) state.cats = state.cats.filter(c => c !== k.slice(4));
+      applyFilters();
+    }));
+
+    const ec = $('empty-clear'); if (ec) ec.addEventListener('click', () => go('#/directory'));
+  }
+
+  // Join form
+  const jf = $('join-form');
+  if (jf){
+    const picked = new Set();
+    jf.querySelectorAll('[data-jcat]').forEach(c => c.addEventListener('click', () => {
+      const k = c.dataset.jcat;
+      picked.has(k) ? picked.delete(k) : picked.add(k);
+      c.setAttribute('aria-pressed', picked.has(k));
+    }));
+
+    jf.addEventListener('submit', e => {
+      e.preventDefault();
+      const req = ['j-practice','j-name','j-email','j-city'];
+      let ok = true;
+      req.forEach(id => {
+        const el = $(id), bad = !el.value.trim() || (el.type === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value));
+        el.setAttribute('aria-invalid', bad); if (bad) ok = false;
+      });
+      const msg = $('join-msg');
+      if (!ok){ msg.textContent = 'Fix the highlighted fields and send again.'; return; }
+      if (!picked.size){ msg.textContent = 'Select at least one discipline.'; return; }
+      msg.textContent = '';
+
+      const body = [
+        ['Practice', $('j-practice').value], ['Practitioner', $('j-name').value],
+        ['Email', $('j-email').value], ['Phone', $('j-phone').value],
+        ['Disciplines', [...picked].map(k => disc(k).label).join(', ')],
+        ['City', $('j-city').value], ['ZIP', $('j-zip').value],
+        ['Credentials', $('j-cred').value], ['Practicing since', $('j-since').value],
+        ['Telehealth', $('j-tele').value], ['Training', $('j-training').value],
+        ['Fees and insurance', $('j-fees').value]
+      ].filter(([,v]) => v && v.trim()).map(([k,v]) => `${k}: ${v}`).join('\n');
+
+      $('join-mail').href = `mailto:info@example.org?subject=${encodeURIComponent('Directory listing — ' + $('j-practice').value)}&body=${encodeURIComponent(body)}`;
+      $('join-done').style.display = 'block';
+      $('join-done').scrollIntoView({ block:'nearest' });
+    });
+  }
+}
+
+document.getElementById('burger').addEventListener('click', e => {
+  const nav = document.getElementById('nav');
+  nav.classList.toggle('open');
+  e.currentTarget.setAttribute('aria-expanded', nav.classList.contains('open'));
+});
+
+window.addEventListener('hashchange', render);
+render();
+</script>
+</body>
+</html>

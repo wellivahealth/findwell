@@ -3,17 +3,28 @@
 A static site. No build tools, no dependencies, no server. Cloudflare Pages
 serves it as-is.
 
-## Deploying to Cloudflare Pages
+## Deploying to Cloudflare (Workers)
 
-Push this whole folder to the repo root, then in Cloudflare:
+Repo layout:
 
-- Framework preset: **None**
-- Build command: **leave empty**
-- Build output directory: **/**
+```
+wrangler.jsonc     <- tells Cloudflare what to serve
+build.py           <- the generator (not published)
+README.md          <- this file (not published)
+public/            <- the actual website
+```
 
-`index.html` sits at the root, which is what Cloudflare serves at `/`. That
-was the problem with the earlier single file — it was named
-`findwell-directory.html`, so the root URL had nothing to serve.
+Push all of this to the repo root. `wrangler.jsonc` points the Worker at
+`public/`, so only the site is served — `build.py` and this README are not
+reachable from the web.
+
+In the Worker's settings, Build command stays **empty** and Deploy command is
+`npx wrangler deploy` (Cloudflare's default). Nothing else to configure.
+
+A Worker with no `wrangler.jsonc` has no idea what to serve — that was the
+problem. If you would rather use Cloudflare Pages instead, delete the Worker,
+create a Pages project from the same repo, and set the build output directory
+to `public`.
 
 ## The pages
 
@@ -64,8 +75,13 @@ drops a practitioner out of nearby results.
 
 ## Notes
 
-- All images still load from the Squarespace CDN. They will stop working if
-  that subscription lapses. Download the originals and change the `SS`
-  constant in `build.py` when you migrate.
+- The hero photograph is hosted locally in `public/assets/img`, in three
+  widths as both WebP and JPEG (the browser picks the smallest that fits;
+  the largest WebP is 116 KB). To swap it: `python3 make_hero.py photo.jpg`,
+  then `python3 build.py`.
+- The remaining images — logo, discipline tiles, the About photograph, two
+  provider logos — still load from the Squarespace CDN and will stop working
+  if that subscription lapses. Download them and change the `SS` constant in
+  `build.py` when you migrate.
 - The join form has no backend; it assembles a mailto. Point it at a form
   service to collect submissions directly.

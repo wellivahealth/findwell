@@ -11,17 +11,30 @@ so search engines can index each discipline, city, and practitioner.
 Nothing from the "Internal, not published" section of the application form
 appears anywhere in this file or in the generated output.
 """
-import os, json, shutil, html, datetime
+import os, json, shutil, html, datetime, hashlib
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-OUT  = ROOT
+OUT  = os.path.join(ROOT, "public")   # Cloudflare serves this folder
 YEAR = 2026
-SITE = "https://findwelldirectory.com"   # used for canonical + og:url
+SITE = "https://findwelldirectory.com"   # <- set to the domain you attach; feeds canonical, og:url, sitemap
+
+def _v(rel):
+    """Content hash for an asset, so a changed file gets a new URL.
+    Assets are cached for a year; without this, browsers keep serving the
+    old CSS after a deploy and nothing appears to change."""
+    try:
+        with open(os.path.join(ROOT, "public", rel), "rb") as f:
+            return hashlib.md5(f.read()).hexdigest()[:10]
+    except FileNotFoundError:
+        return "dev"
+
+CSS_V  = _v("assets/site.css")
+JS_V   = _v("assets/app.js")
+IMG_V  = _v("assets/img/hero-1400.webp")
 
 SS = "https://images.squarespace-cdn.com/content/v1/6877e1d8fb99bd2e2af8e1ed/"
 IMG = {
     "logo":  SS + "c4a2dd29-37ea-438e-aa6c-12715a6a508a/findwell-logo-trans.png",
-    "hero":  SS + "5453e7ab-6288-4564-a1f5-f6928006829b/shutterstock_2466396447.jpg",
     "about": SS + "194a0c8a-39fa-48a9-b260-2af2acae618b/Leonardo_Phoenix_10_Create_an_image_of_a_diverse_group_of_heal_1+%281%29.jpg",
 }
 
@@ -280,6 +293,16 @@ def img_tag(url, alt, sizes, cls="", widths=(500, 750, 1000, 1500), lazy=True):
 
 LOGO = IMG["logo"]
 
+# Hero photograph, hosted locally in /assets/img (not hotlinked).
+# Regenerate the sizes with make_hero.py if the source image changes.
+HERO = f"""<picture>
+      <source type="image/webp" sizes="100vw"
+              srcset="/assets/img/hero-900.webp?v={IMG_V} 900w, /assets/img/hero-1400.webp?v={IMG_V} 1400w, /assets/img/hero-2000.webp?v={IMG_V} 2000w">
+      <img class="hero-bg" src="/assets/img/hero-1400.jpg?v={IMG_V}" sizes="100vw"
+           srcset="/assets/img/hero-900.jpg?v={IMG_V} 900w, /assets/img/hero-1400.jpg?v={IMG_V} 1400w, /assets/img/hero-2000.jpg?v={IMG_V} 2000w"
+           width="2000" height="1250" alt="" aria-hidden="true" fetchpriority="high">
+    </picture>"""
+
 def shell(title, desc, path, body, view="", extra_head=""):
     """Wrap page content in the shared chrome. `path` is the canonical URL path."""
     nav = [("/directory/", "All providers"), ("/practice-types/", "By discipline"),
@@ -307,7 +330,7 @@ def shell(title, desc, path, body, view="", extra_head=""):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css?v={CSS_V}">
 {extra_head}
 </head>
 <body{f' data-view="{view}"' if view else ''}>
@@ -356,7 +379,7 @@ def shell(title, desc, path, body, view="", extra_head=""):
     </div>
   </div>
 </footer>
-<script src="/assets/app.js" defer></script>
+<script src="/assets/app.js?v={JS_V}" defer></script>
 </body>
 </html>
 """
@@ -446,18 +469,23 @@ def record_html(p):
 def page_home():
     ndisc = sum(1 for d in DISCIPLINES if cat_count(d["key"]))
     body = f"""  <section class="hero">
-    {img_tag(IMG['hero'], '', '100vw', cls='hero-bg', lazy=False)}
+    {HERO}
     <div class="wrap hero-in">
-      <h1 class="rise rise-1">Find holistic practitioners whose <em>credentials you can read</em> before you call.</h1>
-      <p class="hero-lede rise rise-2">Every listing shows licensure, where they trained, how long they have practised, what a visit costs, and whether they bill insurance. No commissions, no paid placement, no lead selling.</p>
-      <p class="hero-stats rise rise-2">
-        <span><b>{len(PROVIDERS)}</b> practitioners</span>
-        <span><b>{ndisc}</b> disciplines</span>
-        <span><b>{len(CITIES)}</b> cities</span>
-        <span><b>{sum(1 for p in PROVIDERS if p['telehealth'])}</b> offer telehealth</span>
-      </p>
-      <div class="rise rise-3">{console_html()}</div>
+      <div class="hero-panel rise rise-1">
+        <h1>Find trusted holistic practitioners <em>whose credentials you can read</em> before you call.</h1>
+        <p class="hero-lede">Every listing shows licensure, where they trained, how long they have practised, what a visit costs, and whether they bill insurance. No commissions, no paid placement, no lead selling.</p>
+        <p class="hero-stats">
+          <span><b>{len(PROVIDERS)}</b> practitioners</span>
+          <span><b>{ndisc}</b> disciplines</span>
+          <span><b>{len(CITIES)}</b> cities</span>
+          <span><b>{sum(1 for p in PROVIDERS if p['telehealth'])}</b> offer telehealth</span>
+        </p>
+      </div>
     </div>
+  </section>
+
+  <section class="console-strip">
+    <div class="wrap rise rise-2">{console_html()}</div>
   </section>
 
   <section class="section">
@@ -490,7 +518,10 @@ def page_home():
   </section>"""
     return shell("FindWell Directory — trusted holistic practitioners",
                  "A searchable directory of vetted holistic and integrative practitioners. Filter by discipline, city or distance. Licensure, training, years in practice and pricing on every record.",
-                 "/", body, view="home")
+                 "/", body, view="home",
+                 extra_head=f'<link rel="preload" as="image" href="/assets/img/hero-1400.webp?v={IMG_V}" '
+                            f'imagesrcset="/assets/img/hero-900.webp?v={IMG_V} 900w, /assets/img/hero-1400.webp?v={IMG_V} 1400w, '
+                            f'/assets/img/hero-2000.webp?v={IMG_V} 2000w" imagesizes="100vw" type="image/webp">')
 
 def page_directory(subset=None, title=None, desc=None, path="/directory/", heading=None, intro=""):
     rows = subset if subset is not None else PROVIDERS

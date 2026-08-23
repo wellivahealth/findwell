@@ -1,0 +1,7 @@
+# Hashed asset URLs (?v=…) change whenever the file changes, so these can be
+# cached hard. HTML must never be, or a deploy won't reach anyone.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*
+  Cache-Control: public, max-age=0, must-revalidate

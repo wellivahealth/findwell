@@ -280,7 +280,34 @@ def disc(key):
 def cat_count(key):
     return sum(1 for p in PROVIDERS if key in p["categories"])
 
+STATE_NAMES = {
+    "AL":"Alabama","AK":"Alaska","AZ":"Arizona","AR":"Arkansas","CA":"California",
+    "CO":"Colorado","CT":"Connecticut","DE":"Delaware","DC":"District of Columbia",
+    "FL":"Florida","GA":"Georgia","HI":"Hawaii","ID":"Idaho","IL":"Illinois",
+    "IN":"Indiana","IA":"Iowa","KS":"Kansas","KY":"Kentucky","LA":"Louisiana",
+    "ME":"Maine","MD":"Maryland","MA":"Massachusetts","MI":"Michigan","MN":"Minnesota",
+    "MS":"Mississippi","MO":"Missouri","MT":"Montana","NE":"Nebraska","NV":"Nevada",
+    "NH":"New Hampshire","NJ":"New Jersey","NM":"New Mexico","NY":"New York",
+    "NC":"North Carolina","ND":"North Dakota","OH":"Ohio","OK":"Oklahoma","OR":"Oregon",
+    "PA":"Pennsylvania","RI":"Rhode Island","SC":"South Carolina","SD":"South Dakota",
+    "TN":"Tennessee","TX":"Texas","UT":"Utah","VT":"Vermont","VA":"Virginia",
+    "WA":"Washington","WV":"West Virginia","WI":"Wisconsin","WY":"Wyoming",
+}
+
+def state_name(ab):
+    return STATE_NAMES.get(ab, ab)
+
+def state_slug(ab):
+    return state_name(ab).lower().replace(" ", "-")
+
+STATES = sorted({p["state"] for p in PROVIDERS}, key=state_name)
 CITIES = sorted({(p["city"], p["state"]) for p in PROVIDERS})
+
+def in_state(ab):
+    return [p for p in PROVIDERS if p["state"] == ab]
+
+def cities_in(ab):
+    return sorted({p["city"] for p in in_state(ab)})
 
 def img_tag(url, alt, sizes, cls="", widths=(500, 750, 1000, 1500), lazy=True):
     if not url:
@@ -390,7 +417,8 @@ def console_html():
         f'<button type="button" class="chip" data-chip="{d["key"]}">{E(d["label"])}'
         f'<span class="n">{cat_count(d["key"])}</span></button>'
         for d in DISCIPLINES if cat_count(d["key"]))
-    cityopts = "".join(f'<option value="{E(c)}, {s}">' for c, s in CITIES)
+    whereopts = "".join(f'<option value="{E(state_name(ab))}">' for ab in STATES) + \
+                "".join(f'<option value="{E(c)}">' for c, _ in CITIES)
     return f"""<form class="console" id="console" action="/directory/" method="get">
     <div class="console-hd">
       <h2>Search the directory</h2>
@@ -403,8 +431,8 @@ def console_html():
       </div>
       <div class="field">
         <label for="c-loc">Where</label>
-        <input class="control" id="c-loc" name="city" type="text" placeholder="City or ZIP" list="city-list">
-        <datalist id="city-list">{cityopts}</datalist>
+        <input class="control" id="c-loc" name="where" type="text" placeholder="State, city or ZIP" list="where-list">
+        <datalist id="where-list">{whereopts}</datalist>
       </div>
       <button class="btn btn-primary" type="submit">Search</button>
     </div>
@@ -477,7 +505,7 @@ def page_home():
         <p class="hero-stats">
           <span><b>{len(PROVIDERS)}</b> practitioners</span>
           <span><b>{ndisc}</b> disciplines</span>
-          <span><b>{len(CITIES)}</b> cities</span>
+          <span><b>{len(STATES)}</b> states</span>
           <span><b>{sum(1 for p in PROVIDERS if p['telehealth'])}</b> offer telehealth</span>
         </p>
       </div>
@@ -529,9 +557,9 @@ def page_directory(subset=None, title=None, desc=None, path="/directory/", headi
         f'<label class="check"><input type="checkbox" data-cat="{d["key"]}"> {E(d["label"])}'
         f'<span class="n">{cat_count(d["key"])}</span></label>'
         for d in DISCIPLINES if cat_count(d["key"]))
-    cityopts = "".join(
-        f'<option value="{E(c)}">{E(c)}, {s} ({sum(1 for p in PROVIDERS if p["city"] == c)})</option>'
-        for c, s in CITIES)
+    stateopts = "".join(
+        f'<option value="{ab}">{E(state_name(ab))} ({len(in_state(ab))})</option>'
+        for ab in STATES)
     body = f"""  <div class="wrap">
     <p class="crumb"><a href="/">Home</a> / {E(heading or 'Directory')}</p>
     <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin:.6rem 0 1.4rem">{E(heading or 'Provider directory')}</h1>
@@ -545,8 +573,8 @@ def page_directory(subset=None, title=None, desc=None, path="/directory/", headi
             <input class="control" id="f-q" type="search" placeholder="Name, condition, credential">
           </div>
           <fieldset><legend>Discipline</legend>{checks}</fieldset>
-          <fieldset><legend>City</legend>
-            <select class="control" id="f-city"><option value="">All cities</option>{cityopts}</select>
+          <fieldset><legend>State</legend>
+            <select class="control" id="f-state"><option value="">All states</option>{stateopts}</select>
           </fieldset>
           <fieldset><legend>Distance</legend>
             <input class="control" id="f-zip" type="text" inputmode="numeric" placeholder="ZIP code">
@@ -613,24 +641,23 @@ def page_practice_types():
 
 def page_locations():
     rows = ""
-    for c, s in CITIES:
-        inc = [p for p in PROVIDERS if p["city"] == c]
-        kinds = " · ".join(dict.fromkeys(disc(k)["label"] for p in inc for k in p["categories"]))
-        rows += f"""<li><a class="index-row" href="/locations/{c.lower().replace(' ', '-')}-{s.lower()}/">
-        <span class="index-key">{s}</span>
-        <span class="index-name">{E(c)}<span class="index-sub">{E(kinds)}</span></span>
-        <span class="index-n">{len(inc)}</span></a></li>"""
+    for ab in STATES:
+        n = len(in_state(ab))
+        rows += f"""<li><a class="index-row" href="/locations/{state_slug(ab)}/">
+        <span class="index-key">{ab}</span>
+        <span class="index-name">{E(state_name(ab))}<span class="index-sub">{E(' · '.join(cities_in(ab)))}</span></span>
+        <span class="index-n">{n}</span></a></li>"""
     body = f"""  <div class="wrap">
     <p class="crumb"><a href="/">Home</a> / Locations</p>
     <div class="section-tight">
-      <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Browse by location</h1>
-      <p class="lede">Pick a city, or search by ZIP radius from the directory. {sum(1 for p in PROVIDERS if p['telehealth'])} listings also offer telehealth.</p>
+      <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Browse by state</h1>
+      <p class="lede">Pick a state, then narrow by city or ZIP radius once you are there. {sum(1 for p in PROVIDERS if p['telehealth'])} listings also offer telehealth, which in most disciplines means anywhere in the state they are licensed.</p>
       <ul class="index-list">{rows}</ul>
     </div>
   </div>
   <div style="height:3rem"></div>"""
-    return shell("Browse by location — FindWell Directory",
-                 "Find holistic and integrative practitioners by city.",
+    return shell("Browse by state — FindWell Directory",
+                 "Find holistic and integrative practitioners by state.",
                  "/locations/", body)
 
 def page_provider(p):
@@ -778,6 +805,11 @@ def write(path, content):
     return target
 
 def main():
+    # Wipe generated pages first, so renamed or removed listings don't leave
+    # orphaned URLs behind. Assets are left alone.
+    for d in ("directory", "practice-types", "locations", "provider", "join", "about"):
+        shutil.rmtree(os.path.join(OUT, d), ignore_errors=True)
+
     written = []
     written.append(write("index.html", page_home()))
     written.append(write("directory/", page_directory()))
@@ -796,15 +828,16 @@ def main():
             path=f"/practice-types/{d['slug']}/",
             heading=d["label"], intro=d["note"])))
 
-    for c, s in CITIES:
-        rows = [p for p in PROVIDERS if p["city"] == c]
-        slug = f"{c.lower().replace(' ', '-')}-{s.lower()}"
-        written.append(write(f"locations/{slug}/", page_directory(
+    for ab in STATES:
+        rows = in_state(ab)
+        cs = cities_in(ab)
+        written.append(write(f"locations/{state_slug(ab)}/", page_directory(
             subset=rows,
-            title=f"Holistic practitioners in {c}, {s} — FindWell Directory",
-            desc=f"{len(rows)} holistic and integrative practitioners listed in {c}, {s}.",
-            path=f"/locations/{slug}/",
-            heading=f"{c}, {s}")))
+            title=f"Holistic practitioners in {state_name(ab)} — FindWell Directory",
+            desc=f"{len(rows)} holistic and integrative practitioners listed in {state_name(ab)}.",
+            path=f"/locations/{state_slug(ab)}/",
+            heading=state_name(ab),
+            intro=f"{len(rows)} listed in {state_name(ab)} — {', '.join(cs)}.")))
 
     for p in PROVIDERS:
         written.append(write(f"provider/{p['slug']}/", page_provider(p)))
@@ -812,7 +845,7 @@ def main():
     # sitemap + robots
     urls = ["/", "/directory/", "/practice-types/", "/locations/", "/join/", "/about/"]
     urls += [f"/practice-types/{d['slug']}/" for d in DISCIPLINES]
-    urls += [f"/locations/{c.lower().replace(' ', '-')}-{s.lower()}/" for c, s in CITIES]
+    urls += [f"/locations/{state_slug(ab)}/" for ab in STATES]
     urls += [f"/provider/{p['slug']}/" for p in PROVIDERS]
     today = datetime.date.today().isoformat()
     sm = ('<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -825,7 +858,7 @@ def main():
     print(f"Built {len(written) + 2} files:")
     print(f"  {len(PROVIDERS)} provider pages")
     print(f"  {len(DISCIPLINES)} discipline pages")
-    print(f"  {len(CITIES)} location pages")
+    print(f"  {len(STATES)} state pages")
     print("  6 core pages, 404, sitemap.xml, robots.txt")
 
 if __name__ == "__main__":

@@ -36,8 +36,8 @@ Every page is real HTML at a real URL, so Google indexes each one separately:
 | `/directory/` | All listings, filterable |
 | `/practice-types/` | The twelve discipline tiles |
 | `/practice-types/ayurveda/` etc. | One page per discipline, pre-filtered |
-| `/locations/` | City index |
-| `/locations/tucson-az/` etc. | One page per city, pre-filtered |
+| `/locations/` | State index |
+| `/locations/arizona/` etc. | One page per state, pre-filtered |
 | `/provider/amitaayurveda/` etc. | One page per practitioner |
 | `/join/` | Application form |
 | `/about/` | Who we are |
@@ -62,6 +62,11 @@ Set `SITE` at the top of `build.py` to your live domain before going live —
 it feeds the canonical tags, og:url, and the sitemap.
 
 ## Search and filtering
+
+The "Where" box on the home page accepts a state name, a state abbreviation,
+a city, or a ZIP code, and works out which you meant. The directory rail
+filters by state; city remains available as a URL filter
+(`/directory/?city=Tucson`) for when a state has enough listings to need it.
 
 Filters run client-side over the already-rendered listings, so results are
 instant and the page still works with JavaScript disabled — every listing is

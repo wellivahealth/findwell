@@ -36,7 +36,7 @@
       var p = new URLSearchParams();
       if (q) p.set('q', q);
       if (/^\d{5}$/.test(loc)) { p.set('zip', loc); p.set('radius', '50'); }
-      else if (loc) p.set('city', loc.split(',')[0].trim());
+      else if (loc) p.set('where', loc);
       location.href = '/directory/' + (p.toString() ? '?' + p : '');
     });
     $$('[data-chip]', cons).forEach(function (c) {
@@ -75,12 +75,28 @@
   if (!list) return;
 
   var records = $$('.record', list);
-  var state = { q: '', cats: [], city: '', tele: false, sort: 'name', near: null, radius: 50, label: '' };
+  var state = { q: '', cats: [], city: '', st: '', tele: false, sort: 'name', near: null, radius: 50, label: '' };
+
+  /* Full state names -> abbreviations, so "Arizona", "arizona" and "AZ" all work. */
+  var STATE_NAMES = {
+    alabama:'AL', alaska:'AK', arizona:'AZ', arkansas:'AR', california:'CA',
+    colorado:'CO', connecticut:'CT', delaware:'DE', 'district of columbia':'DC',
+    florida:'FL', georgia:'GA', hawaii:'HI', idaho:'ID', illinois:'IL', indiana:'IN',
+    iowa:'IA', kansas:'KS', kentucky:'KY', louisiana:'LA', maine:'ME', maryland:'MD',
+    massachusetts:'MA', michigan:'MI', minnesota:'MN', mississippi:'MS', missouri:'MO',
+    montana:'MT', nebraska:'NE', nevada:'NV', 'new hampshire':'NH', 'new jersey':'NJ',
+    'new mexico':'NM', 'new york':'NY', 'north carolina':'NC', 'north dakota':'ND',
+    ohio:'OH', oklahoma:'OK', oregon:'OR', pennsylvania:'PA', 'rhode island':'RI',
+    'south carolina':'SC', 'south dakota':'SD', tennessee:'TN', texas:'TX', utah:'UT',
+    vermont:'VT', virginia:'VA', washington:'WA', 'west virginia':'WV',
+    wisconsin:'WI', wyoming:'WY'
+  };
 
   var params = new URLSearchParams(location.search);
   state.q = params.get('q') || '';
   state.cats = (params.get('cat') || '').split(',').filter(Boolean);
   state.city = params.get('city') || '';
+  state.st = (params.get('state') || '').toUpperCase();
   state.tele = params.get('tele') === '1';
   state.sort = params.get('sort') || 'name';
   state.radius = Number(params.get('radius') || 50);
@@ -93,11 +109,25 @@
 
   /* reflect state into the controls */
   if ($('#f-q')) $('#f-q').value = state.q;
-  if ($('#f-city')) $('#f-city').value = state.city;
+  if ($('#f-state')) $('#f-state').value = state.st;
   if ($('#f-tele')) $('#f-tele').checked = state.tele;
   if ($('#f-radius')) $('#f-radius').value = state.radius;
   if ($('#f-zip') && /^\d{5}$/.test(state.label)) $('#f-zip').value = state.label;
   $$('[data-cat]').forEach(function (cb) { cb.checked = state.cats.indexOf(cb.dataset.cat) > -1; });
+  var where = params.get('where');
+  if (where) {
+    var w = where.trim().toLowerCase();
+    var abbrev = STATE_NAMES[w] || (w.length === 2 ? w.toUpperCase() : '');
+    var knownStates = records.map(function (r) { return r.dataset.state; });
+    var knownCities = records.map(function (r) { return r.dataset.city.toLowerCase(); });
+    if (abbrev && knownStates.indexOf(abbrev) > -1) state.st = abbrev;
+    else if (knownCities.indexOf(w) > -1) {
+      state.city = records[knownCities.indexOf(w)].dataset.city;
+    } else state.q = state.q ? state.q + ' ' + where : where;
+    if ($('#f-state')) $('#f-state').value = state.st;
+    if ($('#f-q')) $('#f-q').value = state.q;
+  }
+
   var rLabel = $('label[for="f-radius"]');
   if (rLabel) rLabel.textContent = 'Within ' + state.radius + ' miles';
 
@@ -106,6 +136,7 @@
     if (state.q) p.set('q', state.q);
     if (state.cats.length) p.set('cat', state.cats.join(','));
     if (state.city) p.set('city', state.city);
+    if (state.st) p.set('state', state.st);
     if (state.tele) p.set('tele', '1');
     if (state.sort !== 'name') p.set('sort', state.sort);
     if (state.near) {
@@ -127,6 +158,7 @@
         ok = state.cats.some(function (c) { return mine.indexOf(c) > -1; });
       }
       if (ok && state.city && d.city !== state.city) ok = false;
+      if (ok && state.st && d.state !== state.st) ok = false;
       if (ok && state.tele && d.tele !== '1') ok = false;
       if (ok && q && d.text.indexOf(q) === -1 && d.name.toLowerCase().indexOf(q) === -1) ok = false;
 
@@ -172,6 +204,10 @@
       bits.push(['cat:' + c, cb ? cb.parentNode.textContent.trim().replace(/\s*\d+$/, '') : c]);
     });
     if (state.city) bits.push(['city', state.city]);
+    if (state.st) {
+      var sel = $('#f-state option[value="' + state.st + '"]');
+      bits.push(['state', sel ? sel.textContent.replace(/\s*\(\d+\)$/, '') : state.st]);
+    }
     if (state.tele) bits.push(['tele', 'Telehealth']);
     if (state.near) bits.push(['near', state.radius + ' mi of ' + state.label]);
     box.innerHTML = bits.map(function (b) {
@@ -182,7 +218,8 @@
       btn.addEventListener('click', function () {
         var k = btn.dataset.drop;
         if (k === 'q') { state.q = ''; if ($('#f-q')) $('#f-q').value = ''; }
-        else if (k === 'city') { state.city = ''; if ($('#f-city')) $('#f-city').value = ''; }
+        else if (k === 'city') { state.city = ''; }
+        else if (k === 'state') { state.st = ''; if ($('#f-state')) $('#f-state').value = ''; }
         else if (k === 'tele') { state.tele = false; if ($('#f-tele')) $('#f-tele').checked = false; }
         else if (k === 'near') { state.near = null; state.label = ''; state.sort = 'name'; if ($('#f-zip')) $('#f-zip').value = ''; }
         else if (k.indexOf('cat:') === 0) {
@@ -216,7 +253,9 @@
       apply();
     });
   });
-  if ($('#f-city')) $('#f-city').addEventListener('change', function (e) { state.city = e.target.value; apply(); });
+  if ($('#f-state')) $('#f-state').addEventListener('change', function (e) {
+    state.st = e.target.value; state.city = ''; apply();
+  });
   if ($('#f-tele')) $('#f-tele').addEventListener('change', function (e) { state.tele = e.target.checked; apply(); });
   if ($('#f-sort')) $('#f-sort').addEventListener('change', function (e) { state.sort = e.target.value; apply(); });
   if ($('#f-radius')) {

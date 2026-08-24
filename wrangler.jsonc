@@ -1,10 +1,36 @@
 {
-  // Tells Cloudflare this Worker just serves the files in ./public
-  // Nothing outside public/ is published — build.py and the README stay private.
+  // The Worker handles /api/* and serves everything else from ./public.
   "name": "findwell",
+  "main": "worker/index.js",
   "compatibility_date": "2026-08-01",
+
   "assets": {
     "directory": "./public",
+    "binding": "ASSETS",
     "not_found_handling": "404-page"
+  },
+
+  // npx wrangler d1 create findwell  -> paste the id it prints
+  "d1_databases": [
+    { "binding": "DB", "database_name": "findwell", "database_id": "PASTE_D1_ID_HERE" }
+  ],
+
+  // npx wrangler kv namespace create PENDING  -> paste the id it prints
+  // Holds uploaded logos until a listing is approved.
+  "kv_namespaces": [
+    { "binding": "PENDING", "id": "PASTE_KV_ID_HERE" }
+  ],
+
+  "vars": {
+    "SITE_URL": "https://findwelldirectory.com",
+    "ADMIN_EMAIL": "info@findwelldirectory.com",
+    "MAIL_FROM": "FindWell Directory <info@findwelldirectory.com>",
+    "GH_REPO": "wellivahealth/findwell",
+    "GH_BRANCH": "main"
   }
+
+  // Secrets are set separately, never in this file:
+  //   npx wrangler secret put RESEND_API_KEY
+  //   npx wrangler secret put GH_TOKEN
+  //   npx wrangler secret put SIGNING_SECRET
 }

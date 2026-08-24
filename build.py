@@ -16,9 +16,10 @@ import os, json, shutil, html, datetime, hashlib
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT  = os.path.join(ROOT, "public")   # Cloudflare serves this folder
 YEAR = 2026
-# Paste your Formspree form ID here (the code after /f/ in your endpoint URL).
-# Leave empty and the form falls back to opening an email instead.
-FORMSPREE_ID = "xvznleng"
+# Applications post to our own Worker at /api/apply, which stores them,
+# emails you an approve link, and acknowledges the applicant.
+# Set FORM_ENDPOINT to "" to fall back to opening a pre-filled email instead.
+FORM_ENDPOINT = "/api/apply"
 
 SITE = "https://findwelldirectory.com"   # <- set to the domain you attach; feeds canonical, og:url, sitemap
 
@@ -276,6 +277,39 @@ PROVIDERS = [
 ]
 
 # ---------------------------------------------------------------------------
+# Listings approved through the site (data/listings.json) are merged in here.
+# The Worker writes that file when you click Approve in a notification email;
+# entries below in PROVIDERS take precedence if a slug appears in both.
+def _merge_approved():
+    path = os.path.join(ROOT, "data", "listings.json")
+    if not os.path.exists(path):
+        return
+    try:
+        with open(path) as f:
+            rows = json.load(f)
+    except (ValueError, OSError) as e:
+        print(f"  ! data/listings.json unreadable, skipping ({e})")
+        return
+    have = {p["slug"] for p in PROVIDERS}
+    added = 0
+    for r in rows:
+        if not r.get("slug") or r["slug"] in have:
+            continue
+        r.setdefault("logo", None)
+        r.setdefault("social", [])
+        r.setdefault("long", "")
+        r.setdefault("verified", False)
+        for k in ("credentials", "licensure", "training", "affiliations",
+                  "pricing", "payments", "insurance", "blurb", "address", "zip"):
+            r.setdefault(k, "")
+        PROVIDERS.append(r)
+        have.add(r["slug"])
+        added += 1
+    if added:
+        print(f"  + {added} listing(s) merged from data/listings.json")
+
+_merge_approved()
+
 E = html.escape
 
 def disc(key):
@@ -707,7 +741,7 @@ def page_provider(p):
           <h3 style="font-family:var(--ff-display);font-size:1.15rem;margin-bottom:1rem;padding-bottom:.6rem;border-bottom:1px solid var(--line)">Practice record</h3>
           <dl class="fields">
             <dt>Credentials</dt><dd>{E(p['credentials'])}</dd>
-            <dt>Licensure</dt><dd>{E(p['licensure'])}</dd>
+            <dt>Licensure</dt><dd>{E(p['licensure'])}{'' if p.get('verified', True) else ' <span class="unverified">not yet verified</span>'}</dd>
             <dt>Training</dt><dd>{E(p['training'])}</dd>
             <dt>In practice</dt><dd>{years}</dd>
             <dt>Affiliations</dt><dd>{E(p['affiliations'])}</dd>
@@ -810,7 +844,7 @@ def page_join():
       <p class="lede">Listings are free. We verify license numbers against the issuing board before publishing, and we publish exactly what you send \u2014 including the absence of a license where none exists for your discipline. Fields marked * are required.</p>
 
       <form id="join-form" style="margin-top:2.6rem" novalidate
-            action="{('https://formspree.io/f/' + FORMSPREE_ID) if FORMSPREE_ID else ''}" method="POST">
+            action="{FORM_ENDPOINT}" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="Scope of practice" id="j-cats-value">
         <input type="hidden" name="Payment methods" id="j-pay-value">
         <input type="hidden" name="_subject" id="j-subject" value="Directory application">

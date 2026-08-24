@@ -455,9 +455,12 @@
       headers: { Accept: 'application/json' }
     }).then(function (res) {
       if (btn) { btn.disabled = false; btn.textContent = 'Send'; }
-      if (!res.ok) throw new Error('rejected');
+      if (!res.ok) return res.json().catch(function () { return {}; }).then(function (d) {
+        throw new Error(d.error || 'rejected');
+      });
       title.textContent = 'Thank you for your submission.';
-      text.textContent = ' We will get back to you shortly, images and all.';
+      text.textContent = ' We have emailed you a confirmation. Your listing will be published ' +
+                         'shortly, and we will email you again as soon as it is live.';
       mailWrap.hidden = true;
       reveal();
       form.reset();
@@ -467,9 +470,10 @@
       });
       if ($('j-cats-value')) $('j-cats-value').value = '';
       if ($('j-pay-value')) $('j-pay-value').value = '';
-    }).catch(function () {
+    }).catch(function (err) {
       if (btn) { btn.disabled = false; btn.textContent = 'Send'; }
-      fallback('We could not reach the server.');
+      fallback(err && err.message && err.message !== 'rejected'
+        ? err.message : 'We could not reach the server.');
     });
   });
 })();

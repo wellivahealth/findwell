@@ -89,6 +89,66 @@ drops a practitioner out of nearby results.
   provider logos — still load from the Squarespace CDN and will stop working
   if that subscription lapses. Download them and change the `SS` constant in
   `build.py` when you migrate.
+## The application form and one-click publishing
+
+Applications no longer go to a third party. The form posts to a Cloudflare
+Worker in `worker/index.js`, which:
+
+1. validates the submission and stores it in a D1 database
+2. emails the applicant an acknowledgement
+3. emails **you** the full application with **Approve** and **Decline** buttons
+
+Clicking Approve geocodes the address, commits any uploaded logo plus the
+listing into `data/listings.json` in this repo, and emails the practitioner to
+say their listing is live and that credentials are still being verified. The
+commit triggers a Cloudflare rebuild, so the listing is a real page at its own
+URL about a minute later.
+
+`build.py` merges `data/listings.json` into `PROVIDERS` at build time. Entries
+written by hand in `build.py` win if a slug appears in both. Approved listings
+carry `verified: false` until you edit them, which renders a small "not yet
+verified" note beside the licensure line — set it to `true` once you have
+checked the number against the issuing board.
+
+### One-time setup
+
+```
+npx wrangler d1 create findwell
+npx wrangler d1 execute findwell --remote --file=schema.sql
+npx wrangler kv namespace create PENDING
+```
+
+Paste the two ids into `wrangler.jsonc`, then set three secrets:
+
+```
+npx wrangler secret put RESEND_API_KEY   # resend.com, verify findwelldirectory.com
+npx wrangler secret put GH_TOKEN         # GitHub fine-grained token, Contents: read+write
+npx wrangler secret put SIGNING_SECRET   # any long random string
+```
+
+`SIGNING_SECRET` signs the approve links so only your emails can publish.
+Anyone with the link can approve, so treat those emails as privileged.
+
+`/api/pending?key=YOUR_SIGNING_SECRET` lists anything still waiting on you.
+
+### Logos
+
+Applicants upload up to two images. They are held in KV until you approve,
+then committed to `public/assets/img/providers/` automatically. Nothing is
+kept for declined submissions. To add a logo by hand later, use
+`make_logo.py` and set the `logo` field on that listing.
+
+## Notes
+
+- The hero and About photographs are hosted locally in `public/assets/img`,
+  each in three widths as both WebP and JPEG (the browser picks the smallest
+  that fits). To swap either one:
+  `python3 make_image.py photo.jpg hero` or `python3 make_image.py photo.jpg about 2.0`,
+  then `python3 build.py`.
+- The remaining images — logo, discipline tiles, the About photograph, two
+  provider logos — still load from the Squarespace CDN and will stop working
+  if that subscription lapses. Download them and change the `SS` constant in
+  `build.py` when you migrate.
 ## The application form
 
 Submissions post to Formspree. Open `build.py`, find `FORMSPREE_ID` near the

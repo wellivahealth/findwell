@@ -151,77 +151,30 @@ build on the placeholder ids.
 Until you switch it on, `/api/apply` returns a 404, the form detects that, and
 falls back to opening a pre-filled email. Nothing is lost, it is just manual.
 
-### One-time setup
+### Turning it on — three secrets, no database
 
 ```
-npx wrangler d1 create findwell
-npx wrangler d1 execute findwell --remote --file=schema.sql
-npx wrangler kv namespace create PENDING
+npx wrangler secret put RESEND_API_KEY   # resend.com; verify findwelldirectory.com for sending
+npx wrangler secret put GH_TOKEN         # GitHub fine-grained token, Contents: read + write
+npx wrangler secret put SIGNING_SECRET   # any long random string you invent
 ```
 
-Paste the two ids into **`wrangler.api.jsonc`**, then set three secrets:
+Then copy `wrangler.api.jsonc` over `wrangler.jsonc` and push. That commit
+turns the backend on.
 
-```
-npx wrangler secret put RESEND_API_KEY   # resend.com, verify findwelldirectory.com
-npx wrangler secret put GH_TOKEN         # GitHub fine-grained token, Contents: read+write
-npx wrangler secret put SIGNING_SECRET   # any long random string
-```
-
-Finally, copy `wrangler.api.jsonc` over `wrangler.jsonc` and push. That is the
-commit that turns the backend on.
+There is nothing else to create — no database, no namespace, no ids to paste.
+The Worker keeps everything in this repo through the GitHub API: a submission
+lands in `data/pending/`, approving moves it into `data/listings.json` and the
+logo into `public/assets/img/providers/`. Each action is a single commit, so
+Cloudflare rebuilds once per decision.
 
 `SIGNING_SECRET` signs the approve links so only your emails can publish.
-Anyone with the link can approve, so treat those emails as privileged.
+Anyone holding a link can approve, so treat those emails as privileged.
 
-Two admin pages, both behind your signing secret:
+Admin pages, both behind that secret:
 
-- `/api/pending?key=YOUR_SIGNING_SECRET` — applications you have not decided on
-- `/api/review?key=YOUR_SIGNING_SECRET` — listings published but not yet checked
-  against the issuing board, each with a **Mark verified** button. Clicking it
-  flips `verified` to `true` and rebuilds, removing the "not yet verified" note.
-
-Bookmark the review page. You can also edit `data/listings.json` by hand if you
-prefer — the button just saves you touching JSON.
-
-### Discipline tile images
-
-Tiles are 4:3. To add or replace one:
-
-```
-python3 make_tile.py photo.jpg integrative 0.72 0.61 0.70
-```
-
-The three numbers are the centre of interest as fractions of width and height,
-and a zoom factor (1.0 is the widest possible crop, lower crops in tighter).
-Wide stock photographs usually need both — the default centre crop leaves the
-subject off to one side with dead space beside it.
-
-It writes 500/750/1000px JPEG and WebP to `public/assets/img/disciplines/`.
-Then set that discipline's `img` to the stem, without a width or extension:
-
-```python
-img="/assets/img/disciplines/integrative"
-```
-
-Disciplines with `img=None` render a labelled placeholder frame instead.
-
-### Favicon
-
-The tab icon should be the leaf mark alone — a wordmark is illegible at 16px.
-Run this once against the original logo PNG:
-
-```
-python3 make_favicon.py findwell-logo-trans.png
-```
-
-It trims transparent margins, finds the gap between the mark and the type,
-cuts there, squares the result, and writes favicon.png (512), favicon-180.png,
-favicon-32.png, favicon.ico and favicon-preview.png. Open the preview to see
-how it reads at 16, 32 and 48px before pushing. If the split lands in the wrong
-place, pass the fraction of the width to keep, e.g. `python3 make_favicon.py logo.png 0.28`.
-
-`build.py` uses these automatically once they exist, and falls back to the full
-logo until then.
+- `/api/pending?key=YOUR_SIGNING_SECRET`
+- `/api/review?key=YOUR_SIGNING_SECRET`
 
 ### Logos
 

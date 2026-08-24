@@ -4,13 +4,18 @@
  * POST /api/apply     the join form posts here
  * GET  /api/approve   the button in your notification email
  * GET  /api/decline   the other button
- * GET  /api/pending   a plain list of anything still waiting on you
+ * GET  /api/pending   applications still waiting on you
+ * GET  /api/review    published listings not yet credential-checked
+ * GET  /api/verify    marks one of those verified
  *
  * Everything else falls through to the static site in /public.
  *
- * Approving commits the listing into data/listings.json in your repo, which
- * triggers a Cloudflare rebuild. The listing is live in about a minute, as
- * real HTML on its own URL — same as every other listing.
+ * There is no database. A submission is committed to data/pending/ in the
+ * repo; approving moves it into data/listings.json and moves any logo into
+ * public/assets/img/providers/. Each action is one commit, so Cloudflare
+ * rebuilds once and the listing is live in about a minute.
+ *
+ * That keeps the setup to three secrets — no D1, no KV, no binding ids.
  */
 
 const SCOPE_TO_KEY = {
@@ -46,18 +51,16 @@ async function hmac(secret, message) {
   return [...new Uint8Array(sig)].map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
-function timingSafeEqual(a, b) {
-  if (a.length !== b.length) return false;
+function safeEqual(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string' || a.length !== b.length) return false;
   let out = 0;
   for (let i = 0; i < a.length; i++) out |= a.charCodeAt(i) ^ b.charCodeAt(i);
   return out === 0;
 }
 
-function json(data, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status, headers: { 'content-type': 'application/json' },
-  });
-}
+const json = (data, status = 200) => new Response(JSON.stringify(data), {
+  status, headers: { 'content-type': 'application/json' },
+});
 
 function page(title, body, status = 200) {
   return new Response(`<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
@@ -65,15 +68,101 @@ function page(title, body, status = 200) {
 <style>body{font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 background:#f7fafa;color:#17302f;display:grid;place-items:center;min-height:100vh;margin:0;padding:2rem}
 .card{background:#fff;border:1px solid #dbe3e3;border-radius:10px;padding:2rem;max-width:34rem}
-h1{font-size:1.4rem;margin:0 0 .6rem}p{margin:0 0 .8rem;color:#4a5f5f}
-a{color:#2e5f5c}</style></head><body><div class="card">${body}</div></body></html>`,
+h1{font-size:1.4rem;margin:0 0 .6rem}p{margin:0 0 .8rem;color:#4a5f5f}a{color:#2e5f5c}
+ul{padding-left:0;list-style:none}</style></head><body><div class="card">${body}</div></body></html>`,
     { status, headers: { 'content-type': 'text/html; charset=utf-8' } });
+}
+
+const b64 = (str) => {
+  const bytes = new TextEncoder().encode(str);
+  let bin = '';
+  bytes.forEach((b) => { bin += String.fromCharCode(b); });
+  return btoa(bin);
+};
+
+const b64bytes = (buf) => {
+  const bytes = new Uint8Array(buf);
+  let bin = '';
+  for (let i = 0; i < bytes.length; i += 8192) {
+    bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 8192));
+  }
+  return btoa(bin);
+};
+
+const fromB64 = (s) => new TextDecoder().decode(
+  Uint8Array.from(atob(String(s).replace(/\n/g, '')), (c) => c.charCodeAt(0)));
+
+// ---------------------------------------------------------------- github
+
+function gh(env, path, init = {}) {
+  return fetch(`https://api.github.com${path}`, {
+    ...init,
+    headers: {
+      authorization: `Bearer ${env.GH_TOKEN}`,
+      accept: 'application/vnd.github+json',
+      'user-agent': 'findwell-worker',
+      ...(init.body ? { 'content-type': 'application/json' } : {}),
+      ...(init.headers || {}),
+    },
+  });
+}
+
+async function ghJson(env, path, init) {
+  const res = await gh(env, path, init);
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`GitHub ${path} ${res.status}: ${(await res.text()).slice(0, 300)}`);
+  return res.json();
+}
+
+async function readFile(env, path) {
+  const branch = env.GH_BRANCH || 'main';
+  return ghJson(env, `/repos/${env.GH_REPO}/contents/${encodeURI(path)}?ref=${branch}`);
+}
+
+/**
+ * Write and delete several files in one commit, so Cloudflare rebuilds once.
+ * files: [{ path, contentBase64 }] or [{ path, remove: true }]
+ */
+async function commitFiles(env, message, files) {
+  const repo = env.GH_REPO;
+  const branch = env.GH_BRANCH || 'main';
+
+  const ref = await ghJson(env, `/repos/${repo}/git/ref/heads/${branch}`);
+  const headSha = ref.object.sha;
+  const head = await ghJson(env, `/repos/${repo}/git/commits/${headSha}`);
+
+  const tree = [];
+  for (const f of files) {
+    if (f.remove) {
+      tree.push({ path: f.path, mode: '100644', type: 'blob', sha: null });
+      continue;
+    }
+    const blob = await ghJson(env, `/repos/${repo}/git/blobs`, {
+      method: 'POST',
+      body: JSON.stringify({ content: f.contentBase64, encoding: 'base64' }),
+    });
+    tree.push({ path: f.path, mode: '100644', type: 'blob', sha: blob.sha });
+  }
+
+  const newTree = await ghJson(env, `/repos/${repo}/git/trees`, {
+    method: 'POST',
+    body: JSON.stringify({ base_tree: head.tree.sha, tree }),
+  });
+  const commit = await ghJson(env, `/repos/${repo}/git/commits`, {
+    method: 'POST',
+    body: JSON.stringify({ message, tree: newTree.sha, parents: [headSha] }),
+  });
+  await ghJson(env, `/repos/${repo}/git/refs/heads/${branch}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ sha: commit.sha }),
+  });
+  return commit.sha;
 }
 
 // ---------------------------------------------------------------- email
 
 async function sendEmail(env, { to, subject, html, replyTo }) {
-  if (!env.RESEND_API_KEY) return { skipped: true };
+  if (!env.RESEND_API_KEY || !to) return { skipped: true };
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -82,11 +171,10 @@ async function sendEmail(env, { to, subject, html, replyTo }) {
     },
     body: JSON.stringify({
       from: env.MAIL_FROM || 'FindWell Directory <noreply@findwelldirectory.com>',
-      to: [to], subject, html,
-      ...(replyTo ? { reply_to: replyTo } : {}),
+      to: [to], subject, html, ...(replyTo ? { reply_to: replyTo } : {}),
     }),
   });
-  return { ok: res.ok, status: res.status, body: await res.text() };
+  return { ok: res.ok, status: res.status };
 }
 
 const shell = (inner) => `<div style="font:16px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#17302f;max-width:36rem">
@@ -95,104 +183,49 @@ ${inner}
 FindWell Directory — a network of holistic health care providers<br>
 <a href="https://findwelldirectory.com" style="color:#2e5f5c">findwelldirectory.com</a></p></div>`;
 
-function receivedEmail(s) {
-  return shell(`<h2 style="font-size:20px;margin:0 0 12px">We have your application</h2>
-<p>Thank you for applying to the FindWell Directory. We have received your details for <strong>${esc(s.practice)}</strong>.</p>
-<p>We review each application and verify credentials and license numbers against the issuing board before publishing. We will email you as soon as your listing goes live, and we will only be in touch before then if we have a question.</p>
+const receivedEmail = (s) => shell(`<h2 style="font-size:20px;margin:0 0 12px">We have your application</h2>
+<p>Thank you for applying to the FindWell Directory. We have your details for <strong>${esc(s.practice)}</strong>.</p>
+<p>We review each application and check credentials and license numbers against the issuing board before publishing. We will email you as soon as your listing is live, and will only be in touch before then if we have a question.</p>
 <p>If anything you sent needs correcting, just reply to this email.</p>`);
-}
 
-function publishedEmail(s, url) {
-  return shell(`<h2 style="font-size:20px;margin:0 0 12px">Your listing is live</h2>
+const publishedEmail = (s, url) => shell(`<h2 style="font-size:20px;margin:0 0 12px">Your listing is live</h2>
 <p>Thank you for joining the FindWell Directory. Your listing for <strong>${esc(s.practice)}</strong> is now published:</p>
 <p><a href="${esc(url)}" style="display:inline-block;background:#c23a4b;color:#fff;text-decoration:none;padding:10px 18px;border-radius:6px;font-weight:600">View your listing</a></p>
 <p>One more step on our side: we verify credentials and license numbers against the issuing board before a listing is considered confirmed. That is usually quick, and we will contact you only if we have questions or need something clarified.</p>
 <p>If anything on your listing needs correcting, reply to this email and we will fix it.</p>`);
-}
 
-function adminEmail(s, id, approveUrl, declineUrl) {
+function adminEmail(s, approveUrl, declineUrl) {
   const row = (k, v) => v
     ? `<tr><td style="padding:4px 12px 4px 0;color:#5f7473;vertical-align:top;white-space:nowrap">${esc(k)}</td><td style="padding:4px 0">${esc(v)}</td></tr>`
     : '';
   return shell(`<h2 style="font-size:20px;margin:0 0 4px">New application — ${esc(s.practice)}</h2>
 <p style="margin:0 0 16px;color:#5f7473">${esc(s.first)} ${esc(s.last)} · ${esc(s.city)}, ${esc(s.state)}</p>
-
 <p style="margin:0 0 20px">
 <a href="${esc(approveUrl)}" style="display:inline-block;background:#2e5f5c;color:#fff;text-decoration:none;padding:11px 20px;border-radius:6px;font-weight:600;margin-right:8px">Approve &amp; publish</a>
-<a href="${esc(declineUrl)}" style="display:inline-block;background:#fff;color:#c23a4b;border:1px solid #c23a4b;text-decoration:none;padding:10px 19px;border-radius:6px;font-weight:600">Decline</a>
-</p>
-
+<a href="${esc(declineUrl)}" style="display:inline-block;background:#fff;color:#c23a4b;border:1px solid #c23a4b;text-decoration:none;padding:10px 19px;border-radius:6px;font-weight:600">Decline</a></p>
 <table style="border-collapse:collapse;font-size:14px">
 ${row('Scope', s.scope.join(', '))}
-${row('Licensed', s.licensed)}
-${row('License no.', s.license)}
-${row('Certifications', s.certs)}
-${row('Years', s.years)}
+${row('Licensed', s.licensed)}${row('License no.', s.license)}
+${row('Certifications', s.certs)}${row('Years', s.years)}
 ${row('Training', s.training)}
 ${row('Integrative training', s.integrative || 'none reported')}
-${row('Telehealth', s.telehealth)}
-${row('Physical location', s.physical)}
+${row('Telehealth', s.telehealth)}${row('Physical location', s.physical)}
 ${row('Address', s.address)}
-${row('Email', s.email)}
-${row('Phone', s.phone)}
-${row('Website', s.website)}
+${row('Email', s.email)}${row('Phone', s.phone)}${row('Website', s.website)}
 ${row('Social', s.social)}
-${row('Payments', s.payments.join(', '))}
-${row('Pricing', s.pricing)}
-${row('Short description', s.short)}
-${row('Description', s.long)}
+${row('Payments', s.payments.join(', '))}${row('Pricing', s.pricing)}
+${row('Short description', s.short)}${row('Description', s.long)}
 ${row('Logo uploaded', s.logo_name || 'none')}
 </table>
-
 <p style="margin-top:20px;padding:12px;background:#eff4f4;border-radius:6px;font-size:14px">
 <strong>Internal — not published</strong><br>
 Desired size: ${esc(s.size) || '—'}<br>
 Open to insurance: ${esc(s.openins) || '—'}<br>
 Uses an EHR: ${esc(s.ehr) || '—'}</p>
-
-<p style="font-size:13px;color:#5f7473">Submission ${esc(id)}. Approving commits the listing to your repo and rebuilds the site — live in about a minute.</p>`);
+<p style="font-size:13px;color:#5f7473">Approving publishes the listing and rebuilds the site — live in about a minute.</p>`);
 }
 
-// ---------------------------------------------------------------- github
-
-async function githubGet(env, path) {
-  const res = await fetch(
-    `https://api.github.com/repos/${env.GH_REPO}/contents/${path}?ref=${env.GH_BRANCH || 'main'}`,
-    { headers: {
-      authorization: `Bearer ${env.GH_TOKEN}`,
-      accept: 'application/vnd.github+json',
-      'user-agent': 'findwell-worker',
-    } });
-  if (res.status === 404) return null;
-  if (!res.ok) throw new Error(`github get ${res.status}: ${await res.text()}`);
-  return res.json();
-}
-
-async function githubPut(env, path, contentBase64, message, sha) {
-  const res = await fetch(`https://api.github.com/repos/${env.GH_REPO}/contents/${path}`, {
-    method: 'PUT',
-    headers: {
-      authorization: `Bearer ${env.GH_TOKEN}`,
-      accept: 'application/vnd.github+json',
-      'content-type': 'application/json',
-      'user-agent': 'findwell-worker',
-    },
-    body: JSON.stringify({
-      message, content: contentBase64, branch: env.GH_BRANCH || 'main', ...(sha ? { sha } : {}),
-    }),
-  });
-  if (!res.ok) throw new Error(`github put ${res.status}: ${await res.text()}`);
-  return res.json();
-}
-
-const b64encode = (str) => {
-  const bytes = new TextEncoder().encode(str);
-  let bin = '';
-  bytes.forEach((b) => { bin += String.fromCharCode(b); });
-  return btoa(bin);
-};
-
-// ---------------------------------------------------------------- geocoding
+// ---------------------------------------------------------------- geocode
 
 async function geocode(address) {
   if (!address) return {};
@@ -201,8 +234,7 @@ async function geocode(address) {
       + `?address=${encodeURIComponent(address)}&benchmark=Public_AR_Current&format=json`;
     const res = await fetch(url, { signal: AbortSignal.timeout(6000) });
     if (!res.ok) return {};
-    const data = await res.json();
-    const m = data?.result?.addressMatches?.[0]?.coordinates;
+    const m = (await res.json())?.result?.addressMatches?.[0]?.coordinates;
     return m ? { lat: Number(m.y), lng: Number(m.x) } : {};
   } catch { return {}; }
 }
@@ -212,7 +244,7 @@ async function geocode(address) {
 function readForm(form) {
   const g = (k) => (form.get(k) || '').toString().trim();
   const split = (k) => g(k).split(',').map((s) => s.trim()).filter(Boolean);
-  return {
+  const s = {
     first: g('First name'), last: g('Last name'), practice: g('Practice or business name'),
     email: g('email'), phone: g('Phone'), website: g('Website'), social: g('Social media'),
     physical: g('physical'), country: g('Country'),
@@ -221,13 +253,16 @@ function readForm(form) {
     scope: split('Scope of practice'), short: g('Describe your practice'),
     licensed: g('licensed'), license: g('State(s) and license number(s)'),
     certs: g('Certificates or affiliations'), years: g('Years in practice'),
-    training: g('Primary training and education'),
-    integrative: g('Integrative training'),
+    training: g('Primary training and education'), integrative: g('Integrative training'),
     payments: split('Payment methods'), pricing: g('Pricing structure'),
     telehealth: g('telehealth'), long: g('Listing description'),
     size: g('Desired size of practice'), openins: g('openins'), ehr: g('ehr'),
     honeypot: g('_gotcha'),
   };
+  s.address = s.physical === 'Yes'
+    ? [s.addr1, s.addr2, `${s.city}, ${s.state} ${s.zip}`.trim()].filter(Boolean).join(', ')
+    : '';
+  return s;
 }
 
 function validate(s) {
@@ -244,16 +279,13 @@ function validate(s) {
 function toListing(s, coords, logoPath) {
   const year = new Date().getFullYear();
   const years = parseInt(s.years, 10);
-  const address = s.physical === 'Yes'
-    ? [s.addr1, s.addr2, `${s.city}, ${s.state} ${s.zip}`.trim()].filter(Boolean).join(', ')
-    : '';
   return {
     slug: slugify(s.practice),
     name: s.practice,
     person: `${s.first} ${s.last}`.trim(),
     logo: logoPath || null,
     categories: s.scope.map((x) => SCOPE_TO_KEY[x]).filter(Boolean),
-    city: s.city, state: s.state, zip: s.zip, address,
+    city: s.city, state: s.state, zip: s.zip, address: s.address,
     lat: coords.lat ?? null, lng: coords.lng ?? null,
     telehealth: s.telehealth === 'Yes',
     phone: s.phone, email: s.email, website: s.website,
@@ -281,34 +313,30 @@ function toListing(s, coords, logoPath) {
 async function handleApply(request, env) {
   const form = await request.formData();
   const s = readForm(form);
-
-  // honeypot: silently accept, publish nothing
-  if (s.honeypot) return json({ ok: true });
+  if (s.honeypot) return json({ ok: true });              // bot: accept, store nothing
 
   const missing = validate(s);
   if (missing.length) return json({ ok: false, error: `Missing ${missing.join(', ')}.` }, 400);
 
-  const id = crypto.randomUUID();
+  const id = `${new Date().toISOString().slice(0, 10)}-${slugify(s.practice) || 'application'}`;
+  const files = [];
 
-  // stash an uploaded logo until the listing is approved
-  let logoName = '';
   const file = form.get('Logo or headshot');
-  if (file && typeof file === 'object' && file.size > 0 && file.size <= 10 * 1024 * 1024) {
-    if (/^image\/(png|jpeg|webp)$/.test(file.type)) {
-      logoName = file.name || 'logo.png';
-      if (env.PENDING) {
-        await env.PENDING.put(`logo:${id}`, await file.arrayBuffer(), {
-          expirationTtl: 60 * 60 * 24 * 90,
-          metadata: { name: logoName, type: file.type },
-        });
-      }
-    }
+  if (file && typeof file === 'object' && file.size > 0 && file.size <= 10 * 1024 * 1024
+      && /^image\/(png|jpeg|webp)$/.test(file.type)) {
+    const ext = file.type.includes('png') ? 'png' : file.type.includes('webp') ? 'webp' : 'jpg';
+    s.logo_name = file.name || `logo.${ext}`;
+    s.logo_ext = ext;
+    files.push({
+      path: `data/pending/${id}-logo.${ext}`,
+      contentBase64: b64bytes(await file.arrayBuffer()),
+    });
   }
-  s.logo_name = logoName;
 
-  await env.DB.prepare(
-    `INSERT INTO submissions (id, created_at, status, payload) VALUES (?, ?, 'pending', ?)`
-  ).bind(id, new Date().toISOString(), JSON.stringify(s)).run();
+  s.received_at = new Date().toISOString();
+  files.push({ path: `data/pending/${id}.json`, contentBase64: b64(JSON.stringify(s, null, 2)) });
+
+  await commitFiles(env, `Application: ${s.practice}`, files);
 
   const sig = await hmac(env.SIGNING_SECRET, id);
   const base = env.SITE_URL || 'https://findwelldirectory.com';
@@ -316,12 +344,13 @@ async function handleApply(request, env) {
     sendEmail(env, {
       to: env.ADMIN_EMAIL, replyTo: s.email,
       subject: `New application — ${s.practice}`,
-      html: adminEmail(s, id,
-        `${base}/api/approve?id=${id}&sig=${sig}`,
-        `${base}/api/decline?id=${id}&sig=${sig}`),
+      html: adminEmail(s,
+        `${base}/api/approve?id=${encodeURIComponent(id)}&sig=${sig}`,
+        `${base}/api/decline?id=${encodeURIComponent(id)}&sig=${sig}`),
     }),
     sendEmail(env, {
-      to: s.email, subject: 'We have your FindWell Directory application',
+      to: s.email,
+      subject: 'We have your FindWell Directory application',
       html: receivedEmail(s),
     }),
   ]);
@@ -332,66 +361,54 @@ async function handleApply(request, env) {
 async function handleApprove(request, env) {
   const url = new URL(request.url);
   const id = url.searchParams.get('id') || '';
-  const sig = url.searchParams.get('sig') || '';
-  if (!timingSafeEqual(sig, await hmac(env.SIGNING_SECRET, id))) {
-    return page('Invalid link', '<h1>That link is not valid</h1><p>The approve link was incomplete or has been altered. Open the original email and try again.</p>', 403);
+  if (!safeEqual(url.searchParams.get('sig') || '', await hmac(env.SIGNING_SECRET, id))) {
+    return page('Invalid link',
+      '<h1>That link is not valid</h1><p>Open the original email and press the button again.</p>', 403);
   }
 
-  const row = await env.DB.prepare('SELECT status, payload FROM submissions WHERE id = ?')
-    .bind(id).first();
-  if (!row) return page('Not found', '<h1>Not found</h1><p>No submission with that reference.</p>', 404);
-  if (row.status === 'approved') {
-    return page('Already published', '<h1>Already published</h1><p>This listing was approved earlier. Nothing further to do.</p>');
+  const pending = await readFile(env, `data/pending/${id}.json`);
+  if (!pending) {
+    return page('Already handled',
+      '<h1>Nothing to do</h1><p>This application has already been approved or declined.</p>');
   }
+  const s = JSON.parse(fromB64(pending.content));
+  const slug = slugify(s.practice);
+  const files = [];
 
-  const s = JSON.parse(row.payload);
-  const coords = await geocode(s.physical === 'Yes'
-    ? `${s.addr1}, ${s.city}, ${s.state} ${s.zip}`
-    : `${s.city}, ${s.state} ${s.zip}`);
-
-  // commit the logo first so the listing can point at it
   let logoPath = null;
-  if (s.logo_name && env.PENDING) {
-    const obj = await env.PENDING.getWithMetadata(`logo:${id}`, { type: 'arrayBuffer' });
-    if (obj && obj.value) {
-      const ext = (obj.metadata?.type || '').includes('png') ? 'png'
-        : (obj.metadata?.type || '').includes('webp') ? 'webp' : 'jpg';
-      const path = `public/assets/img/providers/${slugify(s.practice)}.${ext}`;
-      const bytes = new Uint8Array(obj.value);
-      let bin = '';
-      for (let i = 0; i < bytes.length; i += 8192) {
-        bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 8192));
-      }
-      const existing = await githubGet(env, path);
-      await githubPut(env, path, btoa(bin), `Logo for ${s.practice}`, existing?.sha);
-      logoPath = `/assets/img/providers/${slugify(s.practice)}.${ext}`;
-      await env.PENDING.delete(`logo:${id}`);
+  if (s.logo_ext) {
+    const src = await readFile(env, `data/pending/${id}-logo.${s.logo_ext}`);
+    if (src) {
+      logoPath = `/assets/img/providers/${slug}.${s.logo_ext}`;
+      files.push({
+        path: `public/assets/img/providers/${slug}.${s.logo_ext}`,
+        contentBase64: src.content.replace(/\n/g, ''),
+      });
+      files.push({ path: `data/pending/${id}-logo.${s.logo_ext}`, remove: true });
     }
   }
 
-  // merge into data/listings.json and commit — this triggers the rebuild
-  const current = await githubGet(env, 'data/listings.json');
-  let listings = [];
-  if (current) {
-    const bin = atob(current.content.replace(/\n/g, ''));
-    listings = JSON.parse(new TextDecoder().decode(
-      Uint8Array.from(bin, (c) => c.charCodeAt(0))));
-  }
+  const coords = await geocode(s.address || `${s.city}, ${s.state} ${s.zip}`);
+
+  const current = await readFile(env, 'data/listings.json');
+  const listings = current ? JSON.parse(fromB64(current.content)) : [];
   const listing = toListing(s, coords, logoPath);
   const idx = listings.findIndex((l) => l.slug === listing.slug);
   if (idx > -1) listings[idx] = listing; else listings.push(listing);
 
-  await githubPut(env, 'data/listings.json',
-    b64encode(JSON.stringify(listings, null, 2) + '\n'),
-    `Publish listing: ${s.practice}`, current?.sha);
+  files.push({
+    path: 'data/listings.json',
+    contentBase64: b64(JSON.stringify(listings, null, 2) + '\n'),
+  });
+  files.push({ path: `data/pending/${id}.json`, remove: true });
 
-  await env.DB.prepare('UPDATE submissions SET status = ?, decided_at = ? WHERE id = ?')
-    .bind('approved', new Date().toISOString(), id).run();
+  await commitFiles(env, `Publish listing: ${s.practice}`, files);
 
   const base = env.SITE_URL || 'https://findwelldirectory.com';
   const listingUrl = `${base}/provider/${listing.slug}/`;
   await sendEmail(env, {
-    to: s.email, subject: 'Your FindWell Directory listing is live',
+    to: s.email,
+    subject: 'Your FindWell Directory listing is live',
     html: publishedEmail(s, listingUrl),
   });
 
@@ -399,109 +416,93 @@ async function handleApprove(request, env) {
 <p><strong>${esc(s.practice)}</strong> has been added and the site is rebuilding. It will be live at
 <a href="${esc(listingUrl)}">${esc(listingUrl)}</a> in about a minute.</p>
 <p>${esc(s.first)} has been emailed to say the listing is live and that credentials are still being verified.</p>
-<p style="font-size:14px">When you have checked the licence number, mark it verified from your
-<a href="${base}/api/review?key=${encodeURIComponent(env.SIGNING_SECRET)}">review page</a>.</p>
-${coords.lat ? '' : '<p style="color:#c23a4b">The address could not be geocoded, so this listing will not appear in distance searches until coordinates are added by hand.</p>'}`);
+${logoPath ? '<p>Their logo was published with it.</p>' : ''}
+${coords.lat ? '' : '<p style="color:#c23a4b">The address could not be geocoded, so this listing will not appear in distance searches until coordinates are added by hand.</p>'}
+<p style="font-size:14px"><a href="${base}/api/review?key=${encodeURIComponent(env.SIGNING_SECRET)}">Mark it verified</a> once you have checked the licence number.</p>`);
 }
 
 async function handleDecline(request, env) {
   const url = new URL(request.url);
   const id = url.searchParams.get('id') || '';
-  const sig = url.searchParams.get('sig') || '';
-  if (!timingSafeEqual(sig, await hmac(env.SIGNING_SECRET, id))) {
+  if (!safeEqual(url.searchParams.get('sig') || '', await hmac(env.SIGNING_SECRET, id))) {
     return page('Invalid link', '<h1>That link is not valid</h1>', 403);
   }
-  await env.DB.prepare('UPDATE submissions SET status = ?, decided_at = ? WHERE id = ?')
-    .bind('declined', new Date().toISOString(), id).run();
-  if (env.PENDING) await env.PENDING.delete(`logo:${id}`);
-  return page('Declined', '<h1>Declined</h1><p>Nothing was published and no email was sent to the applicant. The submission stays in the database if you need it later.</p>');
+  const pending = await readFile(env, `data/pending/${id}.json`);
+  if (!pending) return page('Already handled', '<h1>Nothing to do</h1><p>Already approved or declined.</p>');
+  const s = JSON.parse(fromB64(pending.content));
+
+  const files = [{ path: `data/pending/${id}.json`, remove: true }];
+  if (s.logo_ext) files.push({ path: `data/pending/${id}-logo.${s.logo_ext}`, remove: true });
+  await commitFiles(env, `Decline application: ${s.practice}`, files);
+
+  return page('Declined',
+    '<h1>Declined</h1><p>Nothing was published and no email was sent to the applicant.</p>');
 }
 
-// ---- verification -------------------------------------------------------
-// Listings published through Approve carry verified:false until someone has
-// actually checked the licence number against the issuing board.
-
-async function readListings(env) {
-  const current = await githubGet(env, 'data/listings.json');
-  if (!current) return { listings: [], sha: undefined };
-  const bin = atob(current.content.replace(/\n/g, ''));
-  const listings = JSON.parse(new TextDecoder().decode(
-    Uint8Array.from(bin, (c) => c.charCodeAt(0))));
-  return { listings, sha: current.sha };
+async function handlePending(request, env) {
+  const url = new URL(request.url);
+  if (!safeEqual(url.searchParams.get('key') || '', env.SIGNING_SECRET)) {
+    return page('Not authorised', '<h1>Not authorised</h1>', 403);
+  }
+  const dir = await readFile(env, 'data/pending');
+  const files = Array.isArray(dir) ? dir.filter((f) => f.name.endsWith('.json')) : [];
+  const base = env.SITE_URL || 'https://findwelldirectory.com';
+  const rows = await Promise.all(files.map(async (f) => {
+    const id = f.name.replace(/\.json$/, '');
+    const sig = await hmac(env.SIGNING_SECRET, id);
+    return `<li style="padding:10px 0;border-top:1px solid #dbe3e3">${esc(id)}
+      &nbsp;<a href="${base}/api/approve?id=${encodeURIComponent(id)}&sig=${sig}">approve</a>
+      &nbsp;<a href="${base}/api/decline?id=${encodeURIComponent(id)}&sig=${sig}">decline</a></li>`;
+  }));
+  return page('Pending applications',
+    `<h1>Pending applications</h1><ul>${rows.join('') || '<li>Nothing waiting.</li>'}</ul>`);
 }
 
 async function handleReview(request, env) {
   const url = new URL(request.url);
-  if (!timingSafeEqual(url.searchParams.get('key') || '', env.SIGNING_SECRET)) {
+  if (!safeEqual(url.searchParams.get('key') || '', env.SIGNING_SECRET)) {
     return page('Not authorised', '<h1>Not authorised</h1>', 403);
   }
-  const { listings } = await readListings(env);
+  const current = await readFile(env, 'data/listings.json');
+  const listings = current ? JSON.parse(fromB64(current.content)) : [];
   const waiting = listings.filter((l) => l.verified === false);
   const base = env.SITE_URL || 'https://findwelldirectory.com';
-
   const rows = await Promise.all(waiting.map(async (l) => {
     const sig = await hmac(env.SIGNING_SECRET, 'verify:' + l.slug);
     return `<li style="padding:12px 0;border-top:1px solid #dbe3e3">
       <strong>${esc(l.name)}</strong> — ${esc(l.person)}<br>
       <span style="color:#5f7473;font-size:14px">${esc(l.licensure)}</span><br>
-      <a href="${base}/provider/${esc(l.slug)}/" style="font-size:14px">view listing</a>
-      &nbsp;·&nbsp;
+      <a href="${base}/provider/${esc(l.slug)}/" style="font-size:14px">view listing</a> ·
       <a href="${base}/api/verify?slug=${encodeURIComponent(l.slug)}&sig=${sig}"
-         style="display:inline-block;background:#2e5f5c;color:#fff;text-decoration:none;
-         padding:5px 12px;border-radius:5px;font-size:14px;font-weight:600">Mark verified</a>
-    </li>`;
+         style="display:inline-block;background:#2e5f5c;color:#fff;text-decoration:none;padding:5px 12px;border-radius:5px;font-size:14px;font-weight:600">Mark verified</a></li>`;
   }));
-
   return page('Awaiting verification', `<h1>Awaiting verification</h1>
-<p>Listings published but not yet checked against the issuing board.</p>
-<ul style="list-style:none;padding:0;margin:1rem 0 0">${rows.join('') ||
-  '<li style="padding:12px 0">Everything is verified.</li>'}</ul>`);
+<p>Published, but not yet checked against the issuing board.</p>
+<ul style="margin:1rem 0 0">${rows.join('') || '<li style="padding:12px 0">Everything is verified.</li>'}</ul>`);
 }
 
 async function handleVerify(request, env) {
   const url = new URL(request.url);
   const slug = url.searchParams.get('slug') || '';
-  const sig = url.searchParams.get('sig') || '';
-  if (!timingSafeEqual(sig, await hmac(env.SIGNING_SECRET, 'verify:' + slug))) {
+  if (!safeEqual(url.searchParams.get('sig') || '', await hmac(env.SIGNING_SECRET, 'verify:' + slug))) {
     return page('Invalid link', '<h1>That link is not valid</h1>', 403);
   }
-  const { listings, sha } = await readListings(env);
+  const current = await readFile(env, 'data/listings.json');
+  const listings = current ? JSON.parse(fromB64(current.content)) : [];
   const row = listings.find((l) => l.slug === slug);
-  if (!row) return page('Not found', '<h1>Not found</h1><p>No listing with that slug.</p>', 404);
-  if (row.verified === true) {
-    return page('Already verified', '<h1>Already verified</h1><p>Nothing to change.</p>');
-  }
+  if (!row) return page('Not found', '<h1>Not found</h1>', 404);
+  if (row.verified === true) return page('Already verified', '<h1>Already verified</h1>');
   row.verified = true;
-  await githubPut(env, 'data/listings.json',
-    b64encode(JSON.stringify(listings, null, 2) + '\n'),
-    `Mark verified: ${row.name}`, sha);
+  await commitFiles(env, `Mark verified: ${row.name}`,
+    [{ path: 'data/listings.json', contentBase64: b64(JSON.stringify(listings, null, 2) + '\n') }]);
   return page('Verified', `<h1>Verified</h1>
-<p><strong>${esc(row.name)}</strong> is marked verified. The site is rebuilding and the
-"not yet verified" note will be gone in about a minute.</p>
-<p><a href="${env.SITE_URL || 'https://findwelldirectory.com'}/api/review?key=${encodeURIComponent(env.SIGNING_SECRET)}">Back to the list</a></p>`);
-}
-
-async function handlePending(request, env) {
-  const url = new URL(request.url);
-  if (url.searchParams.get('key') !== env.SIGNING_SECRET) {
-    return page('Not authorised', '<h1>Not authorised</h1>', 403);
-  }
-  const { results } = await env.DB.prepare(
-    `SELECT id, created_at, payload FROM submissions WHERE status = 'pending' ORDER BY created_at DESC`
-  ).all();
-  const rows = (results || []).map((r) => {
-    const s = JSON.parse(r.payload);
-    return `<li><strong>${esc(s.practice)}</strong> — ${esc(s.first)} ${esc(s.last)},
-      ${esc(s.city)}, ${esc(s.state)} <span style="color:#5f7473">(${esc(r.created_at.slice(0, 10))})</span></li>`;
-  }).join('');
-  return page('Pending applications',
-    `<h1>Pending applications</h1><ul>${rows || '<li>Nothing waiting.</li>'}</ul>`);
+<p><strong>${esc(row.name)}</strong> is marked verified. The note will be gone in about a minute.</p>`);
 }
 
 // ---------------------------------------------------------------- entry
 
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request, env) {
     const url = new URL(request.url);
     try {
       if (url.pathname === '/api/apply' && request.method === 'POST') return await handleApply(request, env);
@@ -512,7 +513,7 @@ export default {
       if (url.pathname === '/api/verify') return await handleVerify(request, env);
     } catch (err) {
       console.error(err);
-      if (url.pathname.startsWith('/api/apply')) {
+      if (url.pathname === '/api/apply') {
         return json({ ok: false, error: 'Something went wrong on our side.' }, 500);
       }
       return page('Error', `<h1>Something went wrong</h1><p>${esc(err.message)}</p>`, 500);

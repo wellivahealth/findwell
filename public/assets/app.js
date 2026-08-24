@@ -26,6 +26,18 @@
     });
   }
 
+  /* ---------- masthead compacts on scroll ---------- */
+  var masthead = document.querySelector('.masthead');
+  if (masthead) {
+    var compact = false;
+    var onScroll = function () {
+      var want = window.scrollY > 48;
+      if (want !== compact) { compact = want; masthead.classList.toggle('compact', want); }
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
   /* ---------- home search console ---------- */
   var cons = $('#console');
   if (cons) {

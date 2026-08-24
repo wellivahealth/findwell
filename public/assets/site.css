@@ -86,31 +86,49 @@ p:last-child{ margin-bottom:0; }
 .wrap{ width:100%; max-width:var(--wrap); margin-inline:auto; padding-inline:clamp(1.1rem, 4vw, 2.5rem); }
 .sr{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 
-/* ---------- masthead ---------- */
+/* ---------- masthead ----------
+   Full height at the top of the page so the lockup and its tagline read, then
+   compact once you scroll, so a sticky bar doesn't eat the screen. */
 .band{ background:var(--brand-deep); color:var(--on-brand); }
 .masthead{
   position:sticky; top:0; z-index:var(--z-sticky);
   background:var(--surface); border-bottom:1px solid var(--line);
+  transition:box-shadow .25s var(--ease);
 }
-.masthead-in{ display:flex; align-items:center; gap:1.25rem; min-height:74px; }
+.masthead-in{
+  display:flex; align-items:center; gap:1.25rem; min-height:112px;
+  transition:min-height .25s var(--ease);
+}
 .mark{ display:flex; align-items:center; margin-right:auto; text-decoration:none; }
-.mark img{ height:38px; width:auto; }
-@media (max-width:520px){ .mark img{ height:30px; } }
+.mark img{ height:76px; width:auto; transition:height .25s var(--ease); }
+
+.masthead.compact{ box-shadow:0 6px 20px -14px oklch(0.2 0.05 195 / .5); }
+.masthead.compact .masthead-in{ min-height:70px; }
+.masthead.compact .mark img{ height:46px; }
+
 .nav{ display:flex; align-items:center; gap:.15rem; }
 .nav a{
-  text-decoration:none; color:var(--ink-soft); font-size:.875rem; font-weight:500;
-  padding:.5rem .7rem; border-radius:var(--r-md);
+  text-decoration:none; color:var(--ink-soft); font-size:.9rem; font-weight:500;
+  padding:.5rem .75rem; border-radius:var(--r-md);
   transition:color .18s var(--ease), background .18s var(--ease);
 }
 .nav a:hover{ color:var(--brand); background:var(--surface-sunk); }
 .nav a[aria-current="page"]{ color:var(--ink); background:var(--surface-sunk); }
-.nav .cta{ margin-left:.4rem; background:var(--accent); color:oklch(0.99 0 0); padding:.5rem .95rem; }
+.nav .cta{ margin-left:.4rem; background:var(--accent); color:oklch(0.99 0 0); padding:.55rem 1rem; }
 .nav .cta:hover{ background:oklch(0.60 0.175 10); color:oklch(1 0 0); }
 .burger{
   display:none; background:none; border:1px solid var(--line-strong); color:var(--ink);
   border-radius:var(--r-md); padding:.45rem .7rem; font-size:.85rem; cursor:pointer;
 }
+@media (max-width:1040px){
+  .masthead-in{ min-height:92px; }
+  .mark img{ height:58px; }
+}
 @media (max-width:900px){
+  .masthead-in{ min-height:78px; }
+  .mark img{ height:50px; }
+  .masthead.compact .masthead-in{ min-height:64px; }
+  .masthead.compact .mark img{ height:42px; }
   .burger{ display:block; }
   .nav{
     display:none; position:absolute; top:100%; left:0; right:0; flex-direction:column;
@@ -119,9 +137,10 @@ p:last-child{ margin-bottom:0; }
     box-shadow:0 18px 30px -24px oklch(0.20 0.05 195 / .6);
   }
   .nav.open{ display:flex; }
-  .nav a{ padding:.7rem .25rem; border-bottom:1px solid var(--line); border-radius:0; }
+  .nav a{ padding:.75rem .25rem; border-bottom:1px solid var(--line); border-radius:0; }
   .nav .cta{ margin:.7rem 0 0; text-align:center; border-radius:var(--r-md); border-bottom:0; }
 }
+@media (max-width:480px){ .mark img{ height:42px; } }
 
 /* Dark masthead variant: add class="masthead dark" on <header>.
    The logo is filtered to solid white so it reads on the deep band. */
@@ -576,7 +595,7 @@ textarea.control{ min-height:110px; resize:vertical; }
 .foot-in{ display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:2rem; }
 @media (max-width:760px){ .foot-in{ grid-template-columns:1fr 1fr; } }
 .foot-mark{ display:inline-block; margin-bottom:1.1rem; }
-.foot-mark img{ height:40px; width:auto; filter:brightness(0) invert(1); opacity:.9; }
+.foot-mark img{ height:52px; width:auto; filter:brightness(0) invert(1); opacity:.92; }
 .foot h4{ font-family:var(--ff-mono); font-weight:500; font-size:.68rem; letter-spacing:.09em; text-transform:uppercase; color:oklch(0.68 0.03 185); margin-bottom:.9rem; }
 .foot a{ color:var(--on-brand-soft); text-decoration:none; display:block; padding:.22rem 0; font-size:.9rem; }
 .foot a:hover{ color:var(--on-brand); }

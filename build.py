@@ -357,7 +357,14 @@ def img_tag(url, alt, sizes, cls="", widths=(500, 750, 1000, 1500), lazy=True):
     return (f'<img{c} src="{url}?format={widths[-1]}w" srcset="{ss}" '
             f'sizes="{sizes}" alt="{E(alt)}"{lz}>')
 
-LOGO = IMG["logo"]
+LOGO = IMG["logo"]          # still used for og:image until a share card exists
+
+# The lockup, hosted locally. 3.34:1, so a 72px tall header logo is ~240px wide.
+LOGO_V = _v("assets/img/logo-800.png")
+LOGO_MARKUP = f"""<img src="/assets/img/logo-800.png?v={LOGO_V}"
+           srcset="/assets/img/logo-400.png?v={_v("assets/img/logo-400.png")} 400w, /assets/img/logo-800.png?v={LOGO_V} 800w"
+           sizes="(max-width:900px) 190px, 280px" width="965" height="289"
+           alt="FindWell Directory — a network of holistic health care providers">"""
 
 # Favicons built from the logo's graphic mark by make_favicon.py. Until that
 # script has been run against the real logo, fall back to the full logo file.
@@ -420,8 +427,7 @@ def shell(title, desc, path, body, view="", extra_head=""):
 <header class="masthead">
   <div class="wrap masthead-in">
     <a class="mark" href="/" aria-label="FindWell Directory — home">
-      <img src="{LOGO}?format=750w" srcset="{LOGO}?format=500w 500w, {LOGO}?format=750w 750w"
-           sizes="126px" width="646" height="195" alt="FindWell Directory">
+      {LOGO_MARKUP}
     </a>
     <button class="burger" id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
@@ -439,7 +445,7 @@ def shell(title, desc, path, body, view="", extra_head=""):
   <div class="wrap">
     <div class="foot-in">
       <div>
-        <span class="foot-mark"><img src="{LOGO}?format=750w" width="646" height="195" alt="FindWell Directory" loading="lazy" decoding="async"></span>
+        <span class="foot-mark"><img src="/assets/img/logo-400.png?v={_v("assets/img/logo-400.png")}" width="965" height="289" alt="FindWell Directory" loading="lazy" decoding="async"></span>
         <p class="foot-blurb">A network of holistic and integrative practitioners. No commissions, no listing fees, no lead-selling.</p>
       </div>
       <div>

@@ -89,5 +89,19 @@ drops a practitioner out of nearby results.
   provider logos — still load from the Squarespace CDN and will stop working
   if that subscription lapses. Download them and change the `SS` constant in
   `build.py` when you migrate.
-- The join form has no backend; it assembles a mailto. Point it at a form
-  service to collect submissions directly.
+## The application form
+
+Submissions post to Formspree. Open `build.py`, find `FORMSPREE_ID` near the
+top, and paste the code from the end of your endpoint URL — if Formspree gave
+you `https://formspree.io/f/abcdwxyz`, the value is `abcdwxyz`. Then run
+`python3 build.py` and push.
+
+Until that ID is set, the form still works: it validates, then opens a
+pre-filled email instead, so no application is lost. The same fallback runs
+if Formspree is unreachable.
+
+Field names are human-readable, so Formspree notification emails arrive
+labelled ("Practice or business name: …") rather than as field codes. A hidden
+honeypot field catches most spam bots. File uploads need a paid Formspree
+plan; on the free tier applicants are asked to reply to the confirmation
+email with their logo attached.

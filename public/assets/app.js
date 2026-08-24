@@ -285,8 +285,9 @@
 })();
 
 /* ---------- join form ----------
-   Assembles the application into an email. The internal section is kept
-   under its own heading so it is obvious what must not be published. */
+   Posts to Formspree when an endpoint is configured on the form's action.
+   If it isn't configured, or the request fails, it falls back to opening a
+   pre-filled email so an application is never silently lost. */
 (function () {
   'use strict';
   var form = document.getElementById('join-form');
@@ -299,73 +300,152 @@
   };
   var cats = [], pays = [];
 
-  function toggler(attr, bucket) {
+  function toggler(attr, bucket, carrierId, errKey) {
     Array.prototype.forEach.call(form.querySelectorAll('[' + attr + ']'), function (c) {
       c.addEventListener('click', function () {
         var k = c.getAttribute(attr), i = bucket.indexOf(k);
         if (i > -1) bucket.splice(i, 1); else bucket.push(k);
         c.setAttribute('aria-pressed', i === -1);
+        var carrier = $(carrierId);
+        if (carrier) carrier.value = bucket.join(', ');
+        var err = form.querySelector('[data-for="' + errKey + '"]');
+        if (err && bucket.length) err.style.display = 'none';
       });
     });
   }
-  toggler('data-jcat', cats);
-  toggler('data-jpay', pays);
+  toggler('data-jcat', cats, 'j-cats-value', 'cats');
+  toggler('data-jpay', pays, 'j-pay-value', 'pay');
+
+  var longEl = $('j-long'), wc = $('wordcount');
+  if (longEl && wc) longEl.addEventListener('input', function () {
+    var n = longEl.value.trim() ? longEl.value.trim().split(/\s+/).length : 0;
+    wc.textContent = n;
+    wc.style.color = n > 150 ? 'var(--accent)' : '';
+  });
+
+  function showErr(sel, on) {
+    var el = form.querySelector(sel);
+    if (el) el.style.display = on ? 'block' : 'none';
+  }
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var ok = true;
-    ['j-practice', 'j-name', 'j-since', 'j-city', 'j-state', 'j-email'].forEach(function (id) {
+
+    var required = ['j-first', 'j-last', 'j-practice', 'j-email', 'j-phone', 'j-website',
+                    'j-city', 'j-state', 'j-zip', 'j-short', 'j-since', 'j-training',
+                    'j-fees', 'j-long', 'j-size'];
+    if (radio('physical') === 'Yes') required.push('j-addr1');
+
+    required.forEach(function (id) {
       var el = $(id);
+      if (!el) return;
       var bad = !el.value.trim() ||
                 (el.type === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value));
       el.setAttribute('aria-invalid', bad);
       if (bad) ok = false;
     });
+
+    ['physical', 'licensed', 'telehealth', 'openins', 'ehr'].forEach(function (n) {
+      var missing = !radio(n);
+      showErr('[data-for="' + n + '"]', missing);
+      if (missing) ok = false;
+    });
+    showErr('[data-for="cats"]', !cats.length);
+    showErr('[data-for="pay"]', !pays.length);
+    if (!cats.length || !pays.length) ok = false;
+
     var msg = $('join-msg');
-    if (!ok) { msg.textContent = 'Fix the highlighted fields and send again.'; return; }
-    if (!cats.length) { msg.textContent = 'Select at least one scope of practice.'; return; }
+    if (!ok) {
+      msg.textContent = 'Some required answers are missing \u2014 they are marked above.';
+      var firstBad = form.querySelector('[aria-invalid="true"]');
+      if (firstBad) firstBad.scrollIntoView({ block: 'center' });
+      return;
+    }
     msg.textContent = '';
 
-    function block(title, rows) {
+    // Plain-text version, used only for the email fallback.
+    function bl(title, rows) {
       var kept = rows.filter(function (r) { return r[1]; });
       if (!kept.length) return '';
       return title + '\n' + kept.map(function (r) { return r[0] + ': ' + r[1]; }).join('\n') + '\n\n';
     }
-
+    var addr = [val('j-addr1'), val('j-addr2'),
+                val('j-city') + ', ' + val('j-state') + ' ' + val('j-zip'),
+                val('j-country')].filter(Boolean).join(', ');
     var body =
-      block('PRACTICE', [
-        ['Practice name', val('j-practice')], ['Provider name', val('j-name')],
-        ['Scope of practice', cats.join(', ')], ['Years in practice', val('j-since')],
-        ['Physical location', radio('physical')], ['Telehealth', radio('telehealth')],
-        ['City', val('j-city')], ['State', val('j-state')], ['Address', val('j-address')]
-      ]) +
-      block('CREDENTIALS', [
-        ['State licensed', radio('licensed')], ['License number', val('j-license')],
-        ['Certifications or affiliations', val('j-certs')],
-        ['Training and education', val('j-training')]
-      ]) +
-      block('CONTACT', [
+      bl('PROVIDER', [
+        ['Provider name', (val('j-first') + ' ' + val('j-last')).trim()],
+        ['Practice or business name', val('j-practice')],
         ['Email', val('j-email')], ['Phone', val('j-phone')],
-        ['Website', val('j-website')], ['Social media', val('j-social')]
-      ]) +
-      block('PRICING AND PAYMENT', [
-        ['Accepts insurance', radio('insurance')], ['Payment methods', pays.join(', ')],
-        ['Pricing structure', val('j-fees')]
-      ]) +
-      block('LISTING COPY', [
-        ['Short description', val('j-short')], ['Long description', val('j-long')]
-      ]) +
-      block('INTERNAL — NOT PUBLISHED', [
-        ['Open to insurance if available', radio('openins')],
-        ['Uses an EHR', radio('ehr')],
+        ['Website', val('j-website')], ['Social media', val('j-social')]]) +
+      bl('LOCATION', [
+        ['Physical location', radio('physical')],
+        ['Address', radio('physical') === 'Yes' ? addr : 'No public premises']]) +
+      bl('SCOPE OF PRACTICE', [
+        ['Scope of practice', cats.join(', ')],
+        ['Describe your practice', val('j-short')]]) +
+      bl('CREDENTIALS & EXPERIENCE', [
+        ['Holds a state license', radio('licensed')],
+        ['State(s) and license number(s)', val('j-license')],
+        ['Certificates or affiliations', val('j-certs')],
+        ['Years in practice', val('j-since')],
+        ['Primary training and education', val('j-training')]]) +
+      bl('PRICING & INSURANCE', [
+        ['Payment methods', pays.join(', ')],
+        ['Pricing structure', val('j-fees')],
+        ['Virtual/telehealth services', radio('telehealth')]]) +
+      bl('LISTING DESCRIPTION', [['Description', val('j-long')]]) +
+      bl('ADDITIONAL QUESTIONS \u2014 NOT PUBLISHED', [
         ['Desired size of practice', val('j-size')],
-        ['Note left on submission', val('j-note')]
-      ]);
+        ['Open to insurance if available', radio('openins')],
+        ['Uses an EHR', radio('ehr')]]);
 
+    var subject = 'Directory application \u2014 ' + val('j-practice');
+    if ($('j-subject')) $('j-subject').value = subject;
     $('join-mail').href = 'mailto:info@findwelldirectory.com?subject=' +
-      encodeURIComponent('Directory application — ' + val('j-practice')) +
-      '&body=' + encodeURIComponent(body);
-    $('join-done').style.display = 'block';
-    $('join-done').scrollIntoView({ block: 'nearest' });
+      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+    var done = $('join-done'), title = $('join-done-title'),
+        text = $('join-done-body'), mailWrap = $('join-mail-wrap');
+
+    function reveal() { done.style.display = 'block'; done.scrollIntoView({ block: 'nearest' }); }
+    function fallback(reason) {
+      title.textContent = 'Almost there \u2014 one more step.';
+      text.textContent = ' ' + reason + ' Press the button below to open your answers in an email, ' +
+                         'then send it. Attach your logo or headshot before sending.';
+      mailWrap.hidden = false;
+      reveal();
+    }
+
+    var endpoint = form.getAttribute('action');
+    if (!endpoint) { fallback('This form is not connected to a server yet.'); return; }
+
+    var btn = form.querySelector('button[type="submit"]');
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending\u2026'; }
+
+    fetch(endpoint, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { Accept: 'application/json' }
+    }).then(function (res) {
+      if (btn) { btn.disabled = false; btn.textContent = 'Send'; }
+      if (!res.ok) throw new Error('rejected');
+      title.textContent = 'Thank you for your submission.';
+      text.textContent = ' We will get back to you shortly. If you have a logo or headshot, ' +
+                         'reply to the confirmation email with it attached.';
+      mailWrap.hidden = true;
+      reveal();
+      form.reset();
+      cats.length = 0; pays.length = 0;
+      Array.prototype.forEach.call(form.querySelectorAll('[aria-pressed]'), function (c) {
+        c.setAttribute('aria-pressed', 'false');
+      });
+      if ($('j-cats-value')) $('j-cats-value').value = '';
+      if ($('j-pay-value')) $('j-pay-value').value = '';
+    }).catch(function () {
+      if (btn) { btn.disabled = false; btn.textContent = 'Send'; }
+      fallback('We could not reach the server.');
+    });
   });
 })();

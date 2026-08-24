@@ -16,6 +16,10 @@ import os, json, shutil, html, datetime, hashlib
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT  = os.path.join(ROOT, "public")   # Cloudflare serves this folder
 YEAR = 2026
+# Paste your Formspree form ID here (the code after /f/ in your endpoint URL).
+# Leave empty and the form falls back to opening an email instead.
+FORMSPREE_ID = ""
+
 SITE = "https://findwelldirectory.com"   # <- set to the domain you attach; feeds canonical, og:url, sitemap
 
 def _v(rel):
@@ -791,18 +795,23 @@ def page_join():
       <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Join the directory</h1>
       <p class="lede">Listings are free. We verify license numbers against the issuing board before publishing, and we publish exactly what you send \u2014 including the absence of a license where none exists for your discipline. Fields marked * are required.</p>
 
-      <form id="join-form" style="margin-top:2.6rem" novalidate>
+      <form id="join-form" style="margin-top:2.6rem" novalidate
+            action="{('https://formspree.io/f/' + FORMSPREE_ID) if FORMSPREE_ID else ''}" method="POST">
+        <input type="hidden" name="Scope of practice" id="j-cats-value">
+        <input type="hidden" name="Payment methods" id="j-pay-value">
+        <input type="hidden" name="_subject" id="j-subject" value="Directory application">
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
 
         <section class="form-section">
           <h2>Provider name</h2>
           <div class="form-grid">
-            <div class="field"><label for="j-first">First name *</label><input class="control" id="j-first" autocomplete="given-name" required><p class="err">Required.</p></div>
-            <div class="field"><label for="j-last">Last name *</label><input class="control" id="j-last" autocomplete="family-name" required><p class="err">Required.</p></div>
-            <div class="field full"><label for="j-practice">Practice or business name *</label><input class="control" id="j-practice" required><p class="err">Required.</p></div>
-            <div class="field"><label for="j-email">Email *</label><input class="control" id="j-email" type="email" autocomplete="email" required><p class="err">Enter a working email address.</p></div>
-            <div class="field"><label for="j-phone">Phone *</label><input class="control" id="j-phone" type="tel" autocomplete="tel" required><p class="err">Required.</p></div>
-            <div class="field full"><label for="j-website">Website *</label><input class="control" id="j-website" type="url" placeholder="http://" required><p class="err">Required.</p></div>
-            <div class="field full"><label for="j-social">Social media</label><textarea class="control" id="j-social" placeholder="One URL per line."></textarea>
+            <div class="field"><label for="j-first">First name *</label><input class="control" id="j-first" name="First name" autocomplete="given-name" required><p class="err">Required.</p></div>
+            <div class="field"><label for="j-last">Last name *</label><input class="control" id="j-last" name="Last name" autocomplete="family-name" required><p class="err">Required.</p></div>
+            <div class="field full"><label for="j-practice">Practice or business name *</label><input class="control" id="j-practice" name="Practice or business name" required><p class="err">Required.</p></div>
+            <div class="field"><label for="j-email">Email *</label><input class="control" id="j-email" name="email" type="email" autocomplete="email" required><p class="err">Enter a working email address.</p></div>
+            <div class="field"><label for="j-phone">Phone *</label><input class="control" id="j-phone" name="Phone" type="tel" autocomplete="tel" required><p class="err">Required.</p></div>
+            <div class="field full"><label for="j-website">Website *</label><input class="control" id="j-website" name="Website" type="url" placeholder="http://" required><p class="err">Required.</p></div>
+            <div class="field full"><label for="j-social">Social media</label><textarea class="control" id="j-social" name="Social media" placeholder="One URL per line."></textarea>
               <p class="hint">Add URLs for your Facebook, LinkedIn, Instagram or YouTube channels.</p></div>
           </div>
         </section>
@@ -817,12 +826,12 @@ def page_join():
               <p class="hint" style="margin:-.15rem 0 .7rem">We will not publish this if you do not have a physical address where you provide services.</p>
             </div>
             <div class="field full"><label for="j-country">Country</label>
-              <select class="control" id="j-country">{countries}</select></div>
-            <div class="field full"><label for="j-addr1">Address line 1</label><input class="control" id="j-addr1" autocomplete="address-line1"><p class="err">Required when you have a physical location.</p></div>
-            <div class="field full"><label for="j-addr2">Address line 2</label><input class="control" id="j-addr2" autocomplete="address-line2"></div>
-            <div class="field"><label for="j-city">City *</label><input class="control" id="j-city" autocomplete="address-level2" required><p class="err">Required.</p></div>
-            <div class="field"><label for="j-state">State *</label><input class="control" id="j-state" placeholder="AZ" autocomplete="address-level1" required><p class="err">Required.</p></div>
-            <div class="field"><label for="j-zip">ZIP code *</label><input class="control" id="j-zip" inputmode="numeric" autocomplete="postal-code" required><p class="err">Required.</p></div>
+              <select class="control" id="j-country" name="Country">{countries}</select></div>
+            <div class="field full"><label for="j-addr1">Address line 1</label><input class="control" id="j-addr1" name="Address line 1" autocomplete="address-line1"><p class="err">Required when you have a physical location.</p></div>
+            <div class="field full"><label for="j-addr2">Address line 2</label><input class="control" id="j-addr2" name="Address line 2" autocomplete="address-line2"></div>
+            <div class="field"><label for="j-city">City *</label><input class="control" id="j-city" name="City" autocomplete="address-level2" required><p class="err">Required.</p></div>
+            <div class="field"><label for="j-state">State *</label><input class="control" id="j-state" name="State" placeholder="AZ" autocomplete="address-level1" required><p class="err">Required.</p></div>
+            <div class="field"><label for="j-zip">ZIP code *</label><input class="control" id="j-zip" name="ZIP code" inputmode="numeric" autocomplete="postal-code" required><p class="err">Required.</p></div>
           </div>
         </section>
 
@@ -833,7 +842,7 @@ def page_join():
               <p class="hint" style="margin:-.15rem 0 .7rem">Select all that apply.</p>
               <div class="chips" id="j-cats">{scope}</div>
               <p class="err" data-for="cats">Select at least one.</p></div>
-            <div class="field full"><label for="j-short">Describe your practice *</label><textarea class="control" id="j-short" required></textarea>
+            <div class="field full"><label for="j-short">Describe your practice *</label><textarea class="control" id="j-short" name="Describe your practice" required></textarea>
               <p class="hint">A brief description of your practice and services, 2\u20133 sentences. This is what appears on the directory and search pages.</p>
               <p class="err">Required.</p></div>
           </div>
@@ -844,11 +853,11 @@ def page_join():
           <div class="form-grid">
             {yesno("licensed", "Do you hold a state license?", "Several disciplines here have no licensure route. Answering No is expected and is published as such.")}
             <div class="field"></div>
-            <div class="field full"><label for="j-license">If yes, list state(s) and license number(s)</label><input class="control" id="j-license" placeholder="Arizona, LAC-010717"></div>
-            <div class="field full"><label for="j-certs">If no, list your certificates or affiliations</label><textarea class="control" id="j-certs" placeholder="NAMA Board Certified, AHG Registered Herbalist, professional associations\u2026"></textarea></div>
-            <div class="field"><label for="j-since">How many years have you been in practice? *</label><input class="control" id="j-since" inputmode="numeric" placeholder="12" required><p class="err">Required.</p></div>
+            <div class="field full"><label for="j-license">If yes, list state(s) and license number(s)</label><input class="control" id="j-license" name="State(s) and license number(s)" placeholder="Arizona, LAC-010717"></div>
+            <div class="field full"><label for="j-certs">If no, list your certificates or affiliations</label><textarea class="control" id="j-certs" name="Certificates or affiliations" placeholder="NAMA Board Certified, AHG Registered Herbalist, professional associations\u2026"></textarea></div>
+            <div class="field"><label for="j-since">How many years have you been in practice? *</label><input class="control" id="j-since" name="Years in practice" inputmode="numeric" placeholder="12" required><p class="err">Required.</p></div>
             <div class="field"></div>
-            <div class="field full"><label for="j-training">Primary training and educational background *</label><textarea class="control" id="j-training" placeholder="Programme, institution, hours completed." required></textarea><p class="err">Required.</p></div>
+            <div class="field full"><label for="j-training">Primary training and educational background *</label><textarea class="control" id="j-training" name="Primary training and education" placeholder="Programme, institution, hours completed." required></textarea><p class="err">Required.</p></div>
           </div>
         </section>
 
@@ -859,7 +868,7 @@ def page_join():
               <p class="hint" style="margin:-.15rem 0 .7rem">Select all that apply.</p>
               <div class="chips" id="j-pay">{pay}</div>
               <p class="err" data-for="pay">Select at least one.</p></div>
-            <div class="field full"><label for="j-fees">Pricing structure *</label><textarea class="control" id="j-fees" placeholder="Initial visit, follow-up, packages." required></textarea>
+            <div class="field full"><label for="j-fees">Pricing structure *</label><textarea class="control" id="j-fees" name="Pricing structure" placeholder="Initial visit, follow-up, packages." required></textarea>
               <p class="hint">What do you charge for your services? List all that apply. A range is fine if pricing varies.</p>
               <p class="err">Required.</p></div>
             {yesno("telehealth", "Do you offer virtual/telehealth services?")}
@@ -870,7 +879,7 @@ def page_join():
           <h2>Listing description</h2>
           <div class="form-grid">
             <div class="field full"><label for="j-long">Give a description of your practice or business *</label>
-              <textarea class="control" id="j-long" style="min-height:170px" required></textarea>
+              <textarea class="control" id="j-long" name="Listing description" style="min-height:170px" required></textarea>
               <p class="hint"><span id="wordcount">0</span> / 150 words. This appears on your own listing page.</p>
               <p class="err">Required.</p></div>
             <div class="field full"><span class="lbl">Media</span>
@@ -882,7 +891,7 @@ def page_join():
           <h2>Additional questions \u2014 not published</h2>
           <p class="hint" style="margin:-.4rem 0 1.2rem">These answers help us plan the directory. They never appear on your listing or anywhere public.</p>
           <div class="form-grid">
-            <div class="field full"><label for="j-size">What is the desired size of your business or practice? *</label><textarea class="control" id="j-size" placeholder="Days per week, patient or customer numbers, or any other metric." required></textarea><p class="err">Required.</p></div>
+            <div class="field full"><label for="j-size">What is the desired size of your business or practice? *</label><textarea class="control" id="j-size" name="Desired size of practice" placeholder="Days per week, patient or customer numbers, or any other metric." required></textarea><p class="err">Required.</p></div>
             {yesno("openins", "If it became available in your field, would you be open to taking insurance?")}
             {yesno("ehr", "Do you use an EHR? (Electronic Health Records)")}
           </div>
@@ -895,8 +904,9 @@ def page_join():
       </form>
 
       <div class="notice" id="join-done" style="display:none;margin-top:2rem">
-        <b>Thank you for your submission.</b> We will get back to you shortly. Your answers were assembled into an email, with the internal section marked separately \u2014 attach your logo or headshot before sending.
-        <p style="margin-top:.8rem"><a class="btn btn-dark btn-sm" id="join-mail" href="#">Open in email</a></p>
+        <b id="join-done-title">Thank you for your submission.</b>
+        <span id="join-done-body"> We will get back to you shortly.</span>
+        <p style="margin-top:.8rem" id="join-mail-wrap" hidden><a class="btn btn-dark btn-sm" id="join-mail" href="#">Open in email</a></p>
       </div>
     </div>
   </div>

@@ -183,6 +183,28 @@ Two admin pages, both behind your signing secret:
 Bookmark the review page. You can also edit `data/listings.json` by hand if you
 prefer — the button just saves you touching JSON.
 
+### Discipline tile images
+
+Tiles are 4:3. To add or replace one:
+
+```
+python3 make_tile.py photo.jpg integrative 0.72 0.61 0.70
+```
+
+The three numbers are the centre of interest as fractions of width and height,
+and a zoom factor (1.0 is the widest possible crop, lower crops in tighter).
+Wide stock photographs usually need both — the default centre crop leaves the
+subject off to one side with dead space beside it.
+
+It writes 500/750/1000px JPEG and WebP to `public/assets/img/disciplines/`.
+Then set that discipline's `img` to the stem, without a width or extension:
+
+```python
+img="/assets/img/disciplines/integrative"
+```
+
+Disciplines with `img=None` render a labelled placeholder frame instead.
+
 ### Favicon
 
 The tab icon should be the leaf mark alone — a wordmark is illegible at 16px.
@@ -229,6 +251,28 @@ you `https://formspree.io/f/abcdwxyz`, the value is `abcdwxyz`. Then run
 Until that ID is set, the form still works: it validates, then opens a
 pre-filled email instead, so no application is lost. The same fallback runs
 if Formspree is unreachable.
+
+### Discipline tile images
+
+Tiles are 4:3. To add or replace one:
+
+```
+python3 make_tile.py photo.jpg integrative 0.72 0.61 0.70
+```
+
+The three numbers are the centre of interest as fractions of width and height,
+and a zoom factor (1.0 is the widest possible crop, lower crops in tighter).
+Wide stock photographs usually need both — the default centre crop leaves the
+subject off to one side with dead space beside it.
+
+It writes 500/750/1000px JPEG and WebP to `public/assets/img/disciplines/`.
+Then set that discipline's `img` to the stem, without a width or extension:
+
+```python
+img="/assets/img/disciplines/integrative"
+```
+
+Disciplines with `img=None` render a labelled placeholder frame instead.
 
 ### Favicon
 

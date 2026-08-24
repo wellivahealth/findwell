@@ -340,26 +340,6 @@ main{ display:block; }
 .tile-go .n{ color:var(--muted); }
 .tile:hover .tile-go{ color:var(--accent); }
 
-/* disciplines with no listings yet — compact, and an invitation to apply */
-.waiting{ margin-top:clamp(2.6rem,5vw,4rem); padding-top:1.8rem; border-top:1px solid var(--line-strong); }
-.waiting h2{ font-size:1.3rem; margin-bottom:.6rem; }
-.waiting .lede{ font-size:.97rem; }
-.waiting-list{
-  list-style:none; padding:0; margin:1.6rem 0 0;
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:.6rem 1.6rem;
-}
-.waiting-list a{
-  display:block; text-decoration:none; padding:.85rem 0; border-top:1px solid var(--line);
-  transition:padding-left .18s var(--ease);
-}
-.waiting-list a:hover{ padding-left:.5rem; }
-.waiting-list strong{
-  display:block; font-family:var(--ff-display); font-size:1.1rem; font-weight:500;
-  letter-spacing:-0.015em; color:var(--ink);
-}
-.waiting-list a:hover strong{ color:var(--brand); }
-.waiting-list span{ display:block; font-size:.85rem; color:var(--muted); margin-top:.15rem; }
-
 /* ---------- split feature (home / about) ---------- */
 .split{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(1.8rem,4vw,3.6rem); align-items:center; }
 @media (max-width:820px){ .split{ grid-template-columns:1fr; } }

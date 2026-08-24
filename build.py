@@ -64,13 +64,13 @@ DISCIPLINES = [
     dict(key="IntegrativeMedicine", label="Integrative & functional medicine",
          slug="integrative-functional-medicine",
          note="Licensed clinicians — MD, DO, NP or PA — practising integrative or functional medicine. Integrative training is published on every record, including when none is reported.",
-         img=None),
+         img="/assets/img/disciplines/integrative"),
     dict(key="Counseling", label="Counselors", slug="counseling",
          note="Licensed mental health professionals — LPC, LCSW, LMFT.",
          img=SS + "1757903674176-QK99BMSR1DQHPNWYLO3E/unsplash-image-F9DFuJoS9EU.jpg"),
     dict(key="Coaching", label="Health & wellness coaches", slug="health-wellness-coaching",
          note="Board certified coaches (NBC-HWC) and other non-clinical forms of support. No state licensure exists.",
-         img=None),
+         img="/assets/img/disciplines/coaching"),
     dict(key="Bodywork", label="Body work", slug="body-work",
          note="CranioSacral, tuina, structural integration. State licensed.",
          img=SS + "1755278329164-ATSTUR14YXFQDGE3ZFGI/unsplash-image-AV0KNliGvQc.jpg"),
@@ -359,8 +359,22 @@ def cities_in(ab):
     return sorted({p["city"] for p in in_state(ab)})
 
 def img_tag(url, alt, sizes, cls="", widths=(500, 750, 1000, 1500), lazy=True):
+    """A remote URL gets Squarespace's ?format= resize parameter. A local stem
+    like /assets/img/disciplines/integrative expands to the generated sizes,
+    with a WebP source and a content hash for cache-busting."""
     if not url:
         return ""
+    if url.startswith("/"):
+        lz = ' loading="lazy" decoding="async"' if lazy else ' fetchpriority="high"'
+        c = f' class="{cls}"' if cls else ""
+        ws = [w for w in widths if w <= 1000] or [1000]
+        def sset(ext):
+            return ", ".join(
+                f'{url}-{w}.{ext}?v={_v(f"{url}-{w}.{ext}".lstrip("/"))} {w}w' for w in ws)
+        mid = ws[len(ws) // 2]
+        return (f'<picture><source type="image/webp" srcset="{sset("webp")}" sizes="{sizes}">'
+                f'<img{c} src="{url}-{mid}.jpg?v={_v(f"{url}-{mid}.jpg".lstrip("/"))}" '
+                f'srcset="{sset("jpg")}" sizes="{sizes}" alt="{E(alt)}"{lz}></picture>')
     ss = ", ".join(f"{url}?format={w}w {w}w" for w in widths)
     lz = ' loading="lazy" decoding="async"' if lazy else ' fetchpriority="high"'
     c = f' class="{cls}"' if cls else ""
@@ -711,44 +725,26 @@ def page_directory(subset=None, title=None, desc=None, path="/directory/", headi
                  path, body, view="directory")
 
 def page_practice_types():
-    """Populated disciplines get photo tiles. Empty ones are listed compactly
-    underneath as an invitation to apply, rather than leaving gaps in the grid."""
-    live  = [d for d in DISCIPLINES if cat_count(d["key"])]
-    empty = [d for d in DISCIPLINES if not cat_count(d["key"])]
-
     tiles = ""
-    for d in live:
+    for d in DISCIPLINES:
         n = cat_count(d["key"])
         frame = (f'<div class="tile-frame">{img_tag(d["img"], "", "(max-width:700px) 92vw, 320px", widths=(500, 750, 1000))}</div>'
                  if d["img"] else f'<div class="tile-frame blank">{E(d["label"])}</div>')
+        go = (f'<span class="tile-go">View providers <span class="n">{n}</span> \u2192</span>'
+              if n else '<span class="tile-go none">No listings yet</span>')
         tiles += f"""<li><a class="tile" href="/practice-types/{d['slug']}/">
-        {frame}<h3>{E(d['label'])}</h3><p>{E(d['note'])}</p>
-        <span class="tile-go">View providers <span class="n">{n}</span> \u2192</span></a></li>"""
-
-    waiting = ""
-    if empty:
-        rows = "".join(
-            f'<li><a href="/practice-types/{d["slug"]}/"><strong>{E(d["label"])}</strong>'
-            f'<span>{E(d["note"])}</span></a></li>' for d in empty)
-        waiting = f"""
-      <section class="waiting">
-        <h2>Also part of the directory</h2>
-        <p class="lede">These disciplines are open and we are reviewing applications. If you practise
-        in one of them, <a href="/join/">apply for a listing</a> \u2014 it is free.</p>
-        <ul class="waiting-list">{rows}</ul>
-      </section>"""
-
+        {frame}<h3>{E(d['label'])}</h3><p>{E(d['note'])}</p>{go}</a></li>"""
     body = f"""  <div class="wrap">
     <p class="crumb"><a href="/">Home</a> / Disciplines</p>
     <div class="section-tight">
       <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Choose the type of practice</h1>
       <p class="lede">Licensure varies by discipline. Where a profession is state licensed, the license number appears on the record. Where it is not, we publish training and certification instead.</p>
-      <ul class="tiles">{tiles}</ul>{waiting}
+      <ul class="tiles">{tiles}</ul>
     </div>
   </div>
   <div style="height:3rem"></div>"""
     return shell("Browse by discipline \u2014 FindWell Directory",
-                 "Browse holistic practitioners by discipline: Ayurveda, acupuncture, TCM, chiropractic, body work, energy work, herbology and more.",
+                 "Browse holistic practitioners by discipline: Ayurveda, acupuncture, TCM, integrative and functional medicine, chiropractic, body work, energy work, herbology and more.",
                  "/practice-types/", body)
 
 def page_locations():

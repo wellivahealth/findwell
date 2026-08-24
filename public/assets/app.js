@@ -323,6 +323,28 @@
     wc.style.color = n > 150 ? 'var(--accent)' : '';
   });
 
+  // Two images maximum, 10 MB each — checked before anything is sent.
+  var MAX_FILES = 2, MAX_BYTES = 10 * 1024 * 1024;
+  var filesEl = $('j-files'), fileList = $('file-list');
+  function filesValid() {
+    if (!filesEl || !filesEl.files.length) return true;
+    if (filesEl.files.length > MAX_FILES) return false;
+    for (var i = 0; i < filesEl.files.length; i++) {
+      if (filesEl.files[i].size > MAX_BYTES) return false;
+    }
+    return true;
+  }
+  if (filesEl) filesEl.addEventListener('change', function () {
+    var names = [];
+    for (var i = 0; i < filesEl.files.length; i++) {
+      names.push(filesEl.files[i].name +
+        ' (' + Math.round(filesEl.files[i].size / 1024) + ' KB)');
+    }
+    if (fileList) fileList.textContent = names.join(' \u00b7 ');
+    var err = form.querySelector('[data-for="files"]');
+    if (err) err.style.display = filesValid() ? 'none' : 'block';
+  });
+
   function showErr(sel, on) {
     var el = form.querySelector(sel);
     if (el) el.style.display = on ? 'block' : 'none';
@@ -354,6 +376,8 @@
     showErr('[data-for="cats"]', !cats.length);
     showErr('[data-for="pay"]', !pays.length);
     if (!cats.length || !pays.length) ok = false;
+    showErr('[data-for="files"]', !filesValid());
+    if (!filesValid()) ok = false;
 
     var msg = $('join-msg');
     if (!ok) {
@@ -413,7 +437,8 @@
     function fallback(reason) {
       title.textContent = 'Almost there \u2014 one more step.';
       text.textContent = ' ' + reason + ' Press the button below to open your answers in an email, ' +
-                         'then send it. Attach your logo or headshot before sending.';
+                         'then send it. Attach your logo or headshot to that email \u2014 ' +
+                         'files chosen above cannot travel this way.';
       mailWrap.hidden = false;
       reveal();
     }
@@ -432,8 +457,7 @@
       if (btn) { btn.disabled = false; btn.textContent = 'Send'; }
       if (!res.ok) throw new Error('rejected');
       title.textContent = 'Thank you for your submission.';
-      text.textContent = ' We will get back to you shortly. If you have a logo or headshot, ' +
-                         'reply to the confirmation email with it attached.';
+      text.textContent = ' We will get back to you shortly, images and all.';
       mailWrap.hidden = true;
       reveal();
       form.reset();

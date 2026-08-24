@@ -18,7 +18,7 @@ OUT  = os.path.join(ROOT, "public")   # Cloudflare serves this folder
 YEAR = 2026
 # Paste your Formspree form ID here (the code after /f/ in your endpoint URL).
 # Leave empty and the form falls back to opening an email instead.
-FORMSPREE_ID = ""
+FORMSPREE_ID = "xvznleng"
 
 SITE = "https://findwelldirectory.com"   # <- set to the domain you attach; feeds canonical, og:url, sitemap
 
@@ -882,8 +882,12 @@ def page_join():
               <textarea class="control" id="j-long" name="Listing description" style="min-height:170px" required></textarea>
               <p class="hint"><span id="wordcount">0</span> / 150 words. This appears on your own listing page.</p>
               <p class="err">Required.</p></div>
-            <div class="field full"><span class="lbl">Media</span>
-              <p class="hint">Upload your logo and/or headshot, maximum 2 images. Attach them to the email this form opens \u2014 square images of 500px or larger work best.</p></div>
+            <div class="field full"><label for="j-files">Media</label>
+              <input class="control file" id="j-files" name="Logo or headshot" type="file"
+                     accept="image/png,image/jpeg,image/webp" multiple>
+              <p class="hint">Upload your logo and/or headshot \u2014 maximum 2 images, 10 MB each. Square images of 500px or larger work best.</p>
+              <p class="err" data-for="files">Choose no more than two images, 10 MB each.</p>
+              <p class="hint" id="file-list" style="margin-top:.4rem"></p></div>
           </div>
         </section>
 

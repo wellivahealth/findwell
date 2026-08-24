@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=247d4c7800">
+<link rel="stylesheet" href="/assets/site.css?v=64c3b1d862">
 
 </head>
 <body data-view="join">
@@ -46,7 +46,7 @@
       <p class="lede">Listings are free. We verify license numbers against the issuing board before publishing, and we publish exactly what you send — including the absence of a license where none exists for your discipline. Fields marked * are required.</p>
 
       <form id="join-form" style="margin-top:2.6rem" novalidate
-            action="" method="POST">
+            action="https://formspree.io/f/xvznleng" method="POST">
         <input type="hidden" name="Scope of practice" id="j-cats-value">
         <input type="hidden" name="Payment methods" id="j-pay-value">
         <input type="hidden" name="_subject" id="j-subject" value="Directory application">
@@ -156,8 +156,12 @@
               <textarea class="control" id="j-long" name="Listing description" style="min-height:170px" required></textarea>
               <p class="hint"><span id="wordcount">0</span> / 150 words. This appears on your own listing page.</p>
               <p class="err">Required.</p></div>
-            <div class="field full"><span class="lbl">Media</span>
-              <p class="hint">Upload your logo and/or headshot, maximum 2 images. Attach them to the email this form opens — square images of 500px or larger work best.</p></div>
+            <div class="field full"><label for="j-files">Media</label>
+              <input class="control file" id="j-files" name="Logo or headshot" type="file"
+                     accept="image/png,image/jpeg,image/webp" multiple>
+              <p class="hint">Upload your logo and/or headshot — maximum 2 images, 10 MB each. Square images of 500px or larger work best.</p>
+              <p class="err" data-for="files">Choose no more than two images, 10 MB each.</p>
+              <p class="hint" id="file-list" style="margin-top:.4rem"></p></div>
           </div>
         </section>
 
@@ -228,6 +232,6 @@
     </div>
   </div>
 </footer>
-<script src="/assets/app.js?v=95db5e3fcd" defer></script>
+<script src="/assets/app.js?v=c3f6e0532b" defer></script>
 </body>
 </html>

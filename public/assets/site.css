@@ -484,9 +484,38 @@ main{ display:block; }
   .band-feature h2, .band-feature p, .band-feature ul{ max-width:none; }
 }
 
-/* ---------- about page figure ---------- */
-.about-figure{ margin:2.4rem 0 0; }
-.about-figure img{ width:100%; height:auto; border-radius:var(--r-lg); display:block; }
+/* ---------- page banner ----------
+   A full-bleed image band at the top of a page, with the heading over it.
+   The photograph is dark, so the type sits white on a light scrim. */
+.page-banner{
+  position:relative; overflow:hidden; isolation:isolate;
+  background:var(--brand-deeper); color:var(--on-brand);
+  min-height:clamp(260px, 40vh, 420px);
+  display:flex; align-items:flex-end;
+}
+.page-banner-bg{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  object-position:center 46%; z-index:-2;
+}
+.page-banner::before{
+  content:""; position:absolute; inset:0; z-index:-1;
+  background:
+    linear-gradient(to top, oklch(0.170 0.028 192 / .88) 0%,
+                            oklch(0.180 0.030 192 / .55) 46%,
+                            oklch(0.190 0.032 192 / .30) 100%),
+    linear-gradient(96deg, oklch(0.170 0.028 192 / .60) 0%, transparent 62%);
+}
+.page-banner-in{ position:relative; width:100%; padding:2.4rem 0 clamp(1.6rem,3vw,2.4rem); }
+.page-banner .banner-crumb{ padding:0 0 .5rem; color:oklch(0.80 0.02 185); }
+.page-banner .banner-crumb a{ color:oklch(0.86 0.02 185); }
+.page-banner .banner-crumb a:hover{ color:#fff; }
+.page-banner h1{
+  font-size:clamp(2.1rem,5vw,3.2rem); letter-spacing:-0.03em; color:var(--on-brand);
+  margin-bottom:.5rem;
+}
+.page-banner-lede{
+  color:oklch(0.86 0.025 185); max-width:46ch; font-size:1.02rem; margin:0;
+}
 
 /* ---------- partner block ---------- */
 .partner{

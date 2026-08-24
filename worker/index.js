@@ -394,6 +394,8 @@ async function handleApprove(request, env) {
 <p><strong>${esc(s.practice)}</strong> has been added and the site is rebuilding. It will be live at
 <a href="${esc(listingUrl)}">${esc(listingUrl)}</a> in about a minute.</p>
 <p>${esc(s.first)} has been emailed to say the listing is live and that credentials are still being verified.</p>
+<p style="font-size:14px">When you have checked the licence number, mark it verified from your
+<a href="${base}/api/review?key=${encodeURIComponent(env.SIGNING_SECRET)}">review page</a>.</p>
 ${coords.lat ? '' : '<p style="color:#c23a4b">The address could not be geocoded, so this listing will not appear in distance searches until coordinates are added by hand.</p>'}`);
 }
 
@@ -408,6 +410,70 @@ async function handleDecline(request, env) {
     .bind('declined', new Date().toISOString(), id).run();
   if (env.PENDING) await env.PENDING.delete(`logo:${id}`);
   return page('Declined', '<h1>Declined</h1><p>Nothing was published and no email was sent to the applicant. The submission stays in the database if you need it later.</p>');
+}
+
+// ---- verification -------------------------------------------------------
+// Listings published through Approve carry verified:false until someone has
+// actually checked the licence number against the issuing board.
+
+async function readListings(env) {
+  const current = await githubGet(env, 'data/listings.json');
+  if (!current) return { listings: [], sha: undefined };
+  const bin = atob(current.content.replace(/\n/g, ''));
+  const listings = JSON.parse(new TextDecoder().decode(
+    Uint8Array.from(bin, (c) => c.charCodeAt(0))));
+  return { listings, sha: current.sha };
+}
+
+async function handleReview(request, env) {
+  const url = new URL(request.url);
+  if (!timingSafeEqual(url.searchParams.get('key') || '', env.SIGNING_SECRET)) {
+    return page('Not authorised', '<h1>Not authorised</h1>', 403);
+  }
+  const { listings } = await readListings(env);
+  const waiting = listings.filter((l) => l.verified === false);
+  const base = env.SITE_URL || 'https://findwelldirectory.com';
+
+  const rows = await Promise.all(waiting.map(async (l) => {
+    const sig = await hmac(env.SIGNING_SECRET, 'verify:' + l.slug);
+    return `<li style="padding:12px 0;border-top:1px solid #dbe3e3">
+      <strong>${esc(l.name)}</strong> — ${esc(l.person)}<br>
+      <span style="color:#5f7473;font-size:14px">${esc(l.licensure)}</span><br>
+      <a href="${base}/provider/${esc(l.slug)}/" style="font-size:14px">view listing</a>
+      &nbsp;·&nbsp;
+      <a href="${base}/api/verify?slug=${encodeURIComponent(l.slug)}&sig=${sig}"
+         style="display:inline-block;background:#2e5f5c;color:#fff;text-decoration:none;
+         padding:5px 12px;border-radius:5px;font-size:14px;font-weight:600">Mark verified</a>
+    </li>`;
+  }));
+
+  return page('Awaiting verification', `<h1>Awaiting verification</h1>
+<p>Listings published but not yet checked against the issuing board.</p>
+<ul style="list-style:none;padding:0;margin:1rem 0 0">${rows.join('') ||
+  '<li style="padding:12px 0">Everything is verified.</li>'}</ul>`);
+}
+
+async function handleVerify(request, env) {
+  const url = new URL(request.url);
+  const slug = url.searchParams.get('slug') || '';
+  const sig = url.searchParams.get('sig') || '';
+  if (!timingSafeEqual(sig, await hmac(env.SIGNING_SECRET, 'verify:' + slug))) {
+    return page('Invalid link', '<h1>That link is not valid</h1>', 403);
+  }
+  const { listings, sha } = await readListings(env);
+  const row = listings.find((l) => l.slug === slug);
+  if (!row) return page('Not found', '<h1>Not found</h1><p>No listing with that slug.</p>', 404);
+  if (row.verified === true) {
+    return page('Already verified', '<h1>Already verified</h1><p>Nothing to change.</p>');
+  }
+  row.verified = true;
+  await githubPut(env, 'data/listings.json',
+    b64encode(JSON.stringify(listings, null, 2) + '\n'),
+    `Mark verified: ${row.name}`, sha);
+  return page('Verified', `<h1>Verified</h1>
+<p><strong>${esc(row.name)}</strong> is marked verified. The site is rebuilding and the
+"not yet verified" note will be gone in about a minute.</p>
+<p><a href="${env.SITE_URL || 'https://findwelldirectory.com'}/api/review?key=${encodeURIComponent(env.SIGNING_SECRET)}">Back to the list</a></p>`);
 }
 
 async function handlePending(request, env) {
@@ -437,6 +503,8 @@ export default {
       if (url.pathname === '/api/approve') return await handleApprove(request, env);
       if (url.pathname === '/api/decline') return await handleDecline(request, env);
       if (url.pathname === '/api/pending') return await handlePending(request, env);
+      if (url.pathname === '/api/review') return await handleReview(request, env);
+      if (url.pathname === '/api/verify') return await handleVerify(request, env);
     } catch (err) {
       console.error(err);
       if (url.pathname.startsWith('/api/apply')) {

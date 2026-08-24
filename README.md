@@ -129,7 +129,33 @@ npx wrangler secret put SIGNING_SECRET   # any long random string
 `SIGNING_SECRET` signs the approve links so only your emails can publish.
 Anyone with the link can approve, so treat those emails as privileged.
 
-`/api/pending?key=YOUR_SIGNING_SECRET` lists anything still waiting on you.
+Two admin pages, both behind your signing secret:
+
+- `/api/pending?key=YOUR_SIGNING_SECRET` — applications you have not decided on
+- `/api/review?key=YOUR_SIGNING_SECRET` — listings published but not yet checked
+  against the issuing board, each with a **Mark verified** button. Clicking it
+  flips `verified` to `true` and rebuilds, removing the "not yet verified" note.
+
+Bookmark the review page. You can also edit `data/listings.json` by hand if you
+prefer — the button just saves you touching JSON.
+
+### Favicon
+
+The tab icon should be the leaf mark alone — a wordmark is illegible at 16px.
+Run this once against the original logo PNG:
+
+```
+python3 make_favicon.py findwell-logo-trans.png
+```
+
+It trims transparent margins, finds the gap between the mark and the type,
+cuts there, squares the result, and writes favicon.png (512), favicon-180.png,
+favicon-32.png, favicon.ico and favicon-preview.png. Open the preview to see
+how it reads at 16, 32 and 48px before pushing. If the split lands in the wrong
+place, pass the fraction of the width to keep, e.g. `python3 make_favicon.py logo.png 0.28`.
+
+`build.py` uses these automatically once they exist, and falls back to the full
+logo until then.
 
 ### Logos
 
@@ -159,6 +185,24 @@ you `https://formspree.io/f/abcdwxyz`, the value is `abcdwxyz`. Then run
 Until that ID is set, the form still works: it validates, then opens a
 pre-filled email instead, so no application is lost. The same fallback runs
 if Formspree is unreachable.
+
+### Favicon
+
+The tab icon should be the leaf mark alone — a wordmark is illegible at 16px.
+Run this once against the original logo PNG:
+
+```
+python3 make_favicon.py findwell-logo-trans.png
+```
+
+It trims transparent margins, finds the gap between the mark and the type,
+cuts there, squares the result, and writes favicon.png (512), favicon-180.png,
+favicon-32.png, favicon.ico and favicon-preview.png. Open the preview to see
+how it reads at 16, 32 and 48px before pushing. If the split lands in the wrong
+place, pass the fraction of the width to keep, e.g. `python3 make_favicon.py logo.png 0.28`.
+
+`build.py` uses these automatically once they exist, and falls back to the full
+logo until then.
 
 ### Logos that practitioners upload
 

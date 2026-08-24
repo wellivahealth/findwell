@@ -38,6 +38,7 @@ JS_V   = _v("assets/app.js")
 IMG_V  = _v("assets/img/hero-1400.webp")
 ABOUT_V = _v("assets/img/about-1400.webp")
 BANNER_V = _v("assets/img/banner-1400.webp")
+ABOUTB_V = _v("assets/img/aboutbanner-1400.webp")
 
 SS = "https://images.squarespace-cdn.com/content/v1/6877e1d8fb99bd2e2af8e1ed/"
 IMG = {
@@ -358,6 +359,22 @@ def img_tag(url, alt, sizes, cls="", widths=(500, 750, 1000, 1500), lazy=True):
 
 LOGO = IMG["logo"]
 
+# Favicons built from the logo's graphic mark by make_favicon.py. Until that
+# script has been run against the real logo, fall back to the full logo file.
+if os.path.exists(os.path.join(OUT, "assets/img/favicon.png")):
+    _fv = _v("assets/img/favicon.png")
+    FAVICON_TAGS = (
+        f'<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png?v={_v("assets/img/favicon-32.png")}">\n'
+        f'<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon.png?v={_fv}">\n'
+        f'<link rel="apple-touch-icon" href="/assets/img/favicon-180.png?v={_v("assets/img/favicon-180.png")}">\n'
+        f'<link rel="shortcut icon" href="/assets/img/favicon.ico?v={_v("assets/img/favicon.ico")}">'
+    )
+else:
+    FAVICON_TAGS = (
+        f'<link rel="icon" type="image/png" href="{LOGO}?format=300w">\n'
+        f'<link rel="apple-touch-icon" href="{LOGO}?format=500w">'
+    )
+
 # Hero photograph, hosted locally in /assets/img (not hotlinked).
 # Regenerate the sizes with make_hero.py if the source image changes.
 HERO = f"""<picture>
@@ -383,8 +400,7 @@ def shell(title, desc, path, body, view="", extra_head=""):
 <title>{E(title)}</title>
 <meta name="description" content="{E(desc)}">
 <link rel="canonical" href="{SITE}{path}">
-<link rel="icon" type="image/png" href="{LOGO}?format=300w">
-<link rel="apple-touch-icon" href="{LOGO}?format=500w">
+{FAVICON_TAGS}
 <meta property="og:site_name" content="FindWell Directory">
 <meta property="og:title" content="{E(title)}">
 <meta property="og:description" content="{E(desc)}">
@@ -977,6 +993,14 @@ BANNER_PICTURE = f"""<picture>
            width="2000" height="833" alt="" aria-hidden="true" loading="lazy" decoding="async">
     </picture>"""
 
+ABOUT_BANNER = f"""<picture>
+      <source type="image/webp" sizes="100vw"
+              srcset="/assets/img/aboutbanner-900.webp?v={ABOUTB_V} 900w, /assets/img/aboutbanner-1400.webp?v={ABOUTB_V} 1400w, /assets/img/aboutbanner-2000.webp?v={ABOUTB_V} 2000w">
+      <img class="page-banner-bg" src="/assets/img/aboutbanner-1400.jpg?v={ABOUTB_V}" sizes="100vw"
+           srcset="/assets/img/aboutbanner-900.jpg?v={ABOUTB_V} 900w, /assets/img/aboutbanner-1400.jpg?v={ABOUTB_V} 1400w, /assets/img/aboutbanner-2000.jpg?v={ABOUTB_V} 2000w"
+           width="2000" height="667" alt="" aria-hidden="true" fetchpriority="high">
+    </picture>"""
+
 ABOUT_PICTURE = f"""<picture>
           <source type="image/webp" sizes="(max-width:860px) 92vw, 70ch"
                   srcset="/assets/img/about-900.webp?v={ABOUT_V} 900w, /assets/img/about-1400.webp?v={ABOUT_V} 1400w, /assets/img/about-2000.webp?v={ABOUT_V} 2000w">
@@ -987,18 +1011,20 @@ ABOUT_PICTURE = f"""<picture>
         </picture>"""
 
 def page_about():
-    body = f"""  <div class="wrap">
-    <p class="crumb"><a href="/">Home</a> / Who we are</p>
-    <div class="section-tight" style="max-width:70ch">
-      <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:1.2rem">Who we are</h1>
+    body = f"""  <section class="page-banner">
+    {ABOUT_BANNER}
+    <div class="wrap page-banner-in">
+      <p class="crumb banner-crumb"><a href="/">Home</a> / Who we are</p>
+      <h1>Who we are</h1>
+      <p class="page-banner-lede">Prevention, transparency, and a direct line between practitioners and the people looking for them.</p>
+    </div>
+  </section>
 
+  <div class="wrap">
+    <div class="section-tight" style="max-width:70ch">
       <p class="lede">FindWell Directory was born out of a simple but urgent mission: to change the conversation around healthcare in our country. Too often, access to healing is filtered through layers of insurance systems, hidden costs, and a pharmaceutical-driven model that doesn't reflect the diverse ways people actually seek wellness. We believe health should be rooted in prevention, transparency, and the empowerment of individuals to choose what works best for their bodies and their lives.</p>
 
       <p class="lede" style="margin-top:1.1rem">This project grew out of our work with Welliva Health, a new approach to healthcare financing that focuses exclusively on integrative and lifestyle-based care rather than the conventional, pharmaceutical-dependent system. While Welliva is developing an alternative model of coverage, FindWell Directory serves as its natural partner: a platform where providers and patients can connect directly, without middlemen. Here, practitioners openly share their credentials, services, and pricing, while users of the directory help us identify the real needs in communities across the country. Together, this network builds the foundation for a healthcare landscape that values prevention, choice, and trust.</p>
-
-      <figure class="about-figure">
-        {ABOUT_PICTURE}
-      </figure>
 
       <aside class="partner">
         <a href="https://wellivahealth.com/" target="_blank" rel="noopener">

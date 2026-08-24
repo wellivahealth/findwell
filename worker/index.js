@@ -499,6 +499,90 @@ async function handleVerify(request, env) {
 <p><strong>${esc(row.name)}</strong> is marked verified. The note will be gone in about a minute.</p>`);
 }
 
+// ---------------------------------------------------------------- selftest
+
+/** Checks each dependency in turn and reports exactly which one fails. */
+async function handleSelftest(request, env) {
+  const url = new URL(request.url);
+  if (!safeEqual(url.searchParams.get('key') || '', env.SIGNING_SECRET || '')) {
+    return page('Not authorised',
+      '<h1>Not authorised</h1><p>Wrong key, or SIGNING_SECRET is not set on the Worker.</p>', 403);
+  }
+
+  const checks = [];
+  const add = (name, ok, detail) => checks.push({ name, ok, detail });
+
+  add('SIGNING_SECRET set', !!env.SIGNING_SECRET, '');
+  add('GH_TOKEN set', !!env.GH_TOKEN, '');
+  add('RESEND_API_KEY set', !!env.RESEND_API_KEY, '');
+  add('GH_REPO', !!env.GH_REPO, env.GH_REPO || 'missing');
+  add('ADMIN_EMAIL', !!env.ADMIN_EMAIL, env.ADMIN_EMAIL || 'missing');
+  add('MAIL_FROM', !!env.MAIL_FROM, env.MAIL_FROM || 'default');
+
+  // can the token see the repository at all?
+  try {
+    const res = await gh(env, `/repos/${env.GH_REPO}`);
+    if (res.ok) {
+      const r = await res.json();
+      add('GitHub: repo visible', true, `${r.full_name}, default branch ${r.default_branch}`);
+      add('GitHub: branch matches', (env.GH_BRANCH || 'main') === r.default_branch,
+        `worker uses "${env.GH_BRANCH || 'main'}", repo default is "${r.default_branch}"`);
+    } else {
+      const body = (await res.text()).slice(0, 200);
+      add('GitHub: repo visible', false, `HTTP ${res.status}. ${
+        res.status === 404
+          ? 'Either GH_REPO is wrong, or the fine-grained token has not been granted access to this repository. If the repo belongs to an organisation, an org owner must approve the token.'
+          : res.status === 401 ? 'Token rejected — expired or mistyped.' : body}`);
+    }
+  } catch (e) { add('GitHub: repo visible', false, e.message); }
+
+  // can it write? create a blob without committing anything
+  try {
+    const res = await gh(env, `/repos/${env.GH_REPO}/git/blobs`, {
+      method: 'POST', body: JSON.stringify({ content: 'selftest', encoding: 'utf-8' }),
+    });
+    add('GitHub: write permission', res.ok, res.ok
+      ? 'Contents: read and write confirmed'
+      : `HTTP ${res.status} — the token needs Repository permissions -> Contents -> Read and write.`);
+  } catch (e) { add('GitHub: write permission', false, e.message); }
+
+  // is the listings file readable and valid?
+  try {
+    const f = await readFile(env, 'data/listings.json');
+    if (!f) add('data/listings.json', false, 'Not found in the repo.');
+    else {
+      const parsed = JSON.parse(fromB64(f.content));
+      add('data/listings.json', true, `${parsed.length} listing(s)`);
+    }
+  } catch (e) { add('data/listings.json', false, e.message); }
+
+  // will Resend accept a send?
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' },
+      body: JSON.stringify({
+        from: env.MAIL_FROM || 'FindWell Directory <noreply@findwelldirectory.com>',
+        to: [env.ADMIN_EMAIL], subject: 'FindWell selftest',
+        html: '<p>If you are reading this, sending works.</p>',
+      }),
+    });
+    const body = (await res.text()).slice(0, 300);
+    add('Resend: send test email', res.ok, res.ok
+      ? `Sent to ${env.ADMIN_EMAIL} — check that inbox.`
+      : `HTTP ${res.status}. ${body}`);
+  } catch (e) { add('Resend: send test email', false, e.message); }
+
+  const rows = checks.map((c) => `<li style="padding:8px 0;border-top:1px solid #dbe3e3">
+    <strong style="color:${c.ok ? '#2e5f5c' : '#c23a4b'}">${c.ok ? 'PASS' : 'FAIL'}</strong>
+    &nbsp;${esc(c.name)}${c.detail ? `<br><span style="font-size:14px;color:#5f7473">${esc(c.detail)}</span>` : ''}
+  </li>`).join('');
+  const failed = checks.filter((c) => !c.ok).length;
+  return page('Self test', `<h1>Self test</h1>
+<p>${failed ? `${failed} check(s) failed — the first failure is usually the cause.` : 'Everything passed.'}</p>
+<ul style="margin:0">${rows}</ul>`);
+}
+
 // ---------------------------------------------------------------- entry
 
 export default {
@@ -509,12 +593,13 @@ export default {
       if (url.pathname === '/api/approve') return await handleApprove(request, env);
       if (url.pathname === '/api/decline') return await handleDecline(request, env);
       if (url.pathname === '/api/pending') return await handlePending(request, env);
+      if (url.pathname === '/api/selftest') return await handleSelftest(request, env);
       if (url.pathname === '/api/review') return await handleReview(request, env);
       if (url.pathname === '/api/verify') return await handleVerify(request, env);
     } catch (err) {
       console.error(err);
       if (url.pathname === '/api/apply') {
-        return json({ ok: false, error: 'Something went wrong on our side.' }, 500);
+        return json({ ok: false, error: `Server error: ${String(err.message).slice(0, 160)}` }, 500);
       }
       return page('Error', `<h1>Something went wrong</h1><p>${esc(err.message)}</p>`, 500);
     }

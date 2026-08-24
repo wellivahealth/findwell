@@ -394,8 +394,8 @@ HERO = f"""<picture>
 
 def shell(title, desc, path, body, view="", extra_head=""):
     """Wrap page content in the shared chrome. `path` is the canonical URL path."""
-    nav = [("/directory/", "All providers"), ("/practice-types/", "By discipline"),
-           ("/locations/", "By location"), ("/about/", "Who we are")]
+    nav = [("/directory/", "Find a provider"), ("/about/", "Who we are"),
+           ("/articles/", "Articles"), ("/advertise/", "Advertise with us")]
     navhtml = "".join(
         f'<a href="{h}"{" aria-current=\"page\"" if path.startswith(h) else ""}>{t}</a>'
         for h, t in nav)
@@ -450,14 +450,16 @@ def shell(title, desc, path, body, view="", extra_head=""):
       </div>
       <div>
         <h4>Find care</h4>
-        <a href="/directory/">All providers</a>
+        <a href="/directory/">Find a provider</a>
         <a href="/practice-types/">By discipline</a>
         <a href="/locations/">By location</a>
       </div>
       <div>
-        <h4>Practitioners</h4>
+        <h4>More</h4>
         <a href="/join/">Join the directory</a>
         <a href="/about/">Who we are</a>
+        <a href="/articles/">Articles</a>
+        <a href="/advertise/">Advertise with us</a>
       </div>
     </div>
     <div class="foot-legal">
@@ -1056,6 +1058,86 @@ def page_about():
                  "FindWell Directory exists to change the conversation around healthcare: prevention, transparency, and direct connection between practitioners and patients. A partner project to Welliva Health.",
                  "/about/", body)
 
+ARTICLES = [
+    # Add posts here, newest first. `body` is raw HTML — paragraphs, h2s, lists.
+    # dict(slug="choosing-an-acupuncturist", title="How to choose an acupuncturist",
+    #      date="2026-09-01", author="Amita Nathwani",
+    #      summary="What to ask before a first appointment, and what a licence does and doesn't tell you.",
+    #      body="<p>…</p>"),
+]
+
+def article_card(a):
+    return f"""<li><a class="index-row" href="/articles/{a['slug']}/">
+      <span class="index-key">{E(a['date'][:7])}</span>
+      <span class="index-name">{E(a['title'])}<span class="index-sub">{E(a.get('summary',''))}</span></span>
+      <span class="index-n">Read</span></a></li>"""
+
+def page_articles():
+    if ARTICLES:
+        inner = f'<ul class="index-list">{"".join(article_card(a) for a in ARTICLES)}</ul>'
+    else:
+        inner = """<div class="empty" style="margin-top:2.4rem">
+        <h3>Nothing published yet</h3>
+        <p>We are writing about how to choose a practitioner, what licensure does and
+        does not guarantee, and what integrative care costs. Check back shortly.</p>
+        <p style="margin-top:1.2rem"><a class="btn btn-dark btn-sm" href="/directory/">Find a provider instead</a></p>
+      </div>"""
+    body = f"""  <div class="wrap">
+    <p class="crumb"><a href="/">Home</a> / Articles</p>
+    <div class="section-tight">
+      <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Articles</h1>
+      <p class="lede">Plain explanations of how holistic and integrative care actually works \u2014 what the credentials mean, what questions to ask, and what things cost.</p>
+      {inner}
+    </div>
+  </div>
+  <div style="height:3rem"></div>"""
+    return shell("Articles \u2014 FindWell Directory",
+                 "Plain explanations of how holistic and integrative care works: credentials, questions to ask, and what care costs.",
+                 "/articles/", body)
+
+def page_article(a):
+    body = f"""  <div class="wrap">
+    <p class="crumb"><a href="/">Home</a> / <a href="/articles/">Articles</a> / {E(a['title'])}</p>
+    <article class="section-tight" style="max-width:68ch">
+      <h1 style="font-size:clamp(1.9rem,4vw,2.7rem);margin-bottom:.6rem">{E(a['title'])}</h1>
+      <p class="crumb" style="padding:0 0 1.6rem">{E(a['date'])}{' \u00b7 ' + E(a['author']) if a.get('author') else ''}</p>
+      <div class="prose">{a['body']}</div>
+      <p style="margin-top:2.4rem"><a class="btn btn-dark" href="/articles/">All articles</a></p>
+    </article>
+  </div>
+  <div style="height:3rem"></div>"""
+    return shell(f"{a['title']} \u2014 FindWell Directory",
+                 a.get('summary', '')[:180], f"/articles/{a['slug']}/", body)
+
+def page_advertise():
+    body = """  <div class="wrap">
+    <p class="crumb"><a href="/">Home</a> / Advertise with us</p>
+    <div class="section-tight" style="max-width:70ch">
+      <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Advertise with us</h1>
+      <p class="lede">FindWell reaches people at the moment they are choosing a practitioner \u2014 comparing credentials, weighing cost, deciding who to call. If you serve that audience, we would like to hear from you.</p>
+
+      <h2 style="font-size:1.35rem;margin:2.6rem 0 .8rem">What we will never sell</h2>
+      <p class="lede">Placement in the directory. Listings are free, ordered by relevance and distance, and no practitioner can pay to rank higher, appear first, or be marked as recommended. We do not sell leads or share the contact details of people using the site. That rule is the reason the directory is worth advertising in at all, and it is not for sale.</p>
+
+      <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">What is available</h2>
+      <ul class="split-list">
+        <li><strong>Sponsored articles.</strong> Clearly labelled, editorially reviewed, and written to be useful rather than promotional.</li>
+        <li><strong>Display placements.</strong> On article pages and discipline pages, visually distinct from listings.</li>
+        <li><strong>Partnerships.</strong> Schools, professional associations, labs, dispensaries, and insurers building something aligned with integrative care.</li>
+      </ul>
+
+      <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">Get in touch</h2>
+      <p class="lede">Tell us who you are trying to reach and we will tell you honestly whether our audience is a fit. Rates depend on placement and season.</p>
+      <p style="margin-top:1.6rem">
+        <a class="btn btn-primary" href="mailto:info@findwelldirectory.com?subject=Advertising%20enquiry">Email us about advertising</a>
+      </p>
+    </div>
+  </div>
+  <div style="height:3rem"></div>"""
+    return shell("Advertise with us \u2014 FindWell Directory",
+                 "Reach people at the moment they are choosing a holistic practitioner. Sponsored articles, display placements and partnerships \u2014 never paid placement in the directory.",
+                 "/advertise/", body)
+
 def page_404():
     body = """  <div class="wrap section">
     <div class="empty">
@@ -1078,7 +1160,8 @@ def write(path, content):
 def main():
     # Wipe generated pages first, so renamed or removed listings don't leave
     # orphaned URLs behind. Assets are left alone.
-    for d in ("directory", "practice-types", "locations", "provider", "join", "about"):
+    for d in ("directory", "practice-types", "locations", "provider", "join",
+              "about", "articles", "advertise"):
         shutil.rmtree(os.path.join(OUT, d), ignore_errors=True)
 
     written = []
@@ -1088,6 +1171,10 @@ def main():
     written.append(write("locations/", page_locations()))
     written.append(write("join/", page_join()))
     written.append(write("about/", page_about()))
+    written.append(write("articles/", page_articles()))
+    written.append(write("advertise/", page_advertise()))
+    for a in ARTICLES:
+        written.append(write(f"articles/{a['slug']}/", page_article(a)))
     written.append(write("404.html", page_404()))
 
     for d in DISCIPLINES:
@@ -1114,7 +1201,9 @@ def main():
         written.append(write(f"provider/{p['slug']}/", page_provider(p)))
 
     # sitemap + robots
-    urls = ["/", "/directory/", "/practice-types/", "/locations/", "/join/", "/about/"]
+    urls = ["/", "/directory/", "/practice-types/", "/locations/", "/join/", "/about/",
+            "/articles/", "/advertise/"]
+    urls += [f"/articles/{a['slug']}/" for a in ARTICLES]
     urls += [f"/practice-types/{d['slug']}/" for d in DISCIPLINES]
     urls += [f"/locations/{state_slug(ab)}/" for ab in STATES]
     urls += [f"/provider/{p['slug']}/" for p in PROVIDERS]
@@ -1130,7 +1219,8 @@ def main():
     print(f"  {len(PROVIDERS)} provider pages")
     print(f"  {len(DISCIPLINES)} discipline pages")
     print(f"  {len(STATES)} state pages")
-    print("  6 core pages, 404, sitemap.xml, robots.txt")
+    print(f"  {len(ARTICLES)} article page(s)")
+    print("  8 core pages, 404, sitemap.xml, robots.txt")
 
 if __name__ == "__main__":
     main()

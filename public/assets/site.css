@@ -536,6 +536,23 @@ main{ display:block; }
   color:oklch(0.86 0.025 185); max-width:46ch; font-size:1.02rem; margin:0;
 }
 
+/* ---------- long-form prose + simple lists ---------- */
+.prose{ font-size:1.06rem; color:var(--ink-soft); }
+.prose h2{ font-size:1.4rem; color:var(--ink); margin:2.2rem 0 .7rem; }
+.prose h3{ font-size:1.15rem; color:var(--ink); margin:1.8rem 0 .5rem; }
+.prose p{ margin-bottom:1.1rem; }
+.prose ul, .prose ol{ margin:0 0 1.2rem 1.1rem; padding:0; }
+.prose li{ margin-bottom:.5rem; }
+.prose blockquote{
+  margin:1.6rem 0; padding:.2rem 0 .2rem 1.2rem;
+  border-left:2px solid var(--accent); color:var(--ink); font-style:italic;
+}
+.split-list{ list-style:none; padding:0; margin:1.2rem 0 0; }
+.split-list li{
+  padding:1rem 0; border-top:1px solid var(--line); color:var(--ink-soft);
+}
+.split-list strong{ color:var(--ink); }
+
 /* ---------- partner block ---------- */
 .partner{
   display:flex; align-items:center; gap:clamp(1.2rem,3vw,2.2rem); flex-wrap:wrap;

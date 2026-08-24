@@ -40,11 +40,30 @@ Every page is real HTML at a real URL, so Google indexes each one separately:
 | `/locations/arizona/` etc. | One page per state, pre-filtered |
 | `/provider/amitaayurveda/` etc. | One page per practitioner |
 | `/join/` | Application form |
+| `/articles/` | Article index (empty until you add one) |
+| `/articles/<slug>/` | One page per article |
+| `/advertise/` | Advertising and partnerships |
 | `/about/` | Who we are |
 | `/404.html` | Not found |
 
 Also generated: `sitemap.xml` and `robots.txt`. Submit the sitemap in Google
 Search Console once the domain is attached.
+
+## Writing an article
+
+Add an entry to the `ARTICLES` list in `build.py`, newest first:
+
+```python
+dict(slug="choosing-an-acupuncturist",
+     title="How to choose an acupuncturist",
+     date="2026-09-01", author="Amita Nathwani",
+     summary="What to ask before a first appointment.",
+     body="<p>First paragraph.</p><h2>A heading</h2><p>More.</p>")
+```
+
+`body` is raw HTML — `<p>`, `<h2>`, `<ul>`, `<blockquote>` are all styled. Run
+`build.py` and the index page, the article page and the sitemap all update. The
+index shows an empty state until the first entry exists.
 
 ## Changing listings
 

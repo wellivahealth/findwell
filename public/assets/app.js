@@ -446,6 +446,9 @@
     var endpoint = form.getAttribute('action');
     if (!endpoint) { fallback('This form is not connected to a server yet.'); return; }
 
+    // A 404 here means the API worker is not deployed yet; the catch below
+    // turns that into the email fallback rather than a dead end.
+
     var btn = form.querySelector('button[type="submit"]');
     if (btn) { btn.disabled = true; btn.textContent = 'Sending\u2026'; }
 

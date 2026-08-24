@@ -110,6 +110,16 @@ carry `verified: false` until you edit them, which renders a small "not yet
 verified" note beside the licensure line — set it to `true` once you have
 checked the number against the issuing board.
 
+### Deploying before the backend exists
+
+`wrangler.jsonc` ships with **no bindings**, so it deploys the static site on
+its own. The full config lives in `wrangler.api.jsonc` and must not be
+deployed until the database and KV namespace exist — Cloudflare fails the
+build on the placeholder ids.
+
+Until you switch it on, `/api/apply` returns a 404, the form detects that, and
+falls back to opening a pre-filled email. Nothing is lost, it is just manual.
+
 ### One-time setup
 
 ```
@@ -118,13 +128,16 @@ npx wrangler d1 execute findwell --remote --file=schema.sql
 npx wrangler kv namespace create PENDING
 ```
 
-Paste the two ids into `wrangler.jsonc`, then set three secrets:
+Paste the two ids into **`wrangler.api.jsonc`**, then set three secrets:
 
 ```
 npx wrangler secret put RESEND_API_KEY   # resend.com, verify findwelldirectory.com
 npx wrangler secret put GH_TOKEN         # GitHub fine-grained token, Contents: read+write
 npx wrangler secret put SIGNING_SECRET   # any long random string
 ```
+
+Finally, copy `wrangler.api.jsonc` over `wrangler.jsonc` and push. That is the
+commit that turns the backend on.
 
 `SIGNING_SECRET` signs the approve links so only your emails can publish.
 Anyone with the link can approve, so treat those emails as privileged.

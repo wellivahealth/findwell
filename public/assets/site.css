@@ -436,6 +436,18 @@ main{ display:block; }
 .detail-fields{ margin-top:2rem; }
 .detail-fields .fields{ font-size:.95rem; gap:.75rem 1.4rem; }
 
+/* ---------- partner block ---------- */
+.partner{
+  display:flex; align-items:center; gap:clamp(1.2rem,3vw,2.2rem); flex-wrap:wrap;
+  margin:2.6rem 0 0; padding:1.5rem clamp(1.2rem,3vw,1.8rem);
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--r-lg);
+}
+.partner img{ width:200px; height:auto; flex:none; }
+.partner-lede{ font-family:var(--ff-display); font-size:1.1rem; color:var(--ink); margin-bottom:.3rem; }
+.partner-link{ font-family:var(--ff-mono); font-size:.8rem; color:var(--brand); text-decoration:none; }
+.partner-link:hover{ color:var(--accent); }
+@media (max-width:560px){ .partner img{ width:170px; } }
+
 /* ---------- forms ---------- */
 .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1.1rem; }
 @media (max-width:700px){ .form-grid{ grid-template-columns:1fr; } }

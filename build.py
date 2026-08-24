@@ -907,22 +907,40 @@ def page_join():
                  "Practitioners: apply for a free listing in the FindWell Directory.",
                  "/join/", body, view="join")
 
+WELLIVA_LOGO = "https://www.wellivahealth.com/welliva_logo_nav.png"
+
 def page_about():
-    body = """  <div class="wrap">
+    body = f"""  <div class="wrap">
     <p class="crumb"><a href="/">Home</a> / Who we are</p>
     <div class="section-tight" style="max-width:70ch">
       <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:1.2rem">Who we are</h1>
-      <p class="lede">FindWell is a directory, not a marketplace. We do not take commissions, sell leads, charge listing fees, or rank practitioners by who pays. What we do is collect the information people actually need before a first appointment and publish it in the same shape for everyone.</p>
-      <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">What we verify</h2>
+
+      <p class="lede">FindWell Directory was born out of a simple but urgent mission: to change the conversation around healthcare in our country. Too often, access to healing is filtered through layers of insurance systems, hidden costs, and a pharmaceutical-driven model that doesn't reflect the diverse ways people actually seek wellness. We believe health should be rooted in prevention, transparency, and the empowerment of individuals to choose what works best for their bodies and their lives.</p>
+
+      <p class="lede" style="margin-top:1.1rem">This project grew out of our work with Welliva Health, a new approach to healthcare financing that focuses exclusively on integrative and lifestyle-based care rather than the conventional, pharmaceutical-dependent system. While Welliva is developing an alternative model of coverage, FindWell Directory serves as its natural partner: a platform where providers and patients can connect directly, without middlemen. Here, practitioners openly share their credentials, services, and pricing, while users of the directory help us identify the real needs in communities across the country. Together, this network builds the foundation for a healthcare landscape that values prevention, choice, and trust.</p>
+
+      <aside class="partner">
+        <a href="https://wellivahealth.com/" target="_blank" rel="noopener">
+          <img src="{WELLIVA_LOGO}" alt="Welliva Health" width="360" height="96" loading="lazy" decoding="async">
+        </a>
+        <div>
+          <p class="partner-lede">Health Assurance for whole-person care.</p>
+          <p><a class="partner-link" href="https://wellivahealth.com/" target="_blank" rel="noopener">wellivahealth.com &rarr;</a></p>
+        </div>
+      </aside>
+
+      <h2 style="font-size:1.35rem;margin:2.6rem 0 .8rem">What we verify</h2>
       <p class="lede">For licensed professions we check the license number against the issuing board and record the date of the check. For unlicensed disciplines there is no board to check, so we record the training programme, hours and any voluntary certification, and we say plainly that no licensure exists.</p>
+
       <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">What we don't do</h2>
-      <p class="lede">We don't evaluate clinical claims, host reviews, or vouch for outcomes. A listing here means the credentials are as stated — nothing more. Complementary care works best alongside medical care, and this directory is built on the assumption that you have a physician too.</p>
-      <p style="margin-top:2.2rem"><a class="btn btn-dark" href="/directory/">Browse the directory</a></p>
+      <p class="lede">We don't evaluate clinical claims, host reviews, or vouch for outcomes. A listing here means the credentials are as stated \u2014 nothing more. Complementary care works best alongside medical care, and this directory is built on the assumption that you have a physician too.</p>
+
+      <p style="margin-top:2.4rem"><a class="btn btn-dark" href="/directory/">Browse the directory</a></p>
     </div>
   </div>
   <div style="height:3rem"></div>"""
-    return shell("Who we are — FindWell Directory",
-                 "FindWell is a directory, not a marketplace: no commissions, no listing fees, no paid placement.",
+    return shell("Who we are \u2014 FindWell Directory",
+                 "FindWell Directory exists to change the conversation around healthcare: prevention, transparency, and direct connection between practitioners and patients. A partner project to Welliva Health.",
                  "/about/", body)
 
 def page_404():

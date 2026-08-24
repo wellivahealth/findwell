@@ -32,6 +32,7 @@ CSS_V  = _v("assets/site.css")
 JS_V   = _v("assets/app.js")
 IMG_V  = _v("assets/img/hero-1400.webp")
 ABOUT_V = _v("assets/img/about-1400.webp")
+BANNER_V = _v("assets/img/banner-1400.webp")
 
 SS = "https://images.squarespace-cdn.com/content/v1/6877e1d8fb99bd2e2af8e1ed/"
 IMG = {
@@ -526,21 +527,17 @@ def page_home():
     </div>
   </section>
 
-  <hr class="rule">
-
-  <section class="section">
-    <div class="wrap split">
-      {img_tag(IMG['about'], 'Practitioners from a range of holistic disciplines', '(max-width:820px) 92vw, 520px')}
-      <div>
-        <h2>About the directory</h2>
-        <p class="lede" style="margin-top:1rem">There is no centralised system for non-insurance-based care, which makes a first appointment a guess. We collect the same facts from every practitioner and publish them in the same shape, so the comparison is yours to make.</p>
-        <ul>
-          <li>Every listing carries state licensure where it applies, years in practice, pricing structure, insurance status and direct contact details.</li>
-          <li>For disciplines with no licensure route — Ayurveda, herbalism, energy medicine — we publish training and voluntary certification instead, and say plainly that no license exists.</li>
-          <li>No middlemen, no commissions, no listing fees. Nothing routes through us and no one pays for placement.</li>
-        </ul>
-        <p style="margin-top:1.8rem"><a class="btn btn-dark" href="/directory/">Find a provider</a></p>
-      </div>
+  <section class="band-feature">
+    {BANNER_PICTURE}
+    <div class="wrap band-feature-in">
+      <h2>About the directory</h2>
+      <p>There is no centralised system for non-insurance-based care, which makes a first appointment a guess. We collect the same facts from every practitioner and publish them in the same shape, so the comparison is yours to make.</p>
+      <ul>
+        <li>Every listing carries state licensure where it applies, years in practice, pricing structure, insurance status and direct contact details.</li>
+        <li>For disciplines with no licensure route \u2014 Ayurveda, herbalism, energy medicine \u2014 we publish training and voluntary certification instead, and say plainly that no license exists.</li>
+        <li>No middlemen, no commissions, no listing fees. Nothing routes through us and no one pays for placement.</li>
+      </ul>
+      <p style="margin-top:1.8rem"><a class="btn btn-primary" href="/directory/">Find a provider</a></p>
     </div>
   </section>"""
     return shell("FindWell Directory — trusted holistic practitioners",
@@ -909,6 +906,14 @@ def page_join():
                  "/join/", body, view="join")
 
 WELLIVA_LOGO = "https://www.wellivahealth.com/welliva_logo_nav.png"
+
+BANNER_PICTURE = f"""<picture>
+      <source type="image/webp" sizes="100vw"
+              srcset="/assets/img/banner-900.webp?v={BANNER_V} 900w, /assets/img/banner-1400.webp?v={BANNER_V} 1400w, /assets/img/banner-2000.webp?v={BANNER_V} 2000w">
+      <img class="band-bg" src="/assets/img/banner-1400.jpg?v={BANNER_V}" sizes="100vw"
+           srcset="/assets/img/banner-900.jpg?v={BANNER_V} 900w, /assets/img/banner-1400.jpg?v={BANNER_V} 1400w, /assets/img/banner-2000.jpg?v={BANNER_V} 2000w"
+           width="2000" height="833" alt="" aria-hidden="true" loading="lazy" decoding="async">
+    </picture>"""
 
 ABOUT_PICTURE = f"""<picture>
           <source type="image/webp" sizes="(max-width:860px) 92vw, 70ch"

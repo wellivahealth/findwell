@@ -436,6 +436,48 @@ main{ display:block; }
 .detail-fields{ margin-top:2rem; }
 .detail-fields .fields{ font-size:.95rem; gap:.75rem 1.4rem; }
 
+/* ---------- full-bleed feature banner ----------
+   Breaks the light page with a dark band. The photograph is cropped so the
+   hands sit right of centre, leaving the left side clear for the copy. */
+.band-feature{
+  position:relative; overflow:hidden; isolation:isolate;
+  background:var(--brand-deeper); color:var(--on-brand);
+  padding:clamp(3.4rem,7vw,5.6rem) 0;
+}
+.band-bg{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  object-position:64% 44%; z-index:-2;
+}
+.band-feature::before{
+  content:""; position:absolute; inset:0; z-index:-1;
+  background:linear-gradient(96deg,
+    oklch(0.180 0.030 192 / .95) 0%,
+    oklch(0.190 0.032 192 / .90) 34%,
+    oklch(0.200 0.034 192 / .55) 54%,
+    transparent 72%);
+}
+.band-feature-in{ position:relative; }
+.band-feature h2{
+  font-size:clamp(1.7rem,3.4vw,2.4rem); color:var(--on-brand);
+  margin-bottom:1rem; max-width:18ch;
+}
+.band-feature p{ color:var(--on-brand-soft); max-width:52ch; font-size:1.02rem; }
+.band-feature ul{ list-style:none; padding:0; margin:1.6rem 0 0; max-width:56ch; }
+.band-feature li{
+  padding:.95rem 0; border-top:1px solid oklch(1 0 0 / .16);
+  color:var(--on-brand-soft); font-size:.97rem;
+}
+@media (max-width:820px){
+  .band-bg{ object-position:70% 44%; }
+  .band-feature::before{
+    background:linear-gradient(to top,
+      oklch(0.180 0.030 192 / .96) 0%,
+      oklch(0.190 0.032 192 / .92) 60%,
+      oklch(0.190 0.032 192 / .82) 100%);
+  }
+  .band-feature h2, .band-feature p, .band-feature ul{ max-width:none; }
+}
+
 /* ---------- about page figure ---------- */
 .about-figure{ margin:2.4rem 0 0; }
 .about-figure img{ width:100%; height:auto; border-radius:var(--r-lg); display:block; }

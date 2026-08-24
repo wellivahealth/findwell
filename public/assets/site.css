@@ -445,11 +445,30 @@ textarea.control{ min-height:110px; resize:vertical; }
 .err{ color:var(--accent); font-size:.82rem; margin-top:.35rem; display:none; }
 .control[aria-invalid="true"]{ border-color:var(--accent); }
 .control[aria-invalid="true"] + .err{ display:block; }
+.err[data-for]{ display:none; }
 .notice{
   border:1px solid var(--line); border-left:1px solid var(--line); background:var(--surface-sunk);
   border-radius:var(--r-md); padding:1rem 1.1rem; font-size:.9rem; color:var(--ink-soft);
 }
 .notice b{ color:var(--ink); }
+
+/* ---------- application form ---------- */
+.form-section{ margin-top:2.8rem; padding-top:1.6rem; border-top:1px solid var(--line-strong); }
+.form-section:first-of-type{ margin-top:0; padding-top:0; border-top:0; }
+.form-section > h2{
+  font-size:1.25rem; letter-spacing:-0.015em; margin-bottom:1.2rem;
+}
+.form-section.internal{
+  background:var(--surface-sunk); border:1px solid var(--line);
+  border-radius:var(--r-lg); padding:1.5rem; margin-top:3rem;
+}
+.form-section.internal > h2{
+  font-family:var(--ff-mono); font-size:.72rem; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:.5rem;
+}
+.radio-row{ display:flex; gap:1.4rem; padding-top:.15rem; }
+.radio-row .check{ padding:.2rem 0; }
+.radio-row input{ accent-color:var(--brand); }
 
 /* ---------- footer ---------- */
 .foot{ background:var(--brand-deeper); color:var(--on-brand-soft); padding:3.2rem 0 2.4rem; margin-top:auto; }

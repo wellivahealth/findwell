@@ -60,14 +60,12 @@ DISCIPLINES = [
     dict(key="EnergyMedicine", label="Energy healers", slug="energy-work",
          note="Reiki, Eden Energy Medicine, biofield therapies. Training shown; no licensure exists.",
          img=SS + "1755278519443-A0U3QGXU0WZX58E0VMA6/unsplash-image-QD7K3E9UTwI.jpg"),
-    dict(key="Chiropractic", label="Chiropractic", slug="chiropractic",
+    dict(key="Chiropractic", label="Chiropractors", slug="chiropractic",
          note="Doctor of Chiropractic — D.C., state licensed.",
          img=SS + "1755990861680-X13BU084AZ5IQFMMC1DT/unsplash-image-8qwYA4INVCk.jpg"),
     dict(key="Herbalism", label="Herbology", slug="herbology",
          note="Registered herbalists and educators.",
          img=SS + "0362a0ef-8a7e-4341-80ff-30549e3acff8/shutterstock_2299524247.jpg"),
-    dict(key="Nutrition", label="Functional nutrition", slug="functional-nutrition",
-         note="RD, CNS, NTP.", img=None),
     dict(key="Farms", label="Local farmers", slug="local-farmers",
          note="Growers and CSAs.",
          img=SS + "1757901505698-RG39FAHW9EKTGN0RON06/unsplash-image-GYF0GAsUkYI.jpg"),
@@ -725,45 +723,187 @@ def page_provider(p):
     return shell(f"{p['name']} — {p['city']}, {p['state']} | FindWell Directory",
                  p["blurb"][:180], f"/provider/{p['slug']}/", body, extra_head=head)
 
+# --- Application form vocabulary, matching the live Squarespace form ---
+PAYMENT_METHODS = ["Insurance", "Cash", "Checks", "Credit Cards", "Debit Cards",
+                   "HSA/FSA", "Paypal", "Venmo", "Zelle", "Crypto Wallet"]
+
+SCOPE_OPTIONS = ["Ayurveda", "Acupuncture", "Traditional Chinese Medicine",
+                 "Naturopathic Medicine", "Chiropractic", "Body Work", "Energy Work",
+                 "Counseling", "Herbalism", "Farmer", "Grocer"]
+
+COUNTRIES = ["United States", "Canada", "Mexico", "United Kingdom", "Australia", "\u2014",
+    "Afghanistan","\u00c5land Islands","Albania","Algeria","American Samoa","Andorra","Angola",
+    "Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Ascension Island","Austria",
+    "Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin",
+    "Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil",
+    "British Indian Ocean Territory","British Virgin Islands","Brunei","Bulgaria","Burkina Faso",
+    "Burundi","Cambodia","Cameroon","Cape Verde","Caribbean Netherlands","Cayman Islands",
+    "Central African Republic","Chad","Chile","China","Christmas Island","Cocos (Keeling) Islands",
+    "Colombia","Comoros","Congo - Brazzaville","Congo - Kinshasa","Cook Islands","Costa Rica",
+    "C\u00f4te d\u2019Ivoire","Croatia","Cuba","Cura\u00e7ao","Cyprus","Czechia","Denmark","Djibouti",
+    "Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea",
+    "Estonia","Eswatini","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France",
+    "French Guiana","French Polynesia","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar",
+    "Greece","Greenland","Grenada","Guadeloupe","Guam","Guatemala","Guernsey","Guinea",
+    "Guinea-Bissau","Guyana","Haiti","Honduras","Hong Kong SAR China","Hungary","Iceland","India",
+    "Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey",
+    "Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia",
+    "Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg",
+    "Macao SAR China","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands",
+    "Martinique","Mauritania","Mauritius","Mayotte","Micronesia","Moldova","Monaco","Mongolia",
+    "Montenegro","Montserrat","Morocco","Mozambique","Myanmar (Burma)","Namibia","Nauru","Nepal",
+    "Netherlands","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Niue",
+    "Norfolk Island","Northern Mariana Islands","North Korea","North Macedonia","Norway","Oman",
+    "Pakistan","Palau","Palestinian Territories","Panama","Papua New Guinea","Paraguay","Peru",
+    "Philippines","Poland","Portugal","Puerto Rico","Qatar","R\u00e9union","Romania","Russia","Rwanda",
+    "Samoa","San Marino","S\u00e3o Tom\u00e9 & Pr\u00edncipe","Saudi Arabia","Senegal","Serbia","Seychelles",
+    "Sierra Leone","Singapore","Sint Maarten","Slovakia","Slovenia","Solomon Islands","Somalia",
+    "South Africa","South Korea","South Sudan","Spain","Sri Lanka","St. Barth\u00e9lemy","St. Helena",
+    "St. Kitts & Nevis","St. Lucia","St. Martin","St. Pierre & Miquelon","St. Vincent & Grenadines",
+    "Sudan","Suriname","Svalbard & Jan Mayen","Sweden","Switzerland","Syria","Taiwan","Tajikistan",
+    "Tanzania","Thailand","Timor-Leste","Togo","Tokelau","Tonga","Trinidad & Tobago",
+    "Tristan da Cunha","Tunisia","T\u00fcrkiye","Turkmenistan","Turks & Caicos Islands","Tuvalu",
+    "U.S. Virgin Islands","Uganda","Ukraine","United Arab Emirates","Uruguay","Uzbekistan","Vanuatu",
+    "Vatican City","Venezuela","Vietnam","Wallis & Futuna","Western Sahara","Yemen","Zambia",
+    "Zimbabwe"]
+
+def yesno(name, label, hint="", req=True):
+    return f"""<div class="field">
+            <span class="lbl">{E(label)}{' *' if req else ''}</span>
+            <div class="radio-row">
+              <label class="check"><input type="radio" name="{name}" value="Yes"> Yes</label>
+              <label class="check"><input type="radio" name="{name}" value="No"> No</label>
+            </div>
+            {f'<p class="hint">{E(hint)}</p>' if hint else ''}
+            <p class="err" data-for="{name}">Choose one.</p>
+          </div>"""
+
 def page_join():
-    chips = "".join(f'<button type="button" class="chip" data-jcat="{d["key"]}" aria-pressed="false">{E(d["label"])}</button>'
-                    for d in DISCIPLINES)
+    scope = "".join(f'<button type="button" class="chip" data-jcat="{E(o)}" aria-pressed="false">{E(o)}</button>'
+                    for o in SCOPE_OPTIONS)
+    pay = "".join(f'<button type="button" class="chip" data-jpay="{E(o)}" aria-pressed="false">{E(o)}</button>'
+                  for o in PAYMENT_METHODS)
+    countries = "".join(
+        '<option disabled>\u2014</option>' if c == "\u2014"
+        else f'<option{" selected" if c == "United States" else ""}>{E(c)}</option>'
+        for c in COUNTRIES)
     body = f"""  <div class="wrap">
     <p class="crumb"><a href="/">Home</a> / Join</p>
-    <div class="section-tight" style="max-width:900px">
+    <div class="section-tight" style="max-width:860px">
       <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Join the directory</h1>
-      <p class="lede">Listings are free. We verify license numbers against the issuing board before publishing, and we publish exactly what you send — including the absence of a license where none exists for your discipline.</p>
-      <form id="join-form" style="margin-top:2.2rem" novalidate>
-        <div class="form-grid">
-          <div class="field"><label for="j-practice">Practice name *</label><input class="control" id="j-practice" required><p class="err">Enter the name your patients see.</p></div>
-          <div class="field"><label for="j-name">Practitioner name *</label><input class="control" id="j-name" required><p class="err">Enter the practitioner's full name.</p></div>
-          <div class="field"><label for="j-email">Email *</label><input class="control" id="j-email" type="email" required><p class="err">Enter a working email address.</p></div>
-          <div class="field"><label for="j-phone">Phone</label><input class="control" id="j-phone" type="tel"></div>
-          <div class="field full"><label for="j-cats">Discipline *</label>
-            <div class="chips" id="j-cats">{chips}</div>
-            <p class="hint">Select every discipline you practise.</p></div>
-          <div class="field"><label for="j-city">City *</label><input class="control" id="j-city" required><p class="err">Enter your practice city.</p></div>
-          <div class="field"><label for="j-zip">ZIP</label><input class="control" id="j-zip" inputmode="numeric"></div>
-          <div class="field full"><label for="j-cred">Credentials and license number</label><input class="control" id="j-cred" placeholder="e.g. L.Ac., AZ LAC-000000 — or 'no licensure exists for this discipline'"></div>
-          <div class="field"><label for="j-since">Practising since</label><input class="control" id="j-since" inputmode="numeric" placeholder="2014"></div>
-          <div class="field"><label for="j-tele">Telehealth</label>
-            <select class="control" id="j-tele"><option value="No">In person only</option><option value="Yes">Telehealth available</option></select></div>
-          <div class="field full"><label for="j-training">Training and school</label><textarea class="control" id="j-training"></textarea></div>
-          <div class="field full"><label for="j-fees">Fee schedule and insurance</label><textarea class="control" id="j-fees" placeholder="Initial visit, follow-up, packages. Which plans you bill, or 'cash pay, superbills on request'."></textarea></div>
-        </div>
-        <div style="display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.6rem;align-items:center">
-          <button class="btn btn-primary" type="submit">Send listing</button>
+      <p class="lede">Listings are free. We verify license numbers against the issuing board before publishing, and we publish exactly what you send \u2014 including the absence of a license where none exists for your discipline. Fields marked * are required.</p>
+
+      <form id="join-form" style="margin-top:2.6rem" novalidate>
+
+        <section class="form-section">
+          <h2>Provider name</h2>
+          <div class="form-grid">
+            <div class="field"><label for="j-first">First name *</label><input class="control" id="j-first" autocomplete="given-name" required><p class="err">Required.</p></div>
+            <div class="field"><label for="j-last">Last name *</label><input class="control" id="j-last" autocomplete="family-name" required><p class="err">Required.</p></div>
+            <div class="field full"><label for="j-practice">Practice or business name *</label><input class="control" id="j-practice" required><p class="err">Required.</p></div>
+            <div class="field"><label for="j-email">Email *</label><input class="control" id="j-email" type="email" autocomplete="email" required><p class="err">Enter a working email address.</p></div>
+            <div class="field"><label for="j-phone">Phone *</label><input class="control" id="j-phone" type="tel" autocomplete="tel" required><p class="err">Required.</p></div>
+            <div class="field full"><label for="j-website">Website *</label><input class="control" id="j-website" type="url" placeholder="http://" required><p class="err">Required.</p></div>
+            <div class="field full"><label for="j-social">Social media</label><textarea class="control" id="j-social" placeholder="One URL per line."></textarea>
+              <p class="hint">Add URLs for your Facebook, LinkedIn, Instagram or YouTube channels.</p></div>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h2>Location</h2>
+          <div class="form-grid">
+            {yesno("physical", "Do you have a physical location?", "Answer No if you work from home or travel to clients.")}
+            <div class="field"></div>
+            <div class="field full" id="address-block">
+              <span class="lbl">Address</span>
+              <p class="hint" style="margin:-.15rem 0 .7rem">We will not publish this if you do not have a physical address where you provide services.</p>
+            </div>
+            <div class="field full"><label for="j-country">Country</label>
+              <select class="control" id="j-country">{countries}</select></div>
+            <div class="field full"><label for="j-addr1">Address line 1</label><input class="control" id="j-addr1" autocomplete="address-line1"><p class="err">Required when you have a physical location.</p></div>
+            <div class="field full"><label for="j-addr2">Address line 2</label><input class="control" id="j-addr2" autocomplete="address-line2"></div>
+            <div class="field"><label for="j-city">City *</label><input class="control" id="j-city" autocomplete="address-level2" required><p class="err">Required.</p></div>
+            <div class="field"><label for="j-state">State *</label><input class="control" id="j-state" placeholder="AZ" autocomplete="address-level1" required><p class="err">Required.</p></div>
+            <div class="field"><label for="j-zip">ZIP code *</label><input class="control" id="j-zip" inputmode="numeric" autocomplete="postal-code" required><p class="err">Required.</p></div>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h2>Scope of practice</h2>
+          <div class="form-grid">
+            <div class="field full"><span class="lbl">Which of the following best describes your services? *</span>
+              <p class="hint" style="margin:-.15rem 0 .7rem">Select all that apply.</p>
+              <div class="chips" id="j-cats">{scope}</div>
+              <p class="err" data-for="cats">Select at least one.</p></div>
+            <div class="field full"><label for="j-short">Describe your practice *</label><textarea class="control" id="j-short" required></textarea>
+              <p class="hint">A brief description of your practice and services, 2\u20133 sentences. This is what appears on the directory and search pages.</p>
+              <p class="err">Required.</p></div>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h2>Credentials &amp; experience</h2>
+          <div class="form-grid">
+            {yesno("licensed", "Do you hold a state license?", "Several disciplines here have no licensure route. Answering No is expected and is published as such.")}
+            <div class="field"></div>
+            <div class="field full"><label for="j-license">If yes, list state(s) and license number(s)</label><input class="control" id="j-license" placeholder="Arizona, LAC-010717"></div>
+            <div class="field full"><label for="j-certs">If no, list your certificates or affiliations</label><textarea class="control" id="j-certs" placeholder="NAMA Board Certified, AHG Registered Herbalist, professional associations\u2026"></textarea></div>
+            <div class="field"><label for="j-since">How many years have you been in practice? *</label><input class="control" id="j-since" inputmode="numeric" placeholder="12" required><p class="err">Required.</p></div>
+            <div class="field"></div>
+            <div class="field full"><label for="j-training">Primary training and educational background *</label><textarea class="control" id="j-training" placeholder="Programme, institution, hours completed." required></textarea><p class="err">Required.</p></div>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h2>Pricing &amp; insurance</h2>
+          <div class="form-grid">
+            <div class="field full"><span class="lbl">Which of the following payments do you accept? *</span>
+              <p class="hint" style="margin:-.15rem 0 .7rem">Select all that apply.</p>
+              <div class="chips" id="j-pay">{pay}</div>
+              <p class="err" data-for="pay">Select at least one.</p></div>
+            <div class="field full"><label for="j-fees">Pricing structure *</label><textarea class="control" id="j-fees" placeholder="Initial visit, follow-up, packages." required></textarea>
+              <p class="hint">What do you charge for your services? List all that apply. A range is fine if pricing varies.</p>
+              <p class="err">Required.</p></div>
+            {yesno("telehealth", "Do you offer virtual/telehealth services?")}
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h2>Listing description</h2>
+          <div class="form-grid">
+            <div class="field full"><label for="j-long">Give a description of your practice or business *</label>
+              <textarea class="control" id="j-long" style="min-height:170px" required></textarea>
+              <p class="hint"><span id="wordcount">0</span> / 150 words. This appears on your own listing page.</p>
+              <p class="err">Required.</p></div>
+            <div class="field full"><span class="lbl">Media</span>
+              <p class="hint">Upload your logo and/or headshot, maximum 2 images. Attach them to the email this form opens \u2014 square images of 500px or larger work best.</p></div>
+          </div>
+        </section>
+
+        <section class="form-section internal">
+          <h2>Additional questions \u2014 not published</h2>
+          <p class="hint" style="margin:-.4rem 0 1.2rem">These answers help us plan the directory. They never appear on your listing or anywhere public.</p>
+          <div class="form-grid">
+            <div class="field full"><label for="j-size">What is the desired size of your business or practice? *</label><textarea class="control" id="j-size" placeholder="Days per week, patient or customer numbers, or any other metric." required></textarea><p class="err">Required.</p></div>
+            {yesno("openins", "If it became available in your field, would you be open to taking insurance?")}
+            {yesno("ehr", "Do you use an EHR? (Electronic Health Records)")}
+          </div>
+        </section>
+
+        <div style="display:flex;gap:.7rem;flex-wrap:wrap;margin-top:2rem;align-items:center">
+          <button class="btn btn-primary" type="submit">Send</button>
           <span class="hint" id="join-msg"></span>
         </div>
       </form>
+
       <div class="notice" id="join-done" style="display:none;margin-top:2rem">
-        <b>Listing ready to send.</b> This form has no server behind it yet, so your details were assembled into an email instead. Point the handler at your form service to collect submissions directly.
+        <b>Thank you for your submission.</b> We will get back to you shortly. Your answers were assembled into an email, with the internal section marked separately \u2014 attach your logo or headshot before sending.
         <p style="margin-top:.8rem"><a class="btn btn-dark btn-sm" id="join-mail" href="#">Open in email</a></p>
       </div>
     </div>
   </div>
   <div style="height:3rem"></div>"""
-    return shell("Join the directory — FindWell Directory",
+    return shell("Join the directory \u2014 FindWell Directory",
                  "Practitioners: apply for a free listing in the FindWell Directory.",
                  "/join/", body, view="join")
 

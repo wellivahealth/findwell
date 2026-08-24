@@ -284,26 +284,37 @@
   apply();
 })();
 
-/* ---------- join form ---------- */
+/* ---------- join form ----------
+   Assembles the application into an email. The internal section is kept
+   under its own heading so it is obvious what must not be published. */
 (function () {
   'use strict';
   var form = document.getElementById('join-form');
   if (!form) return;
   var $ = function (id) { return document.getElementById(id); };
-  var picked = [];
+  var val = function (id) { var el = $(id); return el ? el.value.trim() : ''; };
+  var radio = function (name) {
+    var el = form.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : '';
+  };
+  var cats = [], pays = [];
 
-  Array.prototype.forEach.call(form.querySelectorAll('[data-jcat]'), function (c) {
-    c.addEventListener('click', function () {
-      var k = c.dataset.jcat, i = picked.indexOf(k);
-      if (i > -1) picked.splice(i, 1); else picked.push(k);
-      c.setAttribute('aria-pressed', i === -1);
+  function toggler(attr, bucket) {
+    Array.prototype.forEach.call(form.querySelectorAll('[' + attr + ']'), function (c) {
+      c.addEventListener('click', function () {
+        var k = c.getAttribute(attr), i = bucket.indexOf(k);
+        if (i > -1) bucket.splice(i, 1); else bucket.push(k);
+        c.setAttribute('aria-pressed', i === -1);
+      });
     });
-  });
+  }
+  toggler('data-jcat', cats);
+  toggler('data-jpay', pays);
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var ok = true;
-    ['j-practice', 'j-name', 'j-email', 'j-city'].forEach(function (id) {
+    ['j-practice', 'j-name', 'j-since', 'j-city', 'j-state', 'j-email'].forEach(function (id) {
       var el = $(id);
       var bad = !el.value.trim() ||
                 (el.type === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value));
@@ -312,22 +323,49 @@
     });
     var msg = $('join-msg');
     if (!ok) { msg.textContent = 'Fix the highlighted fields and send again.'; return; }
-    if (!picked.length) { msg.textContent = 'Select at least one discipline.'; return; }
+    if (!cats.length) { msg.textContent = 'Select at least one scope of practice.'; return; }
     msg.textContent = '';
 
-    var rows = [
-      ['Practice', $('j-practice').value], ['Practitioner', $('j-name').value],
-      ['Email', $('j-email').value], ['Phone', $('j-phone').value],
-      ['Disciplines', picked.join(', ')], ['City', $('j-city').value], ['ZIP', $('j-zip').value],
-      ['Credentials', $('j-cred').value], ['Practising since', $('j-since').value],
-      ['Telehealth', $('j-tele').value], ['Training', $('j-training').value],
-      ['Fees and insurance', $('j-fees').value]
-    ].filter(function (r) { return r[1] && r[1].trim(); })
-     .map(function (r) { return r[0] + ': ' + r[1]; }).join('\n');
+    function block(title, rows) {
+      var kept = rows.filter(function (r) { return r[1]; });
+      if (!kept.length) return '';
+      return title + '\n' + kept.map(function (r) { return r[0] + ': ' + r[1]; }).join('\n') + '\n\n';
+    }
+
+    var body =
+      block('PRACTICE', [
+        ['Practice name', val('j-practice')], ['Provider name', val('j-name')],
+        ['Scope of practice', cats.join(', ')], ['Years in practice', val('j-since')],
+        ['Physical location', radio('physical')], ['Telehealth', radio('telehealth')],
+        ['City', val('j-city')], ['State', val('j-state')], ['Address', val('j-address')]
+      ]) +
+      block('CREDENTIALS', [
+        ['State licensed', radio('licensed')], ['License number', val('j-license')],
+        ['Certifications or affiliations', val('j-certs')],
+        ['Training and education', val('j-training')]
+      ]) +
+      block('CONTACT', [
+        ['Email', val('j-email')], ['Phone', val('j-phone')],
+        ['Website', val('j-website')], ['Social media', val('j-social')]
+      ]) +
+      block('PRICING AND PAYMENT', [
+        ['Accepts insurance', radio('insurance')], ['Payment methods', pays.join(', ')],
+        ['Pricing structure', val('j-fees')]
+      ]) +
+      block('LISTING COPY', [
+        ['Short description', val('j-short')], ['Long description', val('j-long')]
+      ]) +
+      block('INTERNAL — NOT PUBLISHED', [
+        ['Open to insurance if available', radio('openins')],
+        ['Uses an EHR', radio('ehr')],
+        ['Desired size of practice', val('j-size')],
+        ['Note left on submission', val('j-note')]
+      ]);
 
     $('join-mail').href = 'mailto:info@findwelldirectory.com?subject=' +
-      encodeURIComponent('Directory listing — ' + $('j-practice').value) +
-      '&body=' + encodeURIComponent(rows);
+      encodeURIComponent('Directory application — ' + val('j-practice')) +
+      '&body=' + encodeURIComponent(body);
     $('join-done').style.display = 'block';
+    $('join-done').scrollIntoView({ block: 'nearest' });
   });
 })();

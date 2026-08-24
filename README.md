@@ -80,9 +80,10 @@ drops a practitioner out of nearby results.
 
 ## Notes
 
-- The hero photograph is hosted locally in `public/assets/img`, in three
-  widths as both WebP and JPEG (the browser picks the smallest that fits;
-  the largest WebP is 116 KB). To swap it: `python3 make_hero.py photo.jpg`,
+- The hero and About photographs are hosted locally in `public/assets/img`,
+  each in three widths as both WebP and JPEG (the browser picks the smallest
+  that fits). To swap either one:
+  `python3 make_image.py photo.jpg hero` or `python3 make_image.py photo.jpg about 2.0`,
   then `python3 build.py`.
 - The remaining images — logo, discipline tiles, the About photograph, two
   provider logos — still load from the Squarespace CDN and will stop working

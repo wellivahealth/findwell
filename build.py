@@ -31,6 +31,7 @@ def _v(rel):
 CSS_V  = _v("assets/site.css")
 JS_V   = _v("assets/app.js")
 IMG_V  = _v("assets/img/hero-1400.webp")
+ABOUT_V = _v("assets/img/about-1400.webp")
 
 SS = "https://images.squarespace-cdn.com/content/v1/6877e1d8fb99bd2e2af8e1ed/"
 IMG = {
@@ -909,6 +910,15 @@ def page_join():
 
 WELLIVA_LOGO = "https://www.wellivahealth.com/welliva_logo_nav.png"
 
+ABOUT_PICTURE = f"""<picture>
+          <source type="image/webp" sizes="(max-width:860px) 92vw, 70ch"
+                  srcset="/assets/img/about-900.webp?v={ABOUT_V} 900w, /assets/img/about-1400.webp?v={ABOUT_V} 1400w, /assets/img/about-2000.webp?v={ABOUT_V} 2000w">
+          <img src="/assets/img/about-1400.jpg?v={ABOUT_V}" sizes="(max-width:860px) 92vw, 70ch"
+               srcset="/assets/img/about-900.jpg?v={ABOUT_V} 900w, /assets/img/about-1400.jpg?v={ABOUT_V} 1400w, /assets/img/about-2000.jpg?v={ABOUT_V} 2000w"
+               width="2000" height="1000" alt="Hands cradling soil and a young seedling, overlaid with a network of connected points"
+               loading="lazy" decoding="async">
+        </picture>"""
+
 def page_about():
     body = f"""  <div class="wrap">
     <p class="crumb"><a href="/">Home</a> / Who we are</p>
@@ -918,6 +928,10 @@ def page_about():
       <p class="lede">FindWell Directory was born out of a simple but urgent mission: to change the conversation around healthcare in our country. Too often, access to healing is filtered through layers of insurance systems, hidden costs, and a pharmaceutical-driven model that doesn't reflect the diverse ways people actually seek wellness. We believe health should be rooted in prevention, transparency, and the empowerment of individuals to choose what works best for their bodies and their lives.</p>
 
       <p class="lede" style="margin-top:1.1rem">This project grew out of our work with Welliva Health, a new approach to healthcare financing that focuses exclusively on integrative and lifestyle-based care rather than the conventional, pharmaceutical-dependent system. While Welliva is developing an alternative model of coverage, FindWell Directory serves as its natural partner: a platform where providers and patients can connect directly, without middlemen. Here, practitioners openly share their credentials, services, and pricing, while users of the directory help us identify the real needs in communities across the country. Together, this network builds the foundation for a healthcare landscape that values prevention, choice, and trust.</p>
+
+      <figure class="about-figure">
+        {ABOUT_PICTURE}
+      </figure>
 
       <aside class="partner">
         <a href="https://wellivahealth.com/" target="_blank" rel="noopener">

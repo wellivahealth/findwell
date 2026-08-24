@@ -457,10 +457,24 @@ def initials(name):
     return "".join(w[0].upper() for w in parts[:2])
 
 def avatar(p, big=False):
+    """Provider logo. A local path (starting with /) is served from our own
+    assets with a cache-busting hash, and a WebP variant is used when one
+    exists. A remote URL gets Squarespace's resize parameter instead."""
     cls = "avatar avatar-lg" if big else "avatar"
-    if p["logo"]:
-        return f'<img class="{cls}" src="{p["logo"]}?format=500w" alt="{E(p["name"])} logo" loading="lazy" decoding="async">'
-    return f'<div class="{cls} avatar-mono" aria-hidden="true">{E(initials(p["name"]))}</div>'
+    logo = p["logo"]
+    if not logo:
+        return f'<div class="{cls} avatar-mono" aria-hidden="true">{E(initials(p["name"]))}</div>'
+    if not logo.startswith("/"):
+        return f'<img class="{cls}" src="{logo}?format=500w" alt="{E(p["name"])} logo" loading="lazy" decoding="async">'
+    rel = logo.lstrip("/")
+    src = f'{logo}?v={_v(rel)}'
+    webp = logo.rsplit(".", 1)[0] + ".webp"
+    img = (f'<img class="{cls}" src="{src}" alt="{E(p["name"])} logo" '
+           f'loading="lazy" decoding="async" width="200" height="200">')
+    if os.path.exists(os.path.join(OUT, webp.lstrip("/"))):
+        return (f'<picture><source type="image/webp" srcset="{webp}?v={_v(webp.lstrip("/"))}">'
+                f'{img}</picture>')
+    return img
 
 def record_html(p):
     years = f'{YEAR - p["since"]} yrs (since {p["since"]})'

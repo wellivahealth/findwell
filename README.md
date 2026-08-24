@@ -100,6 +100,23 @@ Until that ID is set, the form still works: it validates, then opens a
 pre-filled email instead, so no application is lost. The same fallback runs
 if Formspree is unreachable.
 
+### Logos that practitioners upload
+
+Uploaded files go to **Formspree, not to the site**. They appear as a download
+link on the submission in your dashboard. To publish one:
+
+1. Download the image from the Formspree submission.
+2. `python3 make_logo.py ~/Downloads/their-logo.png provider-slug`
+   — pads it to a 400px square without cropping, keeps transparency,
+   and writes both PNG and WebP to `public/assets/img/providers/`.
+3. In `build.py`, set that practitioner's field to
+   `logo="/assets/img/providers/provider-slug.png"`.
+4. `python3 build.py` and push.
+
+Practitioners without a logo get a monogram tile built from the practice name,
+so a listing never shows a broken image. Don't treat Formspree as permanent
+storage — download what you intend to keep.
+
 Field names are human-readable, so Formspree notification emails arrive
 labelled ("Practice or business name: …") rather than as field codes. A hidden
 honeypot field catches most spam bots. File uploads need a paid Formspree

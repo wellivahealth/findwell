@@ -21,6 +21,8 @@ YEAR = 2026
 # Set FORM_ENDPOINT to "" to fall back to opening a pre-filled email instead.
 FORM_ENDPOINT = "/api/apply"
 
+CONTACT_EMAIL = "info@findwelldirectory.com"   # where every enquiry lands
+
 SITE = "https://findwelldirectory.com"   # <- set to the domain you attach; feeds canonical, og:url, sitemap
 
 def _v(rel):
@@ -59,9 +61,16 @@ DISCIPLINES = [
     dict(key="Naturopathy", label="Licensed naturopaths", slug="naturopathic-medicine",
          note="ND or NMD — licensed in Arizona.",
          img=SS + "1755278249101-I8FZPKRHUBB5G4P677O0/unsplash-image-KERVbxLVLiY.jpg"),
-    dict(key="Counseling", label="Counseling & support", slug="counseling",
-         note="Licensed counselors (LPC, LCSW, LMFT) alongside non-clinical coaching and end-of-life support. Licensure status is shown on every record.",
+    dict(key="IntegrativeMedicine", label="Integrative & functional medicine",
+         slug="integrative-functional-medicine",
+         note="Licensed clinicians — MD, DO, NP or PA — practising integrative or functional medicine. Integrative training is published on every record, including when none is reported.",
+         img=None),
+    dict(key="Counseling", label="Counselors", slug="counseling",
+         note="Licensed mental health professionals — LPC, LCSW, LMFT.",
          img=SS + "1757903674176-QK99BMSR1DQHPNWYLO3E/unsplash-image-F9DFuJoS9EU.jpg"),
+    dict(key="Coaching", label="Health & wellness coaches", slug="health-wellness-coaching",
+         note="Board certified coaches (NBC-HWC) and other non-clinical forms of support. No state licensure exists.",
+         img=None),
     dict(key="Bodywork", label="Body work", slug="body-work",
          note="CranioSacral, tuina, structural integration. State licensed.",
          img=SS + "1755278329164-ATSTUR14YXFQDGE3ZFGI/unsplash-image-AV0KNliGvQc.jpg"),
@@ -224,7 +233,7 @@ PROVIDERS = [
 
     dict(slug="emma-vasseur-wellbeing", name="Emma Vasseur: Wellbeing Coach",
          person="Emma Vasseur, NBC-HWC", logo=None,
-         categories=["Bodywork", "EnergyMedicine", "Counseling"],
+         categories=["Bodywork", "EnergyMedicine", "Coaching"],
          city="Tucson", state="AZ", zip="85712",
          address="3071 N Swan Rd, Tucson, AZ 85712",
          lat=32.2660, lng=-110.9060, telehealth=True,
@@ -242,7 +251,7 @@ PROVIDERS = [
 
     dict(slug="anita-kellman-end-of-life-doula", name="End of Life Doula",
          person="Anita Kellman", logo=None,
-         categories=["Counseling"],
+         categories=["Coaching"],
          city="Tucson", state="AZ", zip="85749",
          address="",   # applicant has no public premises; visits by arrangement
          lat=32.2830, lng=-110.7420, telehealth=True,
@@ -260,7 +269,7 @@ PROVIDERS = [
 
     dict(slug="healing-options", name="Healing Options",
          person="Amy Schill, EEM-AP", logo=None,
-         categories=["EnergyMedicine", "Counseling"],
+         categories=["EnergyMedicine", "Coaching"],
          city="Tucson", state="AZ", zip="85704",
          address="855 W Calle Dadivoso, Tucson, AZ 85704",
          lat=32.3390, lng=-110.9950, telehealth=True,
@@ -300,6 +309,7 @@ def _merge_approved():
         r.setdefault("social", [])
         r.setdefault("long", "")
         r.setdefault("verified", False)
+        r.setdefault("integrative_training", "")
         for k in ("credentials", "licensure", "training", "affiliations",
                   "pricing", "payments", "insurance", "blurb", "address", "zip"):
             r.setdefault(k, "")
@@ -394,8 +404,9 @@ HERO = f"""<picture>
 
 def shell(title, desc, path, body, view="", extra_head=""):
     """Wrap page content in the shared chrome. `path` is the canonical URL path."""
-    nav = [("/directory/", "Find a provider"), ("/about/", "Who we are"),
-           ("/articles/", "Articles"), ("/advertise/", "Advertise with us")]
+    nav = [("/directory/", "Find a provider"), ("/practice-types/", "By discipline"),
+           ("/about/", "Who we are"), ("/articles/", "Articles"),
+           ("/advertise/", "Advertise with us")]
     navhtml = "".join(
         f'<a href="{h}"{" aria-current=\"page\"" if path.startswith(h) else ""}>{t}</a>'
         for h, t in nav)
@@ -460,6 +471,7 @@ def shell(title, desc, path, body, view="", extra_head=""):
         <a href="/about/">Who we are</a>
         <a href="/articles/">Articles</a>
         <a href="/advertise/">Advertise with us</a>
+        <a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a>
       </div>
     </div>
     <div class="foot-legal">
@@ -534,6 +546,15 @@ def avatar(p, big=False):
                 f'{img}</picture>')
     return img
 
+def integrative_row(p):
+    """Shown for integrative and functional medicine listings. An empty value
+    is published as 'None reported' rather than being left off the record."""
+    if "IntegrativeMedicine" not in p["categories"]:
+        return ""
+    v = (p.get("integrative_training") or "").strip()
+    return (f'<dt>Integrative training</dt>'
+            f'<dd{"" if v else " class=\"na\""}>{E(v) if v else "None reported"}</dd>')
+
 def record_html(p):
     years = f'{YEAR - p["since"]} yrs (since {p["since"]})'
     hay = " ".join([p["name"], p["person"], p["city"], p["state"], p["zip"],
@@ -557,6 +578,7 @@ def record_html(p):
       <dl class="fields">
         <dt>Credential</dt><dd>{E(p['credentials'])}</dd>
         <dt>Licensure</dt><dd>{E(p['licensure'])}</dd>
+        {integrative_row(p)}
         <dt>In practice</dt><dd>{years}</dd>
         <dt>Fees</dt><dd>{E(p['pricing'])}</dd>
         <dt>Insurance</dt><dd>{E(p['insurance'])}</dd>
@@ -689,26 +711,44 @@ def page_directory(subset=None, title=None, desc=None, path="/directory/", headi
                  path, body, view="directory")
 
 def page_practice_types():
+    """Populated disciplines get photo tiles. Empty ones are listed compactly
+    underneath as an invitation to apply, rather than leaving gaps in the grid."""
+    live  = [d for d in DISCIPLINES if cat_count(d["key"])]
+    empty = [d for d in DISCIPLINES if not cat_count(d["key"])]
+
     tiles = ""
-    for d in DISCIPLINES:
+    for d in live:
         n = cat_count(d["key"])
         frame = (f'<div class="tile-frame">{img_tag(d["img"], "", "(max-width:700px) 92vw, 320px", widths=(500, 750, 1000))}</div>'
                  if d["img"] else f'<div class="tile-frame blank">{E(d["label"])}</div>')
-        go = (f'<span class="tile-go">View providers <span class="n">{n}</span> →</span>'
-              if n else '<span class="tile-go none">No listings yet</span>')
         tiles += f"""<li><a class="tile" href="/practice-types/{d['slug']}/">
-        {frame}<h3>{E(d['label'])}</h3><p>{E(d['note'])}</p>{go}</a></li>"""
+        {frame}<h3>{E(d['label'])}</h3><p>{E(d['note'])}</p>
+        <span class="tile-go">View providers <span class="n">{n}</span> \u2192</span></a></li>"""
+
+    waiting = ""
+    if empty:
+        rows = "".join(
+            f'<li><a href="/practice-types/{d["slug"]}/"><strong>{E(d["label"])}</strong>'
+            f'<span>{E(d["note"])}</span></a></li>' for d in empty)
+        waiting = f"""
+      <section class="waiting">
+        <h2>Also part of the directory</h2>
+        <p class="lede">These disciplines are open and we are reviewing applications. If you practise
+        in one of them, <a href="/join/">apply for a listing</a> \u2014 it is free.</p>
+        <ul class="waiting-list">{rows}</ul>
+      </section>"""
+
     body = f"""  <div class="wrap">
     <p class="crumb"><a href="/">Home</a> / Disciplines</p>
     <div class="section-tight">
       <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Choose the type of practice</h1>
-      <p class="lede">Licensure varies by discipline. Where Arizona licenses a profession, the license number appears on the record. Where it does not, we publish training and certification instead.</p>
-      <ul class="tiles">{tiles}</ul>
+      <p class="lede">Licensure varies by discipline. Where a profession is state licensed, the license number appears on the record. Where it is not, we publish training and certification instead.</p>
+      <ul class="tiles">{tiles}</ul>{waiting}
     </div>
   </div>
   <div style="height:3rem"></div>"""
-    return shell("Browse by discipline — FindWell Directory",
-                 "Browse holistic practitioners by discipline: Ayurveda, acupuncture, TCM, naturopathic medicine, chiropractic, body work, energy work, herbology and more.",
+    return shell("Browse by discipline \u2014 FindWell Directory",
+                 "Browse holistic practitioners by discipline: Ayurveda, acupuncture, TCM, chiropractic, body work, energy work, herbology and more.",
                  "/practice-types/", body)
 
 def page_locations():
@@ -767,6 +807,7 @@ def page_provider(p):
             <dt>Credentials</dt><dd>{E(p['credentials'])}</dd>
             <dt>Licensure</dt><dd>{E(p['licensure'])}{'' if p.get('verified', True) else ' <span class="unverified">not yet verified</span>'}</dd>
             <dt>Training</dt><dd>{E(p['training'])}</dd>
+            {integrative_row(p)}
             <dt>In practice</dt><dd>{years}</dd>
             <dt>Affiliations</dt><dd>{E(p['affiliations'])}</dd>
             <dt>Fees</dt><dd>{E(p['pricing'])}</dd>
@@ -803,7 +844,8 @@ PAYMENT_METHODS = ["Insurance", "Cash", "Checks", "Credit Cards", "Debit Cards",
 
 SCOPE_OPTIONS = ["Ayurveda", "Acupuncture", "Traditional Chinese Medicine",
                  "Naturopathic Medicine", "Chiropractic", "Body Work", "Energy Work",
-                 "Counseling", "Herbalism", "Farmer", "Grocer"]
+                 "Integrative / Functional Medicine", "Counseling",
+                 "Health & Wellness Coaching", "Herbalism", "Farmer", "Grocer"]
 
 COUNTRIES = ["United States", "Canada", "Mexico", "United Kingdom", "Australia", "\u2014",
     "Afghanistan","\u00c5land Islands","Albania","Algeria","American Samoa","Andorra","Angola",
@@ -930,6 +972,9 @@ def page_join():
             <div class="field"><label for="j-since">How many years have you been in practice? *</label><input class="control" id="j-since" name="Years in practice" inputmode="numeric" placeholder="12" required><p class="err">Required.</p></div>
             <div class="field"></div>
             <div class="field full"><label for="j-training">Primary training and educational background *</label><textarea class="control" id="j-training" name="Primary training and education" placeholder="Programme, institution, hours completed." required></textarea><p class="err">Required.</p></div>
+            <div class="field full"><label for="j-integrative">Integrative or functional medicine training</label>
+              <textarea class="control" id="j-integrative" name="Integrative training" placeholder="e.g. IFM Certified Practitioner, ABOIM board certification, fellowship, coursework and hours."></textarea>
+              <p class="hint">Publish exactly what you hold. If you have no formal integrative or functional training, leave this blank \u2014 the listing will say &ldquo;none reported&rdquo; rather than implying otherwise.</p></div>
           </div>
         </section>
 
@@ -1129,7 +1174,7 @@ def page_advertise():
       <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">Get in touch</h2>
       <p class="lede">Tell us who you are trying to reach and we will tell you honestly whether our audience is a fit. Rates depend on placement and season.</p>
       <p style="margin-top:1.6rem">
-        <a class="btn btn-primary" href="mailto:info@findwelldirectory.com?subject=Advertising%20enquiry">Email us about advertising</a>
+        <a class="btn btn-primary" href="mailto:{CONTACT_EMAIL}?subject=Advertising%20enquiry">Email us about advertising</a>
       </p>
     </div>
   </div>

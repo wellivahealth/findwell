@@ -65,6 +65,18 @@ dict(slug="choosing-an-acupuncturist",
 `build.py` and the index page, the article page and the sitemap all update. The
 index shows an empty state until the first entry exists.
 
+## Integrative & functional medicine
+
+This category is gated on licensure: MD, DO, NP or PA. "Functional medicine"
+is a method rather than a licence class, so admitting it as its own category
+would put a physician and a weekend-certified coach side by side. Keeping the
+gate on the licence and publishing the training separately avoids that.
+
+Listings in this category carry an extra record line, **Integrative training**.
+If the applicant reports none, the line reads "None reported" rather than being
+hidden — the absence is the information. The field is `integrative_training`
+on the listing.
+
 ## Changing listings
 
 Everything comes from `build.py`. Edit the `PROVIDERS` or `DISCIPLINES` list at

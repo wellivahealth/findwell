@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=32f70f4b56">
+<link rel="stylesheet" href="/assets/site.css?v=eb4579819c">
 
 </head>
 <body data-view="join">
@@ -36,7 +36,7 @@
     </a>
     <button class="burger" id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
-      <a href="/directory/">Find a provider</a><a href="/about/">Who we are</a><a href="/articles/">Articles</a><a href="/advertise/">Advertise with us</a>
+      <a href="/directory/">Find a provider</a><a href="/practice-types/">By discipline</a><a href="/about/">Who we are</a><a href="/articles/">Articles</a><a href="/advertise/">Advertise with us</a>
       <a class="cta" href="/join/">Join the directory</a>
     </nav>
   </div>
@@ -102,7 +102,7 @@
           <div class="form-grid">
             <div class="field full"><span class="lbl">Which of the following best describes your services? *</span>
               <p class="hint" style="margin:-.15rem 0 .7rem">Select all that apply.</p>
-              <div class="chips" id="j-cats"><button type="button" class="chip" data-jcat="Ayurveda" aria-pressed="false">Ayurveda</button><button type="button" class="chip" data-jcat="Acupuncture" aria-pressed="false">Acupuncture</button><button type="button" class="chip" data-jcat="Traditional Chinese Medicine" aria-pressed="false">Traditional Chinese Medicine</button><button type="button" class="chip" data-jcat="Naturopathic Medicine" aria-pressed="false">Naturopathic Medicine</button><button type="button" class="chip" data-jcat="Chiropractic" aria-pressed="false">Chiropractic</button><button type="button" class="chip" data-jcat="Body Work" aria-pressed="false">Body Work</button><button type="button" class="chip" data-jcat="Energy Work" aria-pressed="false">Energy Work</button><button type="button" class="chip" data-jcat="Counseling" aria-pressed="false">Counseling</button><button type="button" class="chip" data-jcat="Herbalism" aria-pressed="false">Herbalism</button><button type="button" class="chip" data-jcat="Farmer" aria-pressed="false">Farmer</button><button type="button" class="chip" data-jcat="Grocer" aria-pressed="false">Grocer</button></div>
+              <div class="chips" id="j-cats"><button type="button" class="chip" data-jcat="Ayurveda" aria-pressed="false">Ayurveda</button><button type="button" class="chip" data-jcat="Acupuncture" aria-pressed="false">Acupuncture</button><button type="button" class="chip" data-jcat="Traditional Chinese Medicine" aria-pressed="false">Traditional Chinese Medicine</button><button type="button" class="chip" data-jcat="Naturopathic Medicine" aria-pressed="false">Naturopathic Medicine</button><button type="button" class="chip" data-jcat="Chiropractic" aria-pressed="false">Chiropractic</button><button type="button" class="chip" data-jcat="Body Work" aria-pressed="false">Body Work</button><button type="button" class="chip" data-jcat="Energy Work" aria-pressed="false">Energy Work</button><button type="button" class="chip" data-jcat="Integrative / Functional Medicine" aria-pressed="false">Integrative / Functional Medicine</button><button type="button" class="chip" data-jcat="Counseling" aria-pressed="false">Counseling</button><button type="button" class="chip" data-jcat="Health &amp; Wellness Coaching" aria-pressed="false">Health &amp; Wellness Coaching</button><button type="button" class="chip" data-jcat="Herbalism" aria-pressed="false">Herbalism</button><button type="button" class="chip" data-jcat="Farmer" aria-pressed="false">Farmer</button><button type="button" class="chip" data-jcat="Grocer" aria-pressed="false">Grocer</button></div>
               <p class="err" data-for="cats">Select at least one.</p></div>
             <div class="field full"><label for="j-short">Describe your practice *</label><textarea class="control" id="j-short" name="Describe your practice" required></textarea>
               <p class="hint">A brief description of your practice and services, 2–3 sentences. This is what appears on the directory and search pages.</p>
@@ -128,6 +128,9 @@
             <div class="field"><label for="j-since">How many years have you been in practice? *</label><input class="control" id="j-since" name="Years in practice" inputmode="numeric" placeholder="12" required><p class="err">Required.</p></div>
             <div class="field"></div>
             <div class="field full"><label for="j-training">Primary training and educational background *</label><textarea class="control" id="j-training" name="Primary training and education" placeholder="Programme, institution, hours completed." required></textarea><p class="err">Required.</p></div>
+            <div class="field full"><label for="j-integrative">Integrative or functional medicine training</label>
+              <textarea class="control" id="j-integrative" name="Integrative training" placeholder="e.g. IFM Certified Practitioner, ABOIM board certification, fellowship, coursework and hours."></textarea>
+              <p class="hint">Publish exactly what you hold. If you have no formal integrative or functional training, leave this blank — the listing will say &ldquo;none reported&rdquo; rather than implying otherwise.</p></div>
           </div>
         </section>
 
@@ -230,6 +233,7 @@
         <a href="/about/">Who we are</a>
         <a href="/articles/">Articles</a>
         <a href="/advertise/">Advertise with us</a>
+        <a href="mailto:info@findwelldirectory.com">info@findwelldirectory.com</a>
       </div>
     </div>
     <div class="foot-legal">

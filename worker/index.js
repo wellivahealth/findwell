@@ -21,7 +21,9 @@ const SCOPE_TO_KEY = {
   'Chiropractic': 'Chiropractic',
   'Body Work': 'Bodywork',
   'Energy Work': 'EnergyMedicine',
+  'Integrative / Functional Medicine': 'IntegrativeMedicine',
   'Counseling': 'Counseling',
+  'Health & Wellness Coaching': 'Coaching',
   'Herbalism': 'Herbalism',
   'Farmer': 'Farms',
   'Grocer': 'Grocers',
@@ -79,7 +81,7 @@ async function sendEmail(env, { to, subject, html, replyTo }) {
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      from: env.MAIL_FROM || 'FindWell Directory <info@findwelldirectory.com>',
+      from: env.MAIL_FROM || 'FindWell Directory <noreply@findwelldirectory.com>',
       to: [to], subject, html,
       ...(replyTo ? { reply_to: replyTo } : {}),
     }),
@@ -127,6 +129,7 @@ ${row('License no.', s.license)}
 ${row('Certifications', s.certs)}
 ${row('Years', s.years)}
 ${row('Training', s.training)}
+${row('Integrative training', s.integrative || 'none reported')}
 ${row('Telehealth', s.telehealth)}
 ${row('Physical location', s.physical)}
 ${row('Address', s.address)}
@@ -219,6 +222,7 @@ function readForm(form) {
     licensed: g('licensed'), license: g('State(s) and license number(s)'),
     certs: g('Certificates or affiliations'), years: g('Years in practice'),
     training: g('Primary training and education'),
+    integrative: g('Integrative training'),
     payments: split('Payment methods'), pricing: g('Pricing structure'),
     telehealth: g('telehealth'), long: g('Listing description'),
     size: g('Desired size of practice'), openins: g('openins'), ehr: g('ehr'),
@@ -259,6 +263,7 @@ function toListing(s, coords, logoPath) {
       ? (s.license || 'State licensed — number pending verification')
       : 'No state licensure exists for this discipline',
     training: s.training || '',
+    integrative_training: s.integrative || '',
     since: Number.isFinite(years) && years > 0 && years < 90 ? year - years : null,
     affiliations: s.certs || '—',
     pricing: s.pricing || '—',

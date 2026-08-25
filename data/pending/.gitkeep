@@ -1,0 +1,4 @@
+Pending applications land here as JSON, one file each, plus any uploaded logo.
+Approving moves the listing into ../listings.json and the logo into
+public/assets/img/providers/. Declining deletes both. Nothing in this folder is
+published — it sits outside public/.

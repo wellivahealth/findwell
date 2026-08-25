@@ -418,12 +418,27 @@ HERO = f"""<picture>
 
 def shell(title, desc, path, body, view="", extra_head=""):
     """Wrap page content in the shared chrome. `path` is the canonical URL path."""
-    nav = [("/directory/", "Find a provider"), ("/practice-types/", "By discipline"),
-           ("/about/", "Who we are"), ("/articles/", "Articles"),
+    # "Find a provider" opens a menu of the three ways in; the rest are plain links.
+    find_links = [("/directory/", "All providers"),
+                  ("/practice-types/", "By discipline"),
+                  ("/locations/", "By location")]
+    find_active = any(path.startswith(h) for h, _ in find_links)
+    submenu = "".join(
+        f'<li><a href="{h}"{" aria-current=\"page\"" if path.startswith(h) else ""}>{t}</a></li>'
+        for h, t in find_links)
+
+    nav = [("/about/", "Who we are"), ("/articles/", "Articles"),
            ("/advertise/", "Advertise with us")]
-    navhtml = "".join(
+    navhtml = f"""<div class="nav-group">
+        <button type="button" class="nav-toggle" id="find-toggle" aria-expanded="false"
+                aria-controls="find-menu"{' data-active="1"' if find_active else ''}>
+          Find a provider <span class="caret" aria-hidden="true">&#9662;</span>
+        </button>
+        <ul class="nav-menu" id="find-menu">{submenu}</ul>
+      </div>""" + "".join(
         f'<a href="{h}"{" aria-current=\"page\"" if path.startswith(h) else ""}>{t}</a>'
         for h, t in nav)
+
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -505,8 +520,7 @@ def console_html():
         f'<button type="button" class="chip" data-chip="{d["key"]}">{E(d["label"])}'
         f'<span class="n">{cat_count(d["key"])}</span></button>'
         for d in DISCIPLINES if cat_count(d["key"]))
-    whereopts = "".join(f'<option value="{E(state_name(ab))}">' for ab in STATES) + \
-                "".join(f'<option value="{E(c)}">' for c, _ in CITIES)
+    whereopts = "".join(f'<option value="{E(state_name(ab))}">' for ab in STATES)
     return f"""<form class="console" id="console" action="/directory/" method="get">
     <div class="console-hd">
       <h2>Search the directory</h2>
@@ -519,7 +533,7 @@ def console_html():
       </div>
       <div class="field">
         <label for="c-loc">Where</label>
-        <input class="control" id="c-loc" name="where" type="text" placeholder="State, city or ZIP" list="where-list">
+        <input class="control" id="c-loc" name="where" type="text" placeholder="State or ZIP code" list="where-list">
         <datalist id="where-list">{whereopts}</datalist>
       </div>
       <button class="btn btn-primary" type="submit">Search</button>
@@ -659,7 +673,13 @@ def page_home():
                             f'imagesrcset="/assets/img/hero-900.webp?v={IMG_V} 900w, /assets/img/hero-1400.webp?v={IMG_V} 1400w, '
                             f'/assets/img/hero-2000.webp?v={IMG_V} 2000w" imagesizes="100vw" type="image/webp">')
 
-def page_directory(subset=None, title=None, desc=None, path="/directory/", heading=None, intro=""):
+def crumbs_html(trail):
+    """trail is [(label, href or None), ...]; the last item is the current page."""
+    parts = [f'<a href="{h}">{E(t)}</a>' if h else E(t) for t, h in trail]
+    return '<p class="crumb">' + " / ".join(parts) + "</p>"
+
+def page_directory(subset=None, title=None, desc=None, path="/directory/", heading=None,
+                   intro="", trail=None, footer_link=None):
     rows = subset if subset is not None else PROVIDERS
     checks = "".join(
         f'<label class="check"><input type="checkbox" data-cat="{d["key"]}"> {E(d["label"])}'
@@ -669,7 +689,7 @@ def page_directory(subset=None, title=None, desc=None, path="/directory/", headi
         f'<option value="{ab}">{E(state_name(ab))} ({len(in_state(ab))})</option>'
         for ab in STATES)
     body = f"""  <div class="wrap">
-    <p class="crumb"><a href="/">Home</a> / {E(heading or 'Directory')}</p>
+    {crumbs_html(trail or [("Home", "/"), (heading or "Directory", None)])}
     <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin:.6rem 0 1.4rem">{E(heading or 'Provider directory')}</h1>
     {f'<p class="lede" style="margin:-.8rem 0 1.8rem">{E(intro)}</p>' if intro else ''}
     <div class="dir">
@@ -711,6 +731,7 @@ def page_directory(subset=None, title=None, desc=None, path="/directory/", headi
         </div>
         <div class="active-filters" id="active-filters"></div>
         <ul class="records" id="records">{"".join(record_html(p) for p in rows)}</ul>
+        {f'<p class="back-link"><a href="{footer_link[1]}">&larr; {E(footer_link[0])}</a></p>' if footer_link else ''}
         <div class="empty" id="empty" hidden style="margin-top:2rem">
           <h3>No practitioners match those filters</h3>
           <p>Try widening the distance, removing a discipline, or searching a nearby city. Telehealth listings serve patients anywhere in their state.</p>
@@ -735,7 +756,7 @@ def page_practice_types():
         tiles += f"""<li><a class="tile" href="/practice-types/{d['slug']}/">
         {frame}<h3>{E(d['label'])}</h3><p>{E(d['note'])}</p>{go}</a></li>"""
     body = f"""  <div class="wrap">
-    <p class="crumb"><a href="/">Home</a> / Disciplines</p>
+    {crumbs_html([("Home", "/"), ("Find a provider", "/directory/"), ("By discipline", None)])}
     <div class="section-tight">
       <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Choose the type of practice</h1>
       <p class="lede">Licensure varies by discipline. Where a profession is state licensed, the license number appears on the record. Where it is not, we publish training and certification instead.</p>
@@ -756,7 +777,7 @@ def page_locations():
         <span class="index-name">{E(state_name(ab))}<span class="index-sub">{E(' · '.join(cities_in(ab)))}</span></span>
         <span class="index-n">{n}</span></a></li>"""
     body = f"""  <div class="wrap">
-    <p class="crumb"><a href="/">Home</a> / Locations</p>
+    {crumbs_html([("Home", "/"), ("Find a provider", "/directory/"), ("By location", None)])}
     <div class="section-tight">
       <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Browse by state</h1>
       <p class="lede">Pick a state, then narrow by city or ZIP radius once you are there. {sum(1 for p in PROVIDERS if p['telehealth'])} listings also offer telehealth, which in most disciplines means anywhere in the state they are licensed.</p>
@@ -1225,7 +1246,9 @@ def main():
             title=f"{d['label']} practitioners — FindWell Directory",
             desc=f"{d['label']}: {d['note']}",
             path=f"/practice-types/{d['slug']}/",
-            heading=d["label"], intro=d["note"])))
+            heading=d["label"], intro=d["note"],
+            trail=[("Home", "/"), ("Disciplines", "/practice-types/"), (d["label"], None)],
+            footer_link=("All disciplines", "/practice-types/"))))
 
     for ab in STATES:
         rows = in_state(ab)
@@ -1236,7 +1259,9 @@ def main():
             desc=f"{len(rows)} holistic and integrative practitioners listed in {state_name(ab)}.",
             path=f"/locations/{state_slug(ab)}/",
             heading=state_name(ab),
-            intro=f"{len(rows)} listed in {state_name(ab)} — {', '.join(cs)}.")))
+            intro=f"{len(rows)} listed in {state_name(ab)} — {', '.join(cs)}.",
+            trail=[("Home", "/"), ("Locations", "/locations/"), (state_name(ab), None)],
+            footer_link=("All locations", "/locations/"))))
 
     for p in PROVIDERS:
         written.append(write(f"provider/{p['slug']}/", page_provider(p)))

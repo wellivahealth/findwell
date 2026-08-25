@@ -116,6 +116,36 @@ p:last-child{ margin-bottom:0; }
 .nav a[aria-current="page"]{ color:var(--ink); background:var(--surface-sunk); }
 .nav .cta{ margin-left:.4rem; background:var(--accent); color:oklch(0.99 0 0); padding:.55rem 1rem; }
 .nav .cta:hover{ background:oklch(0.60 0.175 10); color:oklch(1 0 0); }
+/* "Find a provider" dropdown. Opens on click; :focus-within keeps it usable
+   by keyboard and if JavaScript never loads. */
+.nav-group{ position:relative; }
+.nav-toggle{
+  display:inline-flex; align-items:center; gap:.35rem;
+  background:none; border:0; cursor:pointer; font-family:inherit;
+  color:var(--ink-soft); font-size:.87rem; font-weight:500;
+  padding:.5rem .62rem; border-radius:var(--r-md); white-space:nowrap;
+  transition:color .18s var(--ease), background .18s var(--ease);
+}
+.nav-toggle:hover{ color:var(--brand); background:var(--surface-sunk); }
+.nav-toggle[data-active="1"]{ color:var(--ink); background:var(--surface-sunk); }
+.nav-toggle .caret{ font-size:.7em; transition:transform .18s var(--ease); }
+.nav-toggle[aria-expanded="true"] .caret{ transform:rotate(180deg); }
+.nav-menu{
+  position:absolute; top:calc(100% + .35rem); left:0; z-index:var(--z-dropdown);
+  min-width:13rem; margin:0; padding:.35rem; list-style:none;
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--r-md);
+  box-shadow:0 18px 40px -22px oklch(0.20 0.05 195 / .55);
+  display:none;
+}
+.nav-toggle[aria-expanded="true"] + .nav-menu,
+.nav-group:focus-within .nav-menu{ display:block; }
+.nav-menu a{
+  display:block; padding:.55rem .7rem; border-radius:var(--r-sm);
+  font-size:.88rem; color:var(--ink-soft); text-decoration:none; white-space:nowrap;
+}
+.nav-menu a:hover{ background:var(--surface-sunk); color:var(--brand); }
+.nav-menu a[aria-current="page"]{ color:var(--ink); background:var(--surface-sunk); }
+
 .burger{
   display:none; background:none; border:1px solid var(--line-strong); color:var(--ink);
   border-radius:var(--r-md); padding:.45rem .7rem; font-size:.85rem; cursor:pointer;
@@ -139,6 +169,20 @@ p:last-child{ margin-bottom:0; }
   }
   .nav.open{ display:flex; }
   .nav a{ padding:.75rem .25rem; border-bottom:1px solid var(--line); border-radius:0; }
+  .nav-group{ position:static; }
+  .nav-toggle{
+    width:100%; justify-content:space-between; padding:.75rem .25rem;
+    border-bottom:1px solid var(--line); border-radius:0; font-size:.95rem;
+  }
+  .nav-toggle .caret{ display:none; }
+  .nav-menu{
+    position:static; display:block; border:0; box-shadow:none; padding:0;
+    background:transparent; min-width:0;
+  }
+  .nav-menu a{
+    padding:.65rem .25rem .65rem 1.1rem; border-bottom:1px solid var(--line);
+    border-radius:0; font-size:.9rem;
+  }
   .nav .cta{ margin:.7rem 0 0; text-align:center; border-radius:var(--r-md); border-bottom:0; }
 }
 @media (max-width:480px){ .mark img{ height:42px; } }
@@ -280,6 +324,10 @@ main{ display:block; }
 .section-tight{ padding:clamp(2rem,4vw,3rem) 0; }
 .section h2{ font-size:clamp(1.6rem,3.2vw,2.3rem); letter-spacing:-0.025em; }
 .lede{ color:var(--ink-soft); max-width:68ch; font-size:1.04rem; }
+
+.back-link{ margin:2rem 0 0; font-family:var(--ff-mono); font-size:.8rem; }
+.back-link a{ color:var(--brand); text-decoration:none; }
+.back-link a:hover{ color:var(--accent); }
 
 .rule{ border:0; border-top:1px solid var(--line); margin:0; }
 

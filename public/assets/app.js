@@ -26,6 +26,24 @@
     });
   }
 
+  /* ---------- "Find a provider" dropdown ---------- */
+  var findToggle = document.getElementById('find-toggle');
+  if (findToggle) {
+    var findGroup = findToggle.parentNode;
+    var close = function () { findToggle.setAttribute('aria-expanded', 'false'); };
+    findToggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = findToggle.getAttribute('aria-expanded') === 'true';
+      findToggle.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+    document.addEventListener('click', function (e) {
+      if (!findGroup.contains(e.target)) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { close(); findToggle.focus(); }
+    });
+  }
+
   /* ---------- masthead compacts on scroll ---------- */
   var masthead = document.querySelector('.masthead');
   if (masthead) {

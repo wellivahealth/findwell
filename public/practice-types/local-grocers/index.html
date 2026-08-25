@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=652f0a943d">
+<link rel="stylesheet" href="/assets/site.css?v=39ddf48653">
 
 </head>
 <body data-view="directory">
@@ -36,7 +36,13 @@
     </a>
     <button class="burger" id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
-      <a href="/directory/">Find a provider</a><a href="/practice-types/" aria-current="page">By discipline</a><a href="/about/">Who we are</a><a href="/articles/">Articles</a><a href="/advertise/">Advertise with us</a>
+      <div class="nav-group">
+        <button type="button" class="nav-toggle" id="find-toggle" aria-expanded="false"
+                aria-controls="find-menu" data-active="1">
+          Find a provider <span class="caret" aria-hidden="true">&#9662;</span>
+        </button>
+        <ul class="nav-menu" id="find-menu"><li><a href="/directory/">All providers</a></li><li><a href="/practice-types/" aria-current="page">By discipline</a></li><li><a href="/locations/">By location</a></li></ul>
+      </div><a href="/about/">Who we are</a><a href="/articles/">Articles</a><a href="/advertise/">Advertise with us</a>
       <a class="cta" href="/join/">Join the directory</a>
     </nav>
   </div>
@@ -44,7 +50,7 @@
 
 <main id="main">
   <div class="wrap">
-    <p class="crumb"><a href="/">Home</a> / Local grocers</p>
+    <p class="crumb"><a href="/">Home</a> / <a href="/practice-types/">Disciplines</a> / Local grocers</p>
     <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin:.6rem 0 1.4rem">Local grocers</h1>
     <p class="lede" style="margin:-.8rem 0 1.8rem">Locally owned and co-oped retail stores.</p>
     <div class="dir">
@@ -86,6 +92,7 @@
         </div>
         <div class="active-filters" id="active-filters"></div>
         <ul class="records" id="records"></ul>
+        <p class="back-link"><a href="/practice-types/">&larr; All disciplines</a></p>
         <div class="empty" id="empty" hidden style="margin-top:2rem">
           <h3>No practitioners match those filters</h3>
           <p>Try widening the distance, removing a discipline, or searching a nearby city. Telehealth listings serve patients anywhere in their state.</p>
@@ -125,6 +132,6 @@
     </div>
   </div>
 </footer>
-<script src="/assets/app.js?v=2b0ceec3c5" defer></script>
+<script src="/assets/app.js?v=1e00324aff" defer></script>
 </body>
 </html>

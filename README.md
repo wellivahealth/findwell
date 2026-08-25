@@ -141,6 +141,14 @@ carry `verified: false` until you edit them, which renders a small "not yet
 verified" note beside the licensure line — set it to `true` once you have
 checked the number against the issuing board.
 
+### How requests are routed
+
+`run_worker_first: ["/api/*"]` in `wrangler.jsonc` is load-bearing. Without it,
+Cloudflare's asset router answers GET requests before the Worker runs, so every
+`/api/` link — approve, decline, review, verify, selftest — returns the 404
+page. POST requests still reach the Worker, which makes the symptom confusing:
+the form errors while the email buttons silently 404.
+
 ### Turning it on — three secrets, no database
 
 ```

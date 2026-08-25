@@ -1,8 +1,12 @@
 {
   // The Worker handles /api/* and serves everything else from ./public.
   //
-  // There is nothing to fill in here — no database ids, no namespace ids.
-  // The three secrets are set in the Cloudflare dashboard under
+  // run_worker_first matters: without it, Cloudflare's asset router answers
+  // GET requests before the Worker sees them, so /api/approve, /api/review
+  // and /api/selftest would all return the 404 page. POST still reached the
+  // Worker, which is why the form errored while the links 404'd.
+  //
+  // Nothing to fill in here. The three secrets live in the dashboard under
   // Workers & Pages -> findwell -> Settings -> Variables and Secrets:
   //   RESEND_API_KEY, GH_TOKEN, SIGNING_SECRET
   "name": "findwell",
@@ -12,7 +16,8 @@
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
   },
 
   "vars": {

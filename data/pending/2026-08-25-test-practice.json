@@ -1,0 +1,40 @@
+{
+  "first": "FindWell",
+  "last": "Directory",
+  "practice": "Test Practice",
+  "email": "info@findwelldirectory.com",
+  "phone": "19709462044",
+  "website": "www.findwelldirectory.com",
+  "social": "",
+  "physical": "No",
+  "country": "United States",
+  "addr1": "3735 N. Bay Horse Loop",
+  "addr2": "",
+  "city": "TUCSON",
+  "state": "AZ",
+  "zip": "85719",
+  "scope": [
+    "Grocer"
+  ],
+  "short": "Network",
+  "licensed": "No",
+  "license": "",
+  "certs": "",
+  "years": "1",
+  "training": "Network.",
+  "integrative": "",
+  "payments": [
+    "Cash"
+  ],
+  "pricing": ".",
+  "telehealth": "No",
+  "long": "findwelldirectory.com/provider/test-practice/",
+  "size": ".",
+  "openins": "No",
+  "ehr": "No",
+  "honeypot": "",
+  "address": "",
+  "logo_name": "FindWell (1).jpeg",
+  "logo_ext": "jpg",
+  "received_at": "2026-08-25T20:15:38.066Z"
+}

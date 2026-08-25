@@ -409,6 +409,10 @@
     showErr('[data-for="files"]', !filesValid());
     if (!filesValid()) ok = false;
 
+    var attest = $('j-attest');
+    showErr('[data-for="attest"]', !(attest && attest.checked));
+    if (!attest || !attest.checked) ok = false;
+
     var msg = $('join-msg');
     if (!ok) {
       msg.textContent = 'Some required answers are missing \u2014 they are marked above.';
@@ -450,6 +454,8 @@
         ['Pricing structure', val('j-fees')],
         ['Virtual/telehealth services', radio('telehealth')]]) +
       bl('LISTING DESCRIPTION', [['Description', val('j-long')]]) +
+      bl('ATTESTATION', [
+        ['Confirmed accurate and current', $('j-attest') && $('j-attest').checked ? 'Yes' : 'No']]) +
       bl('ADDITIONAL QUESTIONS \u2014 NOT PUBLISHED', [
         ['Desired size of practice', val('j-size')],
         ['Open to insurance if available', radio('openins')],

@@ -630,6 +630,30 @@ textarea.control{ min-height:110px; resize:vertical; }
 }
 .notice b{ color:var(--ink); }
 
+/* ---------- verification statement ----------
+   Two states, both plain sentences rather than badges: a badge implies more
+   than was actually checked. */
+.verify{
+  font-size:.86rem; line-height:1.5; margin:1.1rem 0 0;
+  padding:.7rem .9rem; border-radius:var(--r-md);
+}
+.verify b{ font-weight:600; }
+.verify a{ color:inherit; }
+.verify-reported{
+  background:var(--surface-sunk); border:1px solid var(--line); color:var(--ink-soft);
+}
+.verify-reported b{ color:var(--ink); }
+.verify-confirmed{
+  background:oklch(0.96 0.03 155); border:1px solid oklch(0.84 0.06 155); color:oklch(0.36 0.06 155);
+}
+.verify-confirmed b{ color:oklch(0.30 0.07 155); }
+.record-verify{ grid-column:1/-1; margin-top:-.2rem; }
+.record-verify .verify{ margin-top:0; }
+.verify-example{ margin:1.8rem 0; }
+.verify-example > p:last-child{ margin-top:.7rem; color:var(--ink-soft); }
+.attest{ align-items:flex-start; gap:.7rem; font-size:.92rem; line-height:1.5; }
+.attest input{ margin-top:.25rem; }
+
 /* ---------- application form ---------- */
 .form-section{ margin-top:2.8rem; padding-top:1.6rem; border-top:1px solid var(--line-strong); }
 .form-section:first-of-type{ margin-top:0; padding-top:0; border-top:0; }

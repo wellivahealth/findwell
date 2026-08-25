@@ -232,6 +232,7 @@ ${row('Social', s.social)}
 ${row('Payments', s.payments.join(', '))}${row('Pricing', s.pricing)}
 ${row('Short description', s.short)}${row('Description', s.long)}
 ${row('Logo uploaded', s.logo_name || 'none')}
+${row('Attested accurate', s.attestation ? 'Yes' : 'NOT TICKED')}
 </table>
 <p style="margin-top:20px;padding:12px;background:#eff4f4;border-radius:6px;font-size:14px">
 <strong>Internal — not published</strong><br>
@@ -273,6 +274,7 @@ function readForm(form) {
     payments: split('Payment methods'), pricing: g('Pricing structure'),
     telehealth: g('telehealth'), long: g('Listing description'),
     size: g('Desired size of practice'), openins: g('openins'), ehr: g('ehr'),
+    attestation: g('Attestation'),
     honeypot: g('_gotcha'),
   };
   s.address = s.physical === 'Yes'

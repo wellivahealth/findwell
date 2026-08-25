@@ -310,6 +310,7 @@ def _merge_approved():
         r.setdefault("long", "")
         r.setdefault("verified", False)
         r.setdefault("integrative_training", "")
+        r.setdefault("verification", None)
         for k in ("credentials", "licensure", "training", "affiliations",
                   "pricing", "payments", "insurance", "blurb", "address", "zip"):
             r.setdefault(k, "")
@@ -500,6 +501,7 @@ def shell(title, desc, path, body, view="", extra_head=""):
         <a href="/about/">Who we are</a>
         <a href="/articles/">Articles</a>
         <a href="/advertise/">Advertise with us</a>
+        <a href="/verification/">What verification means</a>
         <a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a>
       </div>
     </div>
@@ -574,6 +576,24 @@ def avatar(p, big=False):
                 f'{img}</picture>')
     return img
 
+def verification_line(p):
+    """Two honest states, never a badge that overstates.
+
+    Either we checked with the issuing authority and say so with the source and
+    date, or the practitioner told us and we say that instead. "Not yet
+    verified" is avoided deliberately: on FindWell, unverified is a permanent
+    and acceptable state, not a backlog.
+    """
+    v = p.get("verification")
+    if v and v.get("source"):
+        when = v.get("date", "")
+        return (f'<p class="verify verify-confirmed">'
+                f'<b>{E(v.get("what", "Credential confirmed"))}</b> with {E(v["source"])}'
+                f'{", " + E(when) if when else ""}.</p>')
+    return ('<p class="verify verify-reported">'
+            '<b>As reported by the practitioner.</b> Not independently verified \u2014 '
+            '<a href="/verification/">what this means</a>.</p>')
+
 def integrative_row(p):
     """Shown for integrative and functional medicine listings. An empty value
     is published as 'None reported' rather than being left off the record."""
@@ -611,6 +631,7 @@ def record_html(p):
         <dt>Fees</dt><dd>{E(p['pricing'])}</dd>
         <dt>Insurance</dt><dd>{E(p['insurance'])}</dd>
       </dl>
+      <div class="record-verify">{verification_line(p)}</div>
       <div class="record-actions">
         <a class="btn btn-ghost btn-sm" href="/provider/{p['slug']}/">Full record</a>
         {f'<a class="btn btn-ghost btn-sm" href="tel:{"".join(ch for ch in p["phone"] if ch.isdigit())}">{E(p["phone"])}</a>' if p["phone"] else ""}
@@ -816,13 +837,14 @@ def page_provider(p):
         <h1>{E(p['name'])}</h1>
         <p class="detail-person">{E(p['person'])}</p>
         {tags_html(p)}
+        {verification_line(p)}
         <p class="detail-bio" style="margin-top:1.6rem">{E(p['blurb'])}</p>
         {f'<p class="detail-bio">{E(p["long"])}</p>' if p['long'] else ''}
         <div class="detail-fields">
           <h3 style="font-family:var(--ff-display);font-size:1.15rem;margin-bottom:1rem;padding-bottom:.6rem;border-bottom:1px solid var(--line)">Practice record</h3>
           <dl class="fields">
             <dt>Credentials</dt><dd>{E(p['credentials'])}</dd>
-            <dt>Licensure</dt><dd>{E(p['licensure'])}{'' if p.get('verified', True) else ' <span class="unverified">not yet verified</span>'}</dd>
+            <dt>Licensure</dt><dd>{E(p['licensure'])}</dd>
             <dt>Training</dt><dd>{E(p['training'])}</dd>
             {integrative_row(p)}
             <dt>In practice</dt><dd>{years}</dd>
@@ -924,7 +946,7 @@ def page_join():
     <p class="crumb"><a href="/">Home</a> / Join</p>
     <div class="section-tight" style="max-width:860px">
       <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Join the directory</h1>
-      <p class="lede">Listings are free. We verify license numbers against the issuing board before publishing, and we publish exactly what you send \u2014 including the absence of a license where none exists for your discipline. Fields marked * are required.</p>
+      <p class="lede">Listings are free. We publish exactly what you send \u2014 including the absence of a license where none exists for your discipline. Where we have checked a credential with the issuing board, your listing says so and names the date; where we have not, it says the details are as you reported them. <a href="/verification/">What verification means here</a>. Fields marked * are required.</p>
 
       <form id="join-form" style="margin-top:2.6rem" novalidate
             action="{FORM_ENDPOINT}" method="POST" enctype="multipart/form-data">
@@ -1033,6 +1055,19 @@ def page_join():
             {yesno("openins", "If it became available in your field, would you be open to taking insurance?")}
             {yesno("ehr", "Do you use an EHR? (Electronic Health Records)")}
           </div>
+        </section>
+
+        <section class="form-section">
+          <h2>Confirmation</h2>
+          <label class="check attest" for="j-attest">
+            <input type="checkbox" id="j-attest" name="Attestation" value="Agreed" required>
+            <span>I confirm that the credentials, licenses, certifications and training I have
+            given are accurate and current, that I am entitled to practise as described, and
+            that I will notify FindWell Directory if any of it changes, lapses or is suspended.
+            I understand my listing states how its credentials were established, and that
+            unverified listings are published as reported by me.</span>
+          </label>
+          <p class="err" data-for="attest">This confirmation is required.</p>
         </section>
 
         <div style="display:flex;gap:.7rem;flex-wrap:wrap;margin-top:2rem;align-items:center">
@@ -1200,6 +1235,47 @@ def page_advertise():
                  "Reach people at the moment they are choosing a holistic practitioner. Sponsored articles, display placements and partnerships \u2014 never paid placement in the directory.",
                  "/advertise/", body)
 
+def page_verification():
+    body = """  <div class="wrap">
+    <p class="crumb"><a href="/">Home</a> / What verification means</p>
+    <div class="section-tight" style="max-width:70ch">
+      <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">What verification means here</h1>
+      <p class="lede">Every listing says plainly how its credentials were established. There are two states, and neither is a badge.</p>
+
+      <div class="verify-example">
+        <p class="verify verify-reported"><b>As reported by the practitioner.</b> Not independently verified.</p>
+        <p>The practitioner told us their credentials and we published what they said. We have not checked it with anyone. This is a normal, permanent state for a listing here \u2014 not a queue we are working through.</p>
+      </div>
+
+      <div class="verify-example">
+        <p class="verify verify-confirmed"><b>License AC-4821 confirmed</b> with the Arizona Acupuncture Board of Examiners, 25 Aug 2026.</p>
+        <p>We checked directly with the body that issued the credential, and we name that body and the date we checked. A credential can lapse after a check, which is why the date is there.</p>
+      </div>
+
+      <h2 style="font-size:1.35rem;margin:2.6rem 0 .8rem">Three things people confuse</h2>
+      <ul class="split-list">
+        <li><strong>A state license</strong> is issued by a government board that can revoke it. Naturopathic physicians, acupuncturists, chiropractors, counselors and massage therapists are licensed in Arizona. A license number can be checked against the issuing board by anyone, including you.</li>
+        <li><strong>A certification</strong> comes from a private body with its own training requirements and assessment \u2014 NAMA board certification in Ayurveda, NBC-HWC for health coaches. Real, and meaningful, but no government stands behind it and nobody can be struck off a public register.</li>
+        <li><strong>A membership</strong> is something you join, usually by paying. It is not a credential, and we do not treat it as one, whatever it is called.</li>
+      </ul>
+
+      <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">Disciplines with no license at all</h2>
+      <p class="lede">Ayurveda, herbalism, energy work and end-of-life support have no state licensure anywhere in the United States. That is not a gap in our checking \u2014 there is no register to check. For those listings we publish the training programme, the hours and any voluntary certification, and we say that no licensure exists.</p>
+
+      <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">What practitioners agree to</h2>
+      <p class="lede">Everyone who applies confirms that the credentials they give us are accurate and current, and agrees to tell us if anything changes, lapses or is suspended. If you believe a listing is inaccurate, <a href="mailto:info@findwelldirectory.com?subject=Listing%20query">tell us</a> and we will look into it.</p>
+
+      <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">What a listing is not</h2>
+      <p class="lede">A listing is not a referral, a recommendation, or a judgement about anyone's competence. We publish credentials as stated and, where we have checked them, we say who with and when. Choosing a practitioner remains yours to do.</p>
+
+      <p style="margin-top:2.4rem"><a class="btn btn-dark" href="/directory/">Browse the directory</a></p>
+    </div>
+  </div>
+  <div style="height:3rem"></div>"""
+    return shell("What verification means \u2014 FindWell Directory",
+                 "How credentials on the FindWell Directory are established: what we check, what we don't, and the difference between a state license, a certification and a paid membership.",
+                 "/verification/", body)
+
 def page_404():
     body = """  <div class="wrap section">
     <div class="empty">
@@ -1223,7 +1299,7 @@ def main():
     # Wipe generated pages first, so renamed or removed listings don't leave
     # orphaned URLs behind. Assets are left alone.
     for d in ("directory", "practice-types", "locations", "provider", "join",
-              "about", "articles", "advertise"):
+              "about", "articles", "advertise", "verification"):
         shutil.rmtree(os.path.join(OUT, d), ignore_errors=True)
 
     written = []
@@ -1235,6 +1311,7 @@ def main():
     written.append(write("about/", page_about()))
     written.append(write("articles/", page_articles()))
     written.append(write("advertise/", page_advertise()))
+    written.append(write("verification/", page_verification()))
     for a in ARTICLES:
         written.append(write(f"articles/{a['slug']}/", page_article(a)))
     written.append(write("404.html", page_404()))
@@ -1268,7 +1345,7 @@ def main():
 
     # sitemap + robots
     urls = ["/", "/directory/", "/practice-types/", "/locations/", "/join/", "/about/",
-            "/articles/", "/advertise/"]
+            "/articles/", "/advertise/", "/verification/"]
     urls += [f"/articles/{a['slug']}/" for a in ARTICLES]
     urls += [f"/practice-types/{d['slug']}/" for d in DISCIPLINES]
     urls += [f"/locations/{state_slug(ab)}/" for ab in STATES]

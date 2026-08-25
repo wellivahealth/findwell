@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=39ddf48653">
+<link rel="stylesheet" href="/assets/site.css?v=e45e0e594c">
 
 </head>
 <body data-view="join">
@@ -53,7 +53,7 @@
     <p class="crumb"><a href="/">Home</a> / Join</p>
     <div class="section-tight" style="max-width:860px">
       <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Join the directory</h1>
-      <p class="lede">Listings are free. We verify license numbers against the issuing board before publishing, and we publish exactly what you send — including the absence of a license where none exists for your discipline. Fields marked * are required.</p>
+      <p class="lede">Listings are free. We publish exactly what you send — including the absence of a license where none exists for your discipline. Where we have checked a credential with the issuing board, your listing says so and names the date; where we have not, it says the details are as you reported them. <a href="/verification/">What verification means here</a>. Fields marked * are required.</p>
 
       <form id="join-form" style="margin-top:2.6rem" novalidate
             action="/api/apply" method="POST" enctype="multipart/form-data">
@@ -204,6 +204,19 @@
           </div>
         </section>
 
+        <section class="form-section">
+          <h2>Confirmation</h2>
+          <label class="check attest" for="j-attest">
+            <input type="checkbox" id="j-attest" name="Attestation" value="Agreed" required>
+            <span>I confirm that the credentials, licenses, certifications and training I have
+            given are accurate and current, that I am entitled to practise as described, and
+            that I will notify FindWell Directory if any of it changes, lapses or is suspended.
+            I understand my listing states how its credentials were established, and that
+            unverified listings are published as reported by me.</span>
+          </label>
+          <p class="err" data-for="attest">This confirmation is required.</p>
+        </section>
+
         <div style="display:flex;gap:.7rem;flex-wrap:wrap;margin-top:2rem;align-items:center">
           <button class="btn btn-primary" type="submit">Send</button>
           <span class="hint" id="join-msg"></span>
@@ -239,6 +252,7 @@
         <a href="/about/">Who we are</a>
         <a href="/articles/">Articles</a>
         <a href="/advertise/">Advertise with us</a>
+        <a href="/verification/">What verification means</a>
         <a href="mailto:info@findwelldirectory.com">info@findwelldirectory.com</a>
       </div>
     </div>
@@ -248,6 +262,6 @@
     </div>
   </div>
 </footer>
-<script src="/assets/app.js?v=1e00324aff" defer></script>
+<script src="/assets/app.js?v=5c0bc15c86" defer></script>
 </body>
 </html>

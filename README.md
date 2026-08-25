@@ -49,6 +49,31 @@ Every page is real HTML at a real URL, so Google indexes each one separately:
 Also generated: `sitemap.xml` and `robots.txt`. Submit the sitemap in Google
 Search Console once the domain is attached.
 
+## Marking a listing as board-confirmed
+
+Listings show one of two statements. By default:
+
+> **As reported by the practitioner.** Not independently verified — what this means.
+
+Once you have checked a credential with the issuing board, add a `verification`
+field to that listing and the statement changes:
+
+```python
+verification={"what": "License AZ LAC-010717 confirmed",
+              "source": "the Arizona Acupuncture Board of Examiners",
+              "date": "25 Aug 2026"},
+```
+
+Renders as: **License AZ LAC-010717 confirmed** with the Arizona Acupuncture
+Board of Examiners, 25 Aug 2026.
+
+Name the body and the date every time. A credential can lapse after a check,
+which is exactly why the date is published rather than a badge. There is
+deliberately no "verified" tick — it would claim more than was done.
+
+Listings published through the Approve button get the "as reported" state until
+you add this field.
+
 ## Never overwrite data/listings.json
 
 `data/listings.json` holds every listing published through the Approve button.

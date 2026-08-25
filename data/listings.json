@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "slug": "test-practice",
+    "name": "Test Practice",
+    "person": "FindWell Directory",
+    "logo": "/assets/img/providers/test-practice.jpg",
+    "categories": [
+      "Grocers"
+    ],
+    "city": "TUCSON",
+    "state": "AZ",
+    "zip": "85719",
+    "address": "",
+    "lat": null,
+    "lng": null,
+    "telehealth": false,
+    "phone": "19709462044",
+    "email": "info@findwelldirectory.com",
+    "website": "www.findwelldirectory.com",
+    "social": [],
+    "credentials": "",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "Network.",
+    "integrative_training": "",
+    "since": 2025,
+    "affiliations": "—",
+    "pricing": ".",
+    "payments": "Cash",
+    "insurance": "Not accepted",
+    "blurb": "Network",
+    "long": "findwelldirectory.com/provider/test-practice/",
+    "verified": false
+  }
+]

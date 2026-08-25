@@ -184,7 +184,10 @@ async function sendEmail(env, { to, subject, html, replyTo }) {
     },
     body: JSON.stringify({
       from: env.MAIL_FROM || 'FindWell Directory <noreply@findwelldirectory.com>',
-      to: [to], subject, html, ...(replyTo ? { reply_to: replyTo } : {}),
+      to: [to], subject, html,
+      // Always replyable: MAIL_FROM may be a noreply address, so point
+      // replies at a mailbox someone actually reads.
+      reply_to: replyTo || env.ADMIN_EMAIL || undefined,
     }),
   });
   return { ok: res.ok, status: res.status };

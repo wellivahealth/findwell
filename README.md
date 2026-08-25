@@ -149,6 +149,18 @@ Cloudflare's asset router answers GET requests before the Worker runs, so every
 page. POST requests still reach the Worker, which makes the symptom confusing:
 the form errors while the email buttons silently 404.
 
+### The build command (required for publishing to work)
+
+Cloudflare must run the site generator on every deploy, otherwise approving a
+listing writes `data/listings.json` and nothing regenerates the HTML.
+
+Cloudflare dashboard -> Workers & Pages -> findwell -> Settings -> Build:
+
+- **Build command:** `python3 build.py`
+- **Deploy command:** `npx wrangler deploy` (the default)
+
+`build.py` uses only the Python standard library, so nothing needs installing.
+
 ### Turning it on — three secrets, no database
 
 ```

@@ -23,8 +23,9 @@
   "vars": {
     "SITE_URL": "https://findwelldirectory.com",
     "ADMIN_EMAIL": "info@findwelldirectory.com",
-    // Must be on a domain verified in Resend. Replies go to ADMIN_EMAIL.
-    "MAIL_FROM": "FindWell Directory <noreply@findwelldirectory.com>",
+    // Must be on a domain verified in Resend. Sending as info@ rather than
+    // noreply@ because the emails invite a reply.
+    "MAIL_FROM": "FindWell Directory <info@findwelldirectory.com>",
     "GH_REPO": "wellivahealth/findwell",
     "GH_BRANCH": "main"
   }

@@ -58,6 +58,19 @@ function safeEqual(a, b) {
   return out === 0;
 }
 
+/**
+ * Compare a ?key= value against SIGNING_SECRET.
+ * Base64 secrets contain "+", and a "+" in a query string decodes to a space,
+ * so it is put back. Whitespace at either end is ignored — a trailing newline
+ * pasted into the dashboard is otherwise invisible and breaks every check.
+ */
+function keyOk(url, env) {
+  const provided = (url.searchParams.get('key') || '').trim().replace(/ /g, '+');
+  const expected = (env.SIGNING_SECRET || '').trim();
+  return { ok: !!expected && safeEqual(provided, expected),
+           got: provided.length, want: expected.length };
+}
+
 const json = (data, status = 200) => new Response(JSON.stringify(data), {
   status, headers: { 'content-type': 'application/json' },
 });
@@ -338,7 +351,7 @@ async function handleApply(request, env) {
 
   await commitFiles(env, `Application: ${s.practice}`, files);
 
-  const sig = await hmac(env.SIGNING_SECRET, id);
+  const sig = await hmac((env.SIGNING_SECRET || '').trim(), id);
   const base = env.SITE_URL || 'https://findwelldirectory.com';
   await Promise.all([
     sendEmail(env, {
@@ -361,7 +374,7 @@ async function handleApply(request, env) {
 async function handleApprove(request, env) {
   const url = new URL(request.url);
   const id = url.searchParams.get('id') || '';
-  if (!safeEqual(url.searchParams.get('sig') || '', await hmac(env.SIGNING_SECRET, id))) {
+  if (!safeEqual((url.searchParams.get('sig') || '').trim(), await hmac((env.SIGNING_SECRET || '').trim(), id))) {
     return page('Invalid link',
       '<h1>That link is not valid</h1><p>Open the original email and press the button again.</p>', 403);
   }
@@ -424,7 +437,7 @@ ${coords.lat ? '' : '<p style="color:#c23a4b">The address could not be geocoded,
 async function handleDecline(request, env) {
   const url = new URL(request.url);
   const id = url.searchParams.get('id') || '';
-  if (!safeEqual(url.searchParams.get('sig') || '', await hmac(env.SIGNING_SECRET, id))) {
+  if (!safeEqual((url.searchParams.get('sig') || '').trim(), await hmac((env.SIGNING_SECRET || '').trim(), id))) {
     return page('Invalid link', '<h1>That link is not valid</h1>', 403);
   }
   const pending = await readFile(env, `data/pending/${id}.json`);
@@ -441,15 +454,13 @@ async function handleDecline(request, env) {
 
 async function handlePending(request, env) {
   const url = new URL(request.url);
-  if (!safeEqual(url.searchParams.get('key') || '', env.SIGNING_SECRET)) {
-    return page('Not authorised', '<h1>Not authorised</h1>', 403);
-  }
+  if (!keyOk(url, env).ok) return page('Not authorised', '<h1>Not authorised</h1>', 403);
   const dir = await readFile(env, 'data/pending');
   const files = Array.isArray(dir) ? dir.filter((f) => f.name.endsWith('.json')) : [];
   const base = env.SITE_URL || 'https://findwelldirectory.com';
   const rows = await Promise.all(files.map(async (f) => {
     const id = f.name.replace(/\.json$/, '');
-    const sig = await hmac(env.SIGNING_SECRET, id);
+    const sig = await hmac((env.SIGNING_SECRET || '').trim(), id);
     return `<li style="padding:10px 0;border-top:1px solid #dbe3e3">${esc(id)}
       &nbsp;<a href="${base}/api/approve?id=${encodeURIComponent(id)}&sig=${sig}">approve</a>
       &nbsp;<a href="${base}/api/decline?id=${encodeURIComponent(id)}&sig=${sig}">decline</a></li>`;
@@ -460,15 +471,13 @@ async function handlePending(request, env) {
 
 async function handleReview(request, env) {
   const url = new URL(request.url);
-  if (!safeEqual(url.searchParams.get('key') || '', env.SIGNING_SECRET)) {
-    return page('Not authorised', '<h1>Not authorised</h1>', 403);
-  }
+  if (!keyOk(url, env).ok) return page('Not authorised', '<h1>Not authorised</h1>', 403);
   const current = await readFile(env, 'data/listings.json');
   const listings = current ? JSON.parse(fromB64(current.content)) : [];
   const waiting = listings.filter((l) => l.verified === false);
   const base = env.SITE_URL || 'https://findwelldirectory.com';
   const rows = await Promise.all(waiting.map(async (l) => {
-    const sig = await hmac(env.SIGNING_SECRET, 'verify:' + l.slug);
+    const sig = await hmac((env.SIGNING_SECRET || '').trim(), 'verify:' + l.slug);
     return `<li style="padding:12px 0;border-top:1px solid #dbe3e3">
       <strong>${esc(l.name)}</strong> — ${esc(l.person)}<br>
       <span style="color:#5f7473;font-size:14px">${esc(l.licensure)}</span><br>
@@ -484,7 +493,7 @@ async function handleReview(request, env) {
 async function handleVerify(request, env) {
   const url = new URL(request.url);
   const slug = url.searchParams.get('slug') || '';
-  if (!safeEqual(url.searchParams.get('sig') || '', await hmac(env.SIGNING_SECRET, 'verify:' + slug))) {
+  if (!safeEqual((url.searchParams.get('sig') || '').trim(), await hmac((env.SIGNING_SECRET || '').trim(), 'verify:' + slug))) {
     return page('Invalid link', '<h1>That link is not valid</h1>', 403);
   }
   const current = await readFile(env, 'data/listings.json');
@@ -504,9 +513,15 @@ async function handleVerify(request, env) {
 /** Checks each dependency in turn and reports exactly which one fails. */
 async function handleSelftest(request, env) {
   const url = new URL(request.url);
-  if (!safeEqual(url.searchParams.get('key') || '', env.SIGNING_SECRET || '')) {
-    return page('Not authorised',
-      '<h1>Not authorised</h1><p>Wrong key, or SIGNING_SECRET is not set on the Worker.</p>', 403);
+  const k = keyOk(url, env);
+  if (!k.ok) {
+    return page('Not authorised', `<h1>Not authorised</h1>
+<p>The key in the URL does not match SIGNING_SECRET on the Worker.</p>
+<p style="font-size:14px">Received ${k.got} characters; the Worker holds ${k.want}.
+${k.want === 0 ? 'The Worker has no SIGNING_SECRET set at all — add it under Settings, Variables and Secrets.'
+  : k.got === 0 ? 'No key was supplied in the URL.'
+  : k.got === k.want ? 'Same length, so one or more characters differ — re-copy it.'
+  : 'Different lengths, so the value was cut short or has something extra on the end.'}</p>`, 403);
   }
 
   const checks = [];

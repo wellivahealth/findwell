@@ -187,7 +187,7 @@ PROVIDERS = [
          licensure="No state licensure exists for Ayurveda",
          training="MA in Ayurveda",
          since=2001, affiliations="NAMA; Ayurveda Professionals of Arizona",
-         pricing="New patient $250 · Follow-up $135",
+         pricing="New patient $450 · Follow-up $135",
          payments="Cash, checks, credit, debit, HSA/FSA, PayPal, Venmo, Zelle",
          insurance="Not accepted",
          blurb="Ayurvedic assessment, dietary and lifestyle protocols, and herbal support. Virtual visits available.",

@@ -64,6 +64,13 @@
     "insurance": "Not accepted",
     "blurb": "We're a small, close-knit chiropractic practice built around one-on-one care. Rather than a high-volume, in-and-out model, we take the time to really listen to our patients and understand what's going on before we treat it. Our approach is hands-on and personalized, focused on helping people find real relief from common issues like headaches, sciatica, low back pain, and indigestion — all within the scope of chiropractic care. We pride ourselves on being approachable and attentive, so patients feel heard, not rushed.",
     "long": "Ours is a small, intimate office  — designed around true one-on-one care. We currently offer chiropractic adjustments along with stretching to support treatment, without the distraction of a large facility or a revolving door of patients. We're a growing practice, and while we don't yet offer additional modalities, we plan to expand our services in the coming months to years as the practice grows.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "8583",
+      "source": "the Arizona Board of Chiropractic Examiners",
+      "date": "25 Aug 2026",
+      "by": "admin",
+      "recorded_at": "2026-08-25T23:34:10.496Z"
+    }
   }
 ]

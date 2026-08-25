@@ -285,6 +285,22 @@ img="/assets/img/disciplines/integrative"
 
 Disciplines with `img=None` render a labelled placeholder frame instead.
 
+### Social share card
+
+The image shown when a link is pasted into Slack, iMessage, LinkedIn or X.
+1200x630, built from the hero photograph and the logo:
+
+```
+python3 make_card.py
+```
+
+Writes `public/assets/img/share-card.jpg`. Re-run it after changing the hero
+image or the logo, then `build.py`. Every page uses the same card; if you ever
+want per-listing cards, the same script can be extended.
+
+Twitter/X is set to `summary_large_image`, so the card renders full width
+rather than as a thumbnail.
+
 ### Favicon
 
 The tab icon should be the leaf mark alone — a wordmark is illegible at 16px.

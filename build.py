@@ -382,7 +382,10 @@ def img_tag(url, alt, sizes, cls="", widths=(500, 750, 1000, 1500), lazy=True):
     return (f'<img{c} src="{url}?format={widths[-1]}w" srcset="{ss}" '
             f'sizes="{sizes}" alt="{E(alt)}"{lz}>')
 
-LOGO = IMG["logo"]          # still used for og:image until a share card exists
+LOGO = IMG["logo"]
+
+# Social share card, 1200x630, built by make_card.py.
+CARD_V = _v("assets/img/share-card.jpg")
 
 # The lockup, hosted locally. 3.34:1, so a 72px tall header logo is ~240px wide.
 LOGO_V = _v("assets/img/logo-800.png")
@@ -454,8 +457,13 @@ def shell(title, desc, path, body, view="", extra_head=""):
 <meta property="og:description" content="{E(desc)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{SITE}{path}">
-<meta property="og:image" content="{LOGO}?format=1500w">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="{SITE}/assets/img/share-card.jpg?v={CARD_V}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="FindWell Directory — a practitioner with a client, and the line: licensure, training, years in practice and pricing on every listing.">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{SITE}/assets/img/share-card.jpg?v={CARD_V}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">

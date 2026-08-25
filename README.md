@@ -49,6 +49,19 @@ Every page is real HTML at a real URL, so Google indexes each one separately:
 Also generated: `sitemap.xml` and `robots.txt`. Submit the sitemap in Google
 Search Console once the domain is attached.
 
+## Never overwrite data/listings.json
+
+`data/listings.json` holds every listing published through the Approve button.
+It lives only in the repo — it is the live database.
+
+**Update zips do not contain it, on purpose.** If a zip included it, copying the
+files in would wipe listings that were approved since the zip was made. When
+updating, replace `public/`, `worker/`, `build.py` and `wrangler.jsonc`, and
+leave `data/` alone.
+
+If the file is ever missing, `build.py` carries on without it and the site
+shows only the listings written by hand in `PROVIDERS`.
+
 ## Writing an article
 
 Add an entry to the `ARTICLES` list in `build.py`, newest first:

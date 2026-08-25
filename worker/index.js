@@ -34,6 +34,31 @@ const SCOPE_TO_KEY = {
   'Grocer': 'Grocers',
 };
 
+/** The issuing authority to check, by discipline and state. Extend as the
+ *  directory grows into new states. */
+const BOARDS = {
+  Acupuncture: { AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'] },
+  TCM:         { AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'] },
+  Naturopathy: { AZ: ['the Arizona Naturopathic Physicians Medical Board', 'https://nd.az.gov/resources/license-verification-request'] },
+  Chiropractic:{ AZ: ['the Arizona Board of Chiropractic Examiners', 'https://chiroboard.az.gov/find-chiropractor'] },
+  Bodywork:    { AZ: ['the Arizona Massage Therapy Board', 'https://massagetherapy.az.gov/applications/status'] },
+  Counseling:  { AZ: ['the Arizona Board of Behavioral Health Examiners', 'https://azbbhe.us/'] },
+  IntegrativeMedicine: { AZ: ['the Arizona Medical Board', 'https://www.azmd.gov/'] },
+  Ayurveda:    { '*': ['NAMA Certification Board', 'https://www.namacb.org/'] },
+  Coaching:    { '*': ['the National Board for Health & Wellness Coaching', 'https://nbhwc.org/'] },
+  Herbalism:   { '*': ['the American Herbalists Guild', 'https://www.americanherbalistsguild.com/'] },
+};
+
+function boardFor(listing) {
+  for (const c of listing.categories || []) {
+    const byState = BOARDS[c];
+    if (!byState) continue;
+    const hit = byState[listing.state] || byState['*'];
+    if (hit) return { name: hit[0], url: hit[1] };
+  }
+  return null;
+}
+
 // ---------------------------------------------------------------- helpers
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g,
@@ -477,130 +502,94 @@ async function handlePending(request, env) {
 async function handleReview(request, env) {
   const url = new URL(request.url);
   if (!keyOk(url, env).ok) return page('Not authorised', '<h1>Not authorised</h1>', 403);
+
   const current = await readFile(env, 'data/listings.json');
   const listings = current ? JSON.parse(fromB64(current.content)) : [];
-  const waiting = listings.filter((l) => l.verified === false);
+  const waiting = listings.filter((l) => !l.verification);
   const base = env.SITE_URL || 'https://findwelldirectory.com';
+  const today = new Date().toLocaleDateString('en-GB',
+    { day: 'numeric', month: 'short', year: 'numeric' });
+
   const rows = await Promise.all(waiting.map(async (l) => {
     const sig = await hmac((env.SIGNING_SECRET || '').trim(), 'verify:' + l.slug);
-    return `<li style="padding:12px 0;border-top:1px solid #dbe3e3">
-      <strong>${esc(l.name)}</strong> — ${esc(l.person)}<br>
-      <span style="color:#5f7473;font-size:14px">${esc(l.licensure)}</span><br>
-      <a href="${base}/provider/${esc(l.slug)}/" style="font-size:14px">view listing</a> ·
-      <a href="${base}/api/verify?slug=${encodeURIComponent(l.slug)}&sig=${sig}"
-         style="display:inline-block;background:#2e5f5c;color:#fff;text-decoration:none;padding:5px 12px;border-radius:5px;font-size:14px;font-weight:600">Mark verified</a></li>`;
+    const board = boardFor(l);
+    const what = l.licensure && !/no state licensure/i.test(l.licensure)
+      ? l.licensure : 'Credentials confirmed';
+    return `<li style="padding:16px 0;border-top:1px solid #dbe3e3">
+      <strong>${esc(l.name)}</strong> — ${esc(l.person)}, ${esc(l.city)}, ${esc(l.state)}<br>
+      <span style="color:#5f7473;font-size:14px">${esc(l.licensure || '')}</span><br>
+      ${board ? `<a href="${esc(board.url)}" target="_blank" rel="noopener"
+          style="font-size:14px">Open ${esc(board.name)} &#8599;</a> &nbsp;·&nbsp;` : ''}
+      <a href="${base}/provider/${esc(l.slug)}/" target="_blank" style="font-size:14px">view listing</a>
+      <form method="POST" action="${base}/api/verify" style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+        <input type="hidden" name="slug" value="${esc(l.slug)}">
+        <input type="hidden" name="sig" value="${sig}">
+        <input type="hidden" name="key" value="${esc((env.SIGNING_SECRET || '').trim())}">
+        <input name="what" value="${esc(what)}" style="flex:1 1 16rem;padding:6px 8px;border:1px solid #dbe3e3;border-radius:5px;font:inherit;font-size:14px">
+        <input name="source" value="${esc(board ? board.name : '')}" placeholder="checked with…"
+               style="flex:1 1 16rem;padding:6px 8px;border:1px solid #dbe3e3;border-radius:5px;font:inherit;font-size:14px">
+        <input name="date" value="${esc(today)}" style="width:8rem;padding:6px 8px;border:1px solid #dbe3e3;border-radius:5px;font:inherit;font-size:14px">
+        <button type="submit" style="background:#2e5f5c;color:#fff;border:0;padding:8px 14px;border-radius:5px;font:inherit;font-weight:600;cursor:pointer">Mark confirmed</button>
+      </form>
+    </li>`;
   }));
+
   return page('Awaiting verification', `<h1>Awaiting verification</h1>
-<p>Published, but not yet checked against the issuing board.</p>
-<ul style="margin:1rem 0 0">${rows.join('') || '<li style="padding:12px 0">Everything is verified.</li>'}</ul>`);
+<p>Listings published as reported by the practitioner. Open the board, check the
+number, then press the button — the fields are already filled in.</p>
+<ul style="margin:1rem 0 0">${rows.join('') ||
+  '<li style="padding:12px 0">Everything has been checked.</li>'}</ul>`);
 }
 
 async function handleVerify(request, env) {
   const url = new URL(request.url);
-  const slug = url.searchParams.get('slug') || '';
-  if (!safeEqual((url.searchParams.get('sig') || '').trim(), await hmac((env.SIGNING_SECRET || '').trim(), 'verify:' + slug))) {
+  let slug, sig, what, source, date, key;
+
+  if (request.method === 'POST') {
+    const f = await request.formData();
+    slug = (f.get('slug') || '').toString();
+    sig = (f.get('sig') || '').toString();
+    key = (f.get('key') || '').toString();
+    what = (f.get('what') || '').toString().trim();
+    source = (f.get('source') || '').toString().trim();
+    date = (f.get('date') || '').toString().trim();
+  } else {
+    slug = url.searchParams.get('slug') || '';
+    sig = url.searchParams.get('sig') || '';
+  }
+
+  const expected = await hmac((env.SIGNING_SECRET || '').trim(), 'verify:' + slug);
+  if (!safeEqual(sig.trim(), expected)) {
     return page('Invalid link', '<h1>That link is not valid</h1>', 403);
   }
+  if (!source) {
+    return page('Missing source',
+      '<h1>Name the source</h1><p>Say which body the credential was checked with. ' +
+      'A confirmation without a source is not worth publishing.</p>', 400);
+  }
+
   const current = await readFile(env, 'data/listings.json');
   const listings = current ? JSON.parse(fromB64(current.content)) : [];
   const row = listings.find((l) => l.slug === slug);
   if (!row) return page('Not found', '<h1>Not found</h1>', 404);
-  if (row.verified === true) return page('Already verified', '<h1>Already verified</h1>');
-  row.verified = true;
-  await commitFiles(env, `Mark verified: ${row.name}`,
+
+  row.verification = {
+    what: what || 'Credentials confirmed',
+    source,
+    date: date || new Date().toISOString().slice(0, 10),
+    by: 'admin',
+    recorded_at: new Date().toISOString(),
+  };
+
+  await commitFiles(env, `Verified: ${row.name}`,
     [{ path: 'data/listings.json', contentBase64: b64(JSON.stringify(listings, null, 2) + '\n') }]);
-  return page('Verified', `<h1>Verified</h1>
-<p><strong>${esc(row.name)}</strong> is marked verified. The note will be gone in about a minute.</p>`);
-}
 
-// ---------------------------------------------------------------- selftest
-
-/** Checks each dependency in turn and reports exactly which one fails. */
-async function handleSelftest(request, env) {
-  const url = new URL(request.url);
-  const k = keyOk(url, env);
-  if (!k.ok) {
-    return page('Not authorised', `<h1>Not authorised</h1>
-<p>The key in the URL does not match SIGNING_SECRET on the Worker.</p>
-<p style="font-size:14px">Received ${k.got} characters; the Worker holds ${k.want}.
-${k.want === 0 ? 'The Worker has no SIGNING_SECRET set at all — add it under Settings, Variables and Secrets.'
-  : k.got === 0 ? 'No key was supplied in the URL.'
-  : k.got === k.want ? 'Same length, so one or more characters differ — re-copy it.'
-  : 'Different lengths, so the value was cut short or has something extra on the end.'}</p>`, 403);
-  }
-
-  const checks = [];
-  const add = (name, ok, detail) => checks.push({ name, ok, detail });
-
-  add('SIGNING_SECRET set', !!env.SIGNING_SECRET, '');
-  add('GH_TOKEN set', !!env.GH_TOKEN, '');
-  add('RESEND_API_KEY set', !!env.RESEND_API_KEY, '');
-  add('GH_REPO', !!env.GH_REPO, env.GH_REPO || 'missing');
-  add('ADMIN_EMAIL', !!env.ADMIN_EMAIL, env.ADMIN_EMAIL || 'missing');
-  add('MAIL_FROM', !!env.MAIL_FROM, env.MAIL_FROM || 'default');
-
-  // can the token see the repository at all?
-  try {
-    const res = await gh(env, `/repos/${env.GH_REPO}`);
-    if (res.ok) {
-      const r = await res.json();
-      add('GitHub: repo visible', true, `${r.full_name}, default branch ${r.default_branch}`);
-      add('GitHub: branch matches', (env.GH_BRANCH || 'main') === r.default_branch,
-        `worker uses "${env.GH_BRANCH || 'main'}", repo default is "${r.default_branch}"`);
-    } else {
-      const body = (await res.text()).slice(0, 200);
-      add('GitHub: repo visible', false, `HTTP ${res.status}. ${
-        res.status === 404
-          ? 'Either GH_REPO is wrong, or the fine-grained token has not been granted access to this repository. If the repo belongs to an organisation, an org owner must approve the token.'
-          : res.status === 401 ? 'Token rejected — expired or mistyped.' : body}`);
-    }
-  } catch (e) { add('GitHub: repo visible', false, e.message); }
-
-  // can it write? create a blob without committing anything
-  try {
-    const res = await gh(env, `/repos/${env.GH_REPO}/git/blobs`, {
-      method: 'POST', body: JSON.stringify({ content: 'selftest', encoding: 'utf-8' }),
-    });
-    add('GitHub: write permission', res.ok, res.ok
-      ? 'Contents: read and write confirmed'
-      : `HTTP ${res.status} — the token needs Repository permissions -> Contents -> Read and write.`);
-  } catch (e) { add('GitHub: write permission', false, e.message); }
-
-  // is the listings file readable and valid?
-  try {
-    const f = await readFile(env, 'data/listings.json');
-    if (!f) add('data/listings.json', false, 'Not found in the repo.');
-    else {
-      const parsed = JSON.parse(fromB64(f.content));
-      add('data/listings.json', true, `${parsed.length} listing(s)`);
-    }
-  } catch (e) { add('data/listings.json', false, e.message); }
-
-  // will Resend accept a send?
-  try {
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' },
-      body: JSON.stringify({
-        from: env.MAIL_FROM || 'FindWell Directory <noreply@findwelldirectory.com>',
-        to: [env.ADMIN_EMAIL], subject: 'FindWell selftest',
-        html: '<p>If you are reading this, sending works.</p>',
-      }),
-    });
-    const body = (await res.text()).slice(0, 300);
-    add('Resend: send test email', res.ok, res.ok
-      ? `Sent to ${env.ADMIN_EMAIL} — check that inbox.`
-      : `HTTP ${res.status}. ${body}`);
-  } catch (e) { add('Resend: send test email', false, e.message); }
-
-  const rows = checks.map((c) => `<li style="padding:8px 0;border-top:1px solid #dbe3e3">
-    <strong style="color:${c.ok ? '#2e5f5c' : '#c23a4b'}">${c.ok ? 'PASS' : 'FAIL'}</strong>
-    &nbsp;${esc(c.name)}${c.detail ? `<br><span style="font-size:14px;color:#5f7473">${esc(c.detail)}</span>` : ''}
-  </li>`).join('');
-  const failed = checks.filter((c) => !c.ok).length;
-  return page('Self test', `<h1>Self test</h1>
-<p>${failed ? `${failed} check(s) failed — the first failure is usually the cause.` : 'Everything passed.'}</p>
-<ul style="margin:0">${rows}</ul>`);
+  const base = env.SITE_URL || 'https://findwelldirectory.com';
+  return page('Confirmed', `<h1>Confirmed</h1>
+<p><strong>${esc(row.name)}</strong> now reads:</p>
+<p style="background:#eff6f2;border:1px solid #cfe4d8;border-radius:6px;padding:10px 12px">
+<strong>${esc(row.verification.what)}</strong> with ${esc(source)}, ${esc(row.verification.date)}.</p>
+<p>Live in about a minute. <a href="${base}/api/review?key=${encodeURIComponent((env.SIGNING_SECRET || '').trim())}">Back to the list</a></p>`);
 }
 
 // ---------------------------------------------------------------- entry

@@ -51,12 +51,23 @@ Search Console once the domain is attached.
 
 ## Marking a listing as board-confirmed
 
-Listings show one of two statements. By default:
+Use the review page — no code editing:
 
-> **As reported by the practitioner.** Not independently verified — what this means.
+```
+findwelldirectory.com/api/review?key=YOUR_SIGNING_SECRET
+```
 
-Once you have checked a credential with the issuing board, add a `verification`
-field to that listing and the statement changes:
+Every listing still published "as reported" appears with a link straight to the
+right board for its discipline and state, and a form already filled in with the
+credential text, the board's name and today's date. Open the board in a new tab,
+check the number, come back, press **Mark confirmed**. The listing updates and
+is live in about a minute.
+
+The source field is required. A confirmation with no named source is refused —
+that is the whole point of the statement.
+
+Listings written by hand in `PROVIDERS` inside `build.py` are not editable from
+that page; give them a `verification` field directly:
 
 ```python
 verification={"what": "License AZ LAC-010717 confirmed",
@@ -64,15 +75,8 @@ verification={"what": "License AZ LAC-010717 confirmed",
               "date": "25 Aug 2026"},
 ```
 
-Renders as: **License AZ LAC-010717 confirmed** with the Arizona Acupuncture
-Board of Examiners, 25 Aug 2026.
-
-Name the body and the date every time. A credential can lapse after a check,
-which is exactly why the date is published rather than a badge. There is
-deliberately no "verified" tick — it would claim more than was done.
-
-Listings published through the Approve button get the "as reported" state until
-you add this field.
+To add boards for new states or disciplines, edit `BOARDS` at the top of
+`worker/index.js`.
 
 ## Never overwrite data/listings.json
 

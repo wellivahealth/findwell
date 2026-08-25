@@ -668,7 +668,7 @@ def page_home():
       <h2>How it works</h2>
       <div class="steps">
         <div class="step"><h3>Search by discipline or distance</h3><p>Filter by practice type, city, ZIP radius, or telehealth availability. Combine as many filters as you need.</p></div>
-        <div class="step"><h3>Read the record</h3><p>State license number where one exists, training institution, years in practice, fee schedule and insurance status — in the same place on every listing.</p></div>
+        <div class="step"><h3>Read the record</h3><p>State license number where one exists, training institution, years in practice, fee schedule and insurance status — in the same place on every listing. Each one also says how its credentials were established. <a href="/verification/">What that means</a>.</p></div>
         <div class="step"><h3>Contact them directly</h3><p>Phone, email and website go straight to the practice. Nothing routes through us and no one pays for your contact details.</p></div>
       </div>
     </div>
@@ -750,6 +750,7 @@ def page_directory(subset=None, title=None, desc=None, path="/directory/", headi
             </select>
           </div>
         </div>
+        <p class="results-note">Every listing states how its credentials were established — checked with the issuing board, or as reported by the practitioner. <a href="/verification/">What that means</a>.</p>
         <div class="active-filters" id="active-filters"></div>
         <ul class="records" id="records">{"".join(record_html(p) for p in rows)}</ul>
         {f'<p class="back-link"><a href="{footer_link[1]}">&larr; {E(footer_link[0])}</a></p>' if footer_link else ''}
@@ -780,7 +781,7 @@ def page_practice_types():
     {crumbs_html([("Home", "/"), ("Find a provider", "/directory/"), ("By discipline", None)])}
     <div class="section-tight">
       <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Choose the type of practice</h1>
-      <p class="lede">Licensure varies by discipline. Where a profession is state licensed, the license number appears on the record. Where it is not, we publish training and certification instead.</p>
+      <p class="lede">Licensure varies by discipline. Where a profession is state licensed, the license number appears on the record. Where it is not, we publish training and certification instead — and say so plainly. <a href="/verification/">What verification means here</a>.</p>
       <ul class="tiles">{tiles}</ul>
     </div>
   </div>

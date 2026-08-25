@@ -441,6 +441,12 @@ main{ display:block; }
 .sort{ display:flex; align-items:center; gap:.5rem; font-size:.84rem; color:var(--muted); }
 .sort select{ padding:.4rem 2rem .4rem .6rem; font-size:.84rem; }
 
+.results-note{
+  margin:.9rem 0 0; font-size:.84rem; color:var(--muted); max-width:70ch;
+}
+.results-note a{ color:var(--brand); }
+.results-note a:hover{ color:var(--accent); }
+
 .active-filters{ display:flex; flex-wrap:wrap; gap:.4rem; margin:.9rem 0 0; }
 .tagx{
   display:inline-flex; align-items:center; gap:.45rem; font-family:var(--ff-mono); font-size:.74rem;

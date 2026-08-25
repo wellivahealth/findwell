@@ -141,16 +141,6 @@ carry `verified: false` until you edit them, which renders a small "not yet
 verified" note beside the licensure line — set it to `true` once you have
 checked the number against the issuing board.
 
-### Deploying before the backend exists
-
-`wrangler.jsonc` ships with **no bindings**, so it deploys the static site on
-its own. The full config lives in `wrangler.api.jsonc` and must not be
-deployed until the database and KV namespace exist — Cloudflare fails the
-build on the placeholder ids.
-
-Until you switch it on, `/api/apply` returns a 404, the form detects that, and
-falls back to opening a pre-filled email. Nothing is lost, it is just manual.
-
 ### Turning it on — three secrets, no database
 
 ```
@@ -159,8 +149,12 @@ npx wrangler secret put GH_TOKEN         # GitHub fine-grained token, Contents: 
 npx wrangler secret put SIGNING_SECRET   # any long random string you invent
 ```
 
-Then copy `wrangler.api.jsonc` over `wrangler.jsonc` and push. That commit
-turns the backend on.
+Then push. `wrangler.jsonc` already points at `worker/index.js`, so the
+backend comes up with the deploy.
+
+If a secret is missing the Worker still deploys — the form just falls back to
+opening a pre-filled email, and `/api/selftest?key=YOUR_SIGNING_SECRET` will
+tell you which piece is missing.
 
 There is nothing else to create — no database, no namespace, no ids to paste.
 The Worker keeps everything in this repo through the GitHub API: a submission
@@ -173,8 +167,10 @@ Anyone holding a link can approve, so treat those emails as privileged.
 
 Admin pages, both behind that secret:
 
-- `/api/pending?key=YOUR_SIGNING_SECRET`
-- `/api/review?key=YOUR_SIGNING_SECRET`
+- `/api/pending?key=YOUR_SIGNING_SECRET` — applications awaiting a decision
+- `/api/review?key=YOUR_SIGNING_SECRET` — published listings not yet credential-checked
+- `/api/selftest?key=YOUR_SIGNING_SECRET` — checks every dependency and names
+  whatever is broken; also sends a test email to ADMIN_EMAIL
 
 ### Logos
 

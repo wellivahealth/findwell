@@ -1,14 +1,26 @@
 {
-  // Serves the static site in ./public. This is the config to deploy while
-  // the application backend is not set up yet — it has no bindings, so it
-  // cannot fail on a missing database.
+  // The Worker handles /api/* and serves everything else from ./public.
   //
-  // To switch the backend on, follow "One-time setup" in README.md, then
-  // replace this file with the contents of wrangler.api.jsonc.
+  // There is nothing to fill in here — no database ids, no namespace ids.
+  // The three secrets are set in the Cloudflare dashboard under
+  // Workers & Pages -> findwell -> Settings -> Variables and Secrets:
+  //   RESEND_API_KEY, GH_TOKEN, SIGNING_SECRET
   "name": "findwell",
+  "main": "worker/index.js",
   "compatibility_date": "2026-08-01",
+
   "assets": {
     "directory": "./public",
+    "binding": "ASSETS",
     "not_found_handling": "404-page"
+  },
+
+  "vars": {
+    "SITE_URL": "https://findwelldirectory.com",
+    "ADMIN_EMAIL": "info@findwelldirectory.com",
+    // Must be on a domain verified in Resend. Replies go to ADMIN_EMAIL.
+    "MAIL_FROM": "FindWell Directory <noreply@findwelldirectory.com>",
+    "GH_REPO": "wellivahealth/findwell",
+    "GH_BRANCH": "main"
   }
 }

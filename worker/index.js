@@ -18,6 +18,53 @@
  * That keeps the setup to three secrets — no D1, no KV, no binding ids.
  */
 
+/** "Arizona" truncated to two characters is "AR" — Arkansas. Map full names
+ *  properly, and fall back to the ZIP code when the field is unusable. */
+const STATE_NAMES_TO_ABBR = {
+  alabama:'AL', alaska:'AK', arizona:'AZ', arkansas:'AR', california:'CA', colorado:'CO',
+  connecticut:'CT', delaware:'DE', 'district of columbia':'DC', florida:'FL', georgia:'GA',
+  hawaii:'HI', idaho:'ID', illinois:'IL', indiana:'IN', iowa:'IA', kansas:'KS',
+  kentucky:'KY', louisiana:'LA', maine:'ME', maryland:'MD', massachusetts:'MA',
+  michigan:'MI', minnesota:'MN', mississippi:'MS', missouri:'MO', montana:'MT',
+  nebraska:'NE', nevada:'NV', 'new hampshire':'NH', 'new jersey':'NJ', 'new mexico':'NM',
+  'new york':'NY', 'north carolina':'NC', 'north dakota':'ND', ohio:'OH', oklahoma:'OK',
+  oregon:'OR', pennsylvania:'PA', 'rhode island':'RI', 'south carolina':'SC',
+  'south dakota':'SD', tennessee:'TN', texas:'TX', utah:'UT', vermont:'VT',
+  virginia:'VA', washington:'WA', 'west virginia':'WV', wisconsin:'WI', wyoming:'WY',
+};
+
+/** First three digits of a ZIP identify the state — used as a cross-check. */
+const ZIP_STATE = [
+  [995,999,'AK'],[850,865,'AZ'],[716,729,'AR'],[900,961,'CA'],[800,816,'CO'],
+  [60,69,'CT'],[197,199,'DE'],[200,205,'DC'],[320,349,'FL'],[300,319,'GA'],
+  [967,968,'HI'],[832,838,'ID'],[600,629,'IL'],[460,479,'IN'],[500,528,'IA'],
+  [660,679,'KS'],[400,427,'KY'],[700,714,'LA'],[39,49,'ME'],[206,219,'MD'],
+  [10,27,'MA'],[480,499,'MI'],[550,567,'MN'],[386,397,'MS'],[630,658,'MO'],
+  [590,599,'MT'],[680,693,'NE'],[889,898,'NV'],[30,38,'NH'],[70,89,'NJ'],
+  [870,884,'NM'],[100,149,'NY'],[270,289,'NC'],[580,588,'ND'],[430,459,'OH'],
+  [730,749,'OK'],[970,979,'OR'],[150,196,'PA'],[28,29,'RI'],[290,299,'SC'],
+  [570,577,'SD'],[370,385,'TN'],[750,799,'TX'],[840,847,'UT'],[50,59,'VT'],
+  [220,246,'VA'],[980,994,'WA'],[247,268,'WV'],[530,549,'WI'],[820,831,'WY'],
+];
+
+function stateFromZip(zip) {
+  const n = parseInt(String(zip || '').replace(/\D/g, '').slice(0, 3), 10);
+  if (!Number.isFinite(n)) return '';
+  for (const [lo, hi, ab] of ZIP_STATE) if (n >= lo && n <= hi) return ab;
+  return '';
+}
+
+function normaliseState(raw, zip) {
+  const t = String(raw || '').trim();
+  const byName = STATE_NAMES_TO_ABBR[t.toLowerCase()];
+  if (byName) return byName;
+  const two = t.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 2);
+  const fromZip = stateFromZip(zip);
+  // a two-letter code that contradicts the ZIP is usually a truncated name
+  if (two.length === 2 && (!fromZip || two === fromZip)) return two;
+  return fromZip || two;
+}
+
 const SCOPE_TO_KEY = {
   'Ayurveda': 'Ayurveda',
   'Acupuncture': 'Acupuncture',
@@ -309,7 +356,7 @@ function readForm(form) {
     email: g('email'), phone: g('Phone'), website: g('Website'), social: g('Social media'),
     physical: g('physical'), country: g('Country'),
     addr1: g('Address line 1'), addr2: g('Address line 2'),
-    city: g('City'), state: g('State').toUpperCase().slice(0, 2), zip: g('ZIP code'),
+    city: g('City'), state: normaliseState(g('State'), g('ZIP code')), zip: g('ZIP code'),
     scope: split('Scope of practice'), short: g('Describe your practice'),
     licensed: g('licensed'), license: g('State(s) and license number(s)'),
     certs: g('Certificates or affiliations'), years: g('Years in practice'),
@@ -337,6 +384,16 @@ function validate(s) {
   return missing;
 }
 
+/** A licence field containing only a state name, or nothing, has no number. */
+function looksLikeLicence(v) {
+  const t = String(v || '').trim();
+  if (!t) return false;
+  const stripped = t.toLowerCase().replace(/[^a-z]/g, '');
+  if (STATE_NAMES_TO_ABBR[t.trim().toLowerCase()]) return false;
+  if (stripped.length && !/\d/.test(t) && stripped.length < 12) return false;
+  return true;
+}
+
 function toListing(s, coords, logoPath) {
   const year = new Date().getFullYear();
   const years = parseInt(s.years, 10);
@@ -358,7 +415,7 @@ function toListing(s, coords, logoPath) {
     // credential and the licence stands on its own line.
     credentials: s.certs || '—',
     licensure: s.licensed === 'Yes'
-      ? (s.license || 'State licensed — number pending verification')
+      ? (looksLikeLicence(s.license) ? s.license : 'State licensed — number not provided')
       : (s.certs
           ? 'No state licensure exists for this discipline'
           : 'No state licensure exists for this discipline'),

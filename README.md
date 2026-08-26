@@ -91,6 +91,23 @@ leave `data/` alone.
 If the file is ever missing, `build.py` carries on without it and the site
 shows only the listings written by hand in `PROVIDERS`.
 
+## Adding a discipline
+
+Add an entry to `DISCIPLINES` in `build.py` — `key`, `label`, `slug`, `note`,
+and `img` (use `None` until you have a photograph and it renders a labelled
+placeholder). Then:
+
+- add the matching option to `SCOPE_OPTIONS` in `build.py`, which is the
+  application form
+- map that option to the key in `SCOPE_TO_KEY` at the top of `worker/index.js`
+- if the discipline is state licensed, add its board to `LICENSE_BOARDS` in
+  `build.py` and `BOARDS` in `worker/index.js`, so bare licence numbers get the
+  authority's name and the review page links to the right lookup
+
+The tile, the discipline page, the sitemap entry and the hero count follow
+automatically. Filters and the home-page chips only show disciplines that have
+at least one listing, so a new discipline appears there once someone joins.
+
 ## Writing an article
 
 Add an entry to the `ARTICLES` list in `build.py`, newest first:

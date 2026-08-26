@@ -71,8 +71,11 @@ DISCIPLINES = [
     dict(key="Coaching", label="Health & wellness coaches", slug="health-wellness-coaching",
          note="Board certified coaches (NBC-HWC) and other non-clinical forms of support. No state licensure exists.",
          img="/assets/img/disciplines/coaching"),
+    dict(key="Massage", label="Massage therapy", slug="massage-therapy",
+         note="Licensed massage therapists — LMT, state licensed in Arizona.",
+         img=None),
     dict(key="Bodywork", label="Body work", slug="body-work",
-         note="CranioSacral, tuina, structural integration. State licensed.",
+         note="CranioSacral, structural integration, tuina and other manual therapies. Licensure varies by modality.",
          img=SS + "1755278329164-ATSTUR14YXFQDGE3ZFGI/unsplash-image-AV0KNliGvQc.jpg"),
     dict(key="EnergyMedicine", label="Energy healers", slug="energy-work",
          note="Reiki, Eden Energy Medicine, biofield therapies. Training shown; no licensure exists.",
@@ -312,6 +315,7 @@ LICENSE_BOARDS = {
     "TCM":          {"AZ": "Arizona Acupuncture Board of Examiners"},
     "Naturopathy":  {"AZ": "Arizona Naturopathic Physicians Medical Board"},
     "Chiropractic": {"AZ": "Arizona Board of Chiropractic Examiners"},
+    "Massage":      {"AZ": "Arizona Massage Therapy Board"},
     "Bodywork":     {"AZ": "Arizona Massage Therapy Board"},
     "Counseling":   {"AZ": "Arizona Board of Behavioral Health Examiners"},
     "IntegrativeMedicine": {"AZ": "Arizona Medical Board"},
@@ -1026,7 +1030,7 @@ PAYMENT_METHODS = ["Insurance", "Cash", "Checks", "Credit Cards", "Debit Cards",
                    "HSA/FSA", "Paypal", "Venmo", "Zelle", "Crypto Wallet"]
 
 SCOPE_OPTIONS = ["Ayurveda", "Acupuncture", "Traditional Chinese Medicine",
-                 "Naturopathic Medicine", "Chiropractic", "Body Work", "Energy Work",
+                 "Naturopathic Medicine", "Chiropractic", "Massage Therapy", "Body Work", "Energy Work",
                  "Integrative / Functional Medicine", "Counseling",
                  "Health & Wellness Coaching", "Herbalism", "Farmer", "Grocer"]
 

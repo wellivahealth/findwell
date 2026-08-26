@@ -110,7 +110,14 @@
     "insurance": "Not accepted",
     "blurb": "We help people get out of pain, calm the nervous system, and return to the activities that matter most with results-driven care.\r\nLed by Registered Nurse and Licensed Acupuncturist Josh Whiteley. Our approach combines traditional acupuncture with modern, evidence-informed therapies like orthopedic dry needling, electro-acupuncture, and regenerative medicine injections. By addressing both the source of pain and the surrounding muscle and nerve patterns, we’re able to treat conditions like sciatica, injuries, and chronic pain more effectively and with longer-lasting results.",
     "long": "We provide highly individualized acupuncture and Chinese medicine treatments tailored to your unique needs not only to help you feel better, but to empower you in taking charge of your health and wellness. We treat people who want both grounded medical logic and holistic care.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Arizona",
+      "source": "the American Herbalists Guild",
+      "date": "26 Aug 2026",
+      "by": "admin",
+      "recorded_at": "2026-08-26T03:44:13.090Z"
+    }
   },
   {
     "slug": "lotus-wellspring-healthcare",

@@ -151,6 +151,13 @@
     "insurance": "Not accepted",
     "blurb": "Whole-person Acupuncture care, traditional herbal medicine, and Homeopathy, with subspecialties in Fertility, Women's Health, and Neuroacupuncture.",
     "long": "In her Oriental Medicine clinic, Sybil focuses on gentle, intuitive Japanese styles of practice. The Japanese tradition emphasizes hair-thin needles, shallow insertions, moxibustion (a warming treatment involving artemesia herb), and extensive palpation techniques. This type of acupuncture benefits all but is especially welcome to those who fear needling or who are extremely sensitive.\r\nJapanese acupuncture also features an herbal medicine tradition, called Kampo, based on the classics. Sophisticated palpation of the abdomen is key to determining a patient’s precise pattern of disharmony and to prescribing the most appropriate herbal formula for each individual.\r\nThe AcuGraph system is an invaluable aid in your treatment at Lotus Wellspring Healthcare. A simple test that involves touching a probe to specific points on your wrists, ankles, fingers, or toes shows you—in vivid color and real time—which energy pathways and organs are out of balance and how best to bring everything back into balance.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "California AC-8645",
+      "source": "the American Herbalists Guild",
+      "date": "26 Aug 2026",
+      "by": "admin",
+      "recorded_at": "2026-08-26T03:54:42.530Z"
+    }
   }
 ]

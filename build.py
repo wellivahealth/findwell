@@ -11,7 +11,7 @@ so search engines can index each discipline, city, and practitioner.
 Nothing from the "Internal, not published" section of the application form
 appears anywhere in this file or in the generated output.
 """
-import os, json, shutil, html, datetime, hashlib
+import os, re, json, shutil, html, datetime, hashlib
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT  = os.path.join(ROOT, "public")   # Cloudflare serves this folder
@@ -290,6 +290,76 @@ PROVIDERS = [
 # Listings approved through the site (data/listings.json) are merged in here.
 # The Worker writes that file when you click Approve in a notification email;
 # entries below in PROVIDERS take precedence if a slug appears in both.
+STATE_NAMES = {
+    "AL":"Alabama","AK":"Alaska","AZ":"Arizona","AR":"Arkansas","CA":"California",
+    "CO":"Colorado","CT":"Connecticut","DE":"Delaware","DC":"District of Columbia",
+    "FL":"Florida","GA":"Georgia","HI":"Hawaii","ID":"Idaho","IL":"Illinois",
+    "IN":"Indiana","IA":"Iowa","KS":"Kansas","KY":"Kentucky","LA":"Louisiana",
+    "ME":"Maine","MD":"Maryland","MA":"Massachusetts","MI":"Michigan","MN":"Minnesota",
+    "MS":"Mississippi","MO":"Missouri","MT":"Montana","NE":"Nebraska","NV":"Nevada",
+    "NH":"New Hampshire","NJ":"New Jersey","NM":"New Mexico","NY":"New York",
+    "NC":"North Carolina","ND":"North Dakota","OH":"Ohio","OK":"Oklahoma","OR":"Oregon",
+    "PA":"Pennsylvania","RI":"Rhode Island","SC":"South Carolina","SD":"South Dakota",
+    "TN":"Tennessee","TX":"Texas","UT":"Utah","VT":"Vermont","VA":"Virginia",
+    "WA":"Washington","WV":"West Virginia","WI":"Wisconsin","WY":"Wyoming",
+}
+
+# Which board issues a licence, by discipline and state. Mirrors BOARDS in
+# worker/index.js — used to turn a bare licence number into a statement that
+# names the issuing authority.
+LICENSE_BOARDS = {
+    "Acupuncture":  {"AZ": "Arizona Acupuncture Board of Examiners"},
+    "TCM":          {"AZ": "Arizona Acupuncture Board of Examiners"},
+    "Naturopathy":  {"AZ": "Arizona Naturopathic Physicians Medical Board"},
+    "Chiropractic": {"AZ": "Arizona Board of Chiropractic Examiners"},
+    "Bodywork":     {"AZ": "Arizona Massage Therapy Board"},
+    "Counseling":   {"AZ": "Arizona Board of Behavioral Health Examiners"},
+    "IntegrativeMedicine": {"AZ": "Arizona Medical Board"},
+}
+
+
+def normalise(r):
+    """Tidy what applicants type. People leave the scheme off a web address and
+    give a licence number with no issuing body — both are published verbatim
+    otherwise, and both look careless on the listing."""
+    # web address without a scheme is a broken link
+    w = (r.get("website") or "").strip()
+    if w and not w.startswith(("http://", "https://")):
+        if w.startswith("//"):
+            w = "https:" + w
+        elif "." in w and " " not in w:
+            w = "https://" + w
+        r["website"] = w
+
+    # a bare licence number, with no authority named, is not much use
+    lic = (r.get("licensure") or "").strip()
+    if lic and not re.search(r"board|licen[cs]|college|department|commission|no state",
+                             lic, re.I):
+        board = None
+        for c in r.get("categories", []):
+            board = LICENSE_BOARDS.get(c, {}).get(r.get("state", ""))
+            if board:
+                break
+        if board:
+            # strip a leading state abbreviation or name the applicant already
+            # typed, so we don't end up with "Arizona ... Board #AZ LAC-0001"
+            num = lic.strip()
+            st = r.get("state", "")
+            full = STATE_NAMES.get(st, "") if st else ""
+            num = re.sub(rf"^(?:{re.escape(st)}|{re.escape(full)})\b[\s.:#\-]*", "",
+                         num, flags=re.I).strip()
+            num = num.lstrip("#").strip() or lic
+            r["licensure"] = f"{board} #{num}"
+
+    # tidy a phone number typed as a run of digits
+    ph = re.sub(r"\D", "", r.get("phone") or "")
+    if len(ph) == 11 and ph.startswith("1"):
+        ph = ph[1:]
+    if len(ph) == 10 and (r.get("phone") or "").strip() != "":
+        r["phone"] = f"({ph[:3]}) {ph[3:6]}-{ph[6:]}"
+    return r
+
+
 def _merge_approved():
     path = os.path.join(ROOT, "data", "listings.json")
     if not os.path.exists(path):
@@ -327,7 +397,7 @@ def _merge_approved():
         for k in ("credentials", "licensure", "training", "affiliations",
                   "pricing", "payments", "insurance", "blurb", "address", "zip"):
             r.setdefault(k, "")
-        PROVIDERS.append(r)
+        PROVIDERS.append(normalise(r))
         have.add(r["slug"])
         added += 1
     if added:
@@ -342,20 +412,6 @@ def disc(key):
 
 def cat_count(key):
     return sum(1 for p in PROVIDERS if key in p["categories"])
-
-STATE_NAMES = {
-    "AL":"Alabama","AK":"Alaska","AZ":"Arizona","AR":"Arkansas","CA":"California",
-    "CO":"Colorado","CT":"Connecticut","DE":"Delaware","DC":"District of Columbia",
-    "FL":"Florida","GA":"Georgia","HI":"Hawaii","ID":"Idaho","IL":"Illinois",
-    "IN":"Indiana","IA":"Iowa","KS":"Kansas","KY":"Kentucky","LA":"Louisiana",
-    "ME":"Maine","MD":"Maryland","MA":"Massachusetts","MI":"Michigan","MN":"Minnesota",
-    "MS":"Mississippi","MO":"Missouri","MT":"Montana","NE":"Nebraska","NV":"Nevada",
-    "NH":"New Hampshire","NJ":"New Jersey","NM":"New Mexico","NY":"New York",
-    "NC":"North Carolina","ND":"North Dakota","OH":"Ohio","OK":"Oklahoma","OR":"Oregon",
-    "PA":"Pennsylvania","RI":"Rhode Island","SC":"South Carolina","SD":"South Dakota",
-    "TN":"Tennessee","TX":"Texas","UT":"Utah","VT":"Vermont","VA":"Virginia",
-    "WA":"Washington","WV":"West Virginia","WI":"Wisconsin","WY":"Wyoming",
-}
 
 def state_name(ab):
     return STATE_NAMES.get(ab, ab)
@@ -588,6 +644,10 @@ def avatar(p, big=False):
     if not logo.startswith("/"):
         return f'<img class="{cls}" src="{logo}?format=500w" alt="{E(p["name"])} logo" loading="lazy" decoding="async">'
     rel = logo.lstrip("/")
+    full = os.path.join(OUT, rel)
+    if not os.path.exists(full) or os.path.getsize(full) < 100:
+        # empty or missing file — show the monogram rather than a broken image
+        return f'<div class="{cls} avatar-mono" aria-hidden="true">{E(initials(p["name"]))}</div>'
     src = f'{logo}?v={_v(rel)}'
     webp = logo.rsplit(".", 1)[0] + ".webp"
     img = (f'<img class="{cls}" src="{src}" alt="{E(p["name"])} logo" '

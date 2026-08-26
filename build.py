@@ -792,12 +792,12 @@ def page_home():
       <div class="hero-panel rise rise-1">
         <h1>Find trusted holistic practitioners <em>whose credentials you can read</em> before you call.</h1>
         <p class="hero-lede">Every listing shows licensure, where they trained, how long they have practised, what a visit costs, and whether they bill insurance. No commissions, no paid placement, no lead selling.</p>
-        <p class="hero-stats">
-          <span><b>{len(PROVIDERS)}</b> practitioners</span>
-          <span><b>{ndisc}</b> disciplines</span>
-          <span><b>{len(STATES)}</b> states</span>
-          <span><b>{sum(1 for p in PROVIDERS if p['telehealth'])}</b> offer telehealth</span>
-        </p>
+        <div class="hero-stats">
+          <div><span class="n">{len(DISCIPLINES)}</span><span class="l">disciplines</span></div>
+          <div><span class="n">80+</span><span class="l">modalities</span></div>
+          <div><span class="n">50</span><span class="l">states, open to all</span></div>
+          <div><span class="n em">Unlimited</span><span class="l">practitioners &middot; always free</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -810,9 +810,9 @@ def page_home():
     <div class="wrap">
       <h2>How it works</h2>
       <div class="steps">
-        <div class="step"><h3>Search by discipline or distance</h3><p>Filter by practice type, city, ZIP radius, or telehealth availability. Combine as many filters as you need.</p></div>
-        <div class="step"><h3>Read the record</h3><p>State license number where one exists, training institution, years in practice, fee schedule and insurance status — in the same place on every listing. Each one also says how its credentials were established. <a href="/verification/">What that means</a>.</p></div>
-        <div class="step"><h3>Contact them directly</h3><p>Phone, email and website go straight to the practice. Nothing routes through us and no one pays for your contact details.</p></div>
+        <div class="step"><h3>Search <span aria-hidden="true">&rarr;</span></h3><p>By discipline, state, ZIP radius or telehealth availability. Combine as many filters as you need.</p></div>
+        <div class="step"><h3>Compare <span aria-hidden="true">&rarr;</span></h3><p>Licensure, training, years in practice, fees and insurance status — in the same place on every listing, with a plain statement of how the credentials were established.</p></div>
+        <div class="step"><h3>Contact <span aria-hidden="true">&rarr;</span></h3><p>Phone, email and website go straight to the practice. Nothing routes through us and no one pays for your details.</p></div>
       </div>
     </div>
   </section>

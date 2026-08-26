@@ -228,7 +228,7 @@ async function readBlob(env, path) {
  * Write and delete several files in one commit, so Cloudflare rebuilds once.
  * files: [{ path, contentBase64 }] or [{ path, remove: true }]
  */
-async function commitFiles(env, message, files) {
+async function commitFiles(env, message, files, attempt = 0) {
   const repo = env.GH_REPO;
   const branch = env.GH_BRANCH || 'main';
 
@@ -257,10 +257,23 @@ async function commitFiles(env, message, files) {
     method: 'POST',
     body: JSON.stringify({ message, tree: newTree.sha, parents: [headSha] }),
   });
-  await ghJson(env, `/repos/${repo}/git/refs/heads/${branch}`, {
+
+  // If a deploy (or another application) commits between reading the branch
+  // head and updating it, GitHub rejects this as not a fast-forward. Re-read
+  // and try again rather than losing the submission.
+  const res = await gh(env, `/repos/${repo}/git/refs/heads/${branch}`, {
     method: 'PATCH',
     body: JSON.stringify({ sha: commit.sha }),
   });
+  if (!res.ok) {
+    const body = (await res.text()).slice(0, 200);
+    const conflict = res.status === 409 || res.status === 422;
+    if (conflict && attempt < 3) {
+      await new Promise((r) => setTimeout(r, 400 * (attempt + 1)));
+      return commitFiles(env, message, files, attempt + 1);
+    }
+    throw new Error(`GitHub ref update ${res.status}: ${body}`);
+  }
   return commit.sha;
 }
 

@@ -849,10 +849,15 @@ def crumbs_html(trail):
 def page_directory(subset=None, title=None, desc=None, path="/directory/", heading=None,
                    intro="", trail=None, footer_link=None):
     rows = subset if subset is not None else PROVIDERS
+    # Every discipline is listed, so the filter also shows what the directory
+    # covers. Ones with nothing in them yet are dimmed and cannot be ticked,
+    # so nobody filters their way into an empty page.
     checks = "".join(
-        f'<label class="check"><input type="checkbox" data-cat="{d["key"]}"> {E(d["label"])}'
+        f'<label class="check{"" if cat_count(d["key"]) else " check-empty"}">'
+        f'<input type="checkbox" data-cat="{d["key"]}"'
+        f'{"" if cat_count(d["key"]) else " disabled"}> {E(d["label"])}'
         f'<span class="n">{cat_count(d["key"])}</span></label>'
-        for d in DISCIPLINES if cat_count(d["key"]))
+        for d in DISCIPLINES)
     stateopts = "".join(
         f'<option value="{ab}">{E(state_name(ab))} ({len(in_state(ab))})</option>'
         for ab in STATES)

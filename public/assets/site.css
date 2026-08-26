@@ -453,6 +453,10 @@ main{ display:block; }
 .check input{ accent-color:var(--brand); width:15px; height:15px; flex:none; }
 .check .n{ margin-left:auto; font-family:var(--ff-mono); font-size:.74rem; color:var(--muted); }
 .check:hover{ color:var(--brand); }
+.check-empty{ color:var(--muted); cursor:default; }
+.check-empty:hover{ color:var(--muted); }
+.check-empty input{ opacity:.45; }
+.check-empty .n{ opacity:.6; }
 
 .results-bar{
   display:flex; flex-wrap:wrap; gap:.75rem 1rem; align-items:center;

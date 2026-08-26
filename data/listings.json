@@ -240,7 +240,13 @@
     "insurance": "Not accepted",
     "blurb": "Therapeutic massage therapist focusing on neck, shoulders, chest, jaw, hips and feet.",
     "long": "Therapeutic massage therapist. Focusing on client goals and areas of discomfort, chronic and acute pain.",
-    "verification": null,
+    "verification": {
+      "what": "MT-23614",
+      "source": "the Arizona Massage Therapy Board",
+      "date": "26 Aug 2026",
+      "by": "admin",
+      "recorded_at": "2026-08-26T18:28:05.716Z"
+    },
     "verified": false
   },
   {

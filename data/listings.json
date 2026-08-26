@@ -111,5 +111,39 @@
     "blurb": "We help people get out of pain, calm the nervous system, and return to the activities that matter most with results-driven care.\r\nLed by Registered Nurse and Licensed Acupuncturist Josh Whiteley. Our approach combines traditional acupuncture with modern, evidence-informed therapies like orthopedic dry needling, electro-acupuncture, and regenerative medicine injections. By addressing both the source of pain and the surrounding muscle and nerve patterns, we’re able to treat conditions like sciatica, injuries, and chronic pain more effectively and with longer-lasting results.",
     "long": "We provide highly individualized acupuncture and Chinese medicine treatments tailored to your unique needs not only to help you feel better, but to empower you in taking charge of your health and wellness. We treat people who want both grounded medical logic and holistic care.",
     "verified": false
+  },
+  {
+    "slug": "lotus-wellspring-healthcare",
+    "name": "Lotus Wellspring Healthcare",
+    "person": "Sybil Ihrig, DACM, L.Ac., CCH",
+    "logo": "/assets/img/providers/lotus-wellspring-healthcare.png",
+    "categories": [
+      "Acupuncture",
+      "Herbalism",
+      "Naturopathy"
+    ],
+    "city": "Palm Desert",
+    "state": "CA",
+    "zip": "92260",
+    "address": "74000 Country Club Drive, Suite C4, Palm Desert, CA 92260",
+    "lat": 33.758044369252,
+    "lng": -116.373676742773,
+    "telehealth": true,
+    "phone": "760-854-4242",
+    "email": "lotuswellspring@gmail.com",
+    "website": "https://lotuswellspring.com",
+    "social": [],
+    "credentials": "NCBAHM Acupuncture and Herbal Medicine\r\nCCH, Certified Classical Homeopath",
+    "licensure": "California AC-8645",
+    "training": "Pacific College of Oriental Medicine: Doctorate and Master's in Acupuncture and Chinese Medicine\r\nAmerican Medical College of Homeopathy: 3-year certificate program in Classical Homeopathy",
+    "integrative_training": "",
+    "since": 2002,
+    "affiliations": "NCBAHM Acupuncture and Herbal Medicine\r\nCCH, Certified Classical Homeopath",
+    "pricing": "Initial visit (Acupuncture): $140\r\nFollow-up visits (Acupuncture): $95\r\nInitial Consult (Homeopathy): $350\r\nFollow-up Consults (Homeopathy): $95",
+    "payments": "Cash, Checks, Credit Cards, Zelle",
+    "insurance": "Not accepted",
+    "blurb": "Whole-person Acupuncture care, traditional herbal medicine, and Homeopathy, with subspecialties in Fertility, Women's Health, and Neuroacupuncture.",
+    "long": "In her Oriental Medicine clinic, Sybil focuses on gentle, intuitive Japanese styles of practice. The Japanese tradition emphasizes hair-thin needles, shallow insertions, moxibustion (a warming treatment involving artemesia herb), and extensive palpation techniques. This type of acupuncture benefits all but is especially welcome to those who fear needling or who are extremely sensitive.\r\nJapanese acupuncture also features an herbal medicine tradition, called Kampo, based on the classics. Sophisticated palpation of the abdomen is key to determining a patient’s precise pattern of disharmony and to prescribing the most appropriate herbal formula for each individual.\r\nThe AcuGraph system is an invaluable aid in your treatment at Lotus Wellspring Healthcare. A simple test that involves touching a probe to specific points on your wrists, ankles, fingers, or toes shows you—in vivid color and real time—which energy pathways and organs are out of balance and how best to bring everything back into balance.",
+    "verified": false
   }
 ]

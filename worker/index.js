@@ -158,6 +158,24 @@ async function readFile(env, path) {
 }
 
 /**
+ * Base64 contents of a file, whatever its size.
+ * The contents API returns an empty `content` for anything over 1 MB — which
+ * is most phone photographs — so fall back to the blob API, which handles up
+ * to 100 MB. Reading the contents response alone silently produced empty files.
+ */
+async function readBlob(env, path) {
+  const meta = await readFile(env, path);
+  if (!meta) return null;
+  if (meta.content && meta.encoding === 'base64' && meta.content.trim()) {
+    return meta.content.replace(/\n/g, '');
+  }
+  if (!meta.sha) return null;
+  const blob = await ghJson(env, `/repos/${env.GH_REPO}/git/blobs/${meta.sha}`);
+  if (!blob || !blob.content) return null;
+  return blob.content.replace(/\n/g, '');
+}
+
+/**
  * Write and delete several files in one commit, so Cloudflare rebuilds once.
  * files: [{ path, contentBase64 }] or [{ path, remove: true }]
  */
@@ -256,7 +274,7 @@ ${row('Email', s.email)}${row('Phone', s.phone)}${row('Website', s.website)}
 ${row('Social', s.social)}
 ${row('Payments', s.payments.join(', '))}${row('Pricing', s.pricing)}
 ${row('Short description', s.short)}${row('Description', s.long)}
-${row('Logo uploaded', s.logo_name || 'none')}
+${row('Logo', s.logo_note || (s.logo_name ? s.logo_name : 'none'))}
 ${row('Attested accurate', s.attestation ? 'Yes' : 'NOT TICKED')}
 </table>
 <p style="margin-top:20px;padding:12px;background:#eff4f4;border-radius:6px;font-size:14px">
@@ -333,11 +351,18 @@ function toListing(s, coords, logoPath) {
     telehealth: s.telehealth === 'Yes',
     phone: s.phone, email: s.email, website: s.website,
     social: s.social.split(/[\s,]+/).filter((u) => /^https?:/.test(u)),
-    credentials: s.certs || '',
+    // Never leave a row blank when the applicant gave us something. Someone
+    // who is licensed often puts everything in the licence field and leaves
+    // certifications empty, and vice versa.
+    // Both fields are now asked of every applicant, so certifications are the
+    // credential and the licence stands on its own line.
+    credentials: s.certs || '—',
     licensure: s.licensed === 'Yes'
       ? (s.license || 'State licensed — number pending verification')
-      : 'No state licensure exists for this discipline',
-    training: s.training || '',
+      : (s.certs
+          ? 'No state licensure exists for this discipline'
+          : 'No state licensure exists for this discipline'),
+    training: s.training || '—',
     integrative_training: s.integrative || '',
     since: Number.isFinite(years) && years > 0 && years < 90 ? year - years : null,
     affiliations: s.certs || '—',
@@ -364,16 +389,45 @@ async function handleApply(request, env) {
   const id = `${new Date().toISOString().slice(0, 10)}-${slugify(s.practice) || 'application'}`;
   const files = [];
 
+  // Accept the upload generously and record why anything was skipped, rather
+  // than dropping it silently. Some browsers send an empty or unexpected MIME
+  // type, so fall back to the file extension.
   const file = form.get('Logo or headshot');
-  if (file && typeof file === 'object' && file.size > 0 && file.size <= 10 * 1024 * 1024
-      && /^image\/(png|jpeg|webp)$/.test(file.type)) {
-    const ext = file.type.includes('png') ? 'png' : file.type.includes('webp') ? 'webp' : 'jpg';
-    s.logo_name = file.name || `logo.${ext}`;
-    s.logo_ext = ext;
-    files.push({
-      path: `data/pending/${id}-logo.${ext}`,
-      contentBase64: b64bytes(await file.arrayBuffer()),
-    });
+  if (file && typeof file === 'object' && typeof file.arrayBuffer === 'function') {
+    const name = (file.name || '').toLowerCase();
+    const byName = name.match(/\.(png|jpe?g|webp|heic|heif|gif)$/);
+    const type = (file.type || '').toLowerCase();
+    const isImage = type.startsWith('image/') || !!byName;
+
+    let ext = null;
+    if (type.includes('png') || /\.png$/.test(name)) ext = 'png';
+    else if (type.includes('webp') || /\.webp$/.test(name)) ext = 'webp';
+    else if (type.includes('gif') || /\.gif$/.test(name)) ext = 'gif';
+    else if (type.includes('heic') || type.includes('heif') || /\.heic$|\.heif$/.test(name)) ext = 'heic';
+    else if (isImage) ext = 'jpg';
+
+    if (file.size === 0) {
+      s.logo_note = 'no file chosen';
+    } else if (!isImage) {
+      s.logo_note = `skipped — not an image (${esc(file.name || 'unnamed')}, ${type || 'no type'})`;
+    } else if (file.size > 10 * 1024 * 1024) {
+      s.logo_note = `skipped — ${Math.round(file.size / 1048576)} MB, over the 10 MB limit`;
+    } else {
+      try {
+        s.logo_name = file.name || `logo.${ext}`;
+        s.logo_ext = ext;
+        s.logo_size = file.size;
+        files.push({
+          path: `data/pending/${id}-logo.${ext}`,
+          contentBase64: b64bytes(await file.arrayBuffer()),
+        });
+        s.logo_note = `${s.logo_name}, ${Math.round(file.size / 1024)} KB`;
+      } catch (err) {
+        s.logo_note = `failed to read — ${err.message}`;
+      }
+    }
+  } else {
+    s.logo_note = 'no file field received';
   }
 
   s.received_at = new Date().toISOString();
@@ -419,16 +473,22 @@ async function handleApprove(request, env) {
   const files = [];
 
   let logoPath = null;
+  let logoProblem = '';
   if (s.logo_ext) {
-    const src = await readFile(env, `data/pending/${id}-logo.${s.logo_ext}`);
-    if (src) {
+    const path = `data/pending/${id}-logo.${s.logo_ext}`;
+    const content = await readBlob(env, path);
+    if (content) {
       logoPath = `/assets/img/providers/${slug}.${s.logo_ext}`;
       files.push({
         path: `public/assets/img/providers/${slug}.${s.logo_ext}`,
-        contentBase64: src.content.replace(/\n/g, ''),
+        contentBase64: content,
       });
-      files.push({ path: `data/pending/${id}-logo.${s.logo_ext}`, remove: true });
+      files.push({ path, remove: true });
+    } else {
+      logoProblem = `The uploaded image could not be read back from ${esc(path)}.`;
     }
+  } else {
+    logoProblem = s.logo_note ? `At intake: ${esc(s.logo_note)}` : 'No image was received with the application.';
   }
 
   const coords = await geocode(s.address || `${s.city}, ${s.state} ${s.zip}`);
@@ -459,7 +519,9 @@ async function handleApprove(request, env) {
 <p><strong>${esc(s.practice)}</strong> has been added and the site is rebuilding. It will be live at
 <a href="${esc(listingUrl)}">${esc(listingUrl)}</a> in about a minute.</p>
 <p>${esc(s.first)} has been emailed to say the listing is live and that credentials are still being verified.</p>
-${logoPath ? '<p>Their logo was published with it.</p>' : ''}
+${logoPath
+  ? '<p>Their logo was published with it.</p>'
+  : `<p style="color:#c23a4b">No logo was published. ${logoProblem}</p>`}
 ${coords.lat ? '' : '<p style="color:#c23a4b">The address could not be geocoded, so this listing will not appear in distance searches until coordinates are added by hand.</p>'}
 <p style="font-size:14px"><a href="${base}/api/review?key=${encodeURIComponent(env.SIGNING_SECRET)}">Mark it verified</a> once you have checked the licence number.</p>`);
 }

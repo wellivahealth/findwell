@@ -356,11 +356,25 @@
   // Two images maximum, 10 MB each — checked before anything is sent.
   var MAX_FILES = 2, MAX_BYTES = 10 * 1024 * 1024;
   var filesEl = $('j-files'), fileList = $('file-list');
+  var fileProblem = '';
   function filesValid() {
+    fileProblem = '';
     if (!filesEl || !filesEl.files.length) return true;
-    if (filesEl.files.length > MAX_FILES) return false;
+    if (filesEl.files.length > MAX_FILES) {
+      fileProblem = 'Choose no more than two images.';
+      return false;
+    }
     for (var i = 0; i < filesEl.files.length; i++) {
-      if (filesEl.files[i].size > MAX_BYTES) return false;
+      var f = filesEl.files[i];
+      if (f.size > MAX_BYTES) {
+        fileProblem = f.name + ' is ' + Math.round(f.size / 1048576) +
+                      ' MB — the limit is 10 MB per image.';
+        return false;
+      }
+      if (f.type && f.type.indexOf('image/') !== 0) {
+        fileProblem = f.name + ' is not an image.';
+        return false;
+      }
     }
     return true;
   }
@@ -372,7 +386,11 @@
     }
     if (fileList) fileList.textContent = names.join(' \u00b7 ');
     var err = form.querySelector('[data-for="files"]');
-    if (err) err.style.display = filesValid() ? 'none' : 'block';
+    var okFiles = filesValid();
+    if (err) {
+      err.textContent = fileProblem || 'Choose no more than two images, 10 MB each.';
+      err.style.display = okFiles ? 'none' : 'block';
+    }
   });
 
   function showErr(sel, on) {

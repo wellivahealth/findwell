@@ -303,7 +303,20 @@ def _merge_approved():
     have = {p["slug"] for p in PROVIDERS}
     added = 0
     for r in rows:
-        if not r.get("slug") or r["slug"] in have:
+        if not isinstance(r, dict) or not r.get("slug") or r["slug"] in have:
+            continue
+        if not r.get("name") or not r.get("categories"):
+            print(f"  ! skipping listing {r.get('slug')}: missing name or categories")
+            continue
+        r["categories"] = [c for c in r["categories"]
+                           if any(d["key"] == c for d in DISCIPLINES)]
+        if not r["categories"]:
+            print(f"  ! skipping listing {r['slug']}: no recognised discipline")
+            continue
+        for k in ("city", "state"):
+            r[k] = (r.get(k) or "").strip()
+        if not r["city"] or not r["state"]:
+            print(f"  ! skipping listing {r['slug']}: missing city or state")
             continue
         r.setdefault("logo", None)
         r.setdefault("social", [])
@@ -611,8 +624,25 @@ def integrative_row(p):
     return (f'<dt>Integrative training</dt>'
             f'<dd{"" if v else " class=\"na\""}>{E(v) if v else "None reported"}</dd>')
 
+def years_text(p, word="yrs"):
+    """A listing with no usable start year still has to render."""
+    since = p.get("since")
+    try:
+        since = int(since)
+    except (TypeError, ValueError):
+        return "—"
+    if not (1900 < since <= YEAR):
+        return "—"
+    return f"{YEAR - since} {word} (since {since})"
+
+def val(x, dash="—"):
+    """Never render an empty cell. A dash says 'nothing was given'; a blank
+    space looks like the page is broken."""
+    x = (x or "").strip()
+    return E(x) if x else dash
+
 def record_html(p):
-    years = f'{YEAR - p["since"]} yrs (since {p["since"]})'
+    years = years_text(p, "yrs")
     hay = " ".join([p["name"], p["person"], p["city"], p["state"], p["zip"],
                     p["credentials"], p["training"], p["blurb"], p["licensure"]] +
                    [disc(c)["label"] for c in p["categories"]]).lower()
@@ -632,11 +662,11 @@ def record_html(p):
         </div>
       </div>
       <dl class="fields">
-        <dt>Credential</dt><dd>{E(p['credentials'])}</dd>
-        <dt>Licensure</dt><dd>{E(p['licensure'])}</dd>
+        <dt>Credential</dt><dd class="{'' if (p['credentials'] or '').strip() not in ('', '—') else 'na'}">{val(p['credentials'])}</dd>
+        <dt>Licensure</dt><dd>{val(p['licensure'])}</dd>
         {integrative_row(p)}
         <dt>In practice</dt><dd>{years}</dd>
-        <dt>Fees</dt><dd>{E(p['pricing'])}</dd>
+        <dt>Fees</dt><dd>{val(p['pricing'])}</dd>
         <dt>Insurance</dt><dd>{E(p['insurance'])}</dd>
       </dl>
       <div class="record-verify">{verification_line(p)}</div>
@@ -820,7 +850,7 @@ def page_locations():
                  "/locations/", body)
 
 def page_provider(p):
-    years = f'{YEAR - p["since"]} years (since {p["since"]})'
+    years = years_text(p, "years")
     maps = "https://www.google.com/maps/search/?api=1&query=" + (p["address"] or p["name"]).replace(" ", "+")
     nearby = [x for x in PROVIDERS if x["city"] == p["city"] and x["slug"] != p["slug"]][:4]
     nearby_html = "".join(
@@ -852,15 +882,15 @@ def page_provider(p):
         <div class="detail-fields">
           <h3 style="font-family:var(--ff-display);font-size:1.15rem;margin-bottom:1rem;padding-bottom:.6rem;border-bottom:1px solid var(--line)">Practice record</h3>
           <dl class="fields">
-            <dt>Credentials</dt><dd>{E(p['credentials'])}</dd>
-            <dt>Licensure</dt><dd>{E(p['licensure'])}</dd>
-            <dt>Training</dt><dd>{E(p['training'])}</dd>
+            <dt>Credentials</dt><dd>{val(p['credentials'])}</dd>
+            <dt>Licensure</dt><dd>{val(p['licensure'])}</dd>
+            <dt>Training</dt><dd>{val(p['training'])}</dd>
             {integrative_row(p)}
             <dt>In practice</dt><dd>{years}</dd>
-            <dt>Affiliations</dt><dd>{E(p['affiliations'])}</dd>
-            <dt>Fees</dt><dd>{E(p['pricing'])}</dd>
-            <dt>Payment</dt><dd>{E(p['payments'])}</dd>
-            <dt>Insurance</dt><dd>{E(p['insurance'])}</dd>
+            <dt>Affiliations</dt><dd>{val(p['affiliations'])}</dd>
+            <dt>Fees</dt><dd>{val(p['pricing'])}</dd>
+            <dt>Payment</dt><dd>{val(p['payments'])}</dd>
+            <dt>Insurance</dt><dd>{val(p['insurance'])}</dd>
             <dt>Telehealth</dt><dd>{'Yes' if p['telehealth'] else 'In person only'}</dd>
           </dl>
         </div>
@@ -1015,8 +1045,12 @@ def page_join():
           <div class="form-grid">
             {yesno("licensed", "Do you hold a state license?", "Several disciplines here have no licensure route. Answering No is expected and is published as such.")}
             <div class="field"></div>
-            <div class="field full"><label for="j-license">If yes, list state(s) and license number(s)</label><input class="control" id="j-license" name="State(s) and license number(s)" placeholder="Arizona, LAC-010717"></div>
-            <div class="field full"><label for="j-certs">If no, list your certificates or affiliations</label><textarea class="control" id="j-certs" name="Certificates or affiliations" placeholder="NAMA Board Certified, AHG Registered Herbalist, professional associations\u2026"></textarea></div>
+            <div class="field full"><label for="j-license">State license number(s)</label>
+              <input class="control" id="j-license" name="State(s) and license number(s)" placeholder="Arizona, LAC-010717">
+              <p class="hint">Include the state. Leave blank if your discipline has no state licensure.</p></div>
+            <div class="field full"><label for="j-certs">Certifications and professional affiliations</label>
+              <textarea class="control" id="j-certs" name="Certificates or affiliations" placeholder="NAMA Board Certified, Dipl. O.M. (NCCAOM), NBC-HWC, AHG Registered Herbalist, professional memberships&hellip;"></textarea>
+              <p class="hint">Please fill this in whether or not you are licensed \u2014 board certifications and diplomate status belong here, and they appear on your listing.</p></div>
             <div class="field"><label for="j-since">How many years have you been in practice? *</label><input class="control" id="j-since" name="Years in practice" inputmode="numeric" placeholder="12" required><p class="err">Required.</p></div>
             <div class="field"></div>
             <div class="field full"><label for="j-training">Primary training and educational background *</label><textarea class="control" id="j-training" name="Primary training and education" placeholder="Programme, institution, hours completed." required></textarea><p class="err">Required.</p></div>
@@ -1049,8 +1083,8 @@ def page_join():
               <p class="err">Required.</p></div>
             <div class="field full"><label for="j-files">Media</label>
               <input class="control file" id="j-files" name="Logo or headshot" type="file"
-                     accept="image/png,image/jpeg,image/webp" multiple>
-              <p class="hint">Upload your logo and/or headshot \u2014 maximum 2 images, 10 MB each. Square images of 500px or larger work best.</p>
+                     accept="image/*" multiple>
+              <p class="hint">Upload your logo and/or headshot \u2014 maximum 2 images, 10 MB each. PNG or JPEG, square and 500px or larger works best.</p>
               <p class="err" data-for="files">Choose no more than two images, 10 MB each.</p>
               <p class="hint" id="file-list" style="margin-top:.4rem"></p></div>
           </div>

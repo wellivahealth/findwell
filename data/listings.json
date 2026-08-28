@@ -291,5 +291,39 @@
       "by": "admin",
       "recorded_at": "2026-08-26T18:28:13.946Z"
     }
+  },
+  {
+    "slug": "tucson-manual-and-movement-therapy",
+    "name": "Tucson Manual and Movement Therapy",
+    "person": "Jarrod Lash",
+    "logo": null,
+    "categories": [
+      "TCM",
+      "Bodywork",
+      "Massage"
+    ],
+    "city": "tucson",
+    "state": "AZ",
+    "zip": "85712",
+    "address": "4420 E Presidio Pl, tucson, AZ 85712",
+    "lat": 32.262920352258,
+    "lng": -110.89780291357,
+    "telehealth": true,
+    "phone": "(520) 404-4869",
+    "email": "descendingdragoncommunity@gmail.com",
+    "website": "https://www.descendingdragoncommunity.com/",
+    "social": [],
+    "credentials": "Certified Massage Therapist (1999)\r\nCertified Practitioner and Instructor AOBTA",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "Bancroft school of massage therapy (1997-99)\r\nFormal apprenticeship in Traditional Chinese Medicine (1999-2015)\r\nAuricular Therapy (2006-09)\r\nCertified Qigong and Taiji coach",
+    "integrative_training": "",
+    "since": 1999,
+    "affiliations": "Certified Massage Therapist (1999)\r\nCertified Practitioner and Instructor AOBTA",
+    "pricing": "$125/session for Manual or Movement Therapy\r\n$200 traction therapy",
+    "payments": "Cash, Checks, Credit Cards, Debit Cards, Zelle, Venmo, Paypal, HSA/FSA",
+    "insurance": "Not accepted",
+    "blurb": "Manual and Movement Therapy to relieve pain and improve quality of life.",
+    "long": "Home based business specializing in Tuina Manual Therapy, Qigong and Taiji Movement Therapy.",
+    "verified": false
   }
 ]

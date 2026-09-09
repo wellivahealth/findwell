@@ -357,5 +357,43 @@
     "blurb": "Shamika T. Brown is a Licensed Massage Therapist specializing in advanced somatic recovery and lymphatic health. As the founder of Healing Through Energy LLC, she operates a premier Recovery Lab in the Antelope Valley, where clinical precision meets a high-end, concierge experience.\r\nWith a deep focus on Somatic Hydrotherapy and Trauma-Informed bodywork, Shamika helps clients navigate the intersection of physical tension and nervous system regulation. Her practice is known for its VIP Men’s Wellness protocols—offering discreet, performance-based recovery services—and her signature Somatic Date Night rituals designed for couples seeking deeper connection. Utilizing state-of-the-art hydro-somatic techniques, Shamika provides a \"Total Physical Protection\" environment where luxury and healing are indistinguishable.",
     "long": "Somatic Practitioner & Wellness Curator\r\nStep into a world of Deep Sensory Surrender. Shamika T. Brown is a somatic expert dedicated to the art of \"Drama to Dharma\"—transforming physical stress into profound peace. Through her boutique practice, Healing Through Energy LLC, she has curated a unique menu of Hydro-Somatic rituals and Lomi Lomi-inspired bodywork that prioritizes the human connection.\r\nShamika’s Recovery Lab is a sanctuary for those who demand more from their wellness routine. From private VIP sessions for men to immersive Somatic Hydrotherapy Date Nights, every experience is wrapped in a signature black-and-gold luxury aesthetic. Whether you are seeking lymphatic detoxification Shamika ensures every detail is tailored to your body’s specific narrative.",
     "verified": false
+  },
+  {
+    "slug": "coaching-with-lucy",
+    "name": "Coaching With Lucy",
+    "person": "Lucy Seligman",
+    "logo": "/assets/img/providers/coaching-with-lucy.png",
+    "categories": [
+      "EnergyMedicine",
+      "Counseling",
+      "Coaching"
+    ],
+    "city": "Richmond",
+    "state": "CA",
+    "zip": "94805",
+    "address": "",
+    "lat": null,
+    "lng": null,
+    "telehealth": true,
+    "phone": "510-710-3917",
+    "email": "Lucy@Lucyseligman.com",
+    "website": "https://lucyseligman.com/",
+    "social": [
+      "https://www.facebook.com/LucySeligmanCCHT",
+      "https://www.instagram.com/lucyseligman/",
+      "https://www.linkedin.com/in/lucyseligman/"
+    ],
+    "credentials": "—",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "Masters-level Studies in Social Work, San Jose State University\r\n\r\nBachelor of Arts in East Asian Languages and Culture, USC\r\n\r\nICF Certified Coach [ACC] 2023-2029\r\n\r\nCoaching Certificate - Wisdom of the Whole Coaching Academy 2019\r\n\r\nStress Management – Allegra Learning Solutions 2015\r\n\r\nMedical Hypnotherapy Certification - Hypnotherapy for Health 2014\r\n\r\nClinical Hypnotherapy Certification - HCH Institute 2010 - 2013\r\nTraining included a one-year internship and six-month externship in the school's\r\nlow-fee clinic. Developed skills in gaining rapport, listening and observation, and\r\nguiding clients in relaxation techniques, visualization, stress management and\r\nmind-body pain management.\r\n\r\nReiki Master - HCH Institute 2012\r\n\r\nEnergy Therapy Certification - HCH Institute 2011\r\n\r\nEmotional Freedom Technique - HCH Institute 2011\r\n\r\nSandplay Training - HCH Institute 2011\r\n\r\nTapas Acupressure Basics - HCH Institute 2011\r\n\r\nEnergy Boundaries & Chakra Clearing - HCH Institute 2011\r\n\r\nEricksonian Pain Management - HCH Institute 2011",
+    "integrative_training": "N/A",
+    "since": 2011,
+    "affiliations": "—",
+    "pricing": "Based on the needs of the client it can differ based on the package and number of sessions needed.\r\n\r\nI offer a free 20 minute connection call. - https://cal.com/lucy-seligman/connection-call",
+    "payments": "Credit Cards, Debit Cards",
+    "insurance": "Not accepted",
+    "blurb": "Lucy Seligman is a certified coach and hypnotherapist who works with people who feel overwhelmed, stuck, anxious, or uncertain about what comes next. Using coaching, hypnotherapy, mindfulness, and other mind-body tools, she helps clients quiet the noise, uncover what is getting in the way, and find greater clarity, confidence, and ease as they move forward.",
+    "long": "Lucy Seligman is a certified coach and hypnotherapist who works with people who feel overwhelmed, stuck, anxious, or uncertain about what comes next. Using coaching, hypnotherapy, mindfulness, and other mind-body tools, she helps clients quiet the noise, uncover what is getting in the way, and find greater clarity, confidence, and ease as they move forward.",
+    "verified": false
   }
 ]

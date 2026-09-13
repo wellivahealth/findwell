@@ -395,5 +395,42 @@
     "blurb": "Lucy Seligman is a certified coach and hypnotherapist who works with people who feel overwhelmed, stuck, anxious, or uncertain about what comes next. Using coaching, hypnotherapy, mindfulness, and other mind-body tools, she helps clients quiet the noise, uncover what is getting in the way, and find greater clarity, confidence, and ease as they move forward.",
     "long": "Lucy Seligman is a certified coach and hypnotherapist who works with people who feel overwhelmed, stuck, anxious, or uncertain about what comes next. Using coaching, hypnotherapy, mindfulness, and other mind-body tools, she helps clients quiet the noise, uncover what is getting in the way, and find greater clarity, confidence, and ease as they move forward.",
     "verified": false
+  },
+  {
+    "slug": "working-on-calm-llc",
+    "name": "Working On Calm, LLC",
+    "person": "Melissa Lewis-Duarte",
+    "logo": "/assets/img/providers/working-on-calm-llc.jpg",
+    "categories": [
+      "Coaching"
+    ],
+    "city": "Scottsdale",
+    "state": "AZ",
+    "zip": "85258",
+    "address": "",
+    "lat": null,
+    "lng": null,
+    "telehealth": true,
+    "phone": "480-734-5960",
+    "email": "Melissa@workingoncalm.com",
+    "website": "https://workingoncalm.com/",
+    "social": [
+      "https://www.linkedin.com/in/melissa-lewis-duarte-phd-nbc-hwc-40bba55/",
+      "https://www.instagram.com/workingoncalm/",
+      "https://www.facebook.com/workingoncalm/",
+      "https://www.youtube.com/channel/UCxMyfam2Hbm7JwaAftuvqyA"
+    ],
+    "credentials": "NBC-HWC",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "Ph.D. in Organizational Behavior from Claremont Graduate University",
+    "integrative_training": "Certification in Integrative Health and Wellness Coaching from the Andrew Weil Center for Integrative Medicine",
+    "since": 2021,
+    "affiliations": "NBC-HWC",
+    "pricing": "Hourly One-on-One Virtual Coaching Sessions Rate: $160, no package required",
+    "payments": "Credit Cards, Debit Cards",
+    "insurance": "Not accepted",
+    "blurb": "As an Integrative Wellness Coach, Melissa Lewis-Duarte, PhD, NBC-HWC, combines evidence-based stress management, behavior change, and integrative wellness strategies to help clients who are functioning but not flourishing turn what they already know into simple, realistic habits they can actually sustain. Rather than adding more to an already overwhelming to-do list, she focuses on small changes that decrease stress, increase resilience, and improve overall well-being.",
+    "long": "Melissa works with adults who feel overwhelmed by work, health challenges, caregiving demands, or the cumulative stress of everyday life. Many of her clients are managing significant responsibilities and appear to be functioning well, but feel burned out, constantly on edge, or like their current pace is unsustainable.\r\n\r\nCoaching is individualized to each client’s needs and may focus on practical stress management and resilience strategies that help regulate the nervous system, shift unhelpful thought patterns, manage difficult emotions, engage in what feels fulfilling, and create structures that make it easier to focus on what matters most.\r\n\r\nMelissa’s goal is to help clients identify what will make the greatest difference in their lives and translate that into practical, sustainable action. She offers individual virtual coaching as well as stress management and resilience workshops and programs for healthcare organizations, universities, professional groups, and workplaces.",
+    "verified": false
   }
 ]

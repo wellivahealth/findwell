@@ -21,6 +21,11 @@
 /** "Arizona" truncated to two characters is "AR" — Arkansas. Map full names
  *  properly, and fall back to the ZIP code when the field is unusable. */
 const STATE_NAMES_TO_ABBR = {
+  // Canadian provinces and territories
+  alberta:'AB', 'british columbia':'BC', manitoba:'MB', 'new brunswick':'NB',
+  'newfoundland and labrador':'NL', newfoundland:'NL', 'nova scotia':'NS',
+  'northwest territories':'NT', nunavut:'NU', ontario:'ON', 'prince edward island':'PE',
+  quebec:'QC', 'québec':'QC', saskatchewan:'SK', yukon:'YT',
   alabama:'AL', alaska:'AK', arizona:'AZ', arkansas:'AR', california:'CA', colorado:'CO',
   connecticut:'CT', delaware:'DE', 'district of columbia':'DC', florida:'FL', georgia:'GA',
   hawaii:'HI', idaho:'ID', illinois:'IL', indiana:'IN', iowa:'IA', kansas:'KS',
@@ -48,16 +53,20 @@ const ZIP_STATE = [
 ];
 
 function stateFromZip(zip) {
-  const n = parseInt(String(zip || '').replace(/\D/g, '').slice(0, 3), 10);
+  const digits = String(zip || '').replace(/\D/g, '');
+  if (digits.length !== 5 && digits.length !== 9) return '';   // not a US ZIP
+  const n = parseInt(digits.slice(0, 3), 10);
   if (!Number.isFinite(n)) return '';
   for (const [lo, hi, ab] of ZIP_STATE) if (n >= lo && n <= hi) return ab;
   return '';
 }
 
-function normaliseState(raw, zip) {
+function normaliseState(raw, zip, country) {
   const t = String(raw || '').trim();
   const byName = STATE_NAMES_TO_ABBR[t.toLowerCase()];
   if (byName) return byName;
+  const c = String(country || '').trim();
+  if (/^canada$/i.test(c)) return t.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 2);
   const two = t.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 2);
   const fromZip = stateFromZip(zip);
   // a two-letter code that contradicts the ZIP is usually a truncated name
@@ -85,7 +94,8 @@ const SCOPE_TO_KEY = {
 /** The issuing authority to check, by discipline and state. Extend as the
  *  directory grows into new states. */
 const BOARDS = {
-  Acupuncture: { AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'] },
+  Acupuncture: { AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'],
+                 CA: ['the California Acupuncture Board', 'https://search.dca.ca.gov/'] },
   TCM:         { AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'] },
   Naturopathy: { AZ: ['the Arizona Naturopathic Physicians Medical Board', 'https://nd.az.gov/resources/license-verification-request'] },
   Chiropractic:{ AZ: ['the Arizona Board of Chiropractic Examiners', 'https://chiroboard.az.gov/find-chiropractor'] },
@@ -98,11 +108,22 @@ const BOARDS = {
   Herbalism:   { '*': ['the American Herbalists Guild', 'https://www.americanherbalistsguild.com/'] },
 };
 
+/** Disciplines a state licenses. For these, a certifying body elsewhere in the
+ *  listing (NAMA, AHG, NBHWC) is never the right place to check a licence. */
+const LICENSED = new Set(['Acupuncture', 'TCM', 'Naturopathy', 'Chiropractic',
+  'Massage', 'Counseling', 'IntegrativeMedicine']);
+
 function boardFor(listing) {
-  for (const c of listing.categories || []) {
-    const byState = BOARDS[c];
-    if (!byState) continue;
-    const hit = byState[listing.state] || byState['*'];
+  const cats = listing.categories || [];
+  // a state board for any of the listing's disciplines wins
+  for (const c of cats) {
+    const hit = (BOARDS[c] || {})[listing.state];
+    if (hit) return { name: hit[0], url: hit[1] };
+  }
+  // licensed discipline in a state we have no board for: leave it to the admin
+  if (cats.some((c) => LICENSED.has(c))) return null;
+  for (const c of cats) {
+    const hit = (BOARDS[c] || {})['*'];
     if (hit) return { name: hit[0], url: hit[1] };
   }
   return null;
@@ -309,11 +330,18 @@ const receivedEmail = (s) => shell(`<h2 style="font-size:20px;margin:0 0 12px">W
 <p>We review each application and check credentials and license numbers against the issuing board before publishing. We will email you as soon as your listing is live, and will only be in touch before then if we have a question.</p>
 <p>If anything you sent needs correcting, just reply to this email.</p>`);
 
-const publishedEmail = (s, url) => shell(`<h2 style="font-size:20px;margin:0 0 12px">Your listing is live</h2>
+const publishedEmail = (s, url, joinUrl) => shell(`<h2 style="font-size:20px;margin:0 0 12px">Your listing is live</h2>
 <p>Thank you for joining the FindWell Directory. Your listing for <strong>${esc(s.practice)}</strong> is now published:</p>
 <p><a href="${esc(url)}" style="display:inline-block;background:#c23a4b;color:#fff;text-decoration:none;padding:10px 18px;border-radius:6px;font-weight:600">View your listing</a></p>
-<p>One more step on our side: we verify credentials and license numbers against the issuing board before a listing is considered confirmed. That is usually quick, and we will contact you only if we have questions or need something clarified.</p>
-<p>If anything on your listing needs correcting, reply to this email and we will fix it.</p>`);
+<p>Please take a look when you have a moment. If anything needs changing, whether a fee, the way a credential reads, or the photo, simply reply to this email and we will update it for you.</p>
+<p>We also confirm license numbers and certifications with the issuing board. That is usually quick, and we will only be in touch if we have a question.</p>
+<div style="margin:28px 0 8px;padding:18px 20px;background:#eff4f4;border-radius:8px">
+<p style="margin:0 0 8px;font-weight:600;font-size:17px">Know a practitioner who belongs here?</p>
+<p style="margin:0 0 12px">The directory becomes more useful to patients with every practitioner who joins, and the people who know good practitioners best are other practitioners. If there are colleagues whose work you trust, we would be grateful if you passed this along. Listing is free and always will be, with no paid placement and no leads sold, and the application takes about ten minutes.</p>
+<p style="margin:0 0 12px"><a href="${esc(joinUrl)}" style="display:inline-block;background:#2e5f5c;color:#fff;text-decoration:none;padding:10px 18px;border-radius:6px;font-weight:600">Invite a colleague to join</a></p>
+<p style="margin:0;font-size:14px;color:#5f7473">You are welcome to forward this email as it is. The link above works for anyone.</p>
+</div>
+<p style="margin-top:24px">Warmly,<br>Amita Nathwani<br>FindWell Directory</p>`);
 
 function adminEmail(s, approveUrl, declineUrl) {
   const row = (k, v) => v
@@ -337,6 +365,7 @@ ${row('Social', s.social)}
 ${row('Payments', s.payments.join(', '))}${row('Pricing', s.pricing)}
 ${row('Short description', s.short)}${row('Description', s.long)}
 ${row('Logo', s.logo_note || (s.logo_name ? s.logo_name : 'none'))}
+${row('Referred by', s.referred_by)}
 ${row('Attested accurate', s.attestation ? 'Yes' : 'NOT TICKED')}
 </table>
 <p style="margin-top:20px;padding:12px;background:#eff4f4;border-radius:6px;font-size:14px">
@@ -357,7 +386,18 @@ async function geocode(address) {
     const res = await fetch(url, { signal: AbortSignal.timeout(6000) });
     if (!res.ok) return {};
     const m = (await res.json())?.result?.addressMatches?.[0]?.coordinates;
-    return m ? { lat: Number(m.y), lng: Number(m.x) } : {};
+    if (m) return { lat: Number(m.y), lng: Number(m.x) };
+  } catch { /* fall through */ }
+  try {
+    // Census covers the US only; OpenStreetMap covers Canada (and the US as a backup)
+    const res = await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=us,ca&q='
+      + encodeURIComponent(address), {
+      headers: { 'User-Agent': 'FindWellDirectory/1.0 (info@findwelldirectory.com)' },
+      signal: AbortSignal.timeout(6000),
+    });
+    if (!res.ok) return {};
+    const hit = (await res.json())?.[0];
+    return hit ? { lat: Number(hit.lat), lng: Number(hit.lon) } : {};
   } catch { return {}; }
 }
 
@@ -371,7 +411,7 @@ function readForm(form) {
     email: g('email'), phone: g('Phone'), website: g('Website'), social: g('Social media'),
     physical: g('physical'), country: g('Country'),
     addr1: g('Address line 1'), addr2: g('Address line 2'),
-    city: g('City'), state: normaliseState(g('State'), g('ZIP code')), zip: g('ZIP code'),
+    city: g('City'), state: normaliseState(g('State'), g('ZIP code'), g('Country')), zip: g('ZIP code'),
     scope: split('Scope of practice'), short: g('Describe your practice'),
     licensed: g('licensed'), license: g('State(s) and license number(s)'),
     certs: g('Certificates or affiliations'), years: g('Years in practice'),
@@ -380,6 +420,7 @@ function readForm(form) {
     telehealth: g('telehealth'), long: g('Listing description'),
     size: g('Desired size of practice'), openins: g('openins'), ehr: g('ehr'),
     attestation: g('Attestation'),
+    referred_by: g('Referred by'),
     honeypot: g('_gotcha'),
   };
   s.address = s.physical === 'Yes'
@@ -396,6 +437,7 @@ function validate(s) {
   }
   if (s.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(s.email)) missing.push('a valid email');
   if (!s.scope.length) missing.push('scope of practice');
+
   return missing;
 }
 
@@ -419,6 +461,7 @@ function toListing(s, coords, logoPath) {
     logo: logoPath || null,
     categories: s.scope.map((x) => SCOPE_TO_KEY[x]).filter(Boolean),
     city: s.city, state: s.state, zip: s.zip, address: s.address,
+    country: s.country || 'United States',
     lat: coords.lat ?? null, lng: coords.lng ?? null,
     telehealth: s.telehealth === 'Yes',
     phone: s.phone, email: s.email, website: s.website,
@@ -455,6 +498,9 @@ async function handleApply(request, env) {
   const s = readForm(form);
   if (s.honeypot) return json({ ok: true });              // bot: accept, store nothing
 
+  if (s.country && !/^(united states|canada)$/i.test(s.country)) {
+    return json({ ok: false, error: 'Thank you for your interest. FindWell currently lists practitioners in the United States and Canada only.' }, 400);
+  }
   const missing = validate(s);
   if (missing.length) return json({ ok: false, error: `Missing ${missing.join(', ')}.` }, 400);
 
@@ -584,7 +630,7 @@ async function handleApprove(request, env) {
   await sendEmail(env, {
     to: s.email,
     subject: 'Your FindWell Directory listing is live',
-    html: publishedEmail(s, listingUrl),
+    html: publishedEmail(s, listingUrl, `${base}/join/?ref=${encodeURIComponent(listing.slug)}`),
   });
 
   return page('Published', `<h1>Published</h1>
@@ -633,13 +679,39 @@ async function handlePending(request, env) {
     `<h1>Pending applications</h1><ul>${rows.join('') || '<li>Nothing waiting.</li>'}</ul>`);
 }
 
+/** Checks for listings written into build.py are kept in their own file. */
+async function readChecks(env) {
+  const f = await readFile(env, 'data/verifications.json');
+  return f ? { data: JSON.parse(fromB64(f.content)), exists: true } : { data: {}, exists: false };
+}
+
+/** The original listings live in build.py, not data/listings.json. The build
+ *  publishes a summary of every provider, which is how the review page sees them. */
+async function seedListings(env) {
+  try {
+    const base = env.SITE_URL || 'https://findwelldirectory.com';
+    const res = await env.ASSETS.fetch(new Request(`${base}/assets/data/providers.json`));
+    if (!res.ok) return [];
+    return (await res.json()).filter((p) => p.seed);
+  } catch { return []; }
+}
+
+async function withSeeds(env, listings) {
+  const have = new Set(listings.map((l) => l.slug));
+  const [seeds, checks] = await Promise.all([seedListings(env), readChecks(env)]);
+  return [...listings, ...seeds.filter((p) => !have.has(p.slug))]
+    .map((l) => (checks.data[l.slug] ? { ...l, verification: checks.data[l.slug] } : l));
+}
+
 async function handleReview(request, env) {
   const url = new URL(request.url);
   if (!keyOk(url, env).ok) return page('Not authorised', '<h1>Not authorised</h1>', 403);
 
   const current = await readFile(env, 'data/listings.json');
   const listings = current ? JSON.parse(fromB64(current.content)) : [];
-  const waiting = listings.filter((l) => !l.verification);
+  const everyone = await withSeeds(env, listings);
+  const showAll = url.searchParams.get('all') === '1';
+  const waiting = showAll ? everyone : everyone.filter((l) => !l.verification);
   const base = env.SITE_URL || 'https://findwelldirectory.com';
   const today = new Date().toLocaleDateString('en-GB',
     { day: 'numeric', month: 'short', year: 'numeric' });
@@ -651,6 +723,7 @@ async function handleReview(request, env) {
       ? l.licensure : 'Credentials confirmed';
     return `<li style="padding:16px 0;border-top:1px solid #dbe3e3">
       <strong>${esc(l.name)}</strong> — ${esc(l.person)}, ${esc(l.city)}, ${esc(l.state)}<br>
+      ${l.verification ? `<span style="font-size:13px;color:#c23a4b">Currently: ${esc(l.verification.what)} with ${esc(l.verification.source)}, ${esc(l.verification.date)}</span><br>` : ''}
       <span style="color:#5f7473;font-size:14px">${esc(l.licensure || '')}</span><br>
       ${board ? `<a href="${esc(board.url)}" target="_blank" rel="noopener"
           style="font-size:14px">Open ${esc(board.name)} &#8599;</a> &nbsp;·&nbsp;` : ''}
@@ -704,10 +777,7 @@ async function handleVerify(request, env) {
 
   const current = await readFile(env, 'data/listings.json');
   const listings = current ? JSON.parse(fromB64(current.content)) : [];
-  const row = listings.find((l) => l.slug === slug);
-  if (!row) return page('Not found', '<h1>Not found</h1>', 404);
-
-  row.verification = {
+  const verification = {
     what: what || 'Credentials confirmed',
     source,
     date: date || new Date().toISOString().slice(0, 10),
@@ -715,8 +785,21 @@ async function handleVerify(request, env) {
     recorded_at: new Date().toISOString(),
   };
 
-  await commitFiles(env, `Verified: ${row.name}`,
-    [{ path: 'data/listings.json', contentBase64: b64(JSON.stringify(listings, null, 2) + '\n') }]);
+  let row = listings.find((l) => l.slug === slug);
+  if (row) {
+    row.verification = verification;
+    await commitFiles(env, `Verified: ${row.name}`,
+      [{ path: 'data/listings.json', contentBase64: b64(JSON.stringify(listings, null, 2) + '\n') }]);
+  } else {
+    // one of the original listings written into build.py
+    row = (await seedListings(env)).find((p) => p.slug === slug);
+    if (!row) return page('Not found', '<h1>Not found</h1>', 404);
+    const checks = await readChecks(env);
+    checks.data[slug] = verification;
+    await commitFiles(env, `Verified: ${row.name}`,
+      [{ path: 'data/verifications.json', contentBase64: b64(JSON.stringify(checks.data, null, 2) + '\n') }]);
+  }
+  row.verification = verification;
 
   const base = env.SITE_URL || 'https://findwelldirectory.com';
   return page('Confirmed', `<h1>Confirmed</h1>

@@ -148,9 +148,9 @@ PROVIDERS = [
                  "https://www.instagram.com/catalinaacupuncture/",
                  "https://www.linkedin.com/in/catalinaacupuncture/"],
          credentials="Master of Traditional Oriental Medicine",
-         licensure="Arizona licensed acupuncturist — license no. pending verification",
+         licensure="Arizona Acupuncture Board of Examiners #888 · originally licensed in California, California Acupuncture Board #9744",
          training="Emperor's College — Master of Traditional Oriental Medicine",
-         since=2005, affiliations="—",
+         since=2004, affiliations="—",
          pricing="First visit, 90 min $150 · Return visits, 60 min $100 · Herbal medicine varies",
          payments="Insurance, cash, checks, credit, debit, HSA/FSA, PayPal, Venmo",
          insurance="Accepted — verify your plan with the practice",
@@ -311,7 +311,8 @@ STATE_NAMES = {
 # worker/index.js — used to turn a bare licence number into a statement that
 # names the issuing authority.
 LICENSE_BOARDS = {
-    "Acupuncture":  {"AZ": "Arizona Acupuncture Board of Examiners"},
+    "Acupuncture":  {"AZ": "Arizona Acupuncture Board of Examiners",
+                     "CA": "California Acupuncture Board"},
     "TCM":          {"AZ": "Arizona Acupuncture Board of Examiners"},
     "Naturopathy":  {"AZ": "Arizona Naturopathic Physicians Medical Board"},
     "Chiropractic": {"AZ": "Arizona Board of Chiropractic Examiners"},
@@ -337,14 +338,22 @@ ZIP_STATE = [
     (220,246,'VA'),(980,994,'WA'),(247,268,'WV'),(530,549,'WI'),(820,831,'WY'),
 ]
 
+PROVINCES = {
+    "AB":"Alberta","BC":"British Columbia","MB":"Manitoba","NB":"New Brunswick",
+    "NL":"Newfoundland and Labrador","NS":"Nova Scotia","NT":"Northwest Territories",
+    "NU":"Nunavut","ON":"Ontario","PE":"Prince Edward Island","QC":"Quebec",
+    "SK":"Saskatchewan","YT":"Yukon",
+}
+STATE_NAMES.update(PROVINCES)
 NAME_TO_ABBR = {v.lower(): k for k, v in STATE_NAMES.items()}
+NAME_TO_ABBR["québec"] = "QC"
 
 
 def state_from_zip(zip_code):
-    digits = re.sub(r"\D", "", str(zip_code or ""))[:3]
-    if len(digits) < 3:
+    digits = re.sub(r"\D", "", str(zip_code or ""))
+    if len(digits) not in (5, 9):        # not a US ZIP (Pune's 411007 read as Kentucky)
         return ""
-    n = int(digits)
+    n = int(digits[:3])
     for lo, hi, ab in ZIP_STATE:
         if lo <= n <= hi:
             return ab
@@ -359,12 +368,24 @@ def normalise(r):
     # "Arizona" cut to two characters becomes "AR", which is Arkansas
     st = (r.get("state") or "").strip()
     by_name = NAME_TO_ABBR.get(st.lower())
+    country = (r.get("country") or "").strip()
+    abroad = country and country.lower() not in ("united states", "canada") \
+        and not country.lower().startswith("united states")
     if by_name:
         r["state"] = by_name
+    elif abroad:
+        r["state"] = country              # grouped by country, not a US state
+    elif st and st.upper() not in STATE_NAMES and not state_from_zip(r.get("zip")):
+        r["state"] = st                   # outside the US, typed as given
     else:
         from_zip = state_from_zip(r.get("zip"))
         two = re.sub(r"[^A-Za-z]", "", st).upper()[:2]
         r["state"] = two if (two and (not from_zip or two == from_zip)) else (from_zip or two)
+
+    # carry a corrected state into the published address line as well
+    if st and r["state"] and st.upper() != r["state"] and r.get("address"):
+        r["address"] = re.sub(rf",\s*{re.escape(st)}\s+(?={re.escape(str(r.get('zip') or ''))})",
+                              f", {r['state']} ", r["address"])
 
     # a licence field holding only a state name has no number in it
     lic_raw = (r.get("licensure") or "").strip()
@@ -409,6 +430,10 @@ def normalise(r):
     return r
 
 
+# Listings written into this file (the original directory), as opposed to ones
+# approved through the Worker. Their board checks live in data/verifications.json.
+SEED_SLUGS = {p["slug"] for p in PROVIDERS}
+
 def _merge_approved():
     path = os.path.join(ROOT, "data", "listings.json")
     if not os.path.exists(path):
@@ -452,7 +477,68 @@ def _merge_approved():
     if added:
         print(f"  + {added} listing(s) merged from data/listings.json")
 
+# Admin corrections to approved listings, by slug. Applied on every build.
+CORRECTIONS = {
+    # Lucy asked for her ICF and hypnotherapy credentials to be shown (Sep 2026)
+    "coaching-with-lucy": dict(
+        credentials="ICF Associate Certified Coach (ACC); Certified Clinical Hypnotherapist (CCHT)"),
+}
+# Logos supplied by practitioners after listing (Sep 2026), in public/assets/img/providers/
+LOGOS = {
+    "catalina-acupuncture": "/assets/img/providers/catalina-acupuncture.png",
+    "civano-chiropractic-clinics": "/assets/img/providers/civano-chiropractic-clinics.png",
+    "emma-vasseur-wellbeing": "/assets/img/providers/emma-vasseur-wellbeing.png",
+    "hibiscus-acupuncture": "/assets/img/providers/hibiscus-acupuncture.png",
+    "origins-health": "/assets/img/providers/origins-health.png",
+    "tracy-villegas-lmt": "/assets/img/providers/tracy-villegas-lmt.jpg",
+}
+for _slug, _path in LOGOS.items():
+    CORRECTIONS.setdefault(_slug, {})["logo"] = _path
+
+HIDDEN = {
+    "test-practice",                                  # never published
+    "ayurmantra-ayurveda-holistic-wellness-center",   # India; US and Canada only
+}
+LISTED_COUNTRIES = {"united states", "canada"}
+
+# A confirmation recorded against the wrong body is withdrawn until re-checked.
+# Only the exact bad source is dropped, so a fresh confirmation shows normally.
+WRONG_SOURCE = {
+    "common-roots-acupuncture": "the American Herbalists Guild",
+    "lotus-wellspring-healthcare": "the American Herbalists Guild",
+}
+
+def _load_verifications():
+    path = os.path.join(ROOT, "data", "verifications.json")
+    try:
+        with open(path) as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return {}
+
+def _apply_corrections():
+    global PROVIDERS
+    checks = _load_verifications()        # confirmations recorded for seed listings
+    for p in PROVIDERS:
+        if isinstance(checks.get(p["slug"]), dict):
+            p["verification"] = checks[p["slug"]]
+    PROVIDERS[:] = [p for p in PROVIDERS if p["slug"] not in HIDDEN
+                    and (p.get("country") or "United States").lower() in LISTED_COUNTRIES]
+    for p in PROVIDERS:
+        fix = CORRECTIONS.get(p["slug"])
+        if fix:
+            p.update(fix)
+        bad = WRONG_SOURCE.get(p["slug"])
+        v = p.get("verification")
+        if bad and v and (v.get("source") or "").strip().lower() == bad.lower():
+            p["verification"] = None
+        # the same text given as both summary and description reads as a mistake
+        if (p.get("long") or "").strip() and \
+                (p.get("long") or "").strip() == (p.get("blurb") or "").strip():
+            p["long"] = ""
+
 _merge_approved()
+_apply_corrections()
 
 E = html.escape
 
@@ -1039,41 +1125,8 @@ SCOPE_OPTIONS = ["Ayurveda", "Acupuncture", "Traditional Chinese Medicine",
                  "Integrative / Functional Medicine", "Counseling",
                  "Health & Wellness Coaching", "Herbalism", "Farmer", "Grocer"]
 
-COUNTRIES = ["United States", "Canada", "Mexico", "United Kingdom", "Australia", "\u2014",
-    "Afghanistan","\u00c5land Islands","Albania","Algeria","American Samoa","Andorra","Angola",
-    "Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Ascension Island","Austria",
-    "Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin",
-    "Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil",
-    "British Indian Ocean Territory","British Virgin Islands","Brunei","Bulgaria","Burkina Faso",
-    "Burundi","Cambodia","Cameroon","Cape Verde","Caribbean Netherlands","Cayman Islands",
-    "Central African Republic","Chad","Chile","China","Christmas Island","Cocos (Keeling) Islands",
-    "Colombia","Comoros","Congo - Brazzaville","Congo - Kinshasa","Cook Islands","Costa Rica",
-    "C\u00f4te d\u2019Ivoire","Croatia","Cuba","Cura\u00e7ao","Cyprus","Czechia","Denmark","Djibouti",
-    "Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea",
-    "Estonia","Eswatini","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France",
-    "French Guiana","French Polynesia","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar",
-    "Greece","Greenland","Grenada","Guadeloupe","Guam","Guatemala","Guernsey","Guinea",
-    "Guinea-Bissau","Guyana","Haiti","Honduras","Hong Kong SAR China","Hungary","Iceland","India",
-    "Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey",
-    "Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia",
-    "Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg",
-    "Macao SAR China","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands",
-    "Martinique","Mauritania","Mauritius","Mayotte","Micronesia","Moldova","Monaco","Mongolia",
-    "Montenegro","Montserrat","Morocco","Mozambique","Myanmar (Burma)","Namibia","Nauru","Nepal",
-    "Netherlands","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Niue",
-    "Norfolk Island","Northern Mariana Islands","North Korea","North Macedonia","Norway","Oman",
-    "Pakistan","Palau","Palestinian Territories","Panama","Papua New Guinea","Paraguay","Peru",
-    "Philippines","Poland","Portugal","Puerto Rico","Qatar","R\u00e9union","Romania","Russia","Rwanda",
-    "Samoa","San Marino","S\u00e3o Tom\u00e9 & Pr\u00edncipe","Saudi Arabia","Senegal","Serbia","Seychelles",
-    "Sierra Leone","Singapore","Sint Maarten","Slovakia","Slovenia","Solomon Islands","Somalia",
-    "South Africa","South Korea","South Sudan","Spain","Sri Lanka","St. Barth\u00e9lemy","St. Helena",
-    "St. Kitts & Nevis","St. Lucia","St. Martin","St. Pierre & Miquelon","St. Vincent & Grenadines",
-    "Sudan","Suriname","Svalbard & Jan Mayen","Sweden","Switzerland","Syria","Taiwan","Tajikistan",
-    "Tanzania","Thailand","Timor-Leste","Togo","Tokelau","Tonga","Trinidad & Tobago",
-    "Tristan da Cunha","Tunisia","T\u00fcrkiye","Turkmenistan","Turks & Caicos Islands","Tuvalu",
-    "U.S. Virgin Islands","Uganda","Ukraine","United Arab Emirates","Uruguay","Uzbekistan","Vanuatu",
-    "Vatican City","Venezuela","Vietnam","Wallis & Futuna","Western Sahara","Yemen","Zambia",
-    "Zimbabwe"]
+# FindWell lists practitioners in the United States and Canada only.
+COUNTRIES = ["United States", "Canada"]
 
 def yesno(name, label, hint="", req=True):
     return f"""<div class="field">
@@ -1106,6 +1159,7 @@ def page_join():
         <input type="hidden" name="Scope of practice" id="j-cats-value">
         <input type="hidden" name="Payment methods" id="j-pay-value">
         <input type="hidden" name="_subject" id="j-subject" value="Directory application">
+        <input type="hidden" name="Referred by" id="j-ref">
         <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
 
         <section class="form-section">
@@ -1136,8 +1190,8 @@ def page_join():
             <div class="field full"><label for="j-addr1">Address line 1</label><input class="control" id="j-addr1" name="Address line 1" autocomplete="address-line1"><p class="err">Required when you have a physical location.</p></div>
             <div class="field full"><label for="j-addr2">Address line 2</label><input class="control" id="j-addr2" name="Address line 2" autocomplete="address-line2"></div>
             <div class="field"><label for="j-city">City *</label><input class="control" id="j-city" name="City" autocomplete="address-level2" required><p class="err">Required.</p></div>
-            <div class="field"><label for="j-state">State *</label><input class="control" id="j-state" name="State" placeholder="AZ" autocomplete="address-level1" required><p class="err">Required.</p></div>
-            <div class="field"><label for="j-zip">ZIP code *</label><input class="control" id="j-zip" name="ZIP code" inputmode="numeric" autocomplete="postal-code" required><p class="err">Required.</p></div>
+            <div class="field"><label for="j-state">State / Province *</label><input class="control" id="j-state" name="State" placeholder="AZ or ON" autocomplete="address-level1" required><p class="err">Required.</p></div>
+            <div class="field"><label for="j-zip">ZIP / Postal code *</label><input class="control" id="j-zip" name="ZIP code" autocomplete="postal-code" required><p class="err">Required.</p></div>
           </div>
         </section>
 
@@ -1240,6 +1294,8 @@ def page_join():
       </div>
     </div>
   </div>
+  <script>(function(){{try{{var r=new URLSearchParams(location.search).get("ref");
+    if(r)document.getElementById("j-ref").value=r.slice(0,80);}}catch(e){{}}}})();</script>
   <div style="height:3rem"></div>"""
     return shell("Join the directory \u2014 FindWell Directory",
                  "Practitioners: apply for a free listing in the FindWell Directory.",
@@ -1304,6 +1360,9 @@ def page_about():
       <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">What we don't do</h2>
       <p class="lede">We don't evaluate clinical claims, host reviews, or vouch for outcomes. A listing here means the credentials are as stated \u2014 nothing more. Complementary care works best alongside medical care, and this directory is built on the assumption that you have a physician too.</p>
 
+      <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">Get in touch</h2>
+      <p class="lede">Questions about a listing, a partnership, or the directory itself all come to one inbox: <a href="mailto:{CONTACT_EMAIL}?subject=FindWell%20enquiry">{CONTACT_EMAIL}</a>.</p>
+
       <p style="margin-top:2.4rem"><a class="btn btn-dark" href="/directory/">Browse the directory</a></p>
     </div>
   </div>
@@ -1342,6 +1401,11 @@ def page_articles():
       <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Articles</h1>
       <p class="lede">Plain explanations of how holistic and integrative care actually works \u2014 what the credentials mean, what questions to ask, and what things cost.</p>
       {inner}
+      <div class="notice" style="margin-top:2.6rem">
+        <b>Write for FindWell.</b>
+        Practitioners and researchers are welcome to propose a piece on credentials, costs, or how a discipline works in practice.
+        <p style="margin-top:.8rem"><a class="btn btn-dark btn-sm" href="mailto:{CONTACT_EMAIL}?subject=Article%20proposal">Propose an article</a></p>
+      </div>
     </div>
   </div>
   <div style="height:3rem"></div>"""
@@ -1364,7 +1428,7 @@ def page_article(a):
                  a.get('summary', '')[:180], f"/articles/{a['slug']}/", body)
 
 def page_advertise():
-    body = """  <div class="wrap">
+    body = f"""  <div class="wrap">
     <p class="crumb"><a href="/">Home</a> / Advertise with us</p>
     <div class="section-tight" style="max-width:70ch">
       <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Advertise with us</h1>
@@ -1472,6 +1536,14 @@ def main():
     for a in ARTICLES:
         written.append(write(f"articles/{a['slug']}/", page_article(a)))
     written.append(write("404.html", page_404()))
+    # what the Worker's review page needs to list every practitioner, including
+    # the ones written into this file
+    written.append(write("assets/data/providers.json", json.dumps([
+        dict(slug=p["slug"], name=p["name"], person=p.get("person", ""),
+             city=p["city"], state=p["state"], categories=p["categories"],
+             licensure=p.get("licensure", ""), verification=p.get("verification"),
+             seed=p["slug"] in SEED_SLUGS)
+        for p in PROVIDERS], indent=1)))
 
     for d in DISCIPLINES:
         rows = [p for p in PROVIDERS if d["key"] in p["categories"]]

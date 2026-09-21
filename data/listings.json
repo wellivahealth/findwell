@@ -467,5 +467,41 @@
     "blurb": "Seniors Planning provides Medicare guidance and retirement healthcare planning services for seniors in Yakima, WA. We help individuals understand and compare Medicare Advantage Plans, Medicare Supplement Insurance, and Prescription Drug Plans while providing personalized support to help them make informed healthcare coverage decisions.",
     "long": "Seniors Planning helps seniors in Yakima, WA understand their Medicare and retirement healthcare options. We provide personalized guidance on Medicare Advantage Plans, Medicare Supplement Insurance, and Prescription Drug Plans to help individuals compare coverage choices and better understand their benefits. Our goal is to make Medicare easier to navigate by explaining options clearly and helping seniors make informed healthcare decisions based on their needs, lifestyle, and budget. We are committed to providing trusted support throughout the Medicare planning process.",
     "verified": false
+  },
+  {
+    "slug": "tennessee-neurofeedback",
+    "name": "Tennessee Neurofeedback",
+    "person": "Tennessee Neurofeedback",
+    "logo": "/assets/img/providers/tennessee-neurofeedback.png",
+    "categories": [
+      "Coaching"
+    ],
+    "city": "Brentwood",
+    "state": "TN",
+    "zip": "37027",
+    "address": "5409 Maryland Way #307, Brentwood, TN 37027",
+    "lat": 36.036945627197,
+    "lng": -86.816795047785,
+    "telehealth": false,
+    "phone": "6152908798",
+    "email": "neurofeedbacktn@gmail.com",
+    "website": "https://tnnfb.com/",
+    "social": [
+      "https://www.facebook.com/tnneurofeedback",
+      "https://www.instagram.com/tnnfb/",
+      "https://www.linkedin.com/company/tennessee-neurofeedback"
+    ],
+    "credentials": "—",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "Licensed Marriage and Family Therapist (LMFT) with 15+ years of clinical experience. Board Certified in Neurofeedback (BCN) through BCIA, with qEEG brain mapping-based training.",
+    "integrative_training": "None.",
+    "since": 2017,
+    "affiliations": "—",
+    "pricing": "Free Consultation Available",
+    "payments": "Cash",
+    "insurance": "Not accepted",
+    "blurb": "At Tennessee Neurofeedback, we treat clients with neurofeedback, a non-invasive, drug-free form of brain training for children, teens, and adults. Every plan begins with a qEEG brain map, which our Board Certified Neurotherapists use to build a personalized training plan. During sessions, sensors on the scalp read your brainwave activity while you relax and watch a show or listen to music. Neurofeedback can be used alongside therapy or medication, and remote sessions are available.",
+    "long": "Tennessee Neurofeedback in Brentwood, TN offers personalized, drug-free neurofeedback for children, teens, and adults. Every plan begins with qEEG brain mapping, so our Board Certified Neurotherapists can design training around how each client's brain actually functions. Founded in 2017 by Kaka Ray, a licensed Marriage and Family Therapist, our clinic has helped nearly 3,000 clients across Tennessee. We support ADHD, anxiety, depression, trauma, sleep issues, autism, concussion, migraine, stress, and peak performance. Visit us at 5409 Maryland Way #307, Brentwood. Call 615-290-8798 to book your free initial consultation.",
+    "verified": false
   }
 ]

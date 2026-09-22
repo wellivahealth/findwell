@@ -541,5 +541,43 @@
     "blurb": "\"At Blooming Chiropractic in Costa Mesa in Orange County, we specialize in gentle and effective chiropractic care for pregnancy, postpartum, and pediatric needs. Our Webster-certified chiropractors provide natural support for moms with pregnancy low back pain, sciatica, breech babies, and birth preparation. We also help babies experiencing tongue ties, colic, reflux, and constipation. Our nervous system-based approach ensures that every adjustment is safe, gentle, and customized. Whether you're expecting, healing. We help families across greater Orange County in areas such as East Side Costa Mesa, West Side Costa Mesa, Mesa Verde, Newport Beach, Newport Coast, Irvine, Corona Del Mar, Newport Heights, Huntington Beach, Fountain Valley & more.\"",
     "long": "\"At Blooming Chiropractic in Costa Mesa in Orange County, we specialize in gentle and effective chiropractic care for pregnancy, postpartum, and pediatric needs. Our Webster-certified chiropractors provide natural support for moms with pregnancy low back pain, sciatica, breech babies, and birth preparation. We also help babies experiencing tongue ties, colic, reflux, and constipation. Our nervous system-based approach ensures that every adjustment is safe, gentle, and customized. Whether you're expecting, healing. We help families across greater Orange County in areas such as East Side Costa Mesa, West Side Costa Mesa, Mesa Verde, Newport Beach, Newport Coast, Irvine, Corona Del Mar, Newport Heights, Huntington Beach, Fountain Valley & more.\"",
     "verified": false
+  },
+  {
+    "slug": "therapy-with-z-llc",
+    "name": "Therapy with Z, LLC",
+    "person": "Z. Hamilton Avery",
+    "logo": "/assets/img/providers/therapy-with-z-llc.jpg",
+    "categories": [
+      "EnergyMedicine",
+      "Counseling",
+      "Coaching"
+    ],
+    "city": "Tulsa",
+    "state": "OK",
+    "zip": "74110",
+    "address": "",
+    "country": "United States",
+    "lat": 36.1563122,
+    "lng": -95.9927516,
+    "telehealth": true,
+    "phone": "918-212-8373",
+    "email": "z@therapywithz.com",
+    "website": "https://www.therapywithz.com",
+    "social": [
+      "https://www.linkedin.com/company/therapy-with-z",
+      "https://youtube.com/@therapywithz"
+    ],
+    "credentials": "Licensed Clinical Social Worker (LCSW); Board Certified TeleMental Health Provider (BC-TMH); Certified Massage Therapist (CMT); Certified Yoga Teacher (CYT-1000); Trauma-Informed Yoga Teacher (TIYT)",
+    "licensure": "Oklahoma (22645), Florida (TPSW7232), South Carolina (2089), and Idaho (9081435).",
+    "training": "Master of Social Work (MSW); Bachelor of Science in Psychology; Associate of Applied Science in Pre-Nursing. Advanced training in clinical social work, psychotherapy, integrated behavioral health, crisis intervention, trauma-informed care, mindfulness, and complementary and alternative medicine.",
+    "integrative_training": "Advanced training and certifications in complementary and alternative medicine, including meditation, mindfulness, yoga, and trauma-informed yoga. My integrative approach incorporates mind-body practices, evidence-based psychotherapy, and holistic wellness strategies to support emotional, psychological, and physical well-being, particularly for individuals experiencing chronic illness, pain, and stress.",
+    "since": 2021,
+    "affiliations": "Licensed Clinical Social Worker (LCSW); Board Certified TeleMental Health Provider (BC-TMH); Certified Massage Therapist (CMT); Certified Yoga Teacher (CYT-1000); Trauma-Informed Yoga Teacher (TIYT)",
+    "pricing": "Individual psychotherapy: $75 for 30-minute sessions or $150 for 60-minute sessions. Insurance is accepted through participating networks, with copays, coinsurance, and deductibles varying by plan. A complimentary 15-minute consultation is available.",
+    "payments": "Insurance, Cash, Credit Cards",
+    "insurance": "Accepted — verify your plan with the practice",
+    "blurb": "Therapy with Z, LLC provides inclusive, person-centered online psychotherapy for adolescents (13+), adults, and older adults. We specialize in anxiety, depression, trauma, chronic illness and pain, grief, and LGBTQIA+ affirming care, offering compassionate, evidence-based support tailored to each client's unique needs and goals. Telehealth services are available in Oklahoma, Florida, South Carolina, and Idaho.",
+    "long": "Therapy with Z, LLC is an inclusive, person-centered online psychotherapy practice serving adolescents (13+), adults, and older adults. We specialize in anxiety, depression, trauma and PTSD, chronic illness and pain, grief and loss, stress and burnout, and LGBTQIA+ affirming care. Our integrative, trauma-informed approach combines evidence-based psychotherapy, mindfulness, self-compassion, and practical coping skills to support emotional well-being and personal growth. Telehealth services are available in Oklahoma, Florida, South Carolina, and Idaho.",
+    "verified": false
   }
 ]

@@ -1154,6 +1154,33 @@ def page_join():
       <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Join the directory</h1>
       <p class="lede">Listings are free. We publish exactly what you send \u2014 including the absence of a license where none exists for your discipline. Where we have checked a credential with the issuing board, your listing says so and names the date; where we have not, it says the details are as you reported them. <a href="/verification/">What verification means here</a>. Fields marked * are required.</p>
 
+      <div class="notice" id="join-gate" style="margin-top:2rem">
+        <b>Listings are for individual practitioners.</b>
+        Each listing carries one person's license, training and years in practice, which is what lets us tell a patient how those credentials were established. A practice as a whole cannot hold that, so practitioners who work together are listed side by side rather than as one entry. Practising under a business name is perfectly fine.
+        <p style="margin:1.1rem 0 .5rem"><span class="lbl">Who is this application for? *</span></p>
+        <div class="radio-row">
+          <label class="check"><input type="radio" name="_applicant" value="self" checked> One practitioner, myself</label>
+          <label class="check"><input type="radio" name="_applicant" value="group"> A group practice with several practitioners</label>
+        </div>
+      </div>
+
+      <div class="notice" id="join-group" style="display:none;margin-top:1.6rem">
+        <b>Wonderful, we would love to have your whole team.</b>
+        Each practitioner applies separately, using the same practice name, so that every listing carries that person's own credentials. Below is a link you can send to your colleagues, which fills in your practice name for them.
+        <div class="form-grid" style="margin-top:1.2rem">
+          <div class="field full"><label for="j-gp-name">Practice name</label>
+            <input class="control" id="j-gp-name" placeholder="Your practice or clinic name"></div>
+          <div class="field full"><label for="j-gp-link">Link to share</label>
+            <input class="control" id="j-gp-link" readonly value="{SITE}/join/"></div>
+        </div>
+        <p style="margin-top:1rem;display:flex;gap:.7rem;flex-wrap:wrap;align-items:center">
+          <button type="button" class="btn btn-primary btn-sm" id="j-gp-copy">Copy the link</button>
+          <a class="btn btn-dark btn-sm" id="j-gp-mail" href="#">Email it to your team</a>
+          <span class="hint" id="j-gp-msg"></span>
+        </p>
+        <p class="hint" style="margin-top:1rem">If you also see patients yourself, choose "One practitioner, myself" above and apply as well.</p>
+      </div>
+
       <form id="join-form" style="margin-top:2.6rem" novalidate
             action="{FORM_ENDPOINT}" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="Scope of practice" id="j-cats-value">
@@ -1294,8 +1321,47 @@ def page_join():
       </div>
     </div>
   </div>
-  <script>(function(){{try{{var r=new URLSearchParams(location.search).get("ref");
-    if(r)document.getElementById("j-ref").value=r.slice(0,80);}}catch(e){{}}}})();</script>
+  <script>(function(){{
+    var q=new URLSearchParams(location.search);
+    var el=function(id){{return document.getElementById(id);}};
+    try{{
+      var r=q.get("ref"); if(r)el("j-ref").value=r.slice(0,80);
+      var pr=q.get("practice"); if(pr)el("j-practice").value=pr.slice(0,120);
+    }}catch(e){{}}
+    var form=el("join-form"), group=el("join-group"), name=el("j-gp-name"),
+        link=el("j-gp-link"), mail=el("j-gp-mail"), msg=el("j-gp-msg");
+    function shareUrl(){{
+      var n=(name.value||"").trim();
+      return "{SITE}/join/"+(n?"?practice="+encodeURIComponent(n):"");
+    }}
+    function refresh(){{
+      link.value=shareUrl();
+      mail.href="mailto:?subject="+encodeURIComponent("Join me on the FindWell Directory")
+        +"&body="+encodeURIComponent("I am listing my practice on the FindWell Directory, a free "
+        +"directory of holistic and integrative practitioners. Each practitioner applies "
+        +"individually, so here is the link for you:\\n\\n"+shareUrl()
+        +"\\n\\nIt takes about ten minutes and there is no cost.");
+      msg.textContent="";
+    }}
+    Array.prototype.forEach.call(document.querySelectorAll('input[name="_applicant"]'),
+      function(radio){{
+        radio.addEventListener("change", function(){{
+          var isGroup=radio.value==="group"&&radio.checked;
+          group.style.display=isGroup?"":"none";
+          form.style.display=isGroup?"none":"";
+          if(isGroup){{refresh(); name.focus();}}
+        }});
+      }});
+    name.addEventListener("input", refresh);
+    el("j-gp-copy").addEventListener("click", function(){{
+      link.select();
+      var done=function(){{msg.textContent="Copied.";}};
+      if(navigator.clipboard&&navigator.clipboard.writeText){{
+        navigator.clipboard.writeText(link.value).then(done,function(){{document.execCommand("copy");done();}});
+      }}else{{document.execCommand("copy");done();}}
+    }});
+    refresh();
+  }})();</script>
   <div style="height:3rem"></div>"""
     return shell("Join the directory \u2014 FindWell Directory",
                  "Practitioners: apply for a free listing in the FindWell Directory.",

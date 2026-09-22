@@ -94,40 +94,137 @@ const SCOPE_TO_KEY = {
 
 /** The issuing authority to check, by discipline and state. Extend as the
  *  directory grows into new states. */
-const BOARDS = {
-  Acupuncture: { AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'],
-                 CA: ['the California Acupuncture Board', 'https://search.dca.ca.gov/'] },
-  TCM:         { AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'] },
-  Naturopathy: { AZ: ['the Arizona Naturopathic Physicians Medical Board', 'https://nd.az.gov/resources/license-verification-request'] },
-  Chiropractic:{ AZ: ['the Arizona Board of Chiropractic Examiners', 'https://chiroboard.az.gov/find-chiropractor'] },
-  Massage:     { AZ: ['the Arizona Massage Therapy Board', 'https://massagetherapy.az.gov/applications/status'] },
-  Bodywork:    { AZ: ['the Arizona Massage Therapy Board', 'https://massagetherapy.az.gov/applications/status'] },
-  Counseling:  { AZ: ['the Arizona Board of Behavioral Health Examiners', 'https://azbbhe.us/'] },
-  IntegrativeMedicine: { AZ: ['the Arizona Medical Board', 'https://www.azmd.gov/'] },
-  Ayurveda:    { '*': ['NAMA Certification Board', 'https://www.namacb.org/'] },
-  Coaching:    { '*': ['the National Board for Health & Wellness Coaching', 'https://nbhwc.org/'] },
-  Herbalism:   { '*': ['the American Herbalists Guild', 'https://www.americanherbalistsguild.com/'] },
+/** Where a credential is checked, per discipline. Mirrors the FindWell Directory
+ *  tab of the credentialing matrix. `state` holds boards that license; `also`
+ *  holds certifying bodies that apply everywhere. Keep the two apart: a
+ *  certifying body is never an answer to a licensure question. */
+const SOURCES = {
+  Acupuncture: { licensed: true, state: {
+    AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'],
+    CA: ['the California Acupuncture Board', 'https://search.dca.ca.gov/'] } },
+  TCM: { licensed: true, state: {
+    AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'],
+    CA: ['the California Acupuncture Board', 'https://search.dca.ca.gov/'] } },
+  Naturopathy: { licensed: true, state: {
+    AZ: ['the Arizona Naturopathic Physicians Medical Board', 'https://nd.az.gov/resources/license-verification-request'] } },
+  Chiropractic: { licensed: true, state: {
+    AZ: ['the Arizona Board of Chiropractic Examiners', 'https://chiroboard.az.gov/find-chiropractor'] } },
+  Massage: { licensed: true, state: {
+    AZ: ['the Arizona Massage Therapy Board', 'https://massagetherapy.az.gov/applications/status'] } },
+  Counseling: { licensed: true, state: {
+    AZ: ['the Arizona Board of Behavioral Health Examiners', 'https://azbbhe.us/'] } },
+  IntegrativeMedicine: { licensed: true,
+    state: { AZ: ['the Arizona Medical Board', 'https://www.azmd.gov/PhysicianCenter/PhysicianCenter/license-verification'] },
+    also: [
+      ['the Arizona Board of Osteopathic Examiners, for a DO', 'https://azdo.gov/'],
+      ['the Arizona Regulatory Board of Physician Assistants, for a PA', 'https://www.azpa.gov/'],
+      ['NCCPA, for PA-C certification', 'https://www.nccpa.net/'],
+      ['ABOIM through ABPS, for integrative medicine certification', 'https://www.abpsus.org/integrative-medicine-board-certification/'],
+      ['the American Board of Lifestyle Medicine', 'https://ablm.org/diplomates/'],
+      ['the Institute for Functional Medicine, for FMCP or FMCP-M', 'https://www.ifm.org/certification'],
+    ] },
+  Bodywork: { licensed: false,
+    state: { AZ: ['the Arizona Massage Therapy Board', 'https://massagetherapy.az.gov/applications/status'] },
+    also: [
+      ['Upledger Institute International, for CST-T or CST-D', 'https://www.upledger.com/courses/certification-programs/1'],
+      ['BCTA/NA, for RCST', 'https://www.craniosacraltherapy.org/rcst-criteria-'],
+    ] },
+  Ayurveda: { licensed: false, also: [['the NAMA Certification Board', 'https://www.namacb.org/']] },
+  Coaching: { licensed: false, also: [
+    ['the National Board for Health & Wellness Coaching', 'https://members.nbhwc.org/search/custom.asp?id=6956'],
+    ['the International Coaching Federation', 'https://coachingfederation.org/credentialing/icf-credentials-overview/compare-credentials/'],
+  ] },
+  Herbalism: { licensed: false, also: [['the American Herbalists Guild', 'https://directory.americanherbalistsguild.com/support']] },
+  EnergyMedicine: { licensed: false },
+  Farmer: { licensed: false },
+  Grocer: { licensed: false },
 };
 
-/** Disciplines a state licenses. For these, a certifying body elsewhere in the
- *  listing (NAMA, AHG, NBHWC) is never the right place to check a licence. */
-const LICENSED = new Set(['Acupuncture', 'TCM', 'Naturopathy', 'Chiropractic',
-  'Massage', 'Counseling', 'IntegrativeMedicine']);
+const isLicensed = (c) => !!(SOURCES[c] || {}).licensed;
+
+/** Every place worth opening for this listing, the state board first. */
+function sourcesFor(listing) {
+  const out = []; const seen = new Set();
+  const add = (pair) => {
+    if (pair && !seen.has(pair[0])) { seen.add(pair[0]); out.push({ name: pair[0], url: pair[1] }); }
+  };
+  for (const c of listing.categories || []) add(((SOURCES[c] || {}).state || {})[listing.state]);
+  for (const c of listing.categories || []) ((SOURCES[c] || {}).also || []).forEach(add);
+  return out;
+}
 
 function boardFor(listing) {
   const cats = listing.categories || [];
-  // a state board for any of the listing's disciplines wins
   for (const c of cats) {
-    const hit = (BOARDS[c] || {})[listing.state];
+    const hit = ((SOURCES[c] || {}).state || {})[listing.state];
     if (hit) return { name: hit[0], url: hit[1] };
   }
-  // licensed discipline in a state we have no board for: leave it to the admin
-  if (cats.some((c) => LICENSED.has(c))) return null;
-  for (const c of cats) {
-    const hit = (BOARDS[c] || {})['*'];
-    if (hit) return { name: hit[0], url: hit[1] };
+  // a licensed discipline in a state we have no board for: leave it to the
+  // admin rather than offering a certifying body as if it answered the question
+  if (cats.some(isLicensed)) return null;
+  return sourcesFor(listing)[0] || null;
+}
+
+/** Checks that run before an application reaches the inbox. Nothing here
+ *  approves or declines anything; it prepares the human decision. */
+function preChecks(s, listing, existing) {
+  const out = [];
+  const flag = (t) => out.push({ level: 'flag', text: t });
+  const note = (t) => out.push({ level: 'note', text: t });
+  const cats = listing.categories || [];
+  const licensedCats = cats.filter(isLicensed);
+  const licenceText = `${s.licensed || ''} ${s.license || ''}`;
+  const blob = `${s.short || ''} ${s.long || ''} ${s.certs || ''} ${s.training || ''}`;
+
+  if (!s.attestation) flag('The accuracy attestation was not ticked.');
+
+  if (licensedCats.length && !/\d/.test(licenceText)) {
+    flag(`${licensedCats.join(' and ')} is a licensed discipline, but no licence number was given, `
+       + 'so this listing cannot be confirmed as it stands.');
   }
-  return null;
+  for (const c of licensedCats) {
+    if (!((SOURCES[c] || {}).state || {})[listing.state]) {
+      note(`No board on file yet for ${c} in ${listing.state}. Find the regulator before `
+         + 'confirming, and add it to the matrix while you are there.');
+    }
+  }
+  if (!licensedCats.length && /^yes$/i.test(String(s.licensed || '').trim())) {
+    note('They answered yes to holding a licence, but none of the disciplines they chose are licensed ones. '
+       + 'Often this means the discipline was mis-ticked, so ask what the licence is in.');
+  }
+  if (!licensedCats.length && /\blicen[sc]/i.test(blob + ' ' + licenceText)) {
+    note('None of the disciplines here are licensed, yet the application uses the word licensed. '
+       + 'Worth reading closely before it becomes a published claim.');
+  }
+  if (cats.includes('IntegrativeMedicine') && !s.integrative && !s.certs) {
+    note('Listed under integrative and functional medicine with no integrative training or certification reported.');
+  }
+  if (/IFMCP/i.test(blob)) note('IFMCP is named. IFM has replaced it with FMCP and FMCP-M, so ask which one they hold.');
+  if (/ABIHM/i.test(blob)) note('ABIHM is named. It closed to new candidates in 2016 and ABOIM is the successor.');
+
+  const year = (String(s.years || '').match(/\b(19|20)\d{2}\b/) || [])[0];
+  const thisYear = new Date().getFullYear();
+  if (year && (Number(year) > thisYear || thisYear - Number(year) > 60)) {
+    note(`Practising since ${year} reads oddly, so it may be a typing slip.`);
+  }
+
+  const host = (u) => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return ''; } };
+  for (const l of existing || []) {
+    if (l.slug === listing.slug) {
+      flag(`A listing already exists at /provider/${l.slug}/.`);
+    } else if (l.email && s.email && String(l.email).toLowerCase() === String(s.email).toLowerCase()) {
+      note(`Same email as the listing for ${l.name}. That may be a second practitioner at one practice, which is welcome, or a duplicate.`);
+    } else if (l.website && s.website && host(l.website) && host(l.website) === host(s.website)) {
+      note(`Same website as ${l.name}. If they practise together each listing still stands on its own credentials.`);
+    }
+  }
+
+  if (/\b(our (team|practitioners|providers|clinicians|doctors|physicians)|we are a (group|team)|our staff)\b/i.test(blob)) {
+    note('The description reads like a practice rather than one practitioner, and listings are individual.');
+  }
+
+  if (!out.length) out.push({ level: 'ok', text: 'Nothing caught here. The credential itself still needs checking.' });
+  return out;
 }
 
 // ---------------------------------------------------------------- helpers
@@ -344,7 +441,20 @@ const publishedEmail = (s, url, joinUrl) => shell(`<h2 style="font-size:20px;mar
 </div>
 <p style="margin-top:24px">Warmly,<br>Amita Nathwani<br>FindWell Directory</p>`);
 
-function adminEmail(s, approveUrl, declineUrl) {
+function adminEmail(s, approveUrl, declineUrl, checks = [], places = []) {
+  const tone = { flag: ['#c23a4b', 'Look at this'], note: ['#9a6b1f', 'Worth a look'], ok: ['#2e5f5c', 'Clear'] };
+  const block = checks.length ? `<div style="margin:0 0 20px;padding:14px 16px;background:#fbfaf7;border:1px solid #e6e1d7;border-radius:8px">
+<p style="margin:0 0 10px;font-weight:600">Before you approve</p>
+${checks.map((c) => `<p style="margin:0 0 8px;font-size:14px;line-height:1.45">
+<span style="color:${tone[c.level][0]};font-weight:600">${tone[c.level][1]}:</span> ${esc(c.text)}</p>`).join('')}
+${places.length ? `<p style="margin:12px 0 4px;font-weight:600;font-size:14px">Where to check this one</p>
+<p style="margin:0;font-size:14px;line-height:1.7">${places.map((p) =>
+  `<a href="${esc(p.url)}" style="color:#2e5f5c">${esc(p.name)} &#8599;</a>`).join('<br>')}</p>` : ''}
+</div>` : '';
+  return adminEmailBody(s, approveUrl, declineUrl, block);
+}
+
+function adminEmailBody(s, approveUrl, declineUrl, checkBlock) {
   const row = (k, v) => v
     ? `<tr><td style="padding:4px 12px 4px 0;color:#5f7473;vertical-align:top;white-space:nowrap">${esc(k)}</td><td style="padding:4px 0">${esc(v)}</td></tr>`
     : '';
@@ -353,6 +463,7 @@ function adminEmail(s, approveUrl, declineUrl) {
 <p style="margin:0 0 20px">
 <a href="${esc(approveUrl)}" style="display:inline-block;background:#2e5f5c;color:#fff;text-decoration:none;padding:11px 20px;border-radius:6px;font-weight:600;margin-right:8px">Approve &amp; publish</a>
 <a href="${esc(declineUrl)}" style="display:inline-block;background:#fff;color:#c23a4b;border:1px solid #c23a4b;text-decoration:none;padding:10px 19px;border-radius:6px;font-weight:600">Decline</a></p>
+${checkBlock}
 <table style="border-collapse:collapse;font-size:14px">
 ${row('Scope', s.scope.join(', '))}
 ${row('Licensed', s.licensed)}${row('License no.', s.license)}
@@ -571,6 +682,20 @@ async function handleApply(request, env) {
 
   const sig = await hmac((env.SIGNING_SECRET || '').trim(), id);
   const base = env.SITE_URL || 'https://findwelldirectory.com';
+
+  // run the checks before the notification goes out, so the email arrives
+  // with the homework done rather than just the answers the applicant gave
+  let checks = [], places = [];
+  try {
+    const preview = {
+      slug: slugify(s.practice), state: s.state,
+      categories: s.scope.map((x) => SCOPE_TO_KEY[x]).filter(Boolean),
+    };
+    const current = await readFile(env, 'data/listings.json');
+    const existing = current ? JSON.parse(fromB64(current.content)) : [];
+    checks = preChecks(s, preview, existing);
+    places = sourcesFor(preview);
+  } catch { /* the notification matters more than the checks */ }
   await Promise.all([
     sendEmail(env, {
       to: env.ADMIN_EMAIL, replyTo: s.email,
@@ -578,7 +703,8 @@ async function handleApply(request, env) {
         + (/^(yes|tell me more)$/i.test(s.openins || '') ? ` · Welliva: ${s.openins}` : ''),
       html: adminEmail(s,
         `${base}/api/approve?id=${encodeURIComponent(id)}&sig=${sig}`,
-        `${base}/api/decline?id=${encodeURIComponent(id)}&sig=${sig}`),
+        `${base}/api/decline?id=${encodeURIComponent(id)}&sig=${sig}`,
+        checks, places),
     }),
     sendEmail(env, {
       to: s.email,
@@ -742,8 +868,9 @@ async function handleReview(request, env) {
       <strong>${esc(l.name)}</strong> — ${esc(l.person)}, ${esc(l.city)}, ${esc(l.state)}<br>
       ${l.verification ? `<span style="font-size:13px;color:#c23a4b">Currently: ${esc(l.verification.what)} with ${esc(l.verification.source)}, ${esc(l.verification.date)}</span><br>` : ''}
       <span style="color:#5f7473;font-size:14px">${esc(l.licensure || '')}</span><br>
-      ${board ? `<a href="${esc(board.url)}" target="_blank" rel="noopener"
-          style="font-size:14px">Open ${esc(board.name)} &#8599;</a> &nbsp;·&nbsp;` : ''}
+      ${sourcesFor(l).map((p) => `<a href="${esc(p.url)}" target="_blank" rel="noopener"
+          style="font-size:14px">Open ${esc(p.name)} &#8599;</a>`).join(' &nbsp;·&nbsp; ')}
+      ${sourcesFor(l).length ? ' &nbsp;·&nbsp; ' : ''}
       <a href="${base}/provider/${esc(l.slug)}/" target="_blank" style="font-size:14px">view listing</a>
       <form method="POST" action="${base}/api/verify" style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;align-items:center">
         <input type="hidden" name="slug" value="${esc(l.slug)}">

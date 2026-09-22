@@ -51,7 +51,7 @@ IMG = {
 DISCIPLINES = [
     dict(key="Ayurveda", label="Ayurveda", slug="ayurveda",
          note="Ayurvedic clinicians and educators. NAMA credentialed; no state licensure exists.",
-         img=SS + "1755277939973-CMBB3T6JXU1IHOVFEOSH/unsplash-image-77vZsyvV0bg.jpg"),
+         img="/assets/img/disciplines/ayurveda"),
     dict(key="Acupuncture", label="Acupuncture", slug="acupuncture",
          note="Licensed professionals — L.Ac.",
          img=SS + "1755277990849-EKKNDADU9C6IGG4FCL8D/unsplash-image-QgcdtM9rA5s.jpg"),
@@ -61,9 +61,9 @@ DISCIPLINES = [
     dict(key="Naturopathy", label="Licensed naturopaths", slug="naturopathic-medicine",
          note="ND or NMD — licensed in Arizona.",
          img=SS + "1755278249101-I8FZPKRHUBB5G4P677O0/unsplash-image-KERVbxLVLiY.jpg"),
-    dict(key="IntegrativeMedicine", label="Integrative & functional medicine",
+    dict(key="IntegrativeMedicine", label="Integrative & functional medicine (MD, DO, NP, PA)",
          slug="integrative-functional-medicine",
-         note="Licensed clinicians — MD, DO, NP or PA — practising integrative or functional medicine. Integrative training is published on every record, including when none is reported.",
+         note="Physicians and licensed clinicians — MD, DO, NP or PA — practising integrative or functional medicine. Board certification such as ABOIM, ABIHM, IFMCP or ABLM is published where held, and integrative training appears on every record, including when none is reported.",
          img="/assets/img/disciplines/integrative"),
     dict(key="Counseling", label="Counselors", slug="counseling",
          note="Licensed mental health professionals — LPC, LCSW, LMFT.",
@@ -73,7 +73,7 @@ DISCIPLINES = [
          img="/assets/img/disciplines/coaching"),
     dict(key="Massage", label="Massage therapy", slug="massage-therapy",
          note="Licensed massage therapists — LMT, state licensed in Arizona.",
-         img=None),
+         img="/assets/img/disciplines/massage"),
     dict(key="Bodywork", label="Body work", slug="body-work",
          note="CranioSacral, structural integration, tuina and other manual therapies. Licensure varies by modality.",
          img=SS + "1755278329164-ATSTUR14YXFQDGE3ZFGI/unsplash-image-AV0KNliGvQc.jpg"),
@@ -1122,7 +1122,7 @@ PAYMENT_METHODS = ["Insurance", "Cash", "Checks", "Credit Cards", "Debit Cards",
 
 SCOPE_OPTIONS = ["Ayurveda", "Acupuncture", "Traditional Chinese Medicine",
                  "Naturopathic Medicine", "Chiropractic", "Massage Therapy", "Body Work", "Energy Work",
-                 "Integrative / Functional Medicine", "Counseling",
+                 "Integrative / Functional Medicine (MD, DO, NP, PA)", "Counseling",
                  "Health & Wellness Coaching", "Herbalism", "Farmer", "Grocer"]
 
 # FindWell lists practitioners in the United States and Canada only.
@@ -1290,7 +1290,16 @@ def page_join():
           <p class="hint" style="margin:-.4rem 0 1.2rem">These answers help us plan the directory. They never appear on your listing or anywhere public.</p>
           <div class="form-grid">
             <div class="field full"><label for="j-size">What is the desired size of your business or practice? *</label><textarea class="control" id="j-size" name="Desired size of practice" placeholder="Days per week, patient or customer numbers, or any other metric." required></textarea><p class="err">Required.</p></div>
-            {yesno("openins", "If it became available in your field, would you be open to taking insurance?")}
+            <div class="field full">
+              <span class="lbl">Would you be open to accepting coverage for the care you provide? *</span>
+              <p class="hint" style="margin:-.15rem 0 .7rem">Welliva Health, our partner project, is building coverage for integrative and lifestyle-based care, and is looking for practitioners to join that network. Listing here is free either way, and your answer has no bearing on whether your listing is published.</p>
+              <div class="radio-row">
+                <label class="check"><input type="radio" name="openins" value="Yes"> Yes</label>
+                <label class="check"><input type="radio" name="openins" value="No"> No</label>
+                <label class="check"><input type="radio" name="openins" value="Tell me more"> Tell me more</label>
+              </div>
+              <p class="err" data-for="openins">Choose one.</p>
+            </div>
             {yesno("ehr", "Do you use an EHR? (Electronic Health Records)")}
           </div>
         </section>

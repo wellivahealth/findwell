@@ -83,7 +83,8 @@ const SCOPE_TO_KEY = {
   'Massage Therapy': 'Massage',
   'Body Work': 'Bodywork',
   'Energy Work': 'EnergyMedicine',
-  'Integrative / Functional Medicine': 'IntegrativeMedicine',
+  'Integrative / Functional Medicine (MD, DO, NP, PA)': 'IntegrativeMedicine',
+  'Integrative / Functional Medicine': 'IntegrativeMedicine',   // earlier wording
   'Counseling': 'Counseling',
   'Health & Wellness Coaching': 'Coaching',
   'Herbalism': 'Herbalism',
@@ -371,7 +372,7 @@ ${row('Attested accurate', s.attestation ? 'Yes' : 'NOT TICKED')}
 <p style="margin-top:20px;padding:12px;background:#eff4f4;border-radius:6px;font-size:14px">
 <strong>Internal — not published</strong><br>
 Desired size: ${esc(s.size) || '—'}<br>
-Open to insurance: ${esc(s.openins) || '—'}<br>
+Open to Welliva coverage: ${esc(s.openins) || '—'}${/^(yes|tell me more)$/i.test(s.openins || '') ? ' (worth a follow up)' : ''}<br>
 Uses an EHR: ${esc(s.ehr) || '—'}</p>
 <p style="font-size:13px;color:#5f7473">Approving publishes the listing and rebuilds the site — live in about a minute.</p>`);
 }
@@ -403,6 +404,21 @@ async function geocode(address) {
 
 // ---------------------------------------------------------------- intake
 
+/** The form sends the chosen scopes as one comma-joined string, and some
+ *  labels now contain commas of their own, so match known scopes in the text
+ *  rather than splitting on the comma. Also tolerates earlier wording. */
+function scopeList(raw) {
+  let rest = String(raw || '');
+  const found = [];
+  for (const label of Object.keys(SCOPE_TO_KEY).sort((a, b) => b.length - a.length)) {
+    if (rest.includes(label)) {
+      found.push(label);
+      rest = rest.replace(label, '');
+    }
+  }
+  return found;
+}
+
 function readForm(form) {
   const g = (k) => (form.get(k) || '').toString().trim();
   const split = (k) => g(k).split(',').map((s) => s.trim()).filter(Boolean);
@@ -412,7 +428,7 @@ function readForm(form) {
     physical: g('physical'), country: g('Country'),
     addr1: g('Address line 1'), addr2: g('Address line 2'),
     city: g('City'), state: normaliseState(g('State'), g('ZIP code'), g('Country')), zip: g('ZIP code'),
-    scope: split('Scope of practice'), short: g('Describe your practice'),
+    scope: scopeList(g('Scope of practice')), short: g('Describe your practice'),
     licensed: g('licensed'), license: g('State(s) and license number(s)'),
     certs: g('Certificates or affiliations'), years: g('Years in practice'),
     training: g('Primary training and education'), integrative: g('Integrative training'),
@@ -558,7 +574,8 @@ async function handleApply(request, env) {
   await Promise.all([
     sendEmail(env, {
       to: env.ADMIN_EMAIL, replyTo: s.email,
-      subject: `New application — ${s.practice}`,
+      subject: `New application — ${s.practice}`
+        + (/^(yes|tell me more)$/i.test(s.openins || '') ? ` · Welliva: ${s.openins}` : ''),
       html: adminEmail(s,
         `${base}/api/approve?id=${encodeURIComponent(id)}&sig=${sig}`,
         `${base}/api/decline?id=${encodeURIComponent(id)}&sig=${sig}`),

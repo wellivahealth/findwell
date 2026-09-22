@@ -579,5 +579,45 @@
     "blurb": "Therapy with Z, LLC provides inclusive, person-centered online psychotherapy for adolescents (13+), adults, and older adults. We specialize in anxiety, depression, trauma, chronic illness and pain, grief, and LGBTQIA+ affirming care, offering compassionate, evidence-based support tailored to each client's unique needs and goals. Telehealth services are available in Oklahoma, Florida, South Carolina, and Idaho.",
     "long": "Therapy with Z, LLC is an inclusive, person-centered online psychotherapy practice serving adolescents (13+), adults, and older adults. We specialize in anxiety, depression, trauma and PTSD, chronic illness and pain, grief and loss, stress and burnout, and LGBTQIA+ affirming care. Our integrative, trauma-informed approach combines evidence-based psychotherapy, mindfulness, self-compassion, and practical coping skills to support emotional well-being and personal growth. Telehealth services are available in Oklahoma, Florida, South Carolina, and Idaho.",
     "verified": false
+  },
+  {
+    "slug": "wholistic-medical-group",
+    "name": "Wholistic Medical Group",
+    "person": "Duke Mansell",
+    "logo": "/assets/img/providers/wholistic-medical-group.png",
+    "categories": [
+      "Acupuncture",
+      "TCM",
+      "Naturopathy",
+      "IntegrativeMedicine",
+      "Coaching",
+      "Ayurveda"
+    ],
+    "city": "Tampa",
+    "state": "FL",
+    "zip": "33629",
+    "address": "4017 Henderson Blvd, Tampa, FL 33629",
+    "country": "United States",
+    "lat": 27.929964451122,
+    "lng": -82.510388833841,
+    "telehealth": true,
+    "phone": "18134443946",
+    "email": "info@wholisticmedicalgroup.com",
+    "website": "https://www.wholisticmedicalgroup.com/",
+    "social": [
+      "https://www.instagram.com/wholisticmedicalgroup/"
+    ],
+    "credentials": "Nationally Board Certified by the NCCAOM (National Certification Commission for Acupuncture and Oriental Medicine) Doctor of Oriental Medicine (DOM); Acupuncture Physician (AP), Florida",
+    "licensure": "Florida AP3763",
+    "training": "Graduated Summa Cum Laude from East West College of Natural Medicine’s Traditional Chinese Medicine graduate program with a degree in Acupuncture and Oriental Medicine. Recipient of the TCM Honor Award for exceptional clinical skills. Clinical training included the East West College of Natural Medicine Health Clinic and HealthSouth Rehabilitation Hospital of Sarasota.",
+    "integrative_training": "",
+    "since": 2016,
+    "affiliations": "Nationally Board Certified by the NCCAOM (National Certification Commission for Acupuncture and Oriental Medicine) Doctor of Oriental Medicine (DOM); Acupuncture Physician (AP), Florida",
+    "pricing": "Initial appointment: $350. Follow-up appointments: $90. Four-visit follow-up package: $320. Monthly membership: $99. Free 15-minute consultation available. HSA/FSA accepted; superbills available for patients seeking possible out-of-network reimbursement.",
+    "payments": "Cash, Credit Cards, Debit Cards, HSA/FSA, Venmo",
+    "insurance": "Not accepted",
+    "blurb": "Wholistic Medical Group is a Tampa-based integrative healthcare practice founded by Dr. Duke Mansell, DOM, AP. We combine functional medicine, acupuncture, functional nutrition, dry needling and natural therapies to help patients with persistent concerns including digestive issues, chronic fatigue, pain and inflammation, hormone health, headaches and migraines. Our approach looks beyond individual symptoms to understand contributing factors and support better overall function and long-term health.",
+    "long": "Wholistic Medical Group is a Tampa-based integrative healthcare practice founded by Dr. Duke Mansell, DOM, AP, in 2016. We combine functional medicine, acupuncture, functional nutrition, dry needling and natural therapies with a systems-based approach to health. We work with patients experiencing persistent concerns including digestive issues, chronic fatigue and low energy, chronic pain and inflammation, hormone health, headaches and migraines. Rather than focusing only on individual symptoms, our approach considers contributing factors across the body and develops individualized strategies designed to support better function and long-term health. In-person care is available in Tampa, with telehealth options also available.",
+    "verified": false
   }
 ]

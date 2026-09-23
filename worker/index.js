@@ -102,16 +102,20 @@ const SOURCES = {
   Acupuncture: { licensed: true,
     state: {
       AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'],
-      CA: ['the California Acupuncture Board', 'https://search.dca.ca.gov/'] },
+      CA: ['the California Acupuncture Board', 'https://search.dca.ca.gov/'],
+      FL: ['the Florida Board of Acupuncture, through the Department of Health licence search',
+           'https://appsmqa.doh.state.fl.us/IRM00PRAES/PRASLIST.ASP'] },
     also: [
-      ['NCBAHM, formerly NCCAOM, for Dipl. Ac. and Dipl. O.M.', 'https://www.ncbahm.org/find-a-practitioner-directory/'],
+      ['NCBAHM, formerly NCCAOM, for Dipl. Ac. and Dipl. O.M.', 'https://www.ncbahm.org/find-a-practitioner-directory/', 2],
     ] },
   TCM: { licensed: true,
     state: {
       AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'],
-      CA: ['the California Acupuncture Board', 'https://search.dca.ca.gov/'] },
+      CA: ['the California Acupuncture Board', 'https://search.dca.ca.gov/'],
+      FL: ['the Florida Board of Acupuncture, through the Department of Health licence search',
+           'https://appsmqa.doh.state.fl.us/IRM00PRAES/PRASLIST.ASP'] },
     also: [
-      ['NCBAHM, formerly NCCAOM, for Dipl. C.H. and Dipl. O.M.', 'https://www.ncbahm.org/find-a-practitioner-directory/'],
+      ['NCBAHM, formerly NCCAOM, for Dipl. C.H. and Dipl. O.M.', 'https://www.ncbahm.org/find-a-practitioner-directory/', 2],
     ] },
   Naturopathy: { licensed: true, state: {
     AZ: ['the Arizona Naturopathic Physicians Medical Board', 'https://nd.az.gov/resources/license-verification-request'] } },
@@ -123,26 +127,30 @@ const SOURCES = {
     AZ: ['the Arizona Board of Behavioral Health Examiners', 'https://azbbhe.us/'] } },
   IntegrativeMedicine: { licensed: true,
     state: { AZ: ['the Arizona Medical Board', 'https://www.azmd.gov/PhysicianCenter/PhysicianCenter/license-verification'] },
+    stateAlso: { AZ: [
+      ['the Arizona Board of Osteopathic Examiners, for a DO', 'https://azdo.gov/', 1],
+      ['the Arizona Regulatory Board of Physician Assistants, for a PA', 'https://www.azpa.gov/', 1],
+    ] },
     also: [
-      ['the Arizona Board of Osteopathic Examiners, for a DO', 'https://azdo.gov/'],
-      ['the Arizona Regulatory Board of Physician Assistants, for a PA', 'https://www.azpa.gov/'],
-      ['NCCPA, for PA-C certification', 'https://www.nccpa.net/'],
-      ['ABOIM through ABPS, for integrative medicine certification', 'https://www.abpsus.org/integrative-medicine-board-certification/'],
-      ['the American Board of Lifestyle Medicine', 'https://ablm.org/diplomates/'],
-      ['the Institute for Functional Medicine, for FMCP or FMCP-M', 'https://www.ifm.org/certification'],
+      ['NCCPA, for PA-C certification', 'https://www.nccpa.net/', 2],
+      ['ABOIM through ABPS, for integrative medicine certification', 'https://www.abpsus.org/integrative-medicine-board-certification/', 2],
+      ['the American Board of Lifestyle Medicine', 'https://ablm.org/diplomates/', 2],
+      ['the Institute for Functional Medicine, for FMCP or FMCP-M', 'https://www.ifm.org/certification', 2],
     ] },
   Bodywork: { licensed: false,
     state: { AZ: ['the Arizona Massage Therapy Board', 'https://massagetherapy.az.gov/applications/status'] },
     also: [
-      ['Upledger Institute International, for CST-T or CST-D', 'https://www.upledger.com/courses/certification-programs/1'],
-      ['BCTA/NA, for RCST', 'https://www.craniosacraltherapy.org/rcst-criteria-'],
+      ['NCBAHM, for Dipl. ABT', 'https://www.ncbahm.org/find-a-practitioner-directory/', 2],
+      ['AOBTA, for Certified Practitioner or Instructor in Asian bodywork', 'https://aobta.org/search/custom.asp?id=5142', 3],
+      ['Upledger Institute International, for CST-T or CST-D', 'https://www.upledger.com/courses/certification-programs/1', 3],
+      ['BCTA/NA, for RCST', 'https://www.craniosacraltherapy.org/rcst-criteria-', 3],
     ] },
-  Ayurveda: { licensed: false, also: [['the NAMA Certification Board', 'https://www.namacb.org/']] },
+  Ayurveda: { licensed: false, also: [['the NAMA Certification Board', 'https://www.namacb.org/', 2]] },
   Coaching: { licensed: false, also: [
-    ['the National Board for Health & Wellness Coaching', 'https://members.nbhwc.org/search/custom.asp?id=6956'],
-    ['the International Coaching Federation', 'https://coachingfederation.org/credentialing/icf-credentials-overview/compare-credentials/'],
+    ['the National Board for Health & Wellness Coaching', 'https://members.nbhwc.org/search/custom.asp?id=6956', 2],
+    ['the International Coaching Federation', 'https://coachingfederation.org/credentialing/icf-credentials-overview/compare-credentials/', 2],
   ] },
-  Herbalism: { licensed: false, also: [['the American Herbalists Guild', 'https://directory.americanherbalistsguild.com/support']] },
+  Herbalism: { licensed: false, also: [['the American Herbalists Guild', 'https://directory.americanherbalistsguild.com/support', 3]] },
   EnergyMedicine: { licensed: false },
   Farmer: { licensed: false },
   Grocer: { licensed: false },
@@ -150,15 +158,36 @@ const SOURCES = {
 
 const isLicensed = (c) => !!(SOURCES[c] || {}).licensed;
 
-/** Every place worth opening for this listing, the state board first. */
+/** What a source can prove, strongest first. A listing's verification line may
+ *  never claim a tier above the one actually checked, and for a licensed
+ *  discipline tier 1 is the only answer to the licensure question. */
+const TIERS = {
+  1: 'Licence — legal authority to practise',
+  2: 'National certification — earned by examination',
+  3: 'Professional association — peer reviewed, renewable',
+};
+
+/** Every place worth opening for this listing, ordered by tier. */
 function sourcesFor(listing) {
   const out = []; const seen = new Set();
-  const add = (pair) => {
-    if (pair && !seen.has(pair[0])) { seen.add(pair[0]); out.push({ name: pair[0], url: pair[1] }); }
+  const add = (pair, tier) => {
+    if (pair && !seen.has(pair[0])) {
+      seen.add(pair[0]);
+      out.push({ name: pair[0], url: pair[1], tier: pair[2] || tier });
+    }
   };
-  for (const c of listing.categories || []) add(((SOURCES[c] || {}).state || {})[listing.state]);
-  for (const c of listing.categories || []) ((SOURCES[c] || {}).also || []).forEach(add);
-  return out;
+  for (const c of listing.categories || []) add(((SOURCES[c] || {}).state || {})[listing.state], 1);
+  for (const c of listing.categories || []) {
+    (((SOURCES[c] || {}).stateAlso || {})[listing.state] || []).forEach((x) => add(x, 1));
+  }
+  for (const c of listing.categories || []) ((SOURCES[c] || {}).also || []).forEach((x) => add(x, 3));
+  return out.sort((a, b) => a.tier - b.tier);
+}
+
+/** True when the listing claims a licensed discipline, so a certification or a
+ *  membership must not be recorded as though it settled the licence. */
+function licenceOutstanding(listing) {
+  return (listing.categories || []).some(isLicensed) && !boardFor(listing);
 }
 
 function boardFor(listing) {
@@ -190,6 +219,10 @@ function preChecks(s, listing, existing) {
     flag(`${licensedCats.join(' and ')} is a licensed discipline, but no licence number was given, `
        + 'so this listing cannot be confirmed as it stands.');
   }
+  if (licenceOutstanding(listing) && sourcesFor(listing).length) {
+    note('A licensed discipline here has no board on file, and the other links below are certifications '
+       + 'and memberships. None of them settle the licence, so do not record one as the confirmation.');
+  }
   for (const c of licensedCats) {
     if (!((SOURCES[c] || {}).state || {})[listing.state]) {
       note(`No board on file yet for ${c} in ${listing.state}. Find the regulator before `
@@ -204,12 +237,30 @@ function preChecks(s, listing, existing) {
     note('None of the disciplines here are licensed, yet the application uses the word licensed. '
        + 'Worth reading closely before it becomes a published claim.');
   }
+  if (cats.includes('IntegrativeMedicine')
+      && !/\b(MD|DO|NP|PA-?C?|physician assistant|nurse practitioner|medical doctor|osteopath)\b/i.test(licenceText + ' ' + blob)) {
+    note('Listed under integrative and functional medicine, which is defined by a medical licence, and nothing '
+       + 'here shows one. If the licence is in another discipline, the listing belongs under that discipline with '
+       + 'the functional medicine work described in the text.');
+  }
   if (cats.includes('IntegrativeMedicine') && !s.integrative && !s.certs) {
     note('Listed under integrative and functional medicine with no integrative training or certification reported.');
+  }
+  if (/\b(shiatsu|acupressure|amma|anma|tui ?na|asian bodywork|thai (massage|bodywork)|AOBTA)\b/i.test(blob)) {
+    note('Asian bodywork is described. The bodies are AOBTA, whose CP and Instructor grades sit on a '
+       + '500 hour curriculum, and NCBAHM for Dipl. ABT. Allied membership at AOBTA is 30 hours and is '
+       + 'not a practice credential, so read which one is claimed.');
   }
   if ((cats.includes('TCM') || cats.includes('Acupuncture')) && /herb/i.test(blob)) {
     note('Chinese herbs are mentioned. That is NCBAHM (Dipl. C.H. or Dipl. O.M.), not the herbalists guild, '
        + 'whose RH is a general membership and covers no tradition in particular.');
+  }
+  const titleish = `${s.practice || ''} ${blob}`;
+  if (!cats.includes('IntegrativeMedicine')
+      && /\b(medical (group|center|centre|clinic|practice)|physician|\bMD\b|\bDO\b)\b/i.test(titleish)) {
+    note('The practice name or wording uses medical language while no medical licence is claimed. '
+       + 'Some titles are real and state granted, such as Florida\'s Acupuncture Physician, so the fix '
+       + 'is usually to publish the exact credential rather than to argue about the title.');
   }
   if (/IFMCP/i.test(blob)) note('IFMCP is named. IFM has replaced it with FMCP and FMCP-M, so ask which one they hold.');
   if (/ABIHM/i.test(blob)) note('ABIHM is named. It closed to new candidates in 2016 and ABOIM is the successor.');
@@ -459,9 +510,14 @@ function adminEmail(s, approveUrl, declineUrl, checks = [], places = []) {
 <p style="margin:0 0 10px;font-weight:600">Before you approve</p>
 ${checks.map((c) => `<p style="margin:0 0 8px;font-size:14px;line-height:1.45">
 <span style="color:${tone[c.level][0]};font-weight:600">${tone[c.level][1]}:</span> ${esc(c.text)}</p>`).join('')}
-${places.length ? `<p style="margin:12px 0 4px;font-weight:600;font-size:14px">Where to check this one</p>
-<p style="margin:0;font-size:14px;line-height:1.7">${places.map((p) =>
-  `<a href="${esc(p.url)}" style="color:#2e5f5c">${esc(p.name)} &#8599;</a>`).join('<br>')}</p>` : ''}
+${places.length ? `<p style="margin:12px 0 4px;font-weight:600;font-size:14px">Where to check this one, in order</p>
+${[1, 2, 3].map((t) => {
+  const group = places.filter((p) => p.tier === t);
+  if (!group.length) return '';
+  return `<p style="margin:8px 0 2px;font-size:13px;color:#5f7473">${esc(TIERS[t])}</p>
+<p style="margin:0;font-size:14px;line-height:1.7">${group.map((p) =>
+  `<a href="${esc(p.url)}" style="color:#2e5f5c">${esc(p.name)} &#8599;</a>`).join('<br>')}</p>`;
+}).join('')}` : ''}
 </div>` : '';
   return adminEmailBody(s, approveUrl, declineUrl, block);
 }
@@ -880,8 +936,11 @@ async function handleReview(request, env) {
       <strong>${esc(l.name)}</strong> — ${esc(l.person)}, ${esc(l.city)}, ${esc(l.state)}<br>
       ${l.verification ? `<span style="font-size:13px;color:#c23a4b">Currently: ${esc(l.verification.what)} with ${esc(l.verification.source)}, ${esc(l.verification.date)}</span><br>` : ''}
       <span style="color:#5f7473;font-size:14px">${esc(l.licensure || '')}</span><br>
+      ${licenceOutstanding(l) ? `<div style="font-size:13px;color:#c23a4b;margin-bottom:6px">
+        Licence outstanding: find the regulator for ${esc(l.state)} first. A certification or membership
+        below does not settle it.</div>` : ''}
       ${sourcesFor(l).map((p) => `<a href="${esc(p.url)}" target="_blank" rel="noopener"
-          style="font-size:14px">Open ${esc(p.name)} &#8599;</a>`).join(' &nbsp;·&nbsp; ')}
+          style="font-size:14px" title="${esc(TIERS[p.tier] || '')}">Open ${esc(p.name)} &#8599;</a>`).join(' &nbsp;·&nbsp; ')}
       ${sourcesFor(l).length ? ' &nbsp;·&nbsp; ' : ''}
       <a href="${base}/provider/${esc(l.slug)}/" target="_blank" style="font-size:14px">view listing</a>
       <form method="POST" action="${base}/api/verify" style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;align-items:center">

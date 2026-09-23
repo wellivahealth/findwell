@@ -356,7 +356,14 @@
     "insurance": "Not accepted",
     "blurb": "Shamika T. Brown is a Licensed Massage Therapist specializing in advanced somatic recovery and lymphatic health. As the founder of Healing Through Energy LLC, she operates a premier Recovery Lab in the Antelope Valley, where clinical precision meets a high-end, concierge experience.\r\nWith a deep focus on Somatic Hydrotherapy and Trauma-Informed bodywork, Shamika helps clients navigate the intersection of physical tension and nervous system regulation. Her practice is known for its VIP Men’s Wellness protocols—offering discreet, performance-based recovery services—and her signature Somatic Date Night rituals designed for couples seeking deeper connection. Utilizing state-of-the-art hydro-somatic techniques, Shamika provides a \"Total Physical Protection\" environment where luxury and healing are indistinguishable.",
     "long": "Somatic Practitioner & Wellness Curator\r\nStep into a world of Deep Sensory Surrender. Shamika T. Brown is a somatic expert dedicated to the art of \"Drama to Dharma\"—transforming physical stress into profound peace. Through her boutique practice, Healing Through Energy LLC, she has curated a unique menu of Hydro-Somatic rituals and Lomi Lomi-inspired bodywork that prioritizes the human connection.\r\nShamika’s Recovery Lab is a sanctuary for those who demand more from their wellness routine. From private VIP sessions for men to immersive Somatic Hydrotherapy Date Nights, every experience is wrapped in a signature black-and-gold luxury aesthetic. Whether you are seeking lymphatic detoxification Shamika ensures every detail is tailored to your body’s specific narrative.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "California-93305",
+      "source": "Upledger Institute International, for CST-T or CST-D",
+      "date": "23 Sept 2026",
+      "by": "admin",
+      "recorded_at": "2026-09-23T19:34:53.601Z"
+    }
   },
   {
     "slug": "coaching-with-lucy",

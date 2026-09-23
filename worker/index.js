@@ -102,7 +102,7 @@ const SOURCES = {
   Acupuncture: { licensed: true,
     state: {
       AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'],
-      CA: ['the California Acupuncture Board', 'https://search.dca.ca.gov/'],
+      CA: ['the California Acupuncture Board, through the DCA licence search', 'https://search.dca.ca.gov/'],
       FL: ['the Florida Board of Acupuncture, through the Department of Health licence search',
            'https://appsmqa.doh.state.fl.us/IRM00PRAES/PRASLIST.ASP'] },
     also: [
@@ -111,24 +111,39 @@ const SOURCES = {
   TCM: { licensed: true,
     state: {
       AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'],
-      CA: ['the California Acupuncture Board', 'https://search.dca.ca.gov/'],
+      CA: ['the California Acupuncture Board, through the DCA licence search', 'https://search.dca.ca.gov/'],
       FL: ['the Florida Board of Acupuncture, through the Department of Health licence search',
            'https://appsmqa.doh.state.fl.us/IRM00PRAES/PRASLIST.ASP'] },
     also: [
       ['NCBAHM, formerly NCCAOM, for Dipl. C.H. and Dipl. O.M.', 'https://www.ncbahm.org/find-a-practitioner-directory/', 2],
     ] },
   Naturopathy: { licensed: true, state: {
-    AZ: ['the Arizona Naturopathic Physicians Medical Board', 'https://nd.az.gov/resources/license-verification-request'] } },
+    AZ: ['the Arizona Naturopathic Physicians Medical Board', 'https://nd.az.gov/resources/license-verification-request'],
+    CA: ['the California Board of Naturopathic Medicine, through the DCA licence search', 'https://search.dca.ca.gov/'] } },
   Chiropractic: { licensed: true, state: {
     AZ: ['the Arizona Board of Chiropractic Examiners', 'https://chiroboard.az.gov/find-chiropractor'],
-    CA: ['the California Board of Chiropractic Examiners', 'https://chiro.ca.gov/'] } },
+    CA: ['the California Board of Chiropractic Examiners, through the DCA licence search',
+         'https://search.dca.ca.gov/?BD=8500&TP=DC'] } },
   Massage: { licensed: true, state: {
     AZ: ['the Arizona Massage Therapy Board', 'https://massagetherapy.az.gov/applications/status'] } },
-  Counseling: { licensed: true, state: {
-    AZ: ['the Arizona Board of Behavioral Health Examiners', 'https://azbbhe.us/'] } },
+  Counseling: { licensed: true,
+    state: {
+      AZ: ['the Arizona Board of Behavioral Health Examiners', 'https://azbbhe.us/'],
+      CA: ['the California Board of Behavioral Sciences, through the DCA licence search', 'https://search.dca.ca.gov/'] },
+    stateAlso: { CA: [
+      ['the California Board of Psychology, for a psychologist', 'https://search.dca.ca.gov/', 1],
+    ] } },
   IntegrativeMedicine: { licensed: true,
-    state: { AZ: ['the Arizona Medical Board', 'https://www.azmd.gov/PhysicianCenter/PhysicianCenter/license-verification'] },
-    stateAlso: { AZ: [
+    state: {
+      AZ: ['the Arizona Medical Board', 'https://www.azmd.gov/PhysicianCenter/PhysicianCenter/license-verification'],
+      CA: ['the Medical Board of California, through the DCA licence search', 'https://search.dca.ca.gov/'] },
+    stateAlso: {
+      CA: [
+        ['the Osteopathic Medical Board of California, for a DO', 'https://search.dca.ca.gov/', 1],
+        ['the California Physician Assistant Board, for a PA', 'https://search.dca.ca.gov/', 1],
+        ['the California Board of Registered Nursing, for an NP', 'https://search.dca.ca.gov/', 1],
+      ],
+      AZ: [
       ['the Arizona Board of Osteopathic Examiners, for a DO', 'https://azdo.gov/', 1],
       ['the Arizona Regulatory Board of Physician Assistants, for a PA', 'https://www.azpa.gov/', 1],
     ] },

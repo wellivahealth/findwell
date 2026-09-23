@@ -525,6 +525,9 @@ LISTED_COUNTRIES = {"united states", "canada"}
 # A confirmation recorded against the wrong body is withdrawn until re-checked.
 # Only the exact bad source is dropped, so a fresh confirmation shows normally.
 WRONG_SOURCE = {
+    # confirmed against the coaching board while the listing was still
+    # mis-tagged as coaching; she is an LMFT (Sep 2026)
+    "tennessee-neurofeedback": "the National Board for Health & Wellness Coaching",
     # confirmed against the acupuncture board while the listing was still
     # mis-tagged as acupuncture; she is a chiropractor (Sep 2026)
     "blooming-chiropractic": "the California Acupuncture Board",
@@ -826,8 +829,13 @@ def verification_line(p):
     v = p.get("verification")
     if v and v.get("source"):
         when = v.get("date", "")
+        # the line always opens the same way, so a reader never has to work out
+        # whether a licence number at the front means confirmed or claimed
+        what = (v.get("what") or "").strip()
+        detail = "" if re.match(r"(?i)^credentials? confirmed\b", what) else what
         return (f'<p class="verify verify-confirmed">'
-                f'<b>{E(v.get("what", "Credential confirmed"))}</b> with {E(v["source"])}'
+                f'<b>Credentials confirmed</b>'
+                f'{": " + E(detail) if detail else ""} with {E(v["source"])}'
                 f'{", " + E(when) if when else ""}.</p>')
     return ('<p class="verify verify-reported">'
             '<b>As reported by the practitioner.</b> Not independently verified \u2014 '

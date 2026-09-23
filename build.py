@@ -516,6 +516,9 @@ LISTED_COUNTRIES = {"united states", "canada"}
 # A confirmation recorded against the wrong body is withdrawn until re-checked.
 # Only the exact bad source is dropped, so a fresh confirmation shows normally.
 WRONG_SOURCE = {
+    # confirmed against the acupuncture board while the listing was still
+    # mis-tagged as acupuncture; she is a chiropractor (Sep 2026)
+    "blooming-chiropractic": "the California Acupuncture Board",
     "common-roots-acupuncture": "the American Herbalists Guild",
     "lotus-wellspring-healthcare": "the American Herbalists Guild",
 }

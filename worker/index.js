@@ -120,7 +120,8 @@ const SOURCES = {
   Naturopathy: { licensed: true, state: {
     AZ: ['the Arizona Naturopathic Physicians Medical Board', 'https://nd.az.gov/resources/license-verification-request'] } },
   Chiropractic: { licensed: true, state: {
-    AZ: ['the Arizona Board of Chiropractic Examiners', 'https://chiroboard.az.gov/find-chiropractor'] } },
+    AZ: ['the Arizona Board of Chiropractic Examiners', 'https://chiroboard.az.gov/find-chiropractor'],
+    CA: ['the California Board of Chiropractic Examiners', 'https://chiro.ca.gov/'] } },
   Massage: { licensed: true, state: {
     AZ: ['the Arizona Massage Therapy Board', 'https://massagetherapy.az.gov/applications/status'] } },
   Counseling: { licensed: true, state: {

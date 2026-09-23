@@ -479,6 +479,17 @@ def _merge_approved():
 
 # Admin corrections to approved listings, by slug. Applied on every build.
 CORRECTIONS = {
+    # Blooming Chiropractic: chiropractic is licensed in California, and the
+    # record said the opposite. Credentials taken from their own site (Sep 2026);
+    # no licence number is published there, so none is claimed here.
+    "blooming-chiropractic": dict(
+        person="Dr. Elmira",
+        categories=["Chiropractic"],
+        credentials="Doctor of Chiropractic (DC) \u00b7 Webster Technique certified",
+        licensure="California licensed doctor of chiropractic \u2014 number not provided",
+        training="Doctor of Chiropractic; postgraduate prenatal and pediatric coursework with the "
+                 "International Chiropractic Pediatric Association (ICPA)",
+        pricing=""),
     # Lucy asked for her ICF and hypnotherapy credentials to be shown (Sep 2026)
     "coaching-with-lucy": dict(
         credentials="ICF Associate Certified Coach (ACC); Certified Clinical Hypnotherapist (CCHT)"),
@@ -491,6 +502,7 @@ LOGOS = {
     "hibiscus-acupuncture": "/assets/img/providers/hibiscus-acupuncture.png",
     "origins-health": "/assets/img/providers/origins-health.png",
     "tracy-villegas-lmt": "/assets/img/providers/tracy-villegas-lmt.jpg",
+    "thrive-chiropractic": "/assets/img/providers/thrive-chiropractic.png",
 }
 for _slug, _path in LOGOS.items():
     CORRECTIONS.setdefault(_slug, {})["logo"] = _path

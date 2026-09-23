@@ -473,7 +473,14 @@
     "insurance": "Accepted — verify your plan with the practice",
     "blurb": "Seniors Planning provides Medicare guidance and retirement healthcare planning services for seniors in Yakima, WA. We help individuals understand and compare Medicare Advantage Plans, Medicare Supplement Insurance, and Prescription Drug Plans while providing personalized support to help them make informed healthcare coverage decisions.",
     "long": "Seniors Planning helps seniors in Yakima, WA understand their Medicare and retirement healthcare options. We provide personalized guidance on Medicare Advantage Plans, Medicare Supplement Insurance, and Prescription Drug Plans to help individuals compare coverage choices and better understand their benefits. Our goal is to make Medicare easier to navigate by explaining options clearly and helping seniors make informed healthcare decisions based on their needs, lifestyle, and budget. We are committed to providing trusted support throughout the Medicare planning process.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "19500128",
+      "source": "the National Board for Health & Wellness Coaching",
+      "date": "23 Sept 2026",
+      "by": "admin",
+      "recorded_at": "2026-09-23T19:35:25.326Z"
+    }
   },
   {
     "slug": "tennessee-neurofeedback",

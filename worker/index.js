@@ -99,12 +99,20 @@ const SCOPE_TO_KEY = {
  *  holds certifying bodies that apply everywhere. Keep the two apart: a
  *  certifying body is never an answer to a licensure question. */
 const SOURCES = {
-  Acupuncture: { licensed: true, state: {
-    AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'],
-    CA: ['the California Acupuncture Board', 'https://search.dca.ca.gov/'] } },
-  TCM: { licensed: true, state: {
-    AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'],
-    CA: ['the California Acupuncture Board', 'https://search.dca.ca.gov/'] } },
+  Acupuncture: { licensed: true,
+    state: {
+      AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'],
+      CA: ['the California Acupuncture Board', 'https://search.dca.ca.gov/'] },
+    also: [
+      ['NCBAHM, formerly NCCAOM, for Dipl. Ac. and Dipl. O.M.', 'https://www.ncbahm.org/find-a-practitioner-directory/'],
+    ] },
+  TCM: { licensed: true,
+    state: {
+      AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'],
+      CA: ['the California Acupuncture Board', 'https://search.dca.ca.gov/'] },
+    also: [
+      ['NCBAHM, formerly NCCAOM, for Dipl. C.H. and Dipl. O.M.', 'https://www.ncbahm.org/find-a-practitioner-directory/'],
+    ] },
   Naturopathy: { licensed: true, state: {
     AZ: ['the Arizona Naturopathic Physicians Medical Board', 'https://nd.az.gov/resources/license-verification-request'] } },
   Chiropractic: { licensed: true, state: {
@@ -198,6 +206,10 @@ function preChecks(s, listing, existing) {
   }
   if (cats.includes('IntegrativeMedicine') && !s.integrative && !s.certs) {
     note('Listed under integrative and functional medicine with no integrative training or certification reported.');
+  }
+  if ((cats.includes('TCM') || cats.includes('Acupuncture')) && /herb/i.test(blob)) {
+    note('Chinese herbs are mentioned. That is NCBAHM (Dipl. C.H. or Dipl. O.M.), not the herbalists guild, '
+       + 'whose RH is a general membership and covers no tradition in particular.');
   }
   if (/IFMCP/i.test(blob)) note('IFMCP is named. IFM has replaced it with FMCP and FMCP-M, so ask which one they hold.');
   if (/ABIHM/i.test(blob)) note('ABIHM is named. It closed to new candidates in 2016 and ABOIM is the successor.');

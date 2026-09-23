@@ -129,10 +129,15 @@ const SOURCES = {
   Counseling: { licensed: true,
     state: {
       AZ: ['the Arizona Board of Behavioral Health Examiners', 'https://azbbhe.us/'],
-      CA: ['the California Board of Behavioral Sciences, through the DCA licence search', 'https://search.dca.ca.gov/'] },
+      CA: ['the California Board of Behavioral Sciences, through the DCA licence search', 'https://search.dca.ca.gov/'],
+      TN: ['the Tennessee Board for Professional Counselors, Marital and Family Therapists and Clinical Pastoral Therapists, through the Department of Health licence search',
+           'https://apps.health.tn.gov/Licensure/default.aspx'] },
     stateAlso: { CA: [
       ['the California Board of Psychology, for a psychologist', 'https://search.dca.ca.gov/', 1],
-    ] } },
+    ] },
+    also: [
+      ['BCIA, for BCN or BCB neurofeedback and biofeedback certification', 'https://www.bcia.org/', 2],
+    ] },
   IntegrativeMedicine: { licensed: true,
     state: {
       AZ: ['the Arizona Medical Board', 'https://www.azmd.gov/PhysicianCenter/PhysicianCenter/license-verification'],
@@ -277,6 +282,11 @@ function preChecks(s, listing, existing) {
     note('The practice name or wording uses medical language while no medical licence is claimed. '
        + 'Some titles are real and state granted, such as Florida\'s Acupuncture Physician, so the fix '
        + 'is usually to publish the exact credential rather than to argue about the title.');
+  }
+  if (/\b(neurofeedback|biofeedback|qEEG|BCN\b|BCIA)\b/i.test(blob)) {
+    note('Neurofeedback is described. BCIA is the certifying body, and its own guidance says board '
+       + 'certification is not a licence to practise, so check the state licence separately. BCIA now '
+       + 'distinguishes BCN-L for licensed clinicians from BCN-P for performance work, so ask which is held.');
   }
   if (/IFMCP/i.test(blob)) note('IFMCP is named. IFM has replaced it with FMCP and FMCP-M, so ask which one they hold.');
   if (/ABIHM/i.test(blob)) note('ABIHM is named. It closed to new candidates in 2016 and ABOIM is the successor.');

@@ -490,6 +490,15 @@ CORRECTIONS = {
         training="Doctor of Chiropractic; postgraduate prenatal and pediatric coursework with the "
                  "International Chiropractic Pediatric Association (ICPA)",
         pricing=""),
+    # Tennessee Neurofeedback: Kaka Ray is an LMFT, which is a licensed
+    # discipline, not a coach. Credentials as she reported them (Sep 2026).
+    "tennessee-neurofeedback": dict(
+        person="Kaka Ray, LMFT",
+        categories=["Counseling"],
+        credentials="Licensed Marriage and Family Therapist (LMFT) \u00b7 Board Certified in Neurofeedback (BCN), BCIA",
+        licensure="Tennessee licensed marriage and family therapist \u2014 number not provided",
+        training="Marriage and family therapy; neurofeedback training based on qEEG brain mapping; "
+                 "brain-based and trauma-focused methods over 20 years of practice"),
     # Lucy asked for her ICF and hypnotherapy credentials to be shown (Sep 2026)
     "coaching-with-lucy": dict(
         credentials="ICF Associate Certified Coach (ACC); Certified Clinical Hypnotherapist (CCHT)"),

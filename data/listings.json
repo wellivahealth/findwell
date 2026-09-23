@@ -575,7 +575,14 @@
     "insurance": "Not accepted",
     "blurb": "\"At Blooming Chiropractic in Costa Mesa in Orange County, we specialize in gentle and effective chiropractic care for pregnancy, postpartum, and pediatric needs. Our Webster-certified chiropractors provide natural support for moms with pregnancy low back pain, sciatica, breech babies, and birth preparation. We also help babies experiencing tongue ties, colic, reflux, and constipation. Our nervous system-based approach ensures that every adjustment is safe, gentle, and customized. Whether you're expecting, healing. We help families across greater Orange County in areas such as East Side Costa Mesa, West Side Costa Mesa, Mesa Verde, Newport Beach, Newport Coast, Irvine, Corona Del Mar, Newport Heights, Huntington Beach, Fountain Valley & more.\"",
     "long": "\"At Blooming Chiropractic in Costa Mesa in Orange County, we specialize in gentle and effective chiropractic care for pregnancy, postpartum, and pediatric needs. Our Webster-certified chiropractors provide natural support for moms with pregnancy low back pain, sciatica, breech babies, and birth preparation. We also help babies experiencing tongue ties, colic, reflux, and constipation. Our nervous system-based approach ensures that every adjustment is safe, gentle, and customized. Whether you're expecting, healing. We help families across greater Orange County in areas such as East Side Costa Mesa, West Side Costa Mesa, Mesa Verde, Newport Beach, Newport Coast, Irvine, Corona Del Mar, Newport Heights, Huntington Beach, Fountain Valley & more.\"",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Credentials confirmed",
+      "source": "the California Acupuncture Board",
+      "date": "23 Sept 2026",
+      "by": "admin",
+      "recorded_at": "2026-09-23T21:09:30.647Z"
+    }
   },
   {
     "slug": "therapy-with-z-llc",

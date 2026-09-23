@@ -646,6 +646,13 @@
     "insurance": "Not accepted",
     "blurb": "Wholistic Medical Group is a Tampa-based integrative healthcare practice founded by Dr. Duke Mansell, DOM, AP. We combine functional medicine, acupuncture, functional nutrition, dry needling and natural therapies to help patients with persistent concerns including digestive issues, chronic fatigue, pain and inflammation, hormone health, headaches and migraines. Our approach looks beyond individual symptoms to understand contributing factors and support better overall function and long-term health.",
     "long": "Wholistic Medical Group is a Tampa-based integrative healthcare practice founded by Dr. Duke Mansell, DOM, AP, in 2016. We combine functional medicine, acupuncture, functional nutrition, dry needling and natural therapies with a systems-based approach to health. We work with patients experiencing persistent concerns including digestive issues, chronic fatigue and low energy, chronic pain and inflammation, hormone health, headaches and migraines. Rather than focusing only on individual symptoms, our approach considers contributing factors across the body and develops individualized strategies designed to support better function and long-term health. In-person care is available in Tampa, with telehealth options also available.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Florida AP3763",
+      "source": "the Florida Board of Acupuncture, through the Department of Health licence search",
+      "date": "23 Sept 2026",
+      "by": "admin",
+      "recorded_at": "2026-09-23T21:09:09.894Z"
+    }
   }
 ]

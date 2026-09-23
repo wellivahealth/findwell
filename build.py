@@ -61,9 +61,9 @@ DISCIPLINES = [
     dict(key="Naturopathy", label="Licensed naturopaths", slug="naturopathic-medicine",
          note="ND or NMD — licensed in Arizona.",
          img=SS + "1755278249101-I8FZPKRHUBB5G4P677O0/unsplash-image-KERVbxLVLiY.jpg"),
-    dict(key="IntegrativeMedicine", label="Integrative & functional medicine (MD, DO, NP, PA)",
+    dict(key="IntegrativeMedicine", label="Integrative & functional medicine (MD, DO, NP, PA, RN)",
          slug="integrative-functional-medicine",
-         note="Physicians and licensed clinicians — MD, DO, NP or PA — practising integrative or functional medicine. Board certification such as ABOIM, ABIHM, IFMCP or ABLM is published where held, and integrative training appears on every record, including when none is reported.",
+         note="Physicians and licensed clinicians — MD, DO, NP, PA or RN — practising integrative or functional medicine. Board certification such as ABOIM, ABIHM, IFMCP or ABLM is published where held, and integrative training appears on every record, including when none is reported.",
          img="/assets/img/disciplines/integrative"),
     dict(key="Counseling", label="Counselors", slug="counseling",
          note="Licensed mental health professionals — LPC, LCSW, LMFT.",
@@ -499,6 +499,10 @@ CORRECTIONS = {
         licensure="Tennessee licensed marriage and family therapist \u2014 number not provided",
         training="Marriage and family therapy; neurofeedback training based on qEEG brain mapping; "
                  "brain-based and trauma-focused methods over 20 years of practice"),
+    # Common Roots: RN as well as a licensed TCM practitioner (Sep 2026)
+    "common-roots-acupuncture": dict(
+        credentials="Registered Nurse (RN) \u00b7 Licensed acupuncturist and practitioner of Chinese medicine",
+        licensure="Arizona registered nurse and licensed acupuncturist \u2014 numbers not provided"),
     # Lucy asked for her ICF and hypnotherapy credentials to be shown (Sep 2026)
     "coaching-with-lucy": dict(
         credentials="ICF Associate Certified Coach (ACC); Certified Clinical Hypnotherapist (CCHT)"),
@@ -543,9 +547,18 @@ def _load_verifications():
     except (OSError, ValueError):
         return {}
 
+def _load_overrides():
+    """Field edits made from the review page, e.g. corrected disciplines."""
+    try:
+        with open(os.path.join(ROOT, "data", "overrides.json")) as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return {}
+
 def _apply_corrections():
     global PROVIDERS
-    checks = _load_verifications()        # confirmations recorded for seed listings
+    checks = _load_verifications()
+    edits = _load_overrides()        # confirmations recorded for seed listings
     for p in PROVIDERS:
         if isinstance(checks.get(p["slug"]), dict):
             p["verification"] = checks[p["slug"]]
@@ -555,6 +568,9 @@ def _apply_corrections():
         fix = CORRECTIONS.get(p["slug"])
         if fix:
             p.update(fix)
+        edit = edits.get(p["slug"])
+        if isinstance(edit, dict):
+            p.update({k: v for k, v in edit.items() if k != "slug"})
         bad = WRONG_SOURCE.get(p["slug"])
         v = p.get("verification")
         if bad and v and (v.get("source") or "").strip().lower() == bad.lower():
@@ -1159,7 +1175,7 @@ PAYMENT_METHODS = ["Insurance", "Cash", "Checks", "Credit Cards", "Debit Cards",
 
 SCOPE_OPTIONS = ["Ayurveda", "Acupuncture", "Traditional Chinese Medicine",
                  "Naturopathic Medicine", "Chiropractic", "Massage Therapy", "Body Work", "Energy Work",
-                 "Integrative / Functional Medicine (MD, DO, NP, PA)", "Counseling",
+                 "Integrative / Functional Medicine (MD, DO, NP, PA, RN)", "Counseling",
                  "Health & Wellness Coaching", "Herbalism", "Farmer", "Grocer"]
 
 # FindWell lists practitioners in the United States and Canada only.
@@ -1264,6 +1280,7 @@ def page_join():
           <div class="form-grid">
             <div class="field full"><span class="lbl">Which of the following best describes your services? *</span>
               <p class="hint" style="margin:-.15rem 0 .7rem">Select all that apply.</p>
+              <p class="hint" style="margin:-.3rem 0 .7rem">Tick only what you are licensed or credentialed in. Other work you offer belongs in the description below.</p>
               <div class="chips" id="j-cats">{scope}</div>
               <p class="err" data-for="cats">Select at least one.</p></div>
             <div class="field full"><label for="j-short">Describe your practice *</label><textarea class="control" id="j-short" name="Describe your practice" required></textarea>

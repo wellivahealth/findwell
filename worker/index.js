@@ -83,6 +83,7 @@ const SCOPE_TO_KEY = {
   'Massage Therapy': 'Massage',
   'Body Work': 'Bodywork',
   'Energy Work': 'EnergyMedicine',
+  'Integrative / Functional Medicine (MD, DO, NP, PA, RN)': 'IntegrativeMedicine',
   'Integrative / Functional Medicine (MD, DO, NP, PA)': 'IntegrativeMedicine',
   'Integrative / Functional Medicine': 'IntegrativeMedicine',   // earlier wording
   'Counseling': 'Counseling',
@@ -179,6 +180,25 @@ const SOURCES = {
 
 const isLicensed = (c) => !!(SOURCES[c] || {}).licensed;
 
+const DISCIPLINE_LABELS = {
+  Ayurveda: 'Ayurveda', Acupuncture: 'Acupuncture', TCM: 'TCM',
+  Naturopathy: 'Naturopathy', IntegrativeMedicine: 'Integrative & functional medicine',
+  Counseling: 'Counseling', Coaching: 'Health & wellness coaching',
+  Massage: 'Massage therapy', Bodywork: 'Body work', EnergyMedicine: 'Energy work',
+  Chiropractic: 'Chiropractic', Herbalism: 'Herbology',
+  Farmer: 'Local farms', Grocer: 'Local grocers',
+};
+
+/** Checkboxes for the disciplines, used before approving and after publishing. */
+function disciplineBoxes(selected = [], name = 'cats') {
+  return Object.entries(DISCIPLINE_LABELS).map(([k, label]) => `
+    <label style="display:inline-block;margin:0 14px 6px 0;font-size:14px">
+      <input type="checkbox" name="${name}" value="${k}"${selected.includes(k) ? ' checked' : ''}>
+      ${esc(label)}${isLicensed(k) ? ' <span style="color:#9a6b1f">(licensed)</span>' : ''}</label>`).join('');
+}
+
+const cleanCats = (list) => [...new Set(list.filter((c) => DISCIPLINE_LABELS[c]))];
+
 /** What a source can prove, strongest first. A listing's verification line may
  *  never claim a tier above the one actually checked, and for a licensed
  *  discipline tier 1 is the only answer to the licensure question. */
@@ -187,6 +207,16 @@ const TIERS = {
   2: 'National certification — earned by examination',
   3: 'Professional association — peer reviewed, renewable',
 };
+
+/** Licences that show up inside a record rather than in its disciplines, such
+ *  as a nurse who practises acupuncture. Each adds its own tier 1 source. */
+const CREDENTIAL_HINTS = [
+  { test: /\b(RN|registered nurse)\b/i, byState: {
+      AZ: ['the Arizona State Board of Nursing, for the RN licence', 'https://www.azbn.gov/'],
+      CA: ['the California Board of Registered Nursing, through the DCA licence search', 'https://search.dca.ca.gov/'],
+      TN: ['the Tennessee Department of Health, for the RN licence', 'https://apps.health.tn.gov/Licensure/default.aspx'],
+    } },
+];
 
 /** Every place worth opening for this listing, ordered by tier. */
 function sourcesFor(listing) {
@@ -200,6 +230,10 @@ function sourcesFor(listing) {
   for (const c of listing.categories || []) add(((SOURCES[c] || {}).state || {})[listing.state], 1);
   for (const c of listing.categories || []) {
     (((SOURCES[c] || {}).stateAlso || {})[listing.state] || []).forEach((x) => add(x, 1));
+  }
+  const text = `${listing.credentials || ''} ${listing.licensure || ''} ${listing.training || ''}`;
+  for (const hint of CREDENTIAL_HINTS) {
+    if (hint.test.test(text)) add((hint.byState || {})[listing.state], 1);
   }
   for (const c of listing.categories || []) ((SOURCES[c] || {}).also || []).forEach((x) => add(x, 3));
   return out.sort((a, b) => a.tier - b.tier);
@@ -259,7 +293,7 @@ function preChecks(s, listing, existing) {
        + 'Worth reading closely before it becomes a published claim.');
   }
   if (cats.includes('IntegrativeMedicine')
-      && !/\b(MD|DO|NP|PA-?C?|physician assistant|nurse practitioner|medical doctor|osteopath)\b/i.test(licenceText + ' ' + blob)) {
+      && !/\b(MD|DO|NP|RN|PA-?C?|physician assistant|nurse practitioner|registered nurse|medical doctor|osteopath)\b/i.test(licenceText + ' ' + blob)) {
     note('Listed under integrative and functional medicine, which is defined by a medical licence, and nothing '
        + 'here shows one. If the licence is in another discipline, the listing belongs under that discipline with '
        + 'the functional medicine work described in the text.');
@@ -851,6 +885,9 @@ async function handleApprove(request, env) {
   const current = await readFile(env, 'data/listings.json');
   const listings = current ? JSON.parse(fromB64(current.content)) : [];
   const listing = toListing(s, coords, logoPath);
+  // disciplines corrected on the pending page win over what was ticked
+  const chosen = cleanCats(url.searchParams.getAll('cats'));
+  if (chosen.length) listing.categories = chosen;
   const idx = listings.findIndex((l) => l.slug === listing.slug);
   if (idx > -1) listings[idx] = listing; else listings.push(listing);
 
@@ -905,15 +942,37 @@ async function handlePending(request, env) {
   const dir = await readFile(env, 'data/pending');
   const files = Array.isArray(dir) ? dir.filter((f) => f.name.endsWith('.json')) : [];
   const base = env.SITE_URL || 'https://findwelldirectory.com';
+  const key = encodeURIComponent((env.SIGNING_SECRET || '').trim());
+
   const rows = await Promise.all(files.map(async (f) => {
     const id = f.name.replace(/\.json$/, '');
     const sig = await hmac((env.SIGNING_SECRET || '').trim(), id);
-    return `<li style="padding:10px 0;border-top:1px solid #dbe3e3">${esc(id)}
-      &nbsp;<a href="${base}/api/approve?id=${encodeURIComponent(id)}&sig=${sig}">approve</a>
-      &nbsp;<a href="${base}/api/decline?id=${encodeURIComponent(id)}&sig=${sig}">decline</a></li>`;
+    let s2 = {};
+    try {
+      const raw = await readFile(env, `data/pending/${id}.json`);
+      if (raw) s2 = JSON.parse(fromB64(raw.content));
+    } catch { /* show the row even if the file will not parse */ }
+    const proposed = cleanCats((s2.scope || []).map((x) => SCOPE_TO_KEY[x]).filter(Boolean));
+    const who = [s2.first, s2.last].filter(Boolean).join(' ');
+    return `<li style="padding:14px 0;border-top:1px solid #dbe3e3">
+      <strong>${esc(s2.practice || id)}</strong>${who ? ` — ${esc(who)}` : ''}
+      ${s2.city ? `<br><span style="font-size:14px;color:#5f7473">${esc(s2.city)}, ${esc(s2.state || '')}
+        · ${esc(s2.licensed === 'Yes' ? `licensed: ${s2.license || 'no number given'}` : 'no licence claimed')}</span>` : ''}
+      <form method="GET" action="${base}/api/approve" style="margin-top:8px">
+        <input type="hidden" name="id" value="${esc(id)}">
+        <input type="hidden" name="sig" value="${esc(sig)}">
+        <div style="font-size:13px;color:#5f7473;margin-bottom:4px">Disciplines to publish, as they ticked them. Untick anything they are not licensed or credentialed in.</div>
+        ${disciplineBoxes(proposed)}
+        <div style="margin-top:8px">
+          <button type="submit" style="background:#2e5f5c;color:#fff;border:0;padding:8px 16px;border-radius:6px;font-weight:600">Approve with these</button>
+          &nbsp;<a href="${base}/api/decline?id=${encodeURIComponent(id)}&sig=${sig}" style="font-size:14px">decline</a>
+        </div>
+      </form></li>`;
   }));
   return page('Pending applications',
-    `<h1>Pending applications</h1><ul>${rows.join('') || '<li>Nothing waiting.</li>'}</ul>`);
+    `<h1>Pending applications</h1>
+     <p style="font-size:14px"><a href="${base}/api/review?key=${key}">Go to credential review</a></p>
+     <ul style="list-style:none;padding:0">${rows.join('') || '<li>Nothing waiting.</li>'}</ul>`);
 }
 
 /** Checks for listings written into build.py are kept in their own file. */
@@ -938,6 +997,31 @@ async function withSeeds(env, listings) {
   const [seeds, checks] = await Promise.all([seedListings(env), readChecks(env)]);
   return [...listings, ...seeds.filter((p) => !have.has(p.slug))]
     .map((l) => (checks.data[l.slug] ? { ...l, verification: checks.data[l.slug] } : l));
+}
+
+/** Field edits from the review page. Kept in data/overrides.json so a listing
+ *  written into build.py can be corrected the same way as an approved one. */
+async function handleCategories(request, env) {
+  const form = await request.formData();
+  const url = new URL(request.url);
+  const key = (form.get('key') || url.searchParams.get('key') || '').trim();
+  if (!keyOk(new URL(`${url.origin}/?key=${encodeURIComponent(key)}`), env).ok) {
+    return page('Not authorised', '<h1>Not authorised</h1>', 403);
+  }
+  const slug = String(form.get('slug') || '');
+  const cats = cleanCats(form.getAll('cats').map(String));
+  if (!slug) return page('Not found', '<h1>Not found</h1>', 404);
+
+  const f = await readFile(env, 'data/overrides.json');
+  const data = f ? JSON.parse(fromB64(f.content)) : {};
+  data[slug] = { ...(data[slug] || {}), categories: cats };
+  await commitFiles(env, `Disciplines: ${slug}`,
+    [{ path: 'data/overrides.json', contentBase64: b64(JSON.stringify(data, null, 2) + '\n') }]);
+
+  const base = env.SITE_URL || 'https://findwelldirectory.com';
+  return page('Saved', `<h1>Disciplines saved</h1>
+<p>${esc(slug)} now reads: ${cats.length ? esc(cats.map((c) => DISCIPLINE_LABELS[c]).join(', ')) : 'none'}.</p>
+<p>Live in about a minute. <a href="${base}/api/review?key=${encodeURIComponent((env.SIGNING_SECRET || '').trim())}">Back to the list</a></p>`);
 }
 
 async function handleReview(request, env) {
@@ -969,6 +1053,13 @@ async function handleReview(request, env) {
           style="font-size:14px" title="${esc(TIERS[p.tier] || '')}">Open ${esc(p.name)} &#8599;</a>`).join(' &nbsp;·&nbsp; ')}
       ${sourcesFor(l).length ? ' &nbsp;·&nbsp; ' : ''}
       <a href="${base}/provider/${esc(l.slug)}/" target="_blank" style="font-size:14px">view listing</a>
+      <form method="POST" action="${base}/api/categories" style="margin:8px 0 10px">
+        <input type="hidden" name="slug" value="${esc(l.slug)}">
+        <input type="hidden" name="key" value="${esc((env.SIGNING_SECRET || '').trim())}">
+        <div style="font-size:13px;color:#5f7473;margin-bottom:4px">Disciplines</div>
+        ${disciplineBoxes(l.categories || [])}
+        <button type="submit" style="font-size:13px;padding:5px 10px;border:1px solid #2e5f5c;background:#fff;color:#2e5f5c;border-radius:5px">Save disciplines</button>
+      </form>
       <form method="POST" action="${base}/api/verify" style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;align-items:center">
         <input type="hidden" name="slug" value="${esc(l.slug)}">
         <input type="hidden" name="sig" value="${sig}">
@@ -1062,6 +1153,7 @@ export default {
       if (url.pathname === '/api/pending') return await handlePending(request, env);
       if (url.pathname === '/api/selftest') return await handleSelftest(request, env);
       if (url.pathname === '/api/review') return await handleReview(request, env);
+      if (url.pathname === '/api/categories') return await handleCategories(request, env);
       if (url.pathname === '/api/verify') return await handleVerify(request, env);
     } catch (err) {
       console.error(err);

@@ -445,7 +445,14 @@
     "insurance": "Not accepted",
     "blurb": "As an Integrative Wellness Coach, Melissa Lewis-Duarte, PhD, NBC-HWC, combines evidence-based stress management, behavior change, and integrative wellness strategies to help clients who are functioning but not flourishing turn what they already know into simple, realistic habits they can actually sustain. Rather than adding more to an already overwhelming to-do list, she focuses on small changes that decrease stress, increase resilience, and improve overall well-being.",
     "long": "Melissa works with adults who feel overwhelmed by work, health challenges, caregiving demands, or the cumulative stress of everyday life. Many of her clients are managing significant responsibilities and appear to be functioning well, but feel burned out, constantly on edge, or like their current pace is unsustainable.\r\n\r\nCoaching is individualized to each client’s needs and may focus on practical stress management and resilience strategies that help regulate the nervous system, shift unhelpful thought patterns, manage difficult emotions, engage in what feels fulfilling, and create structures that make it easier to focus on what matters most.\r\n\r\nMelissa’s goal is to help clients identify what will make the greatest difference in their lives and translate that into practical, sustainable action. She offers individual virtual coaching as well as stress management and resilience workshops and programs for healthcare organizations, universities, professional groups, and workplaces.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Credentials confirmed",
+      "source": "the National Board for Health & Wellness Coaching",
+      "date": "23 Sept 2026",
+      "by": "admin",
+      "recorded_at": "2026-09-23T21:08:41.447Z"
+    }
   },
   {
     "slug": "seniors-planning-expert-help-for-medicare-care-decisions",

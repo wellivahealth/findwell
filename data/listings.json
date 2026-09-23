@@ -530,7 +530,14 @@
     "insurance": "Not accepted",
     "blurb": "At Tennessee Neurofeedback, we treat clients with neurofeedback, a non-invasive, drug-free form of brain training for children, teens, and adults. Every plan begins with a qEEG brain map, which our Board Certified Neurotherapists use to build a personalized training plan. During sessions, sensors on the scalp read your brainwave activity while you relax and watch a show or listen to music. Neurofeedback can be used alongside therapy or medication, and remote sessions are available.",
     "long": "Tennessee Neurofeedback in Brentwood, TN offers personalized, drug-free neurofeedback for children, teens, and adults. Every plan begins with qEEG brain mapping, so our Board Certified Neurotherapists can design training around how each client's brain actually functions. Founded in 2017 by Kaka Ray, a licensed Marriage and Family Therapist, our clinic has helped nearly 3,000 clients across Tennessee. We support ADHD, anxiety, depression, trauma, sleep issues, autism, concussion, migraine, stress, and peak performance. Visit us at 5409 Maryland Way #307, Brentwood. Call 615-290-8798 to book your free initial consultation.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Credentials confirmed",
+      "source": "the National Board for Health & Wellness Coaching",
+      "date": "23 Sept 2026",
+      "by": "admin",
+      "recorded_at": "2026-09-23T21:09:21.764Z"
+    }
   },
   {
     "slug": "blooming-chiropractic",

@@ -627,10 +627,10 @@ HERO = f"""<picture>
 def shell(title, desc, path, body, view="", extra_head=""):
     """Wrap page content in the shared chrome. `path` is the canonical URL path."""
     # "Find a provider" opens a menu of the three ways in; the rest are plain links.
-    find_links = [("/directory/", "All providers"),
-                  ("/practice-types/", "By discipline"),
+    find_links = [("/practice-types/", "By discipline"),
                   ("/locations/", "By location")]
-    find_active = any(path.startswith(h) for h, _ in find_links)
+    find_active = (any(path.startswith(h) for h, _ in find_links)
+                   or path.startswith("/directory/"))
     submenu = "".join(
         f'<li><a href="{h}"{" aria-current=\"page\"" if path.startswith(h) else ""}>{t}</a></li>'
         for h, t in find_links)
@@ -703,7 +703,6 @@ def shell(title, desc, path, body, view="", extra_head=""):
       </div>
       <div>
         <h4>Find care</h4>
-        <a href="/directory/">Find a provider</a>
         <a href="/practice-types/">By discipline</a>
         <a href="/locations/">By location</a>
       </div>
@@ -869,6 +868,7 @@ def record_html(p):
         <a class="btn btn-ghost btn-sm" href="/provider/{p['slug']}/">Full record</a>
         {f'<a class="btn btn-ghost btn-sm" href="tel:{"".join(ch for ch in p["phone"] if ch.isdigit())}">{E(p["phone"])}</a>' if p["phone"] else ""}
         <a class="btn btn-ghost btn-sm" href="mailto:{E(p['email'])}">Email</a>
+        {f'<a class="btn btn-ghost btn-sm" href="{E(p["website"])}" target="_blank" rel="noopener">Website</a>' if p["website"] else ""}
       </div>
     </article>
   </li>"""
@@ -917,7 +917,7 @@ def page_home():
         <li>For disciplines with no licensure route \u2014 Ayurveda, herbalism, energy medicine \u2014 we publish training and voluntary certification instead, and say plainly that no license exists.</li>
         <li>No middlemen, no commissions, no listing fees. Nothing routes through us and no one pays for placement.</li>
       </ul>
-      <p style="margin-top:1.8rem"><a class="btn btn-primary" href="/directory/">Find a provider</a></p>
+      <p style="margin-top:1.8rem"><a class="btn btn-primary" href="/practice-types/">Find a practitioner</a></p>
     </div>
   </section>"""
     return shell("FindWell Directory — trusted holistic practitioners",
@@ -1016,13 +1016,14 @@ def page_practice_types():
         tiles += f"""<li><a class="tile" href="/practice-types/{d['slug']}/">
         {frame}<h3>{E(d['label'])}</h3><p>{E(d['note'])}</p>{go}</a></li>"""
     body = f"""  <div class="wrap">
-    {crumbs_html([("Home", "/"), ("Find a provider", "/directory/"), ("By discipline", None)])}
+    {crumbs_html([("Home", "/"), ("Find a practitioner", None)])}
     <div class="section-tight">
       <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Choose the type of practice</h1>
       <p class="lede">Licensure varies by discipline. Where a profession is state licensed, the license number appears on the record. Where it is not, we publish training and certification instead — and say so plainly. <a href="/verification/">What verification means here</a>.</p>
       <ul class="tiles">{tiles}</ul>
     </div>
   </div>
+  <div class="wrap" style="margin-top:.4rem">{console_html()}</div>
   <div style="height:3rem"></div>"""
     return shell("Browse by discipline \u2014 FindWell Directory",
                  "Browse holistic practitioners by discipline: Ayurveda, acupuncture, TCM, integrative and functional medicine, chiropractic, body work, energy work, herbology and more.",
@@ -1037,7 +1038,7 @@ def page_locations():
         <span class="index-name">{E(state_name(ab))}<span class="index-sub">{E(' · '.join(cities_in(ab)))}</span></span>
         <span class="index-n">{n}</span></a></li>"""
     body = f"""  <div class="wrap">
-    {crumbs_html([("Home", "/"), ("Find a provider", "/directory/"), ("By location", None)])}
+    {crumbs_html([("Home", "/"), ("Find a practitioner", "/practice-types/"), ("By location", None)])}
     <div class="section-tight">
       <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Browse by state</h1>
       <p class="lede">Pick a state, then narrow by city or ZIP radius once you are there. {sum(1 for p in PROVIDERS if p['telehealth'])} listings also offer telehealth, which in most disciplines means anywhere in the state they are licensed.</p>
@@ -1061,6 +1062,10 @@ def page_provider(p):
         f'<div class="contact-row"><span class="k">Social</span><a href="{E(u)}" target="_blank" rel="noopener">'
         f'{E(u.split("//")[-1].replace("www.", "").rstrip("/"))}</a></div>'
         for u in p["social"] if u.startswith("http"))
+    # first discipline with a page of its own, so the crumb lands among colleagues
+    _disc = next((d for d in DISCIPLINES if d["key"] in p["categories"]), None)
+    disc_crumb = (f'<a href="/practice-types/{_disc["slug"]}/">{E(_disc["label"])}</a> / '
+                  if _disc else "")
     ld = {"@context": "https://schema.org", "@type": "MedicalBusiness", "name": p["name"],
           "url": f"{SITE}/provider/{p['slug']}/", "telephone": p["phone"], "email": p["email"],
           "address": {"@type": "PostalAddress", "addressLocality": p["city"],
@@ -1069,7 +1074,7 @@ def page_provider(p):
     if p["address"]:
         ld["address"]["streetAddress"] = p["address"].split(",")[0]
     body = f"""  <div class="wrap">
-    <p class="crumb"><a href="/">Home</a> / <a href="/directory/">Directory</a> / {E(p['name'])}</p>
+    <p class="crumb"><a href="/">Home</a> / <a href="/practice-types/">Find a practitioner</a> / {disc_crumb}{E(p['name'])}</p>
     <div class="detail">
       <div>
         {avatar(p, True)}
@@ -1438,7 +1443,7 @@ def page_about():
       <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">Get in touch</h2>
       <p class="lede">Questions about a listing, a partnership, or the directory itself all come to one inbox: <a href="mailto:{CONTACT_EMAIL}?subject=FindWell%20enquiry">{CONTACT_EMAIL}</a>.</p>
 
-      <p style="margin-top:2.4rem"><a class="btn btn-dark" href="/directory/">Browse the directory</a></p>
+      <p style="margin-top:2.4rem"><a class="btn btn-dark" href="/practice-types/">Find a practitioner</a></p>
     </div>
   </div>
   <div style="height:3rem"></div>"""
@@ -1468,7 +1473,7 @@ def page_articles():
         <h3>Nothing published yet</h3>
         <p>We are writing about how to choose a practitioner, what licensure does and
         does not guarantee, and what integrative care costs. Check back shortly.</p>
-        <p style="margin-top:1.2rem"><a class="btn btn-dark btn-sm" href="/directory/">Find a provider instead</a></p>
+        <p style="margin-top:1.2rem"><a class="btn btn-dark btn-sm" href="/practice-types/">Find a practitioner instead</a></p>
       </div>"""
     body = f"""  <div class="wrap">
     <p class="crumb"><a href="/">Home</a> / Articles</p>
@@ -1564,7 +1569,7 @@ def page_verification():
       <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">What a listing is not</h2>
       <p class="lede">A listing is not a referral, a recommendation, or a judgement about anyone's competence. We publish credentials as stated and, where we have checked them, we say who with and when. Choosing a practitioner remains yours to do.</p>
 
-      <p style="margin-top:2.4rem"><a class="btn btn-dark" href="/directory/">Browse the directory</a></p>
+      <p style="margin-top:2.4rem"><a class="btn btn-dark" href="/practice-types/">Find a practitioner</a></p>
     </div>
   </div>
   <div style="height:3rem"></div>"""
@@ -1577,7 +1582,7 @@ def page_404():
     <div class="empty">
       <h3>That page isn't here</h3>
       <p>The link may be out of date, or the listing may have been removed.</p>
-      <p style="margin-top:1.2rem"><a class="btn btn-dark btn-sm" href="/directory/">Browse the directory</a></p>
+      <p style="margin-top:1.2rem"><a class="btn btn-dark btn-sm" href="/practice-types/">Find a practitioner</a></p>
     </div>
   </div>"""
     return shell("Page not found — FindWell Directory", "Page not found.", "/404", body)

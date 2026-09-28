@@ -782,6 +782,13 @@
     "insurance": "Accepted — verify your plan with the practice",
     "blurb": "Spectrum WellCare provides individualized acupuncture and Traditional Chinese Medicine in MetroWest Orlando. Ajay Purohit is a Florida-licensed Acupuncture Physician who offers acupuncture, personalized Chinese herbal medicine, and related integrative services.",
     "long": "Spectrum WellCare provides personalized acupuncture and Traditional Chinese Medicine in MetroWest Orlando. Florida-licensed Acupuncture Physician Ajay Purohit offers acupuncture, individualized Chinese herbal medicine, and MPS microcurrent therapy. The clinic serves Orlando and nearby Central Florida communities and has provided care since 2012. Insurance and VA Community Care benefits may be available with verification and required authorization. Call 407-347-5038 to ask about services, coverage, and current self-pay rates.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Florida, AP 2734.",
+      "source": "the Florida Board of Acupuncture, through the Department of Health licence search",
+      "date": "28 Sept 2026",
+      "by": "admin",
+      "recorded_at": "2026-09-28T19:10:57.479Z"
+    }
   }
 ]

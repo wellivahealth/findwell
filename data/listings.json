@@ -744,5 +744,44 @@
     "blurb": "At Atlanta Men's Clinic in Suwanee, we lead the field in advanced men’s health, offering a comprehensive range of specialized therapies designed to enhance vitality, performance, and overall well-being. Our clinic features state-of-the-art therapies, including innovative erectile dysfunction solutions and regenerative medicine, all backed by our commitment to conducting in-house clinical research. This dedication ensures that our patients benefit from the most cutting-edge and effective care available. With a strong focus on personalized wellness plans, our expert team is here to support you in achieving your health goals through comprehensive, tailored care, and compassionate service.",
     "long": "At Atlanta Men's Clinic in Suwanee, we lead the field in advanced men’s health, offering a comprehensive range of specialized therapies designed to enhance vitality, performance, and overall well-being. Our clinic features state-of-the-art therapies, including innovative erectile dysfunction solutions and regenerative medicine, all backed by our commitment to conducting in-house clinical research. This dedication ensures that our patients benefit from the most cutting-edge and effective care available. With a strong focus on personalized wellness plans, our expert team is here to support you in achieving your health goals through comprehensive, tailored care, and compassionate service.",
     "verified": false
+  },
+  {
+    "slug": "spectrum-wellcare",
+    "name": "Spectrum WellCare",
+    "person": "Ajay Purohit",
+    "logo": "/assets/img/providers/spectrum-wellcare.jpg",
+    "categories": [
+      "TCM",
+      "Acupuncture",
+      "Herbalism"
+    ],
+    "city": "Orlando",
+    "state": "FL",
+    "zip": "32835",
+    "address": "2295 S Hiawassee Rd Ste 207,, Orlando, FL 32835",
+    "country": "United States",
+    "lat": 28.518001102863,
+    "lng": -81.48238595252,
+    "telehealth": false,
+    "phone": "407-347-5038",
+    "email": "spectrumwellcare@gmail.com",
+    "website": "https://www.spectrumwellcareunited.com/",
+    "social": [
+      "https://www.linkedin.com/in/ajay-purohit-04826322/",
+      "https://www.facebook.com/profile.php?id=100067412259930",
+      "https://www.instagram.com/spectrumwellcare"
+    ],
+    "credentials": "DTCM, MPH, NCCAOM.",
+    "licensure": "Florida, AP 2734.",
+    "training": "Doctorate in Traditional Chinese Medicine, Five Branches University; Master of Public Health in Health Systems Management and BS in Psychology, Tulane University; acupuncture and Chinese medicine training, Florida College of Integrative Medicine.",
+    "integrative_training": "",
+    "since": 2009,
+    "affiliations": "DTCM, MPH, NCCAOM.",
+    "pricing": "Initial and follow-up visit rates vary. Call 407-347-5038 for current self-pay pricing. Insurance coverage and out-of-pocket costs depend on your plan.",
+    "payments": "Insurance, Cash",
+    "insurance": "Accepted — verify your plan with the practice",
+    "blurb": "Spectrum WellCare provides individualized acupuncture and Traditional Chinese Medicine in MetroWest Orlando. Ajay Purohit is a Florida-licensed Acupuncture Physician who offers acupuncture, personalized Chinese herbal medicine, and related integrative services.",
+    "long": "Spectrum WellCare provides personalized acupuncture and Traditional Chinese Medicine in MetroWest Orlando. Florida-licensed Acupuncture Physician Ajay Purohit offers acupuncture, individualized Chinese herbal medicine, and MPS microcurrent therapy. The clinic serves Orlando and nearby Central Florida communities and has provided care since 2012. Insurance and VA Community Care benefits may be available with verification and required authorization. Call 407-347-5038 to ask about services, coverage, and current self-pay rates.",
+    "verified": false
   }
 ]

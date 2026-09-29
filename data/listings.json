@@ -790,5 +790,41 @@
       "by": "admin",
       "recorded_at": "2026-09-28T19:10:57.479Z"
     }
+  },
+  {
+    "slug": "natural-kare-and-wellness-llc",
+    "name": "Natural Kare and Wellness, LLC.",
+    "person": "Natasha Muir-Kennedy",
+    "logo": "/assets/img/providers/natural-kare-and-wellness-llc.png",
+    "categories": [
+      "Coaching"
+    ],
+    "city": "Pontiac",
+    "state": "MI",
+    "zip": "48340",
+    "address": "",
+    "country": "United States",
+    "lat": 42.6389216,
+    "lng": -83.2910468,
+    "telehealth": true,
+    "phone": "2489346024",
+    "email": "naturalkareandwellness@gmail.com",
+    "website": "https://naturalkareandwell.wixsite.com/natural-kare-and-wel",
+    "social": [
+      "https://www.facebook.com/profile.php?id=61583239551333",
+      "https://www.instagram.com/natural_kare_and_wellness_llc?stkn=MXF0N2NwMWNvcXVvdg%3D%3D&utm_source=qr"
+    ],
+    "credentials": "N/A",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "MS Applied Clinical Nutrition \r\nBS Health education and Health promotion",
+    "integrative_training": "N/A",
+    "since": 2025,
+    "affiliations": "N/A",
+    "pricing": "• Intitial Nutrition & Wellness Consultation — $50 \r\n60 minutes\r\n• Follow-Up Sessions— $40\r\n45 minutes \r\n• 3-Sessions Wellness Package — $125\r\nOne initial 60- minute session + two 45-minutes follow-ups\r\n• 5-Session Wellness Package —$200\r\nOne initial 60-minute session + four 45-minute follow-ups",
+    "payments": "Debit Cards, Credit Cards",
+    "insurance": "Not accepted",
+    "blurb": "Natural Kare & Wellness provides personalized nutrition and wellness support to help individuals make healthier, sustainable lifestyle changes. I focus on nutrition, education, healthy, wealth management, good health, women’s, and chronic disease prevention to practical, whole-food nutrition, and behavior-change strategies",
+    "long": "Natural Kare & Wellness provides personalized nutrition and wellness support designed to help individuals make healthier, sustainable lifestyle changes. I focus on practical nutrition, education, healthy, weight management, gut health, women’s wellness, emotional, eating, and chronic disease prevention using whole-good nutrition and behavior-change strategies.",
+    "verified": false
   }
 ]

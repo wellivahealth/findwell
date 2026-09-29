@@ -826,5 +826,38 @@
     "blurb": "Natural Kare & Wellness provides personalized nutrition and wellness support to help individuals make healthier, sustainable lifestyle changes. I focus on nutrition, education, healthy, wealth management, good health, women’s, and chronic disease prevention to practical, whole-food nutrition, and behavior-change strategies",
     "long": "Natural Kare & Wellness provides personalized nutrition and wellness support designed to help individuals make healthier, sustainable lifestyle changes. I focus on practical nutrition, education, healthy, weight management, gut health, women’s wellness, emotional, eating, and chronic disease prevention using whole-good nutrition and behavior-change strategies.",
     "verified": false
+  },
+  {
+    "slug": "natural-healing-acupuncture",
+    "name": "Natural Healing & Acupuncture",
+    "person": "Denise Wiesner",
+    "logo": "/assets/img/providers/natural-healing-acupuncture.png",
+    "categories": [
+      "Acupuncture"
+    ],
+    "city": "Los Angeles",
+    "state": "CA",
+    "zip": "90025",
+    "address": "2001 S Barrington Ave, #220, Los Angeles, CA 90025",
+    "country": "United States",
+    "lat": 34.036961059032,
+    "lng": -118.450290019039,
+    "telehealth": true,
+    "phone": "+1 310-473-7474",
+    "email": "denisewiesner25@gmail.com",
+    "website": "https://naturalhealingacupuncture.com/",
+    "social": [],
+    "credentials": "FABORM (Fellow of the American Board of Oriental Reproductive Medicine); Hunyuan Fertility Method Certified; Clinical Excellence in Fertility Program; Fertile Soul affiliate; American Society of Reproductive Medicine / RESOLVE.",
+    "licensure": "Californie, AC 4831",
+    "training": "Bachelor of Science in Exercise Kinesiology, University of California, Los Angeles (UCLA), 1985. Master’s Degree in Traditional Chinese Medicine, Emperor’s College, Santa Monica, California, 1994. Doctorate, Pacific College of Health and Science, 2022. Also completed 3-1/2 months of study and clinical treatment of patients at a hospital in Shanghai, China.",
+    "integrative_training": "Integrative Chinese medicine practice\r\nFunctional laboratory testing through Rupa Health\r\nChinese herbal medicine\r\nAcupuncture\r\nNutritional counseling\r\nMind-body practices\r\nFABORM / ABORM certification related to reproductive medicine",
+    "since": 1996,
+    "affiliations": "FABORM (Fellow of the American Board of Oriental Reproductive Medicine); Hunyuan Fertility Method Certified; Clinical Excellence in Fertility Program; Fertile Soul affiliate; American Society of Reproductive Medicine / RESOLVE.",
+    "pricing": "Pricing varies depending on the specific service, health concern, and insurance coverage. Please contact the office for current fees and pricing information.",
+    "payments": "Cash, Debit Cards",
+    "insurance": "Not accepted",
+    "blurb": "Natural Healing Acupuncture offers holistic healing solutions through Traditional Chinese Medicine in a warm and welcoming environment. Located in Los Angeles, CA, the clinic specializes in fertility acupuncture and provides a wide range of services including acupuncture, herbal medicine, cupping therapy, moxibustion, electro-acupuncture, and nutritional guidance. Whether you're seeking support for fertility, women’s health, pain management, digestive issues, anxiety, or stress relief, Natural Healing Acupuncture delivers personalized care to restore balance and promote long-term wellness. For those looking for expert fertility acupuncture in Los Angeles, CA, this clinic provides compassionate, results-driven treatment tailored to your individual needs.",
+    "long": "Natural Healing & Acupuncture is an integrative Chinese medicine practice serving West Los Angeles and Santa Monica. The practice combines Traditional Chinese Medicine with nutritional and medical science to create individualized health and wellness plans. Services include acupuncture, Chinese herbal medicine, nutrition, functional laboratory testing, and integrative care. Areas of focus include fertility, IVF and IUI support, women's health, pain management, cancer support, and overall health and wellness. Telemedicine services are also available for eligible consultations and coaching.",
+    "verified": false
   }
 ]

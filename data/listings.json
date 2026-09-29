@@ -858,6 +858,13 @@
     "insurance": "Not accepted",
     "blurb": "Natural Healing Acupuncture offers holistic healing solutions through Traditional Chinese Medicine in a warm and welcoming environment. Located in Los Angeles, CA, the clinic specializes in fertility acupuncture and provides a wide range of services including acupuncture, herbal medicine, cupping therapy, moxibustion, electro-acupuncture, and nutritional guidance. Whether you're seeking support for fertility, women’s health, pain management, digestive issues, anxiety, or stress relief, Natural Healing Acupuncture delivers personalized care to restore balance and promote long-term wellness. For those looking for expert fertility acupuncture in Los Angeles, CA, this clinic provides compassionate, results-driven treatment tailored to your individual needs.",
     "long": "Natural Healing & Acupuncture is an integrative Chinese medicine practice serving West Los Angeles and Santa Monica. The practice combines Traditional Chinese Medicine with nutritional and medical science to create individualized health and wellness plans. Services include acupuncture, Chinese herbal medicine, nutrition, functional laboratory testing, and integrative care. Areas of focus include fertility, IVF and IUI support, women's health, pain management, cancer support, and overall health and wellness. Telemedicine services are also available for eligible consultations and coaching.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Californie, AC 4831",
+      "source": "the California Acupuncture Board, through the DCA licence search",
+      "date": "29 Sept 2026",
+      "by": "admin",
+      "recorded_at": "2026-09-29T22:55:05.783Z"
+    }
   }
 ]

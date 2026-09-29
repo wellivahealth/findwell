@@ -866,5 +866,40 @@
       "by": "admin",
       "recorded_at": "2026-09-29T22:55:08.367Z"
     }
+  },
+  {
+    "slug": "rocky-top-vitality",
+    "name": "Rocky Top Vitality",
+    "person": "Melissa Osborne",
+    "logo": "/assets/img/providers/rocky-top-vitality.png",
+    "categories": [
+      "IntegrativeMedicine"
+    ],
+    "city": "Farragut",
+    "state": "TN",
+    "zip": "37934",
+    "address": "102 S Campbell Station Rd, Suite 21, Farragut, TN 37934",
+    "country": "United States",
+    "lat": 35.881169425491,
+    "lng": -84.160323848844,
+    "telehealth": true,
+    "phone": "8659022456",
+    "email": "Melissa@rockytopvitality.com",
+    "website": "www.rockytopvitality.com",
+    "social": [
+      "https://www.facebook.com/share/1Df3UUFh65/?mibextid=wwXIfr"
+    ],
+    "credentials": "AANP Family Nurse Practitioner",
+    "licensure": "Tennessee -39347. Florida APRN9212764",
+    "training": "Georgetown University- MSN- Family Nurse Practitioner Program\r\n\r\nAdvent Health University- ASN, BSN Nursing",
+    "integrative_training": "Foundational Functional Medicine Certificate through the EliteNP, Thyroid Optimization Certificate through the EliteNP, Men and Women’s Health Certificate through the EliteNP, IV Therapy Certificate through the EliteNP",
+    "since": 2016,
+    "affiliations": "AANP Family Nurse Practitioner",
+    "pricing": "IV therapy starting at $125\r\nVitamin and nutrient injections starting at $30\r\nFunctional Medicine Initial Visit $450, Functional Medicine follow up visits ranging from $175-$200",
+    "payments": "Cash, Debit Cards, Credit Cards, HSA/FSA",
+    "insurance": "Not accepted",
+    "blurb": "Rocky Top Vitality is a wellness and functional medicine practice located in East Tennessee. We offer personalized IV hydration therapy, vitamin injections, functional medicine evaluations, hormone and thyroid optimization, wellness services, and mobile IV therapy. Our private, luxury setting focuses on personalized care, preventative wellness, and evidence-informed treatments designed to support each patient’s individual health goals. We also provide telehealth functional medicine visits for Tennessee residents who are unable to physically visit our clinic and to Florida residents.",
+    "long": "Rocky Top Vitality is a wellness and functional medicine practice founded by Melissa Osborne, Nurse Practitioner.  Rocky Top Vitality proudly serves Farragut, Knoxville, West Knoxville, and surrounding areas. With oversight from a Board Certified Emergency Medicine Physician, our clinic offer personalized IV hydration therapy, vitamin injections, functional medicine evaluations, hormone and thyroid optimization, wellness services, and mobile IV therapy. Our private, luxury setting focuses on personalized care, preventative wellness, and evidence-informed treatments designed to support each patient’s individual health goals. We also provide Functional Medicine telehealth services to Tennessee residents, who are not able to come into our clinic as well as Florida residents.",
+    "verified": false
   }
 ]

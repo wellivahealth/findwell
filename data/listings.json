@@ -901,5 +901,40 @@
     "blurb": "Rocky Top Vitality is a wellness and functional medicine practice located in East Tennessee. We offer personalized IV hydration therapy, vitamin injections, functional medicine evaluations, hormone and thyroid optimization, wellness services, and mobile IV therapy. Our private, luxury setting focuses on personalized care, preventative wellness, and evidence-informed treatments designed to support each patient’s individual health goals. We also provide telehealth functional medicine visits for Tennessee residents who are unable to physically visit our clinic and to Florida residents.",
     "long": "Rocky Top Vitality is a wellness and functional medicine practice founded by Melissa Osborne, Nurse Practitioner.  Rocky Top Vitality proudly serves Farragut, Knoxville, West Knoxville, and surrounding areas. With oversight from a Board Certified Emergency Medicine Physician, our clinic offer personalized IV hydration therapy, vitamin injections, functional medicine evaluations, hormone and thyroid optimization, wellness services, and mobile IV therapy. Our private, luxury setting focuses on personalized care, preventative wellness, and evidence-informed treatments designed to support each patient’s individual health goals. We also provide Functional Medicine telehealth services to Tennessee residents, who are not able to come into our clinic as well as Florida residents.",
     "verified": false
+  },
+  {
+    "slug": "becoming-well-coaching-llc",
+    "name": "Becoming Well Coaching LLC",
+    "person": "Jessica Lewis",
+    "logo": "/assets/img/providers/becoming-well-coaching-llc.jpg",
+    "categories": [
+      "Coaching"
+    ],
+    "city": "Fountain City",
+    "state": "IN",
+    "zip": "47341",
+    "address": "",
+    "country": "United States",
+    "lat": 39.9556598,
+    "lng": -84.9173354,
+    "telehealth": true,
+    "phone": "18127276109",
+    "email": "jessicalewis@becomingwellcoaching.com",
+    "website": "N/A",
+    "social": [
+      "https://www.facebook.com/profile.php?id=61594305332345"
+    ],
+    "credentials": "Member of AAMFT",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "Bachelors in Psychology, Certificate in Drug and Alcohol Abuse, Minor in Neuroscience, Masters in Marriage and Family Therapy",
+    "integrative_training": "",
+    "since": 2025,
+    "affiliations": "Member of AAMFT",
+    "pricing": "Individual Weekly Session - $65.\r\nIndividual Biweekly Session - $80\r\nIndividual Monthly Session - $95\r\nCouple/Family Weekly Session - $70\r\nCouple/Family Biweekly Session - $85\r\nCouple/Family Monthly Session $100",
+    "payments": "Credit Cards, Debit Cards",
+    "insurance": "Not accepted",
+    "blurb": "Virtual, whole-person wellness coaching for adults seeking positive, sustainable change and greater balance in their lives.\r\nA warm, client-led approach focused on self-reflection, mindfulness, emotional awareness, and personal growth.\r\nHelping you create meaningful change across the areas of your overall wellness.\r\nFree 15 minute consultation.",
+    "long": "Becoming Well Coaching provides virtual, whole-person wellness coaching for individuals who want to create positive, sustainable changes in their lives. Through a client-led approach, I help you look at the different areas of wellness—including physical, emotional, social, intellectual, spiritual, environmental, occupational, and financial well-being—and identify where you would like to grow.\r\n\r\nMy approach is warm, supportive, and practical, with an emphasis on self-reflection, mindfulness, emotional awareness, and meaningful change. Rather than telling you what you should do, I help you explore what matters to you and develop greater awareness of the thoughts, habits, and patterns that may be affecting your overall well-being.\r\n\r\nAll coaching sessions are offered virtually, making it convenient to receive support from wherever you are. I also offer a complimentary 15-minute consultation to discuss your goals, learn more about coaching, and determine whether it may be a good fit for you.",
+    "verified": false
   }
 ]

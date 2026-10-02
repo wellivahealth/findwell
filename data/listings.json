@@ -936,5 +936,38 @@
     "blurb": "Virtual, whole-person wellness coaching for adults seeking positive, sustainable change and greater balance in their lives.\r\nA warm, client-led approach focused on self-reflection, mindfulness, emotional awareness, and personal growth.\r\nHelping you create meaningful change across the areas of your overall wellness.\r\nFree 15 minute consultation.",
     "long": "Becoming Well Coaching provides virtual, whole-person wellness coaching for individuals who want to create positive, sustainable changes in their lives. Through a client-led approach, I help you look at the different areas of wellness—including physical, emotional, social, intellectual, spiritual, environmental, occupational, and financial well-being—and identify where you would like to grow.\r\n\r\nMy approach is warm, supportive, and practical, with an emphasis on self-reflection, mindfulness, emotional awareness, and meaningful change. Rather than telling you what you should do, I help you explore what matters to you and develop greater awareness of the thoughts, habits, and patterns that may be affecting your overall well-being.\r\n\r\nAll coaching sessions are offered virtually, making it convenient to receive support from wherever you are. I also offer a complimentary 15-minute consultation to discuss your goals, learn more about coaching, and determine whether it may be a good fit for you.",
     "verified": false
+  },
+  {
+    "slug": "my-healing-garden",
+    "name": "My Healing Garden",
+    "person": "Carmen Croitoru",
+    "logo": "/assets/img/providers/my-healing-garden.jpg",
+    "categories": [
+      "EnergyMedicine"
+    ],
+    "city": "Spirit Lake",
+    "state": "ID",
+    "zip": "83869",
+    "address": "",
+    "country": "United States",
+    "lat": 47.9662924,
+    "lng": -116.868531,
+    "telehealth": true,
+    "phone": "208-352-2283",
+    "email": "MyHealingGarden333@gmail.com",
+    "website": "https://myhealinggarden.net/",
+    "social": [],
+    "credentials": "Certified Biofeedback Specialist (CBS) — The Board of Advanced Natural Health Sciences\r\nReconnective Healing® Foundational Practitioner — The Reconnection\r\nBrain Gym® Consultant — Brain Gym International / Educational Kinesiology Foundation\r\nTouch for Health® Proficiency — Touch for Health\r\nState-Certified Educator — California and Idaho, beginning in 1997",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "Certified Biofeedback Specialist (CBS)\r\nReconnective Healing® Foundational Practitioner\r\nBrain Gym® Consultant\r\nTouch for Health® Proficiency\r\nState-Certified Educator in California and Idaho, beginning in 1997",
+    "integrative_training": "",
+    "since": 2012,
+    "affiliations": "Certified Biofeedback Specialist (CBS) — The Board of Advanced Natural Health Sciences\r\nReconnective Healing® Foundational Practitioner — The Reconnection\r\nBrain Gym® Consultant — Brain Gym International / Educational Kinesiology Foundation\r\nTouch for Health® Proficiency — Touch for Health\r\nState-Certified Educator — California and Idaho, beginning in 1997",
+    "pricing": "Fees vary depending on the service and number of sessions needed. I offer a complimentary 30-minute Connection Call to discuss your needs and available options.",
+    "payments": "Paypal, Venmo, Zelle, Debit Cards, Credit Cards, Cash, Checks",
+    "insurance": "Not accepted",
+    "blurb": "At My Healing Garden, I offer personalized distance energy healing and remote Quantum Biofeedback sessions, along with Energy Scans & Chakra Clearing and Intuitive Readings. I also offer private healing retreats at My Healing Sanctuary in the mountains of North Idaho.",
+    "long": "My Healing Garden is a holistic energy healing practice based in the mountains of North Idaho, offering distance and remote sessions to clients wherever they are. I offer Distance Energy Healing, remote Quantum Biofeedback, Energy Scans & Chakra Clearing, Intuitive Readings, and personalized spiritual healing sessions.\r\nMy approach is intuitive and individualized, recognizing that each person is different and may benefit from a different type of support. I draw from more than a decade of energy work along with my background as a Certified Biofeedback Specialist, Reconnective Healing® Foundational Practitioner, Brain Gym® Consultant, Touch for Health® practitioner, and Certified Educator.\r\nI also offer My Healing Sanctuary, a private healing retreat on our wooded property in Priest River, Idaho, for those who would like to step away from everyday life, enjoy quiet personal time, and receive overnight Quantum Biofeedback sessions.",
+    "verified": false
   }
 ]

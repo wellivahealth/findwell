@@ -1002,6 +1002,13 @@
     "insurance": "Not accepted",
     "blurb": "Chi Harmony Acupuncture is a Boston acupuncture practice founded by licensed acupuncturist Stephanie Smith in 2009. Located in downtown Boston near the Public Garden, the practice offers individualized acupuncture care for pain and musculoskeletal concerns, stress and sleep, headaches and migraines, women’s health, fertility, digestive health, and general well-being. Treatments may include acupuncture, electro-acupuncture, and cupping, based on each patient’s needs.",
     "long": "Chi Harmony Acupuncture provides personalized acupuncture care in downtown Boston, near the Public Garden. Founded by licensed acupuncturist Stephanie Smith in 2009, the practice offers one-on-one care informed by traditional Chinese medicine and more than 17 years of clinical experience.\r\nStephanie takes a practical, individualized approach, considering the broader context of each patient’s concerns and how physical symptoms may interact with stress, daily demands, and nervous-system responses. Treatment is tailored to the individual and adjusted over time as needs change.\r\nAreas of care include pain and musculoskeletal concerns, stress and sleep, headaches and migraines, women’s health, fertility, digestive health, and general well-being. Treatments may incorporate acupuncture, electro-acupuncture, and cupping when appropriate.\r\nConveniently located near Back Bay, Beacon Hill, the South End, and Downtown Crossing, Chi Harmony Acupuncture welcomes patients seeking thoughtful, individualized care.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Massachusetts, 241960",
+      "source": "Massachusetts Board of Registration in Medicine",
+      "date": "12 Oct 2026",
+      "by": "admin",
+      "recorded_at": "2026-10-12T03:30:33.506Z"
+    }
   }
 ]

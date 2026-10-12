@@ -1047,6 +1047,13 @@
     "insurance": "Not accepted",
     "blurb": "Shanti Pappas specializes in digestive health and weight management. As a National Board Certified Health Coach and advanced certified functional medicine nutritionist, she takes a holistic approach to nutrition and wellness, creating personalized food and lifestyle plans to support lasting health improvements.",
     "long": "Shanti Pappas is the Digestion and Weight Expert since 2010. I help busy people like you finally resolve digestion and weight issues for good. I am a national board certified health coach and advanced certified functional medicine nutritionist. This means that I know what I am doing and I am confident I can help you feel and look your best for good. I take a holistic approach to health and wellness. I look at each area of your life and how that connects to your symptoms, challenges and concerns. I then put together a specific plan for you to make lasting food and lifestyle shifts that can help improve your energy restore your balance and enhance your health.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Credentials confirmed",
+      "source": "the National Board for Health & Wellness Coaching",
+      "date": "12 Oct 2026",
+      "by": "admin",
+      "recorded_at": "2026-10-12T03:34:07.419Z"
+    }
   }
 ]

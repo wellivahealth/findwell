@@ -969,5 +969,39 @@
     "blurb": "At My Healing Garden, I offer personalized distance energy healing and remote Quantum Biofeedback sessions, along with Energy Scans & Chakra Clearing and Intuitive Readings. I also offer private healing retreats at My Healing Sanctuary in the mountains of North Idaho.",
     "long": "My Healing Garden is a holistic energy healing practice based in the mountains of North Idaho, offering distance and remote sessions to clients wherever they are. I offer Distance Energy Healing, remote Quantum Biofeedback, Energy Scans & Chakra Clearing, Intuitive Readings, and personalized spiritual healing sessions.\r\nMy approach is intuitive and individualized, recognizing that each person is different and may benefit from a different type of support. I draw from more than a decade of energy work along with my background as a Certified Biofeedback Specialist, Reconnective Healing® Foundational Practitioner, Brain Gym® Consultant, Touch for Health® practitioner, and Certified Educator.\r\nI also offer My Healing Sanctuary, a private healing retreat on our wooded property in Priest River, Idaho, for those who would like to step away from everyday life, enjoy quiet personal time, and receive overnight Quantum Biofeedback sessions.",
     "verified": false
+  },
+  {
+    "slug": "chi-harmony-acupuncture",
+    "name": "Chi Harmony Acupuncture",
+    "person": "Stephanie Smith",
+    "logo": "/assets/img/providers/chi-harmony-acupuncture.png",
+    "categories": [
+      "TCM",
+      "Acupuncture"
+    ],
+    "city": "Boston",
+    "state": "MA",
+    "zip": "02116",
+    "address": "20 Park Plaza, Suite 600, Boston, MA 02116",
+    "country": "United States",
+    "lat": 42.351555078147,
+    "lng": -71.06884342139,
+    "telehealth": false,
+    "phone": "617-267-1055",
+    "email": "ChiHarmonyAcu@gmail.com",
+    "website": "chiharmonyacu.com",
+    "social": [],
+    "credentials": "—",
+    "licensure": "Massachusetts, 241960",
+    "training": "MAOM, New England School of Acupuncture 2009",
+    "integrative_training": "",
+    "since": 2009,
+    "affiliations": "—",
+    "pricing": "Acupuncture (60 minutes): $125\r\nCosmetic Acupuncture (90 minutes): $175",
+    "payments": "Cash, Checks, Credit Cards, Debit Cards, HSA/FSA, Paypal, Venmo, Zelle",
+    "insurance": "Not accepted",
+    "blurb": "Chi Harmony Acupuncture is a Boston acupuncture practice founded by licensed acupuncturist Stephanie Smith in 2009. Located in downtown Boston near the Public Garden, the practice offers individualized acupuncture care for pain and musculoskeletal concerns, stress and sleep, headaches and migraines, women’s health, fertility, digestive health, and general well-being. Treatments may include acupuncture, electro-acupuncture, and cupping, based on each patient’s needs.",
+    "long": "Chi Harmony Acupuncture provides personalized acupuncture care in downtown Boston, near the Public Garden. Founded by licensed acupuncturist Stephanie Smith in 2009, the practice offers one-on-one care informed by traditional Chinese medicine and more than 17 years of clinical experience.\r\nStephanie takes a practical, individualized approach, considering the broader context of each patient’s concerns and how physical symptoms may interact with stress, daily demands, and nervous-system responses. Treatment is tailored to the individual and adjusted over time as needs change.\r\nAreas of care include pain and musculoskeletal concerns, stress and sleep, headaches and migraines, women’s health, fertility, digestive health, and general well-being. Treatments may incorporate acupuncture, electro-acupuncture, and cupping when appropriate.\r\nConveniently located near Back Bay, Beacon Hill, the South End, and Downtown Crossing, Chi Harmony Acupuncture welcomes patients seeking thoughtful, individualized care.",
+    "verified": false
   }
 ]

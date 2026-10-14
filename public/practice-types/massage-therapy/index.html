@@ -46,7 +46,7 @@
                 aria-controls="find-menu" data-active="1">
           Find a provider <span class="caret" aria-hidden="true">&#9662;</span>
         </button>
-        <ul class="nav-menu" id="find-menu"><li><a href="/directory/">All providers</a></li><li><a href="/practice-types/" aria-current="page">By discipline</a></li><li><a href="/locations/">By location</a></li></ul>
+        <ul class="nav-menu" id="find-menu"><li><a href="/practice-types/" aria-current="page">By discipline</a></li><li><a href="/locations/">By location</a></li></ul>
       </div><a href="/about/">Who we are</a><a href="/articles/">Articles</a><a href="/advertise/">Advertise with us</a>
       <a class="cta" href="/join/">Join the directory</a>
     </nav>
@@ -66,9 +66,9 @@
             <label for="f-q">Keyword</label>
             <input class="control" id="f-q" type="search" placeholder="Name, condition, credential">
           </div>
-          <fieldset><legend>Discipline</legend><label class="check"><input type="checkbox" data-cat="Ayurveda"> Ayurveda<span class="n">3</span></label><label class="check"><input type="checkbox" data-cat="Acupuncture"> Acupuncture<span class="n">3</span></label><label class="check"><input type="checkbox" data-cat="TCM"> TCM<span class="n">2</span></label><label class="check check-empty"><input type="checkbox" data-cat="Naturopathy" disabled> Licensed naturopaths<span class="n">0</span></label><label class="check check-empty"><input type="checkbox" data-cat="IntegrativeMedicine" disabled> Integrative &amp; functional medicine<span class="n">0</span></label><label class="check check-empty"><input type="checkbox" data-cat="Counseling" disabled> Counselors<span class="n">0</span></label><label class="check"><input type="checkbox" data-cat="Coaching"> Health &amp; wellness coaches<span class="n">3</span></label><label class="check check-empty"><input type="checkbox" data-cat="Massage" disabled> Massage therapy<span class="n">0</span></label><label class="check"><input type="checkbox" data-cat="Bodywork"> Body work<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="EnergyMedicine"> Energy healers<span class="n">3</span></label><label class="check"><input type="checkbox" data-cat="Chiropractic"> Chiropractors<span class="n">1</span></label><label class="check"><input type="checkbox" data-cat="Herbalism"> Herbology<span class="n">4</span></label><label class="check check-empty"><input type="checkbox" data-cat="Farms" disabled> Local farmers<span class="n">0</span></label><label class="check check-empty"><input type="checkbox" data-cat="Grocers" disabled> Local grocers<span class="n">0</span></label></fieldset>
+          <fieldset><legend>Discipline</legend><label class="check"><input type="checkbox" data-cat="Ayurveda"> Ayurveda<span class="n">5</span></label><label class="check"><input type="checkbox" data-cat="Acupuncture"> Acupuncture<span class="n">10</span></label><label class="check"><input type="checkbox" data-cat="TCM"> TCM<span class="n">8</span></label><label class="check"><input type="checkbox" data-cat="Naturopathy"> Licensed naturopaths<span class="n">3</span></label><label class="check"><input type="checkbox" data-cat="IntegrativeMedicine"> Integrative &amp; functional medicine (MD, DO, NP, PA, RN)<span class="n">3</span></label><label class="check"><input type="checkbox" data-cat="Counseling"> Counselors<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="Coaching"> Health &amp; wellness coaches<span class="n">12</span></label><label class="check"><input type="checkbox" data-cat="Massage"> Massage therapy<span class="n">2</span></label><label class="check"><input type="checkbox" data-cat="Bodywork"> Body work<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="EnergyMedicine"> Energy healers<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="Chiropractic"> Chiropractors<span class="n">4</span></label><label class="check check-empty"><input type="checkbox" data-cat="Nutrition" disabled> Nutritionists<span class="n">0</span></label><label class="check"><input type="checkbox" data-cat="Herbalism"> Herbology<span class="n">7</span></label><label class="check check-empty"><input type="checkbox" data-cat="Farms" disabled> Local farmers<span class="n">0</span></label><label class="check check-empty"><input type="checkbox" data-cat="Grocers" disabled> Local grocers<span class="n">0</span></label></fieldset>
           <fieldset><legend>State</legend>
-            <select class="control" id="f-state"><option value="">All states</option><option value="AZ">Arizona (9)</option><option value="CO">Colorado (1)</option></select>
+            <select class="control" id="f-state"><option value="">All states</option><option value="AZ">Arizona (14)</option><option value="CA">California (6)</option><option value="CO">Colorado (2)</option><option value="FL">Florida (2)</option><option value="GA">Georgia (1)</option><option value="ID">Idaho (1)</option><option value="IN">Indiana (1)</option><option value="MA">Massachusetts (1)</option><option value="MI">Michigan (2)</option><option value="OK">Oklahoma (1)</option><option value="TN">Tennessee (2)</option><option value="WA">Washington (1)</option></select>
           </fieldset>
           <fieldset><legend>Distance</legend>
             <input class="control" id="f-zip" type="text" inputmode="numeric" placeholder="ZIP code">
@@ -85,7 +85,7 @@
       </aside>
       <section>
         <div class="results-bar">
-          <p class="results-count" aria-live="polite"><b id="count">0</b> <span id="count-word">practitioners</span><span id="count-where"></span></p>
+          <p class="results-count" aria-live="polite"><b id="count">2</b> <span id="count-word">practitioners</span><span id="count-where"></span></p>
           <div class="sort">
             <label for="f-sort">Sort</label>
             <select class="control" id="f-sort">
@@ -97,7 +97,73 @@
         </div>
         <p class="results-note">Every listing states how its credentials were established — checked with the issuing board, or as reported by the practitioner. <a href="/verification/">What that means</a>.</p>
         <div class="active-filters" id="active-filters"></div>
-        <ul class="records" id="records"></ul>
+        <ul class="records" id="records"><li class="record" data-cats="Massage"
+      data-city="Tucson" data-state="AZ" data-tele="0"
+      data-lat="32.2496" data-lng="-110.9508" data-since="2009"
+      data-name="Tracy Villegas, LMT" data-text="tracy villegas, lmt tracy villegas tucson az 85719 ncbtmb providence institute, 2009 — 750 hour program. therapeutic massage therapist focusing on neck, shoulders, chest, jaw, hips and feet. arizona massage therapy board #mt-23614 massage therapy">
+    <article class="record-in">
+      <div class="record-head">
+        <picture><source type="image/webp" srcset="/assets/img/providers/tracy-villegas-lmt.webp?v=166daa9e7a"><img class="avatar" src="/assets/img/providers/tracy-villegas-lmt.jpg?v=8055d667dd" alt="Tracy Villegas, LMT logo" loading="lazy" decoding="async" width="200" height="200"></picture>
+        <div>
+          <h3 class="record-name"><a href="/provider/tracy-villegas-lmt/">Tracy Villegas, LMT</a></h3>
+          <p class="record-person"><b>Tracy Villegas</b></p>
+          <p class="record-where">Tucson, AZ 85719 <span class="record-dist"></span></p>
+          <div class="record-tags"><a class="tag" href="/practice-types/massage-therapy/">Massage therapy</a></div>
+        </div>
+      </div>
+      <dl class="fields">
+        <dt>Credential</dt><dd class="">NCBTMB</dd>
+        <dt>Licensure</dt><dd>Arizona Massage Therapy Board #MT-23614</dd>
+        
+        <dt>In practice</dt><dd>17 yrs (since 2009)</dd>
+        <dt>Fees</dt><dd>60 min $95 · 90 min $145</dd>
+        <dt>Insurance</dt><dd>Not accepted</dd>
+      </dl>
+      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b>: MT-23614 with the Arizona Massage Therapy Board, 26 Aug 2026.</p></div>
+      <div class="record-actions">
+        <a class="btn btn-ghost btn-sm" href="/provider/tracy-villegas-lmt/">Full record</a>
+        <a class="btn btn-ghost btn-sm" href="tel:5209903332">(520) 990-3332</a>
+        <a class="btn btn-ghost btn-sm" href="mailto:tracy612@gmail.com">Email</a>
+        <a class="btn btn-ghost btn-sm" href="https://www.rootedintegrativewellness.com/tracy-villegas-lmt.html" target="_blank" rel="noopener">Website</a>
+      </div>
+    </article>
+  </li><li class="record" data-cats="TCM Bodywork Massage"
+      data-city="tucson" data-state="AZ" data-tele="1"
+      data-lat="32.262920352258" data-lng="-110.89780291357" data-since="1999"
+      data-name="Tucson Manual and Movement Therapy" data-text="tucson manual and movement therapy jarrod lash tucson az 85712 certified massage therapist (1999)
+certified practitioner and instructor aobta bancroft school of massage therapy (1997-99)
+formal apprenticeship in traditional chinese medicine (1999-2015)
+auricular therapy (2006-09)
+certified qigong and taiji coach manual and movement therapy to relieve pain and improve quality of life. no state licensure exists for this discipline tcm body work massage therapy">
+    <article class="record-in">
+      <div class="record-head">
+        <picture><source type="image/webp" srcset="/assets/img/providers/tucson-manual-and-movement-therapy.webp?v=5592d8c3b6"><img class="avatar" src="/assets/img/providers/tucson-manual-and-movement-therapy.png?v=966c1b2bd3" alt="Tucson Manual and Movement Therapy logo" loading="lazy" decoding="async" width="200" height="200"></picture>
+        <div>
+          <h3 class="record-name"><a href="/provider/tucson-manual-and-movement-therapy/">Tucson Manual and Movement Therapy</a></h3>
+          <p class="record-person"><b>Jarrod Lash</b></p>
+          <p class="record-where">tucson, AZ 85712 <span class="record-dist"></span></p>
+          <div class="record-tags"><a class="tag" href="/practice-types/traditional-chinese-medicine/">TCM</a><a class="tag" href="/practice-types/body-work/">Body work</a><a class="tag" href="/practice-types/massage-therapy/">Massage therapy</a><span class="tag tag-tele">Telehealth</span></div>
+        </div>
+      </div>
+      <dl class="fields">
+        <dt>Credential</dt><dd class="">Certified Massage Therapist (1999)
+Certified Practitioner and Instructor AOBTA</dd>
+        <dt>Licensure</dt><dd>No state licensure exists for this discipline</dd>
+        
+        <dt>In practice</dt><dd>27 yrs (since 1999)</dd>
+        <dt>Fees</dt><dd>$125/session for Manual or Movement Therapy
+$200 traction therapy</dd>
+        <dt>Insurance</dt><dd>Not accepted</dd>
+      </dl>
+      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b> with the Certified Practitioner in Asian bodywork (AOBTA), 23 Sept 2026.</p></div>
+      <div class="record-actions">
+        <a class="btn btn-ghost btn-sm" href="/provider/tucson-manual-and-movement-therapy/">Full record</a>
+        <a class="btn btn-ghost btn-sm" href="tel:5204044869">(520) 404-4869</a>
+        <a class="btn btn-ghost btn-sm" href="mailto:descendingdragoncommunity@gmail.com">Email</a>
+        <a class="btn btn-ghost btn-sm" href="https://www.descendingdragoncommunity.com/" target="_blank" rel="noopener">Website</a>
+      </div>
+    </article>
+  </li></ul>
         <p class="back-link"><a href="/practice-types/">&larr; All disciplines</a></p>
         <div class="empty" id="empty" hidden style="margin-top:2rem">
           <h3>No practitioners match those filters</h3>
@@ -119,7 +185,6 @@
       </div>
       <div>
         <h4>Find care</h4>
-        <a href="/directory/">Find a provider</a>
         <a href="/practice-types/">By discipline</a>
         <a href="/locations/">By location</a>
       </div>

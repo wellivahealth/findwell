@@ -83,6 +83,9 @@ DISCIPLINES = [
     dict(key="Chiropractic", label="Chiropractors", slug="chiropractic",
          note="Doctor of Chiropractic — D.C., state licensed.",
          img=SS + "1755990861680-X13BU084AZ5IQFMMC1DT/unsplash-image-8qwYA4INVCk.jpg"),
+    dict(key="Nutrition", label="Nutritionists", slug="nutrition",
+         note="Registered dietitians (RD, RDN) and nutritionists, including CNS and BCHN. Licensure varies by state.",
+         img="/assets/img/disciplines/nutrition"),
     dict(key="Herbalism", label="Herbology", slug="herbology",
          note="Registered herbalists and educators.",
          img=SS + "0362a0ef-8a7e-4341-80ff-30549e3acff8/shutterstock_2299524247.jpg"),
@@ -190,7 +193,7 @@ PROVIDERS = [
          licensure="No state licensure exists for Ayurveda",
          training="MA in Ayurveda",
          since=2001, affiliations="NAMA; Ayurveda Professionals of Arizona",
-         pricing="New patient $450 · Follow-up $135",
+         pricing="New patient $350 · Follow-up $135",
          payments="Cash, checks, credit, debit, HSA/FSA, PayPal, Venmo, Zelle",
          insurance="Not accepted",
          blurb="Ayurvedic assessment, dietary and lifestyle protocols, and herbal support. Virtual visits available.",
@@ -315,10 +318,14 @@ LICENSE_BOARDS = {
                      "CA": "California Acupuncture Board"},
     "TCM":          {"AZ": "Arizona Acupuncture Board of Examiners"},
     "Naturopathy":  {"AZ": "Arizona Naturopathic Physicians Medical Board"},
-    "Chiropractic": {"AZ": "Arizona Board of Chiropractic Examiners"},
+    "Chiropractic": {"AZ": "Arizona Board of Chiropractic Examiners",
+                     "CO": "Colorado State Board of Chiropractic Examiners",
+                     "FL": "Florida Board of Chiropractic Medicine"},
+    "Nutrition":    {"FL": "Florida Dietetics and Nutrition Practice Council"},
     "Massage":      {"AZ": "Arizona Massage Therapy Board"},
     "Bodywork":     {"AZ": "Arizona Massage Therapy Board"},
-    "Counseling":   {"AZ": "Arizona Board of Behavioral Health Examiners"},
+    "Counseling":   {"AZ": "Arizona Board of Behavioral Health Examiners",
+                     "SC": "South Carolina Board of Examiners for Licensure of Professional Counselors, Marriage and Family Therapists, Addiction Counselors and Psycho-Educational Specialists"},
     "IntegrativeMedicine": {"AZ": "Arizona Medical Board"},
 }
 
@@ -515,6 +522,8 @@ LOGOS = {
     "hibiscus-acupuncture": "/assets/img/providers/hibiscus-acupuncture.png",
     "origins-health": "/assets/img/providers/origins-health.png",
     "tracy-villegas-lmt": "/assets/img/providers/tracy-villegas-lmt.jpg",
+    # Descending Dragon Health Center (Jarrod Lash), logo sent Oct 2026
+    "tucson-manual-and-movement-therapy": "/assets/img/providers/tucson-manual-and-movement-therapy.png",
     "thrive-chiropractic": "/assets/img/providers/thrive-chiropractic.png",
 }
 for _slug, _path in LOGOS.items():
@@ -1176,7 +1185,7 @@ PAYMENT_METHODS = ["Insurance", "Cash", "Checks", "Credit Cards", "Debit Cards",
 SCOPE_OPTIONS = ["Ayurveda", "Acupuncture", "Traditional Chinese Medicine",
                  "Naturopathic Medicine", "Chiropractic", "Massage Therapy", "Body Work", "Energy Work",
                  "Integrative / Functional Medicine (MD, DO, NP, PA, RN)", "Counseling",
-                 "Health & Wellness Coaching", "Herbalism", "Farmer", "Grocer"]
+                 "Health & Wellness Coaching", "Nutrition (RD and Nutritionists)", "Herbalism", "Farmer", "Grocer"]
 
 # FindWell lists practitioners in the United States and Canada only.
 COUNTRIES = ["United States", "Canada"]

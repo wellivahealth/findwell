@@ -91,6 +91,7 @@ const SCOPE_TO_KEY = {
   'Herbalism': 'Herbalism',
   'Farmer': 'Farms',
   'Grocer': 'Grocers',
+  'Nutrition (RD and Nutritionists)': 'Nutrition',
 };
 
 /** The issuing authority to check, by discipline and state. Extend as the
@@ -105,7 +106,9 @@ const SOURCES = {
       AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'],
       CA: ['the California Acupuncture Board, through the DCA licence search', 'https://search.dca.ca.gov/'],
       FL: ['the Florida Board of Acupuncture, through the Department of Health licence search',
-           'https://appsmqa.doh.state.fl.us/IRM00PRAES/PRASLIST.ASP'] },
+           'https://mqa-internet.doh.state.fl.us/mqasearchservices/healthcareproviders'],
+      CO: ['the Colorado Office of Acupuncture Regulation, through the DORA licence lookup',
+           'https://apps2.colorado.gov/dora/licensing/lookup/licenselookup.aspx'] },
     also: [
       ['NCBAHM, formerly NCCAOM, for Dipl. Ac. and Dipl. O.M.', 'https://www.ncbahm.org/find-a-practitioner-directory/', 2],
     ] },
@@ -114,23 +117,41 @@ const SOURCES = {
       AZ: ['the Arizona Acupuncture Board of Examiners', 'https://acupuncture.az.gov/'],
       CA: ['the California Acupuncture Board, through the DCA licence search', 'https://search.dca.ca.gov/'],
       FL: ['the Florida Board of Acupuncture, through the Department of Health licence search',
-           'https://appsmqa.doh.state.fl.us/IRM00PRAES/PRASLIST.ASP'] },
+           'https://mqa-internet.doh.state.fl.us/mqasearchservices/healthcareproviders'],
+      CO: ['the Colorado Office of Acupuncture Regulation, through the DORA licence lookup',
+           'https://apps2.colorado.gov/dora/licensing/lookup/licenselookup.aspx'] },
     also: [
       ['NCBAHM, formerly NCCAOM, for Dipl. C.H. and Dipl. O.M.', 'https://www.ncbahm.org/find-a-practitioner-directory/', 2],
     ] },
   Naturopathy: { licensed: true, state: {
     AZ: ['the Arizona Naturopathic Physicians Medical Board', 'https://nd.az.gov/resources/license-verification-request'],
-    CA: ['the California Board of Naturopathic Medicine, through the DCA licence search', 'https://search.dca.ca.gov/'] } },
+    CA: ['the California Board of Naturopathic Medicine, through the DCA licence search', 'https://search.dca.ca.gov/'],
+    CO: ['the Colorado Office of Naturopathic Doctor Registration, through the DORA licence lookup',
+         'https://apps2.colorado.gov/dora/licensing/lookup/licenselookup.aspx'] } },
   Chiropractic: { licensed: true, state: {
     AZ: ['the Arizona Board of Chiropractic Examiners', 'https://chiroboard.az.gov/find-chiropractor'],
     CA: ['the California Board of Chiropractic Examiners, through the DCA licence search',
-         'https://search.dca.ca.gov/?BD=8500&TP=DC'] } },
+         'https://search.dca.ca.gov/?BD=8500&TP=DC'],
+    CO: ['the Colorado State Board of Chiropractic Examiners, through the DORA licence lookup',
+         'https://apps2.colorado.gov/dora/licensing/lookup/licenselookup.aspx'],
+    FL: ['the Florida Board of Chiropractic Medicine, through the Department of Health licence search',
+         'https://mqa-internet.doh.state.fl.us/mqasearchservices/healthcareproviders'] } },
   Massage: { licensed: true, state: {
-    AZ: ['the Arizona Massage Therapy Board', 'https://massagetherapy.az.gov/applications/status'] } },
+    AZ: ['the Arizona Massage Therapy Board', 'https://massagetherapy.az.gov/applications/status'],
+    CO: ['the Colorado Office of Massage Therapy Licensure, through the DORA licence lookup',
+         'https://apps2.colorado.gov/dora/licensing/lookup/licenselookup.aspx'],
+    FL: ['the Florida Board of Massage Therapy, through the Department of Health licence search',
+         'https://mqa-internet.doh.state.fl.us/mqasearchservices/healthcareproviders'] } },
   Counseling: { licensed: true,
     state: {
       AZ: ['the Arizona Board of Behavioral Health Examiners', 'https://azbbhe.us/'],
       CA: ['the California Board of Behavioral Sciences, through the DCA licence search', 'https://search.dca.ca.gov/'],
+      CO: ['the Colorado mental health boards (LPC, LMFT, LCSW, psychologist), through the DORA licence lookup',
+           'https://apps2.colorado.gov/dora/licensing/lookup/licenselookup.aspx'],
+      FL: ['the Florida Board of Clinical Social Work, Marriage and Family Therapy and Mental Health Counseling, through the Department of Health licence search',
+           'https://mqa-internet.doh.state.fl.us/mqasearchservices/healthcareproviders'],
+      SC: ['the South Carolina Board of Examiners for Licensure of Professional Counselors, Marriage and Family Therapists, Addiction Counselors and Psycho-Educational Specialists',
+           'https://verify.llronline.com/LicLookup/Counselors/Counselors.aspx?div=18&AspxAutoDetectCookieSupport=1'],
       TN: ['the Tennessee Board for Professional Counselors, Marital and Family Therapists and Clinical Pastoral Therapists, through the Department of Health licence search',
            'https://apps.health.tn.gov/Licensure/default.aspx'] },
     stateAlso: { CA: [
@@ -142,7 +163,9 @@ const SOURCES = {
   IntegrativeMedicine: { licensed: true,
     state: {
       AZ: ['the Arizona Medical Board', 'https://www.azmd.gov/PhysicianCenter/PhysicianCenter/license-verification'],
-      CA: ['the Medical Board of California, through the DCA licence search', 'https://search.dca.ca.gov/'] },
+      CA: ['the Medical Board of California, through the DCA licence search', 'https://search.dca.ca.gov/'],
+      CO: ['the Colorado Medical Board, through the DORA licence lookup', 'https://apps2.colorado.gov/dora/licensing/lookup/licenselookup.aspx'],
+      FL: ['the Florida Board of Medicine, through the Department of Health licence search', 'https://mqa-internet.doh.state.fl.us/mqasearchservices/healthcareproviders'] },
     stateAlso: {
       CA: [
         ['the Osteopathic Medical Board of California, for a DO', 'https://search.dca.ca.gov/', 1],
@@ -152,12 +175,33 @@ const SOURCES = {
       AZ: [
       ['the Arizona Board of Osteopathic Examiners, for a DO', 'https://azdo.gov/', 1],
       ['the Arizona Regulatory Board of Physician Assistants, for a PA', 'https://www.azpa.gov/', 1],
-    ] },
+      ['the Arizona State Board of Nursing, for an NP (APRN) or RN', 'https://azbn.boardsofnursing.org/licenselookup', 1],
+    ],
+      CO: [
+        ['the Colorado Board of Nursing, for an NP (APRN) or RN, through the DORA licence lookup', 'https://apps2.colorado.gov/dora/licensing/lookup/licenselookup.aspx', 1],
+      ],
+      FL: [
+        ['the Florida Board of Osteopathic Medicine, for a DO', 'https://mqa-internet.doh.state.fl.us/mqasearchservices/healthcareproviders', 1],
+        ['the Florida Board of Nursing, for an NP (APRN) or RN', 'https://mqa-internet.doh.state.fl.us/mqasearchservices/healthcareproviders', 1],
+      ],
+    },
     also: [
       ['NCCPA, for PA-C certification', 'https://www.nccpa.net/', 2],
       ['ABOIM through ABPS, for integrative medicine certification', 'https://www.abpsus.org/integrative-medicine-board-certification/', 2],
       ['the American Board of Lifestyle Medicine', 'https://ablm.org/diplomates/', 2],
       ['the Institute for Functional Medicine, for FMCP or FMCP-M', 'https://www.ifm.org/certification', 2],
+    ] },
+  Nutrition: { licensed: false,
+    // Dietetics is licensed in some states and not others. Where a state board
+    // is on file it answers first; elsewhere the RD or CNS credential is the check.
+    state: {
+      FL: ['the Florida Dietetics and Nutrition Practice Council, through the Department of Health licence search',
+           'https://mqa-internet.doh.state.fl.us/mqasearchservices/healthcareproviders'],
+    },
+    also: [
+      ['the Commission on Dietetic Registration, for RD or RDN', 'https://www.cdrnet.org/', 2],
+      ['the Board for Certification of Nutrition Specialists, for CNS', 'https://theana.org/certify', 2],
+      ['the Holistic Nutrition Credentialing Board, for BCHN', 'https://hncb.org/', 2],
     ] },
   Bodywork: { licensed: false,
     state: { AZ: ['the Arizona Massage Therapy Board', 'https://massagetherapy.az.gov/applications/status'] },
@@ -185,7 +229,7 @@ const DISCIPLINE_LABELS = {
   Naturopathy: 'Naturopathy', IntegrativeMedicine: 'Integrative & functional medicine',
   Counseling: 'Counseling', Coaching: 'Health & wellness coaching',
   Massage: 'Massage therapy', Bodywork: 'Body work', EnergyMedicine: 'Energy work',
-  Chiropractic: 'Chiropractic', Herbalism: 'Herbology',
+  Chiropractic: 'Chiropractic', Herbalism: 'Herbology', Nutrition: 'Nutrition',
   Farmer: 'Local farms', Grocer: 'Local grocers',
 };
 
@@ -215,7 +259,20 @@ const CREDENTIAL_HINTS = [
       AZ: ['the Arizona State Board of Nursing, for the RN licence', 'https://www.azbn.gov/'],
       CA: ['the California Board of Registered Nursing, through the DCA licence search', 'https://search.dca.ca.gov/'],
       TN: ['the Tennessee Department of Health, for the RN licence', 'https://apps.health.tn.gov/Licensure/default.aspx'],
+      CO: ['the Colorado Board of Nursing, for the RN licence, through the DORA licence lookup', 'https://apps2.colorado.gov/dora/licensing/lookup/licenselookup.aspx'],
+      FL: ['the Florida Board of Nursing, for the RN licence', 'https://mqa-internet.doh.state.fl.us/mqasearchservices/healthcareproviders'],
     } },
+  { test: /\b(NP|FNP|APRN|ARNP|DNP|nurse practitioner)\b/i, byState: {
+      AZ: ['the Arizona State Board of Nursing, for an NP (APRN) or RN', 'https://azbn.boardsofnursing.org/licenselookup'],
+      CA: ['the California Board of Registered Nursing, for the NP, through the DCA licence search', 'https://search.dca.ca.gov/'],
+      CO: ['the Colorado Board of Nursing, for an NP (APRN) or RN, through the DORA licence lookup', 'https://apps2.colorado.gov/dora/licensing/lookup/licenselookup.aspx'],
+      FL: ['the Florida Board of Nursing, for an NP (APRN) or RN', 'https://mqa-internet.doh.state.fl.us/mqasearchservices/healthcareproviders'],
+    },
+    everywhere: ['Nursys QuickConfirm, the national nursing licence lookup, for an NP or RN in most states', 'https://www.nursys.com/LQC/LQCSearch.aspx', 1],
+    national: [
+      ['the AANP Certification Board, for FNP-C and other NP board certification', 'https://www.aanpcert.org/', 2],
+      ['the ANCC, for FNP-BC and other NP board certification', 'https://www.nursingworld.org/certification/', 2],
+    ] },
 ];
 
 /** Every place worth opening for this listing, ordered by tier. */
@@ -233,7 +290,10 @@ function sourcesFor(listing) {
   }
   const text = `${listing.credentials || ''} ${listing.licensure || ''} ${listing.training || ''}`;
   for (const hint of CREDENTIAL_HINTS) {
-    if (hint.test.test(text)) add((hint.byState || {})[listing.state], 1);
+    if (!hint.test.test(text)) continue;
+    add((hint.byState || {})[listing.state], 1);
+    if (hint.everywhere) add(hint.everywhere, 1);
+    (hint.national || []).forEach((x) => add(x, 2));
   }
   for (const c of listing.categories || []) ((SOURCES[c] || {}).also || []).forEach((x) => add(x, 3));
   return out.sort((a, b) => a.tier - b.tier);
@@ -297,6 +357,12 @@ function preChecks(s, listing, existing) {
     note('Listed under integrative and functional medicine, which is defined by a medical licence, and nothing '
        + 'here shows one. If the licence is in another discipline, the listing belongs under that discipline with '
        + 'the functional medicine work described in the text.');
+  }
+  if (/\b(NP|FNP|APRN|ARNP|DNP|nurse practitioner)\b/i.test(licenceText + ' ' + blob)) {
+    note('A nurse practitioner. The licence is held with the state board of nursing, not the medical board, '
+       + 'so check it there or on Nursys QuickConfirm, which is free and covers most states. Board '
+       + 'certification such as FNP-C or FNP-BC is separate from the licence and is checked with the AANP '
+       + 'Certification Board or the ANCC.');
   }
   if (cats.includes('IntegrativeMedicine') && !s.integrative && !s.certs) {
     note('Listed under integrative and functional medicine with no integrative training or certification reported.');

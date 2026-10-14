@@ -46,7 +46,7 @@
                 aria-controls="find-menu" data-active="1">
           Find a provider <span class="caret" aria-hidden="true">&#9662;</span>
         </button>
-        <ul class="nav-menu" id="find-menu"><li><a href="/directory/">All providers</a></li><li><a href="/practice-types/" aria-current="page">By discipline</a></li><li><a href="/locations/">By location</a></li></ul>
+        <ul class="nav-menu" id="find-menu"><li><a href="/practice-types/" aria-current="page">By discipline</a></li><li><a href="/locations/">By location</a></li></ul>
       </div><a href="/about/">Who we are</a><a href="/articles/">Articles</a><a href="/advertise/">Advertise with us</a>
       <a class="cta" href="/join/">Join the directory</a>
     </nav>
@@ -66,9 +66,9 @@
             <label for="f-q">Keyword</label>
             <input class="control" id="f-q" type="search" placeholder="Name, condition, credential">
           </div>
-          <fieldset><legend>Discipline</legend><label class="check"><input type="checkbox" data-cat="Ayurveda"> Ayurveda<span class="n">3</span></label><label class="check"><input type="checkbox" data-cat="Acupuncture"> Acupuncture<span class="n">3</span></label><label class="check"><input type="checkbox" data-cat="TCM"> TCM<span class="n">2</span></label><label class="check check-empty"><input type="checkbox" data-cat="Naturopathy" disabled> Licensed naturopaths<span class="n">0</span></label><label class="check check-empty"><input type="checkbox" data-cat="IntegrativeMedicine" disabled> Integrative &amp; functional medicine<span class="n">0</span></label><label class="check check-empty"><input type="checkbox" data-cat="Counseling" disabled> Counselors<span class="n">0</span></label><label class="check"><input type="checkbox" data-cat="Coaching"> Health &amp; wellness coaches<span class="n">3</span></label><label class="check check-empty"><input type="checkbox" data-cat="Massage" disabled> Massage therapy<span class="n">0</span></label><label class="check"><input type="checkbox" data-cat="Bodywork"> Body work<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="EnergyMedicine"> Energy healers<span class="n">3</span></label><label class="check"><input type="checkbox" data-cat="Chiropractic"> Chiropractors<span class="n">1</span></label><label class="check"><input type="checkbox" data-cat="Herbalism"> Herbology<span class="n">4</span></label><label class="check check-empty"><input type="checkbox" data-cat="Farms" disabled> Local farmers<span class="n">0</span></label><label class="check check-empty"><input type="checkbox" data-cat="Grocers" disabled> Local grocers<span class="n">0</span></label></fieldset>
+          <fieldset><legend>Discipline</legend><label class="check"><input type="checkbox" data-cat="Ayurveda"> Ayurveda<span class="n">5</span></label><label class="check"><input type="checkbox" data-cat="Acupuncture"> Acupuncture<span class="n">10</span></label><label class="check"><input type="checkbox" data-cat="TCM"> TCM<span class="n">8</span></label><label class="check"><input type="checkbox" data-cat="Naturopathy"> Licensed naturopaths<span class="n">3</span></label><label class="check"><input type="checkbox" data-cat="IntegrativeMedicine"> Integrative &amp; functional medicine (MD, DO, NP, PA, RN)<span class="n">3</span></label><label class="check"><input type="checkbox" data-cat="Counseling"> Counselors<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="Coaching"> Health &amp; wellness coaches<span class="n">12</span></label><label class="check"><input type="checkbox" data-cat="Massage"> Massage therapy<span class="n">2</span></label><label class="check"><input type="checkbox" data-cat="Bodywork"> Body work<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="EnergyMedicine"> Energy healers<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="Chiropractic"> Chiropractors<span class="n">4</span></label><label class="check check-empty"><input type="checkbox" data-cat="Nutrition" disabled> Nutritionists<span class="n">0</span></label><label class="check"><input type="checkbox" data-cat="Herbalism"> Herbology<span class="n">7</span></label><label class="check check-empty"><input type="checkbox" data-cat="Farms" disabled> Local farmers<span class="n">0</span></label><label class="check check-empty"><input type="checkbox" data-cat="Grocers" disabled> Local grocers<span class="n">0</span></label></fieldset>
           <fieldset><legend>State</legend>
-            <select class="control" id="f-state"><option value="">All states</option><option value="AZ">Arizona (9)</option><option value="CO">Colorado (1)</option></select>
+            <select class="control" id="f-state"><option value="">All states</option><option value="AZ">Arizona (14)</option><option value="CA">California (6)</option><option value="CO">Colorado (2)</option><option value="FL">Florida (2)</option><option value="GA">Georgia (1)</option><option value="ID">Idaho (1)</option><option value="IN">Indiana (1)</option><option value="MA">Massachusetts (1)</option><option value="MI">Michigan (2)</option><option value="OK">Oklahoma (1)</option><option value="TN">Tennessee (2)</option><option value="WA">Washington (1)</option></select>
           </fieldset>
           <fieldset><legend>Distance</legend>
             <input class="control" id="f-zip" type="text" inputmode="numeric" placeholder="ZIP code">
@@ -85,7 +85,7 @@
       </aside>
       <section>
         <div class="results-bar">
-          <p class="results-count" aria-live="polite"><b id="count">0</b> <span id="count-word">practitioners</span><span id="count-where"></span></p>
+          <p class="results-count" aria-live="polite"><b id="count">4</b> <span id="count-word">practitioners</span><span id="count-where"></span></p>
           <div class="sort">
             <label for="f-sort">Sort</label>
             <select class="control" id="f-sort">
@@ -97,7 +97,351 @@
         </div>
         <p class="results-note">Every listing states how its credentials were established — checked with the issuing board, or as reported by the practitioner. <a href="/verification/">What that means</a>.</p>
         <div class="active-filters" id="active-filters"></div>
-        <ul class="records" id="records"></ul>
+        <ul class="records" id="records"><li class="record" data-cats="Ayurveda Naturopathy Coaching Counseling Acupuncture TCM Bodywork"
+      data-city="Longmont" data-state="CO" data-tele="1"
+      data-lat="None" data-lng="None" data-since="1996"
+      data-name="Awakened Living" data-text="awakened living nibodhi haas longmont co 80504 nama board certified
+american naturopathic medicine board certified / anmcab (american naturopathic medicine certification and accreditation board): certified traditional naturopath
+
+gabor mate: 
+*compassionate inquiry
+*healing trauma and addiction course
+*the biology of loss: how to foster resilience when attachments are impaired workshop
+
+ acology: (the academy of modern applied psychology): 
+*diploma training course in modern applied pyschology (dimap)
+*diploma in mindfulness (certification training)
+*mental health and wellness practitioner training course
+*certified life coach
+*nlp (neuro-linguistic programming) training course ayurveda
+certified ayurveda practitioner nama (national ayurveda medical association)
+
+ clinical experience
+*1997-2019 independent study with numerous north india and kerala vaidyas
+*23 years clinical experience running 100% non-profit charitable ayurveda and naturopathy clinic in kerala, india (a.m.m.a) amrita medical mission of ayurveda) m.a. math (amritapuri ashram) 
+*2015-2020 created and taught 2x a year week-long ayurveda/ yoga program in kerala, india m.a.math (amritapuri ashram)
+*2003-2019 mata amritanandamayi devi’s world tours offering ayurveda/naturopathy/vedic psychology /counseling sessions throughout usa, canada, europe, uk, australia, singapore, malyasia, thailand
+*current: lead practitioner amritapuri ashram welnness center
+
+the school of healing arts
+-ayurvedic massage 
+-ayurvedic principles
+-ayurvedic cooking 
+-ayurvedic herbal medicine
+
+the ayurvedic institute:
+ayurveda studies year 1 and 2
+nadi pariksha
+pancha karma
+marma chikitsa
+the secret science of life
+emotional psychological and spiritual healing
+healing relationships through mind body  consciousness
+ayurvedic art of spiritual healing for mind and body
+healing psychological trauma
+mind and disease the flow of pathology from mind to matter
+the smokeless flame of attention spiritual healing through mantra and meditation
+ayurvedic herbalism
+balancing the doshas with herbs
+ayurveda herbology and healing organs
+healing through sound
+spiritual rituals for self healing
+ayurveda and jyotish
+auto immune disorders
+pregnancy and infant care
+palmistry
+vastu shastra
+sanskrit (simon chokoisky)
+
+ayurvedic healing institute
+-vedic psychology/counselor  
+-vedic medical astrology
+
+american institute of vedic studies
+-integral vedic counselor 
+-ayurvedic astrology 
+-yoga, ayurveda, mantra &amp; meditation course
+-ayurvedic healing course
+-ayurveda practitioner /educator
+
+alandi ayurveda gurukula
+nadi pariksha
+aushadhi
+ayurvedic cooking  
+
+rocky mountain institute of yoga and ayurveda
+-ayurvedic pulse course - dr. john douillard 
+-pancha karma 
+
+other:
+*ayurveda animal wellness consultant - dr. vivek singh and dr megha panwar
+*ayurvedic psychotherapy - dr. himani sharma
+*vaidya mishra - charak course
+*pancha karma, rasa shastra  - d.h.a.r.m.a (dhanvantari himalaya ayurveda research and medicine acadamy) 2002
+*rasa shastra, pancha karma - vaidya rajpurohit - rishikesh
+*rasa shastra - amrita institute of ayurveda (amritapuri)
+*ayurvedic gynaecology and paediatrics - dr. partap chauhan - jiva ayurveda
+*the gunas - jeffrey armstrong
+*practical tantra in daily life - robert svoboda
+*understanding omens in daily life - robert svoboda
+*sanjay and sarbani rath - jyotish year 1
+*women&#x27;s transitions women&#x27;s lives - dr. claudia welch
+*principles of ayurveda for yoga teachers - kaivalyadhama (swami maheshananda )
+
+yoga teacher/therapist trainings: 
+swaroopa yoga (master yoga academy - swami nirmalananda) - 2000 hours
+yin yoga - 100 hours
+eddie stern - 50 hours
+richard freeman - 1 year
+integral yoga ytt certification
+sivananda yoga ytt certification
+ayur-yoga certification
+agama yoga ytt certification
+kundalini yoga ytt certification
+
+psychology and counseling
+ gabor mate: 
+*compassionate inquiry
+*healing trauma and addiction course
+*a masterclass for healers
+*the biology of loss: how to foster resilience when attachments are impaired workshop
+
+acology (the academy of modern applied psychology): 
+*diploma training course in modern applied pyschology (dimap)
+*diploma in mindfulness (certification training)
+*mental health and wellness practitioner training course
+*certified life coach
+*nlp (neuro-linguistic programming) training course
+
+peter levine: the body as healer: working from the body up workshop
+positive psychology - martin seligman 
+men’s sexual mastery - layla martin
+psychology of human sexuality - dr. bev knox
+sex therapy and healing - dr. saskia kalwinex
+sexual transmutation - sexual energy alchemy - ibrael yildirim
+mantak chia - 2 week intensive
+david deida and sophia diaz - retreats 
+pslam isadora - training
+psychological first-aid - dr. george everly jr. ph.d - johns hopkins university
+bringing the body into therapy: clinical tools of somatic experiencing workshop - -abi blakeslee phd, mft, cmt, sep
+know thyself - the value and limits of self-knowledge: the unconscious - dr. mitchell s. greem d.phy
+
+curanderismo (4 part healing course) - dr. eliseo “cheo” torres and dr. mario del angel guevara
+*global and cultural influences of traditional healing
+*traditional healing of the body
+*traditional healing use of plants
+*traditional healing of the mind, energy and spirit
+
+personal study and training - 1998-2003 yatiri chief valerio “freddy” cohaila - peruvian yatiri spiritual leader of the pachamama church
+
+yoga psychology
+body psychology
+yogic pranic healing
+non-violent communication
+transpersonal psychology
+shamanic counseling/soul retrieval
+death and dying
+
+-the school of healing arts:
+*holistic health practitioner
+*zen shiatsu treacher
+*clinical nutritional counselor
+*watsu
+*massage therapist 
+*aromatherapy
+
+-the school of natural medicine:
+*natural doctor: naturopathy, herbology, iridology, homeopathy, nutrition
+*clayton college of natural health - doctor of naturopathy (now traditional naturopathy)
+
+anmcab (american naturopathic medicine certification and accreditation board): certified &quot;naturopathic doctor&quot; washington d.c., usa 2002
+ancb (american naturopathic certification board): certified traditional naturopath, usa 2006
+ibam (indian board of alternative medicine) m.d. (a.m.), medical doctor of alternative medicine, india 2006
+ibam (indian board of alternative medicine)/open international university of alternative medicine) d.acu., doctor of acupuncture, india 2015
+rmp license in india (registered medical practitioner) india 2014
+holistic health practitioner/educator
+
+university of minnesota 2020-2021
+holistic wellness program:
+-mindfulness in integrative healthcare
+-guided imagery
+-traditional herbal medicine in supportive cancer care: alternative to integrative
+-integrative therapy and healing practices
+-aromatherapy - clinical use of essential oils
+-herbal medicine
+
+additional certifications: 
+ordained minister - ulc
+reiki master teacher - ma uri (kahuna, arch, reiki master teacher)
+master herbalist - dr. christopher hobbs
+medical cannabis - university of colorado boulder
+gemstone and crystal healing dr. nibodhi has spent over 30 years giving private consultations to more than 30,000 people. as a traditional naturopath and ayurvedic practitioner, he supports people in transforming their health and consciousness.
+
+drawing on ayurveda, vedic sciences, yoga, compassionate inquiry, jyotish and traditional naturopathy, he supports physical, emotional, and spiritual well-being. his approach helps cultivate balance, clarity, and resilience in body, mind, and self.
+
+each session is personalized. dr. nibodhi meets people with respect and attentiveness, creating a supportive space for meaningful healing and growth. his guidance is thoughtful, practical, and grounded in decades of experience. no state licensure exists for this discipline ayurveda licensed naturopaths health &amp; wellness coaches counselors acupuncture tcm body work">
+    <article class="record-in">
+      <div class="record-head">
+        <img class="avatar" src="/assets/img/providers/awakened-living.jpg?v=b2e904136a" alt="Awakened Living logo" loading="lazy" decoding="async" width="200" height="200">
+        <div>
+          <h3 class="record-name"><a href="/provider/awakened-living/">Awakened Living</a></h3>
+          <p class="record-person"><b>Nibodhi Haas</b></p>
+          <p class="record-where">Longmont, CO 80504 <span class="record-dist"></span></p>
+          <div class="record-tags"><a class="tag" href="/practice-types/ayurveda/">Ayurveda</a><a class="tag" href="/practice-types/naturopathic-medicine/">Licensed naturopaths</a><a class="tag" href="/practice-types/health-wellness-coaching/">Health &amp; wellness coaches</a><a class="tag" href="/practice-types/counseling/">Counselors</a><a class="tag" href="/practice-types/acupuncture/">Acupuncture</a><a class="tag" href="/practice-types/traditional-chinese-medicine/">TCM</a><a class="tag" href="/practice-types/body-work/">Body work</a><span class="tag tag-tele">Telehealth</span></div>
+        </div>
+      </div>
+      <dl class="fields">
+        <dt>Credential</dt><dd class="">NAMA Board Certified
+American Naturopathic Medicine Board Certified / ANMCAB (American Naturopathic Medicine Certification and Accreditation Board): Certified Traditional Naturopath
+
+Gabor Mate: 
+*Compassionate Inquiry
+*Healing Trauma and Addiction Course
+*The Biology of Loss: How to Foster Resilience When Attachments are Impaired Workshop
+
+ ACOLOGY: (The Academy of Modern Applied Psychology): 
+*Diploma Training Course in Modern Applied Pyschology (DiMAP)
+*Diploma in Mindfulness (Certification Training)
+*Mental Health and Wellness Practitioner Training Course
+*Certified Life Coach
+*NLP (Neuro-Linguistic Programming) Training Course</dd>
+        <dt>Licensure</dt><dd>No state licensure exists for this discipline</dd>
+        
+        <dt>In practice</dt><dd>30 yrs (since 1996)</dd>
+        <dt>Fees</dt><dd>Sliding Scale based on length of time. https://www.nibodhi.com/consultations</dd>
+        <dt>Insurance</dt><dd>Not accepted</dd>
+      </dl>
+      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b> with NAMA Certification Board, 26 Aug 2026.</p></div>
+      <div class="record-actions">
+        <a class="btn btn-ghost btn-sm" href="/provider/awakened-living/">Full record</a>
+        <a class="btn btn-ghost btn-sm" href="tel:8087424692">(808) 742-4692</a>
+        <a class="btn btn-ghost btn-sm" href="mailto:nibodhi108@gmail.com">Email</a>
+        <a class="btn btn-ghost btn-sm" href="https://www.nibodhi.com" target="_blank" rel="noopener">Website</a>
+      </div>
+    </article>
+  </li><li class="record" data-cats="EnergyMedicine Counseling Coaching"
+      data-city="Richmond" data-state="CA" data-tele="1"
+      data-lat="None" data-lng="None" data-since="2011"
+      data-name="Coaching With Lucy" data-text="coaching with lucy lucy seligman richmond ca 94805 icf associate certified coach (acc); certified clinical hypnotherapist (ccht) masters-level studies in social work, san jose state university
+
+bachelor of arts in east asian languages and culture, usc
+
+icf certified coach [acc] 2023-2029
+
+coaching certificate - wisdom of the whole coaching academy 2019
+
+stress management – allegra learning solutions 2015
+
+medical hypnotherapy certification - hypnotherapy for health 2014
+
+clinical hypnotherapy certification - hch institute 2010 - 2013
+training included a one-year internship and six-month externship in the school&#x27;s
+low-fee clinic. developed skills in gaining rapport, listening and observation, and
+guiding clients in relaxation techniques, visualization, stress management and
+mind-body pain management.
+
+reiki master - hch institute 2012
+
+energy therapy certification - hch institute 2011
+
+emotional freedom technique - hch institute 2011
+
+sandplay training - hch institute 2011
+
+tapas acupressure basics - hch institute 2011
+
+energy boundaries &amp; chakra clearing - hch institute 2011
+
+ericksonian pain management - hch institute 2011 lucy seligman is a certified coach and hypnotherapist who works with people who feel overwhelmed, stuck, anxious, or uncertain about what comes next. using coaching, hypnotherapy, mindfulness, and other mind-body tools, she helps clients quiet the noise, uncover what is getting in the way, and find greater clarity, confidence, and ease as they move forward. no state licensure exists for this discipline energy healers counselors health &amp; wellness coaches">
+    <article class="record-in">
+      <div class="record-head">
+        <img class="avatar" src="/assets/img/providers/coaching-with-lucy.png?v=e8781e00d0" alt="Coaching With Lucy logo" loading="lazy" decoding="async" width="200" height="200">
+        <div>
+          <h3 class="record-name"><a href="/provider/coaching-with-lucy/">Coaching With Lucy</a></h3>
+          <p class="record-person"><b>Lucy Seligman</b></p>
+          <p class="record-where">Richmond, CA 94805 <span class="record-dist"></span></p>
+          <div class="record-tags"><a class="tag" href="/practice-types/energy-work/">Energy healers</a><a class="tag" href="/practice-types/counseling/">Counselors</a><a class="tag" href="/practice-types/health-wellness-coaching/">Health &amp; wellness coaches</a><span class="tag tag-tele">Telehealth</span></div>
+        </div>
+      </div>
+      <dl class="fields">
+        <dt>Credential</dt><dd class="">ICF Associate Certified Coach (ACC); Certified Clinical Hypnotherapist (CCHT)</dd>
+        <dt>Licensure</dt><dd>No state licensure exists for this discipline</dd>
+        
+        <dt>In practice</dt><dd>15 yrs (since 2011)</dd>
+        <dt>Fees</dt><dd>Based on the needs of the client it can differ based on the package and number of sessions needed.
+
+I offer a free 20 minute connection call. - https://cal.com/lucy-seligman/connection-call</dd>
+        <dt>Insurance</dt><dd>Not accepted</dd>
+      </dl>
+      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b> with the International Coaching Federation, 23 Sept 2026.</p></div>
+      <div class="record-actions">
+        <a class="btn btn-ghost btn-sm" href="/provider/coaching-with-lucy/">Full record</a>
+        <a class="btn btn-ghost btn-sm" href="tel:5107103917">(510) 710-3917</a>
+        <a class="btn btn-ghost btn-sm" href="mailto:Lucy@Lucyseligman.com">Email</a>
+        <a class="btn btn-ghost btn-sm" href="https://lucyseligman.com/" target="_blank" rel="noopener">Website</a>
+      </div>
+    </article>
+  </li><li class="record" data-cats="Counseling"
+      data-city="Brentwood" data-state="TN" data-tele="0"
+      data-lat="36.036945627197" data-lng="-86.816795047785" data-since="2017"
+      data-name="Tennessee Neurofeedback" data-text="tennessee neurofeedback kaka ray, lmft brentwood tn 37027 licensed marriage and family therapist (lmft) · board certified in neurofeedback (bcn), bcia marriage and family therapy; neurofeedback training based on qeeg brain mapping; brain-based and trauma-focused methods over 20 years of practice at tennessee neurofeedback, we treat clients with neurofeedback, a non-invasive, drug-free form of brain training for children, teens, and adults. every plan begins with a qeeg brain map, which our board certified neurotherapists use to build a personalized training plan. during sessions, sensors on the scalp read your brainwave activity while you relax and watch a show or listen to music. neurofeedback can be used alongside therapy or medication, and remote sessions are available. tennessee licensed marriage and family therapist — number not provided counselors">
+    <article class="record-in">
+      <div class="record-head">
+        <img class="avatar" src="/assets/img/providers/tennessee-neurofeedback.png?v=f9009940c0" alt="Tennessee Neurofeedback logo" loading="lazy" decoding="async" width="200" height="200">
+        <div>
+          <h3 class="record-name"><a href="/provider/tennessee-neurofeedback/">Tennessee Neurofeedback</a></h3>
+          <p class="record-person"><b>Kaka Ray, LMFT</b></p>
+          <p class="record-where">Brentwood, TN 37027 <span class="record-dist"></span></p>
+          <div class="record-tags"><a class="tag" href="/practice-types/counseling/">Counselors</a></div>
+        </div>
+      </div>
+      <dl class="fields">
+        <dt>Credential</dt><dd class="">Licensed Marriage and Family Therapist (LMFT) · Board Certified in Neurofeedback (BCN), BCIA</dd>
+        <dt>Licensure</dt><dd>Tennessee licensed marriage and family therapist — number not provided</dd>
+        
+        <dt>In practice</dt><dd>9 yrs (since 2017)</dd>
+        <dt>Fees</dt><dd>Free Consultation Available</dd>
+        <dt>Insurance</dt><dd>Not accepted</dd>
+      </dl>
+      <div class="record-verify"><p class="verify verify-reported"><b>As reported by the practitioner.</b> Not independently verified — <a href="/verification/">what this means</a>.</p></div>
+      <div class="record-actions">
+        <a class="btn btn-ghost btn-sm" href="/provider/tennessee-neurofeedback/">Full record</a>
+        <a class="btn btn-ghost btn-sm" href="tel:6152908798">(615) 290-8798</a>
+        <a class="btn btn-ghost btn-sm" href="mailto:neurofeedbacktn@gmail.com">Email</a>
+        <a class="btn btn-ghost btn-sm" href="https://tnnfb.com/" target="_blank" rel="noopener">Website</a>
+      </div>
+    </article>
+  </li><li class="record" data-cats="EnergyMedicine Counseling Coaching"
+      data-city="Tulsa" data-state="OK" data-tele="1"
+      data-lat="36.1563122" data-lng="-95.9927516" data-since="2021"
+      data-name="Therapy with Z, LLC" data-text="therapy with z, llc z. hamilton avery tulsa ok 74110 licensed clinical social worker (lcsw); board certified telemental health provider (bc-tmh); certified massage therapist (cmt); certified yoga teacher (cyt-1000); trauma-informed yoga teacher (tiyt) master of social work (msw); bachelor of science in psychology; associate of applied science in pre-nursing. advanced training in clinical social work, psychotherapy, integrated behavioral health, crisis intervention, trauma-informed care, mindfulness, and complementary and alternative medicine. therapy with z, llc provides inclusive, person-centered online psychotherapy for adolescents (13+), adults, and older adults. we specialize in anxiety, depression, trauma, chronic illness and pain, grief, and lgbtqia+ affirming care, offering compassionate, evidence-based support tailored to each client&#x27;s unique needs and goals. telehealth services are available in oklahoma, florida, south carolina, and idaho. oklahoma (22645), florida (tpsw7232), south carolina (2089), and idaho (9081435). energy healers counselors health &amp; wellness coaches">
+    <article class="record-in">
+      <div class="record-head">
+        <img class="avatar" src="/assets/img/providers/therapy-with-z-llc.jpg?v=984ec8afe8" alt="Therapy with Z, LLC logo" loading="lazy" decoding="async" width="200" height="200">
+        <div>
+          <h3 class="record-name"><a href="/provider/therapy-with-z-llc/">Therapy with Z, LLC</a></h3>
+          <p class="record-person"><b>Z. Hamilton Avery</b></p>
+          <p class="record-where">Tulsa, OK 74110 <span class="record-dist"></span></p>
+          <div class="record-tags"><a class="tag" href="/practice-types/energy-work/">Energy healers</a><a class="tag" href="/practice-types/counseling/">Counselors</a><a class="tag" href="/practice-types/health-wellness-coaching/">Health &amp; wellness coaches</a><span class="tag tag-tele">Telehealth</span></div>
+        </div>
+      </div>
+      <dl class="fields">
+        <dt>Credential</dt><dd class="">Licensed Clinical Social Worker (LCSW); Board Certified TeleMental Health Provider (BC-TMH); Certified Massage Therapist (CMT); Certified Yoga Teacher (CYT-1000); Trauma-Informed Yoga Teacher (TIYT)</dd>
+        <dt>Licensure</dt><dd>Oklahoma (22645), Florida (TPSW7232), South Carolina (2089), and Idaho (9081435).</dd>
+        
+        <dt>In practice</dt><dd>5 yrs (since 2021)</dd>
+        <dt>Fees</dt><dd>Individual psychotherapy: $75 for 30-minute sessions or $150 for 60-minute sessions. Insurance is accepted through participating networks, with copays, coinsurance, and deductibles varying by plan. A complimentary 15-minute consultation is available.</dd>
+        <dt>Insurance</dt><dd>Accepted — verify your plan with the practice</dd>
+      </dl>
+      <div class="record-verify"><p class="verify verify-reported"><b>As reported by the practitioner.</b> Not independently verified — <a href="/verification/">what this means</a>.</p></div>
+      <div class="record-actions">
+        <a class="btn btn-ghost btn-sm" href="/provider/therapy-with-z-llc/">Full record</a>
+        <a class="btn btn-ghost btn-sm" href="tel:9182128373">(918) 212-8373</a>
+        <a class="btn btn-ghost btn-sm" href="mailto:z@therapywithz.com">Email</a>
+        <a class="btn btn-ghost btn-sm" href="https://www.therapywithz.com" target="_blank" rel="noopener">Website</a>
+      </div>
+    </article>
+  </li></ul>
         <p class="back-link"><a href="/practice-types/">&larr; All disciplines</a></p>
         <div class="empty" id="empty" hidden style="margin-top:2rem">
           <h3>No practitioners match those filters</h3>
@@ -119,7 +463,6 @@
       </div>
       <div>
         <h4>Find care</h4>
-        <a href="/directory/">Find a provider</a>
         <a href="/practice-types/">By discipline</a>
         <a href="/locations/">By location</a>
       </div>

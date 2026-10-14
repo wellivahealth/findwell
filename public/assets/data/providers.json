@@ -1,0 +1,614 @@
+[
+ {
+  "slug": "celia-hildebrand-acupuncture",
+  "name": "Celia Hildebrand Acupuncture",
+  "person": "Celia Hildebrand, L.Ac.",
+  "city": "Tucson",
+  "state": "AZ",
+  "categories": [
+   "Acupuncture",
+   "EnergyMedicine",
+   "Herbalism"
+  ],
+  "licensure": "Arizona licensed acupuncturist \u2014 AZ LAC 001177",
+  "verification": {
+   "what": "Arizona licensed acupuncturist \u2014 AZ LAC 001177",
+   "source": "the Arizona Acupuncture Board of Examiners",
+   "date": "22 Sept 2026",
+   "by": "admin",
+   "recorded_at": "2026-09-22T19:01:14.619Z"
+  },
+  "seed": true
+ },
+ {
+  "slug": "hibiscus-acupuncture",
+  "name": "Hibiscus Acupuncture",
+  "person": "Frank Harris, L.Ac.",
+  "city": "Tucson",
+  "state": "AZ",
+  "categories": [
+   "Acupuncture",
+   "TCM",
+   "Bodywork"
+  ],
+  "licensure": "Arizona licensed acupuncturist \u2014 AZ LAC-010717",
+  "verification": {
+   "what": "Arizona licensed acupuncturist \u2014 AZ LAC-010717",
+   "source": "the Arizona Acupuncture Board of Examiners",
+   "date": "23 Sept 2026",
+   "by": "admin",
+   "recorded_at": "2026-09-23T19:36:22.813Z"
+  },
+  "seed": true
+ },
+ {
+  "slug": "catalina-acupuncture",
+  "name": "Catalina Acupuncture",
+  "person": "Nathan Anderson, L.Ac.",
+  "city": "Tucson",
+  "state": "AZ",
+  "categories": [
+   "Acupuncture",
+   "TCM",
+   "Bodywork",
+   "Herbalism"
+  ],
+  "licensure": "Arizona Acupuncture Board of Examiners #888 \u00b7 originally licensed in California, California Acupuncture Board #9744",
+  "verification": {
+   "what": "Arizona Acupuncture Board of Examiners #888 \u00b7 originally licensed in California, California Acupuncture Board #9744",
+   "source": "the Arizona Acupuncture Board of Examiners",
+   "date": "23 Sept 2026",
+   "by": "admin",
+   "recorded_at": "2026-09-23T19:36:34.352Z"
+  },
+  "seed": true
+ },
+ {
+  "slug": "origins-health",
+  "name": "Origins Health",
+  "person": "Gwendolynn Diaz, MAS (AyD)",
+  "city": "Paonia",
+  "state": "CO",
+  "categories": [
+   "Ayurveda"
+  ],
+  "licensure": "No state licensure exists for Ayurveda",
+  "verification": {
+   "what": "Credentials confirmed",
+   "source": "the NAMA Certification Board",
+   "date": "23 Sept 2026",
+   "by": "admin",
+   "recorded_at": "2026-09-23T21:09:43.835Z"
+  },
+  "seed": true
+ },
+ {
+  "slug": "amitaayurveda",
+  "name": "AmitaAyurveda",
+  "person": "Amita Nathwani, MA",
+  "city": "Tucson",
+  "state": "AZ",
+  "categories": [
+   "Ayurveda",
+   "Herbalism"
+  ],
+  "licensure": "No state licensure exists for Ayurveda",
+  "verification": {
+   "what": "Credentials confirmed",
+   "source": "Ayurveda Professionals of Arizona",
+   "date": "23 Sept 2026",
+   "by": "admin",
+   "recorded_at": "2026-09-23T21:10:58.632Z"
+  },
+  "seed": true
+ },
+ {
+  "slug": "ananda-ayurveda-yogalish",
+  "name": "Ananda Ayurveda & Yogalish",
+  "person": "Tanja Bungardt-Price",
+  "city": "Tucson",
+  "state": "AZ",
+  "categories": [
+   "Ayurveda",
+   "Herbalism"
+  ],
+  "licensure": "No state licensure exists for Ayurveda",
+  "verification": {
+   "what": "Credentials confirmed",
+   "source": "NAMA Certification Board",
+   "date": "22 Sept 2026",
+   "by": "admin",
+   "recorded_at": "2026-09-22T19:01:43.569Z"
+  },
+  "seed": true
+ },
+ {
+  "slug": "thrive-chiropractic",
+  "name": "Thrive: a chiropractic wellness center",
+  "person": "Deva Nieuwenhuis, D.C.",
+  "city": "Tucson",
+  "state": "AZ",
+  "categories": [
+   "Chiropractic",
+   "Bodywork"
+  ],
+  "licensure": "Arizona licensed chiropractor \u2014 license no. 7971",
+  "verification": {
+   "what": "Arizona licensed chiropractor \u2014 license no. 7971",
+   "source": "the Arizona Board of Chiropractic Examiners",
+   "date": "22 Sept 2026",
+   "by": "admin",
+   "recorded_at": "2026-09-22T18:49:56.559Z"
+  },
+  "seed": true
+ },
+ {
+  "slug": "emma-vasseur-wellbeing",
+  "name": "Emma Vasseur: Wellbeing Coach",
+  "person": "Emma Vasseur, NBC-HWC",
+  "city": "Tucson",
+  "state": "AZ",
+  "categories": [
+   "Bodywork",
+   "EnergyMedicine",
+   "Coaching"
+  ],
+  "licensure": "Not a licensed counsellor; coaching and bodywork are unlicensed in AZ",
+  "verification": {
+   "what": "Credentials confirmed",
+   "source": "the National Board for Health & Wellness Coaching",
+   "date": "23 Sept 2026",
+   "by": "admin",
+   "recorded_at": "2026-09-23T21:12:42.678Z"
+  },
+  "seed": true
+ },
+ {
+  "slug": "anita-kellman-end-of-life-doula",
+  "name": "End of Life Doula",
+  "person": "Anita Kellman",
+  "city": "Tucson",
+  "state": "AZ",
+  "categories": [
+   "Coaching"
+  ],
+  "licensure": "No state licensure exists for doula practice; not a licensed counsellor",
+  "verification": null,
+  "seed": true
+ },
+ {
+  "slug": "healing-options",
+  "name": "Healing Options",
+  "person": "Amy Schill, EEM-AP",
+  "city": "Tucson",
+  "state": "AZ",
+  "categories": [
+   "EnergyMedicine",
+   "Coaching"
+  ],
+  "licensure": "No state licensure exists for energy medicine",
+  "verification": {
+   "what": "Credentials confirmed",
+   "source": "the National Board for Health & Wellness Coaching",
+   "date": "22 Sept 2026",
+   "by": "admin",
+   "recorded_at": "2026-09-22T18:51:16.523Z"
+  },
+  "seed": true
+ },
+ {
+  "slug": "civano-chiropractic-clinics",
+  "name": "Civano Chiropractic Clinics",
+  "person": "Clint Mausser",
+  "city": "Tucson",
+  "state": "AZ",
+  "categories": [
+   "Chiropractic"
+  ],
+  "licensure": "Arizona Board of Chiropractic Examiners #8583",
+  "verification": {
+   "what": "8583",
+   "source": "the Arizona Board of Chiropractic Examiners",
+   "date": "25 Aug 2026",
+   "by": "admin",
+   "recorded_at": "2026-08-25T23:34:10.496Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "common-roots-acupuncture",
+  "name": "Common Roots Acupuncture",
+  "person": "Josh Whiteley",
+  "city": "Tucson",
+  "state": "AZ",
+  "categories": [
+   "Acupuncture",
+   "TCM",
+   "Herbalism",
+   "IntegrativeMedicine"
+  ],
+  "licensure": "Arizona registered nurse and licensed acupuncturist \u2014 numbers not provided",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "lotus-wellspring-healthcare",
+  "name": "Lotus Wellspring Healthcare",
+  "person": "Sybil Ihrig, DACM, L.Ac., CCH",
+  "city": "Palm Desert",
+  "state": "CA",
+  "categories": [
+   "Acupuncture",
+   "Herbalism",
+   "Naturopathy"
+  ],
+  "licensure": "California Acupuncture Board #AC-8645",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "awakened-living",
+  "name": "Awakened Living",
+  "person": "Nibodhi Haas",
+  "city": "Longmont",
+  "state": "CO",
+  "categories": [
+   "Ayurveda",
+   "Naturopathy",
+   "Coaching",
+   "Counseling",
+   "Acupuncture",
+   "TCM",
+   "Bodywork"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": {
+   "what": "Credentials confirmed",
+   "source": "NAMA Certification Board",
+   "date": "26 Aug 2026",
+   "by": "admin",
+   "recorded_at": "2026-08-26T04:46:24.811Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "tracy-villegas-lmt",
+  "name": "Tracy Villegas, LMT",
+  "person": "Tracy Villegas",
+  "city": "Tucson",
+  "state": "AZ",
+  "categories": [
+   "Massage"
+  ],
+  "licensure": "Arizona Massage Therapy Board #MT-23614",
+  "verification": {
+   "what": "MT-23614",
+   "source": "the Arizona Massage Therapy Board",
+   "date": "26 Aug 2026",
+   "by": "admin",
+   "recorded_at": "2026-08-26T18:28:05.716Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "tucson-manual-and-movement-therapy",
+  "name": "Tucson Manual and Movement Therapy",
+  "person": "Jarrod Lash",
+  "city": "tucson",
+  "state": "AZ",
+  "categories": [
+   "TCM",
+   "Bodywork",
+   "Massage"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": {
+   "what": "Credentials confirmed",
+   "source": "the Certified Practitioner in Asian bodywork (AOBTA)",
+   "date": "23 Sept 2026",
+   "by": "admin",
+   "recorded_at": "2026-09-23T21:05:39.940Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "healing-through-energy-llc",
+  "name": "Healing through energy LLC",
+  "person": "Shamika Brown",
+  "city": "Palmdale",
+  "state": "CA",
+  "categories": [
+   "Bodywork"
+  ],
+  "licensure": "California-93305",
+  "verification": {
+   "what": "California-93305",
+   "source": "Upledger Institute International, for CST-T or CST-D",
+   "date": "23 Sept 2026",
+   "by": "admin",
+   "recorded_at": "2026-09-23T19:34:53.601Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "coaching-with-lucy",
+  "name": "Coaching With Lucy",
+  "person": "Lucy Seligman",
+  "city": "Richmond",
+  "state": "CA",
+  "categories": [
+   "EnergyMedicine",
+   "Counseling",
+   "Coaching"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": {
+   "what": "Credentials confirmed",
+   "source": "the International Coaching Federation",
+   "date": "23 Sept 2026",
+   "by": "admin",
+   "recorded_at": "2026-09-23T21:27:45.681Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "working-on-calm-llc",
+  "name": "Working On Calm, LLC",
+  "person": "Melissa Lewis-Duarte",
+  "city": "Scottsdale",
+  "state": "AZ",
+  "categories": [
+   "Coaching"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": {
+   "what": "Credentials confirmed",
+   "source": "the National Board for Health & Wellness Coaching",
+   "date": "23 Sept 2026",
+   "by": "admin",
+   "recorded_at": "2026-09-23T21:08:41.447Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "seniors-planning-expert-help-for-medicare-care-decisions",
+  "name": "Seniors Planning | Expert Help for Medicare & Care Decisions",
+  "person": "Zain Taha",
+  "city": "Yakima",
+  "state": "WA",
+  "categories": [
+   "Coaching"
+  ],
+  "licensure": "19500128",
+  "verification": {
+   "what": "19500128",
+   "source": "the National Board for Health & Wellness Coaching",
+   "date": "23 Sept 2026",
+   "by": "admin",
+   "recorded_at": "2026-09-23T19:35:25.326Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "tennessee-neurofeedback",
+  "name": "Tennessee Neurofeedback",
+  "person": "Kaka Ray, LMFT",
+  "city": "Brentwood",
+  "state": "TN",
+  "categories": [
+   "Counseling"
+  ],
+  "licensure": "Tennessee licensed marriage and family therapist \u2014 number not provided",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "blooming-chiropractic",
+  "name": "Blooming Chiropractic",
+  "person": "Dr. Elmira",
+  "city": "Costa Mesa",
+  "state": "CA",
+  "categories": [
+   "Chiropractic"
+  ],
+  "licensure": "California licensed doctor of chiropractic \u2014 number not provided",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "therapy-with-z-llc",
+  "name": "Therapy with Z, LLC",
+  "person": "Z. Hamilton Avery",
+  "city": "Tulsa",
+  "state": "OK",
+  "categories": [
+   "EnergyMedicine",
+   "Counseling",
+   "Coaching"
+  ],
+  "licensure": "Oklahoma (22645), Florida (TPSW7232), South Carolina (2089), and Idaho (9081435).",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "wholistic-medical-group",
+  "name": "Wholistic Medical Group",
+  "person": "Duke Mansell",
+  "city": "Tampa",
+  "state": "FL",
+  "categories": [
+   "Acupuncture",
+   "TCM",
+   "Naturopathy",
+   "IntegrativeMedicine",
+   "Coaching",
+   "Ayurveda"
+  ],
+  "licensure": "Florida AP3763",
+  "verification": {
+   "what": "Florida AP3763",
+   "source": "the Florida Board of Acupuncture, through the Department of Health licence search",
+   "date": "23 Sept 2026",
+   "by": "admin",
+   "recorded_at": "2026-09-23T21:09:09.894Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "hidden-healing-reiki",
+  "name": "Hidden Healing Reiki",
+  "person": "Jenn Lane",
+  "city": "Ypsilanti",
+  "state": "MI",
+  "categories": [
+   "EnergyMedicine"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "atlanta-mens-clinic",
+  "name": "Atlanta Men's Clinic",
+  "person": "Atlanta Men's Clinic",
+  "city": "Suwanee",
+  "state": "GA",
+  "categories": [
+   "Chiropractic"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "spectrum-wellcare",
+  "name": "Spectrum WellCare",
+  "person": "Ajay Purohit",
+  "city": "Orlando",
+  "state": "FL",
+  "categories": [
+   "TCM",
+   "Acupuncture",
+   "Herbalism"
+  ],
+  "licensure": "Florida, AP 2734.",
+  "verification": {
+   "what": "Florida, AP 2734.",
+   "source": "the Florida Board of Acupuncture, through the Department of Health licence search",
+   "date": "28 Sept 2026",
+   "by": "admin",
+   "recorded_at": "2026-09-28T19:10:57.479Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "natural-kare-and-wellness-llc",
+  "name": "Natural Kare and Wellness, LLC.",
+  "person": "Natasha Muir-Kennedy",
+  "city": "Pontiac",
+  "state": "MI",
+  "categories": [
+   "Coaching"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "natural-healing-acupuncture",
+  "name": "Natural Healing & Acupuncture",
+  "person": "Denise Wiesner",
+  "city": "Los Angeles",
+  "state": "CA",
+  "categories": [
+   "Acupuncture"
+  ],
+  "licensure": "California Acupuncture Board #Californie, AC 4831",
+  "verification": {
+   "what": "Californie, AC 4831",
+   "source": "the California Acupuncture Board, through the DCA licence search",
+   "date": "29 Sept 2026",
+   "by": "admin",
+   "recorded_at": "2026-09-29T22:55:08.367Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "rocky-top-vitality",
+  "name": "Rocky Top Vitality",
+  "person": "Melissa Osborne",
+  "city": "Farragut",
+  "state": "TN",
+  "categories": [
+   "IntegrativeMedicine"
+  ],
+  "licensure": "Tennessee -39347. Florida APRN9212764",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "becoming-well-coaching-llc",
+  "name": "Becoming Well Coaching LLC",
+  "person": "Jessica Lewis",
+  "city": "Fountain City",
+  "state": "IN",
+  "categories": [
+   "Coaching"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "my-healing-garden",
+  "name": "My Healing Garden",
+  "person": "Carmen Croitoru",
+  "city": "Spirit Lake",
+  "state": "ID",
+  "categories": [
+   "EnergyMedicine"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "chi-harmony-acupuncture",
+  "name": "Chi Harmony Acupuncture",
+  "person": "Stephanie Smith",
+  "city": "Boston",
+  "state": "MA",
+  "categories": [
+   "TCM",
+   "Acupuncture"
+  ],
+  "licensure": "Massachusetts, 241960",
+  "verification": {
+   "what": "Massachusetts, 241960",
+   "source": "Massachusetts Board of Registration in Medicine",
+   "date": "12 Oct 2026",
+   "by": "admin",
+   "recorded_at": "2026-10-12T03:30:33.506Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "happy-belly-health-san-diego",
+  "name": "Happy Belly Health San Diego",
+  "person": "Shanti Pappas",
+  "city": "San Diego",
+  "state": "CA",
+  "categories": [
+   "Coaching"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": {
+   "what": "Credentials confirmed",
+   "source": "the National Board for Health & Wellness Coaching",
+   "date": "12 Oct 2026",
+   "by": "admin",
+   "recorded_at": "2026-10-12T03:34:07.419Z"
+  },
+  "seed": false
+ }
+]

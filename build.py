@@ -517,6 +517,7 @@ CORRECTIONS = {
 # Logos supplied by practitioners after listing (Sep 2026), in public/assets/img/providers/
 LOGOS = {
     "catalina-acupuncture": "/assets/img/providers/catalina-acupuncture.png",
+    "celia-hildebrand-acupuncture": "/assets/img/providers/celia-hildebrand-acupuncture.png",
     "civano-chiropractic-clinics": "/assets/img/providers/civano-chiropractic-clinics.png",
     "emma-vasseur-wellbeing": "/assets/img/providers/emma-vasseur-wellbeing.png",
     "hibiscus-acupuncture": "/assets/img/providers/hibiscus-acupuncture.png",
@@ -525,6 +526,8 @@ LOGOS = {
     # Descending Dragon Health Center (Jarrod Lash), logo sent Oct 2026
     "tucson-manual-and-movement-therapy": "/assets/img/providers/tucson-manual-and-movement-therapy.png",
     "thrive-chiropractic": "/assets/img/providers/thrive-chiropractic.png",
+    # submitted as an SVG with a .jpg name, which browsers will not draw (Oct 2026)
+    "spectrum-wellcare": "/assets/img/providers/spectrum-wellcare.svg",
 }
 for _slug, _path in LOGOS.items():
     CORRECTIONS.setdefault(_slug, {})["logo"] = _path

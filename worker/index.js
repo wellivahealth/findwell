@@ -358,6 +358,13 @@ function preChecks(s, listing, existing) {
        + 'here shows one. If the licence is in another discipline, the listing belongs under that discipline with '
        + 'the functional medicine work described in the text.');
   }
+  if (cats.includes('Naturopathy')
+      && !/\b(N\.?\s?M\.?\s?D|N\.?\s?D)\b\.?|naturopathic (doctor|physician|medical doctor)/i.test(licenceText + ' ' + blob)) {
+    flag('Naturopathic medicine is ticked, but nothing here shows an ND or NMD licence. This category is for '
+       + 'licensed naturopathic doctors only. Traditional naturopaths, homeopaths and practitioners certified by '
+       + 'private boards such as ANMCAB belong under the discipline that matches their training, so untick '
+       + 'Naturopathic medicine before approving unless they can give a state licence number.');
+  }
   if (/\b(NP|FNP|APRN|ARNP|DNP|nurse practitioner)\b/i.test(licenceText + ' ' + blob)) {
     note('A nurse practitioner. The licence is held with the state board of nursing, not the medical board, '
        + 'so check it there or on Nursys QuickConfirm, which is free and covers most states. Board '

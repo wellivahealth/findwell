@@ -1162,5 +1162,40 @@
     "blurb": "We provide 1:1 nutritional counseling, meal planning, and supplement recommendations. Areas of focus include women’s health, perimenopause, and gut health.",
     "long": "We help women lose weight, beat the bloat, and eliminate fatigue by repairing your digestive tract and teaching you how to eat for your body.",
     "verified": false
+  },
+  {
+    "slug": "emma-harvie-nutrition",
+    "name": "Emma Harvie Nutrition",
+    "person": "Emma Harvie",
+    "logo": "/assets/img/providers/emma-harvie-nutrition.jpg",
+    "categories": [
+      "Nutrition"
+    ],
+    "city": "Atlanta",
+    "state": "GA",
+    "zip": "30312",
+    "address": "",
+    "country": "United States",
+    "lat": 33.7544657,
+    "lng": -84.3898151,
+    "telehealth": true,
+    "phone": "2183431633",
+    "email": "emmaharvienutrition@gmail.com",
+    "website": "www.emmaharvienutrition.com",
+    "social": [
+      "https://www.linkedin.com/in/emmaharvienutrition/"
+    ],
+    "credentials": "Board Certified Nutrition Specialist (CNS)\r\nLicensed Nutritionist",
+    "licensure": "Minnestoa - N243, Florida - #406",
+    "training": "Master of Science in Human Nutrition and Functional Medicine",
+    "integrative_training": "",
+    "since": 2020,
+    "affiliations": "Board Certified Nutrition Specialist (CNS)\r\nLicensed Nutritionist",
+    "pricing": "Custom Consultation + 2 Follow-Ups – $700\r\n60-minute initial consultation, personalized nutrition plan, and two 30-minute follow-ups with written protocols after each session.\r\n\r\n3-Month Program – $2,000\r\n60-minute initial consultation, personalized nutrition plan, and six 45-minute follow-ups over three months, with written protocols after each session.\r\n\r\nSingle Nutrition Session – $350\r\nOne 60-minute focused session: One comprehensive session built around what you need most, whether that's a jumping off point, a kitchen overhaul, direction on intake and meal timing, or guidance on a specific concern.",
+    "payments": "Cash, Venmo, Zelle, Credit Cards, Checks, Debit Cards, Paypal",
+    "insurance": "Not accepted",
+    "blurb": "Evidence-based, physiology-first nutrition support, individualized to your goals, preferences, and lifestyle.  I'll work with you to uncover what's driving your health concerns and collaboratively guide you towards a better quality of life. Clients come to me for support with body composition, sports performance, gut health, endocrine disorders, and health concerns that haven't responded to generic advice, as well as anyone simply looking to support their healthspan and longevity, or reach their fullest health potential.",
+    "long": "Emma Harvie Nutrition is a virtual nutrition practice serving clients nationwide. Emma Harvie, MS, CNS, LN, is a Licensed Nutritionist specializing in functional medicine, longevity, and sports performance nutrition.\r\n\r\nHer approach is physiology-first and root-cause focused. Rather than handing out generic meal plans or restrictive diets, she builds individualized strategies around each client’s goals, lab data, and lifestyle. Clients range from athletes chasing performance and recovery to people working to improve energy, body composition, metabolic health, and long-term well-being.\r\n\r\nEvery program includes a personalized nutrition plan and a written protocol after each session, so clients know exactly what to do between visits. The goal is sustainable change built to fit real life, not short-term fixes.",
+    "verified": false
   }
 ]

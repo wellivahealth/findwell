@@ -1128,5 +1128,39 @@
     "blurb": "Anastasia Dosov Nutrition & Wellness Consulting is an integrative and functional nutrition practice specializing in gastrointestinal health, gut microbiome restoration, metabolic health, and pediatric nutrition, with a particular focus on autism spectrum disorder (ASD) and ADHD. Our services include comprehensive nutritional assessments, advanced functional laboratory testing, and personalized dietary and nutraceutical interventions tailored to each individual's needs. We combine evidence-informed clinical nutrition with a whole-person approach to address contributing factors, support physiological function, and promote long-term health and well-being.",
     "long": "Anastasia Dosov Nutrition & Wellness Consulting is a functional nutrition practice specializing in gastrointestinal health, gut microbiome restoration, metabolic health, and pediatric nutrition, with a particular focus on autism spectrum disorder (ASD) and other neurodevelopmental conditions.\r\n\r\nFounded by Anastasia Dosov, MS, CNS, LDN, the practice combines evidence-based clinical nutrition, functional medicine principles, and advanced laboratory testing to develop personalized nutritional interventions that address underlying physiological imbalances.\r\n\r\nAreas of expertise include the gut–brain axis, digestive disorders, intestinal dysbiosis, mitochondrial function, nutritional deficiencies, and dietary and nutraceutical interventions for children with ASD and ADHD.\r\n\r\nAnastasia is actively involved in clinical research exploring nutritional interventions in autism and pursues ongoing advanced education in microbiome science and functional medicine.\r\n\r\nThe practice provides comprehensive nutritional assessments, individualized dietary and supplementation protocols, functional laboratory testing, and ongoing support for children and adults. Consultations are available virtually, with a focus on collaborative, and scientifically informed care.",
     "verified": false
+  },
+  {
+    "slug": "barefoot-nurse-nutritionist",
+    "name": "Barefoot Nurse Nutritionist",
+    "person": "Erika Dycus",
+    "logo": "/assets/img/providers/barefoot-nurse-nutritionist.jpg",
+    "categories": [
+      "IntegrativeMedicine",
+      "Nutrition"
+    ],
+    "city": "Woodstock",
+    "state": "IL",
+    "zip": "60098",
+    "address": "4119 Dean St, Woodstock, IL 60098",
+    "country": "United States",
+    "lat": 42.269988206935,
+    "lng": -88.452573958059,
+    "telehealth": true,
+    "phone": "8154519367",
+    "email": "ekdycus@barefootnursenutrition.com",
+    "website": "barefootnursenutritionist.com",
+    "social": [],
+    "credentials": "CNS",
+    "licensure": "Illinois RN: 041.374248; Illinois LDN: 164.009162",
+    "training": "Masters in Applied Clinical Nutrition from NYCC, Bachelor’s Degree in Nursing from Olivet Nazarene University, 1000 supervised practice hours through The Nutrition and Herbal Collective internship program",
+    "integrative_training": "Pending certification completion as an IFNCP with the IFNA program",
+    "since": 2022,
+    "affiliations": "CNS",
+    "pricing": "Nutrition & Naturopathic Consultation: $350\r\nNaturopathic Only Consultation: $275\r\nNutrition Only Consultation: $200\r\n\r\nFollow up:\r\n30 Minutes: $100\r\n45 Minutes: $125\r\n60 Minutes: $150\r\n\r\nAsk us about our Signature Programs!",
+    "payments": "Insurance, Cash, HSA/FSA",
+    "insurance": "Accepted — verify your plan with the practice",
+    "blurb": "We provide 1:1 nutritional counseling, meal planning, and supplement recommendations. Areas of focus include women’s health, perimenopause, and gut health.",
+    "long": "We help women lose weight, beat the bloat, and eliminate fatigue by repairing your digestive tract and teaching you how to eat for your body.",
+    "verified": false
   }
 ]

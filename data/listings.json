@@ -1055,5 +1055,43 @@
       "by": "admin",
       "recorded_at": "2026-10-12T03:34:07.419Z"
     }
+  },
+  {
+    "slug": "stone-spirit-healing-arts",
+    "name": "Stone Spirit Healing Arts",
+    "person": "Jacinda Jackson",
+    "logo": "/assets/img/providers/stone-spirit-healing-arts.jpg",
+    "categories": [
+      "Coaching",
+      "EnergyMedicine",
+      "Counseling"
+    ],
+    "city": "Concord",
+    "state": "NH",
+    "zip": "03301",
+    "address": "",
+    "country": "United States",
+    "lat": 43.207178,
+    "lng": -71.537476,
+    "telehealth": true,
+    "phone": "6038565737",
+    "email": "jcndas@gmail.com",
+    "website": "https://steep-fog-f3bd.jacindatarot603.workers.dev/",
+    "social": [
+      "https://bsky.app/profile/jdoodles71.bsky.social",
+      "https://substack.com/@jacindajackson?utm_source=share&utm_medium=android&r=ql181"
+    ],
+    "credentials": "LCMHC, RM",
+    "licensure": "NH1211",
+    "training": "Masters in Clinical Mental Health Counseling and Reiki Master, Masters in Fine Arts",
+    "integrative_training": "",
+    "since": 2008,
+    "affiliations": "LCMHC, RM",
+    "pricing": "$44 per 30 minutes",
+    "payments": "Venmo",
+    "insurance": "Not accepted",
+    "blurb": "Stone Spirit Healing Arts offers intuitive tarot readings, spiritual guidance, and a unique, experiential approach to Reiki energy healing that incorporates art, creativity, and self-expression. As a Reiki Master and licensed mental health counselor with over 20 years of experience, I blend intuition, spiritual wisdom, and creative exploration to support self-discovery, emotional balance, personal growth, and a deeper connection with your authentic self.",
+    "long": "Stone Spirit Healing Arts offers intuitive tarot readings, spiritual guidance, and a unique, experiential approach to Reiki energy healing that incorporates art, creativity, and self-expression. As a Reiki Master and licensed mental health counselor with over 20 years of experience, I blend intuition, spiritual wisdom, and creative exploration to support self-discovery, emotional balance, personal growth, and a deeper connection with your authentic self.",
+    "verified": false
   }
 ]

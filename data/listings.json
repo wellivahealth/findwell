@@ -1230,5 +1230,38 @@
     "blurb": "Wildflower Nutrition is a functional nutrition practice helping health-conscious women navigate fatigue, digestive concerns, hormonal changes, and the overwhelm of conflicting nutrition advice. Through personalized nutrition, lab interpretation, and health coaching, I help women better understand their bodies, identify what’s contributing to their symptoms, and build sustainable habits that support their health. My approach combines evidence-based nutrition with practical behavior change to help women feel more energized, confident in their choices, and empowered to live the lives they want.",
     "long": "Wildflower Nutrition is a functional nutrition and health coaching practice founded by Stephanie Hands, MS, CNS, NBC-HWC. I specialize in helping women navigate fatigue, digestive issues, hormonal changes, metabolic health concerns, and the overwhelm that often comes with trying to improve their health.\r\n\r\nMy approach combines evidence-based nutrition, functional lab assessment, and personalized health coaching to understand the underlying factors contributing to symptoms. I consider the whole person, including nutrition, lifestyle, health history, stress, and individual goals, to create practical recommendations that fit into everyday life.\r\n\r\nWhether you’re struggling with persistent symptoms, feeling confused by conflicting health advice, or simply want to feel better in your body, Wildflower Nutrition provides individualized support to help you make informed decisions, build confidence in your choices, and develop sustainable habits.\r\n\r\nMy mission is to help women feel more energized, trust their bodies, and have more energy for the lives they want to live.",
     "verified": false
+  },
+  {
+    "slug": "aurivel-healing",
+    "name": "Aurivel Healing",
+    "person": "Kieu Trinh Mack",
+    "logo": "/assets/img/providers/aurivel-healing.png",
+    "categories": [
+      "EnergyMedicine"
+    ],
+    "city": "Duluth",
+    "state": "GA",
+    "zip": "30096",
+    "address": "",
+    "country": "United States",
+    "lat": 34.0028569,
+    "lng": -84.1441046,
+    "telehealth": false,
+    "phone": "4702376614",
+    "email": "Dynamicimpact360@gmail.com",
+    "website": "no website",
+    "social": [],
+    "credentials": "Certificate from Quantum Touch",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "Trained by Quantum Touch teachers",
+    "integrative_training": "",
+    "since": 2014,
+    "affiliations": "Certificate from Quantum Touch",
+    "pricing": "30-minute energy-healing session $50\r\nTravel within 10 miles Included\r\n10–20 miles Add $10\r\n20–30 miles Add $20\r\nOver 30 miles Quote individually",
+    "payments": "Cash, Checks, Zelle, Crypto Wallet",
+    "insurance": "Not accepted",
+    "blurb": "I offer hands-on energy healing using Quantum-Touch techniques for people seeking an alternative approach to relaxation and pain relief. Experience the benefits of energy work for yourself.",
+    "long": "I offer hands-on Quantum-Touch energy healing for people interested in exploring alternative healing methods. Clients have reported feeling warmth during sessions, deep relaxation, and reduced pain afterward. My goal is to help people experience the potential benefits of energy work firsthand.",
+    "verified": false
   }
 ]

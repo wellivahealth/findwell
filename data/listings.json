@@ -1332,5 +1332,39 @@
     "blurb": "Love & Light Palms is a holistic wellness practice based in Columbus, Ohio, offering Usui Reiki Healing, Chakra Balancing, Aura Cleansing, and Akashic Records Readings. Services focus on relaxation, energetic balance, personal reflection, and overall well-being.\r\n\r\nIn-person Reiki experiences are available in Columbus, with distance Reiki offered to clients regardless of location. Each experience is designed to provide a peaceful, compassionate, and welcoming environment.",
     "long": "Welcome to Love & Light Palms, where Healing Begins Within.\r\n\r\nFounded by Charla Woods-Favors, a Usui Reiki Level II practitioner, Love & Light Palms provides compassionate, personalized holistic wellness experiences in Columbus, Ohio, and remotely.\r\n\r\nServices include Reiki Healing, Chakra Balancing, Aura Cleansing, and Akashic Records Readings. Our approach encourages relaxation, energetic balance, self-awareness, and personal growth in a peaceful, judgment-free environment.\r\n\r\nWe offer a complimentary 20-minute first-time experience by appointment, allowing newcomers to discover Reiki in a welcoming and comfortable setting.\r\n\r\nWhether you're seeking a moment of stillness or exploring a deeper connection with yourself, you are welcome here.\r\n\r\nYou Matter. You Belong Here.\r\n\r\nVisit www.loveandlightpalms.com to explore our services and schedule an experience.",
     "verified": false
+  },
+  {
+    "slug": "steps-nutrition-group",
+    "name": "S.T.E.P.S. Nutrition Group",
+    "person": "Miriam Wiener, MS, MPH",
+    "logo": "/assets/img/providers/steps-nutrition-group.png",
+    "categories": [
+      "Nutrition",
+      "Herbalism"
+    ],
+    "city": "Beverly Hills",
+    "state": "CA",
+    "zip": "90213",
+    "address": "",
+    "country": "United States",
+    "lat": 34.0657718,
+    "lng": -118.4122685,
+    "telehealth": true,
+    "phone": "8008406373",
+    "email": "support@stepsnutritiongroup.com",
+    "website": "https://www.stepsnutritiongroup.com",
+    "social": [],
+    "credentials": "—",
+    "licensure": "State licensed — number not provided",
+    "training": "Licensed Dietitian-Nutritionist\r\nBoard-Certified Nutrition Specialist",
+    "integrative_training": "10-Month Herbalist Apprenticeship, Jane Bothwell (1994)\r\n1-Year Vega Macrobiotic Study Center Work/Study Apprenticeship (1991-92)",
+    "since": 1996,
+    "affiliations": "—",
+    "pricing": "Insurance-based practice.",
+    "payments": "Insurance, Cash, Credit Cards, Venmo, Checks, Debit Cards, Paypal, HSA/FSA, Zelle",
+    "insurance": "Accepted — verify your plan with the practice",
+    "blurb": "Miriam Wiener, MS, MPH, founded S.T.E.P.S. Nutrition Group to provide quality, evidence-based nutrition therapy for women and girls. \r\n\r\nA licensed dietitian-nutritionist and board-certified nutrition specialist with over 30 years of experience, she is known for her warm approach and sympathetic ear, combined with highly effective tools and techniques that work.",
+    "long": "Miriam Wiener, MS, MPH, founded S.T.E.P.S. Nutrition Group to provide quality, evidence-based nutrition therapy for women and girls. \r\n\r\nA licensed dietitian-nutritionist and board-certified nutrition specialist with over 30 years of experience, she is known for her warm approach and sympathetic ear, combined with highly effective tools and techniques that work.\r\n\r\nMiriam is a graduate of UCLA and the UNC Gillings School of Global Public Health, where she developed an award-winning diabetes prevention and management program based on her trademarked S.T.E.P.S. to Nourishment® framework.\r\n\r\nShe is a grant reviewer for the IHS Department of Health and Human Services Division of Diabetes Treatment and Prevention, and the founder and executive director of Nourishment of the Soul, a 501(c)(3) nonprofit organization dedicated to bringing foundational, evidence-based nutrition education to women and girls.\r\n\r\nMiriam has been featured in the Jewish Journal of Greater Los Angeles.",
+    "verified": false
   }
 ]

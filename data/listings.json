@@ -1263,5 +1263,38 @@
     "blurb": "I offer hands-on energy healing using Quantum-Touch techniques for people seeking an alternative approach to relaxation and pain relief. Experience the benefits of energy work for yourself.",
     "long": "I offer hands-on Quantum-Touch energy healing for people interested in exploring alternative healing methods. Clients have reported feeling warmth during sessions, deep relaxation, and reduced pain afterward. My goal is to help people experience the potential benefits of energy work firsthand.",
     "verified": false
+  },
+  {
+    "slug": "fuel-nourish-thrive",
+    "name": "Fuel, Nourish, Thrive",
+    "person": "Lindley Wells",
+    "logo": null,
+    "categories": [
+      "Nutrition"
+    ],
+    "city": "San Francisco",
+    "state": "CA",
+    "zip": "94109-3006",
+    "address": "",
+    "country": "United States",
+    "lat": 37.7879363,
+    "lng": -122.4075201,
+    "telehealth": true,
+    "phone": "+14138842054",
+    "email": "lindley.wells@gmail.com",
+    "website": "https://lindleywells.wixsite.com/nutr",
+    "social": [],
+    "credentials": "Licensed Dietitian Nutritionist, Commonwealth of Massachusetts\t\t\t\t\t\r\nBoard of Registration of Dietitians and Nutritionists \r\n\r\nCertified Nutrition Specialist\t\t\t\t\t\t\t\t\t\r\nAmerican Nutrition Association\r\n\r\nWomen’s Integrative Medicine Institute Certified Practitioner\t\t\t\t\t\r\nCertificate program taught by Aviva Romm\r\n\r\nCertificate in Canine Nutrition\t\t\t\t\t\t\t\t\r\nCompanion Animal Sciences Institute",
+    "licensure": "Massachusetts LDN5057",
+    "training": "Colby College, Waterville, ME \t\t\t\t\t\t\t\t\t\r\nBachelor of Arts in Environmental Policy\r\n\r\nMaryland University of Integrative Health, Laurel, MD\t\t\t\t\t\t\r\nMaster of Science in Nutrition and Integrative Health",
+    "integrative_training": "Women’s Integrative Medicine Institute Certified Practitioner\t\t\t\t\t\r\nCertificate program taught by Aviva Romm",
+    "since": 2018,
+    "affiliations": "Licensed Dietitian Nutritionist, Commonwealth of Massachusetts\t\t\t\t\t\r\nBoard of Registration of Dietitians and Nutritionists \r\n\r\nCertified Nutrition Specialist\t\t\t\t\t\t\t\t\t\r\nAmerican Nutrition Association\r\n\r\nWomen’s Integrative Medicine Institute Certified Practitioner\t\t\t\t\t\r\nCertificate program taught by Aviva Romm\r\n\r\nCertificate in Canine Nutrition\t\t\t\t\t\t\t\t\r\nCompanion Animal Sciences Institute",
+    "pricing": "$250 for initial visit (1 hour) for humans/children\r\n$150 for an initial visit for canine nutrition clients (45 minutes- 1 hour)\r\n$75 for a follow up visit (30 minutes)",
+    "payments": "Cash, Checks, Paypal, Venmo, Zelle",
+    "insurance": "Not accepted",
+    "blurb": "I am a licensed dietitian nutritionist with a background in functional and integrative health and nutrition. I've had the privilege of training under and learning from some of the foremost leaders in the field of functional and integrative health, including, Kara Fitzgerald, Aviva Romm, and staff at Mark Hyman's Ultra Wellness Center – all trailblazers and visionaries. \r\n\r\nI also have a certification in canine nutrition",
+    "long": "My interest in food policy, integrative nutrition, and public health has guided me throughout my educational and professional life. Even when I was very young, healthful and intuitive eating and living has been a passion and now I am lucky enough to pursue it as a career. In addition to clinical work, I love researching and writing and am published in Forbes, MindBodyGreen, Yahoo, Real Simple, and CleanPlates.\r\n\r\nI believe in real food and real ingredients and I am always busy in the kitchen creating healthful, tasty, and nutrient-dense recipes. I use a practical, positive approach to help individuals improve their overall well being, achieve their goals, and develop sustainable habits to lead a healthy and happy life. I treasure the opportunity to be part of one’s journey and find the foods that nourish both body and soul.",
+    "verified": false
   }
 ]

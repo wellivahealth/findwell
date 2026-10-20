@@ -643,7 +643,7 @@ const receivedEmail = (s) => shell(`<h2 style="font-size:20px;margin:0 0 12px">W
 <p>Thank you for applying to the FindWell Directory. We have your details for <strong>${esc(s.practice)}</strong>.</p>
 <p>We review each application and check credentials and license numbers against the issuing board before publishing. We will email you as soon as your listing is live, and will only be in touch before then if we have a question.</p>
 <p>If anything you sent needs correcting, just reply to this email.</p>
-<p style="margin-top:24px">Warmly,<br>Amita Nathwani and Emma Vasseur<br>FindWell Directory</p>`);
+<p style="margin-top:24px">Warmly,<br>Amita Nathwani, CEO<br>Emma Vasseur, Practitioner Liaison<br>FindWell Directory</p>`);
 
 const publishedEmail = (s, url, joinUrl) => shell(`<h2 style="font-size:20px;margin:0 0 12px">Your listing is live</h2>
 <p>Thank you for joining the FindWell Directory. Your listing for <strong>${esc(s.practice)}</strong> is now published:</p>
@@ -656,7 +656,7 @@ const publishedEmail = (s, url, joinUrl) => shell(`<h2 style="font-size:20px;mar
 <p style="margin:0 0 12px"><a href="${esc(joinUrl)}" style="display:inline-block;background:#2e5f5c;color:#fff;text-decoration:none;padding:10px 18px;border-radius:6px;font-weight:600">Invite a colleague to join</a></p>
 <p style="margin:0;font-size:14px;color:#5f7473">You are welcome to forward this email as it is. The link above works for anyone.</p>
 </div>
-<p style="margin-top:24px">Warmly,<br>Amita Nathwani and Emma Vasseur<br>FindWell Directory</p>`);
+<p style="margin-top:24px">Warmly,<br>Amita Nathwani, CEO<br>Emma Vasseur, Practitioner Liaison<br>FindWell Directory</p>`);
 
 function adminEmail(s, approveUrl, declineUrl, checks = [], places = []) {
   const tone = { flag: ['#c23a4b', 'Look at this'], note: ['#9a6b1f', 'Worth a look'], ok: ['#2e5f5c', 'Clear'] };

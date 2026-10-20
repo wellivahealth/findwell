@@ -1129,14 +1129,21 @@ def crumbs_html(trail):
     return '<p class="crumb">' + " / ".join(parts) + "</p>"
 
 def page_directory(subset=None, title=None, desc=None, path="/directory/", heading=None,
-                   intro="", trail=None, footer_link=None):
+                   intro="", trail=None, footer_link=None, current=None):
     rows = subset if subset is not None else PROVIDERS
     # Every discipline is listed, so the filter also shows what the directory
     # covers. Ones with nothing in them yet are dimmed and cannot be ticked,
     # so nobody filters their way into an empty page.
+    # One discipline at a time. On a discipline's own page, choosing another
+    # goes to that discipline's page rather than narrowing this one.
+    def _href(d):
+        if not current:
+            return ""
+        return ' data-href="/directory/"' if d["key"] == current else f' data-href="/practice-types/{d["slug"]}/"'
     checks = "".join(
         f'<label class="check{"" if cat_count(d["key"]) else " check-empty"}">'
-        f'<input type="checkbox" data-cat="{d["key"]}"'
+        f'<input type="checkbox" data-cat="{d["key"]}"{_href(d)}'
+        f'{" checked" if d["key"] == current else ""}'
         f'{"" if cat_count(d["key"]) else " disabled"}> {E(d["label"])}'
         f'<span class="n">{cat_count(d["key"])}</span></label>'
         for d in DISCIPLINES)
@@ -1877,7 +1884,7 @@ def main():
             path=f"/practice-types/{d['slug']}/",
             heading=d["label"], intro=d["note"],
             trail=[("Home", "/"), ("Disciplines", "/practice-types/"), (d["label"], None)],
-            footer_link=("All disciplines", "/practice-types/"))))
+            footer_link=("All disciplines", "/practice-types/"), current=d["key"])))
 
     for ab in STATES:
         rows = in_state(ab)

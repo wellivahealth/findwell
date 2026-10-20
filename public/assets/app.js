@@ -124,7 +124,7 @@
 
   var params = new URLSearchParams(location.search);
   state.q = params.get('q') || '';
-  state.cats = (params.get('cat') || '').split(',').filter(Boolean);
+  state.cats = (params.get('cat') || '').split(',').filter(Boolean).slice(0, 1);
   state.city = params.get('city') || '';
   state.st = (params.get('state') || '').toUpperCase();
   state.tele = params.get('tele') === '1';
@@ -143,7 +143,9 @@
   if ($('#f-tele')) $('#f-tele').checked = state.tele;
   if ($('#f-radius')) $('#f-radius').value = state.radius;
   if ($('#f-zip') && /^\d{5}$/.test(state.label)) $('#f-zip').value = state.label;
-  $$('[data-cat]').forEach(function (cb) { cb.checked = state.cats.indexOf(cb.dataset.cat) > -1; });
+  $$('[data-cat]').forEach(function (cb) {
+    if (!cb.dataset.href) cb.checked = state.cats.indexOf(cb.dataset.cat) > -1;
+  });
   var where = params.get('where');
   if (where) {
     var w = where.trim().toLowerCase();
@@ -275,11 +277,14 @@
     var v = e.target.value;
     t = setTimeout(function () { state.q = v.trim(); apply(); }, 250);
   });
+  /* one discipline at a time: a new choice replaces the old one, and on a
+     discipline's own page it opens that discipline's page instead */
   $$('[data-cat]').forEach(function (cb) {
     cb.addEventListener('change', function () {
+      if (cb.dataset.href) { location.href = cb.dataset.href; return; }
       var k = cb.dataset.cat;
-      if (cb.checked) state.cats.push(k);
-      else state.cats = state.cats.filter(function (c) { return c !== k; });
+      $$('[data-cat]').forEach(function (o) { if (o !== cb) o.checked = false; });
+      state.cats = cb.checked ? [k] : [];
       apply();
     });
   });

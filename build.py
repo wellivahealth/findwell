@@ -515,6 +515,8 @@ CORRECTIONS = {
     "common-roots-acupuncture": dict(
         credentials="Registered Nurse (RN) \u00b7 Licensed acupuncturist and practitioner of Chinese medicine",
         licensure="Arizona registered nurse and licensed acupuncturist \u2014 numbers not provided"),
+    # Nibodhi Haas ticked every discipline; he is listed for Ayurveda only (Oct 2026)
+    "awakened-living": dict(categories=["Ayurveda"]),
     # Lucy asked for her ICF and hypnotherapy credentials to be shown (Sep 2026)
     "coaching-with-lucy": dict(
         credentials="ICF Associate Certified Coach (ACC); Certified Clinical Hypnotherapist (CCHT)"),

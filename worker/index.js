@@ -344,11 +344,16 @@ function preChecks(s, listing, existing) {
          + 'confirming, and add it to the matrix while you are there.');
     }
   }
-  if (!licensedCats.length && /^yes$/i.test(String(s.licensed || '').trim())) {
+  const dietetics = cats.includes('Nutrition');
+  if (dietetics && /^yes$/i.test(String(s.licensed || '').trim())) {
+    note('A dietetics or nutrition licence is claimed. Licensing varies by state, so check the state board '
+       + 'where they practise, and the Commission on Dietetic Registration for an RD or RDN.');
+  }
+  if (!dietetics && !licensedCats.length && /^yes$/i.test(String(s.licensed || '').trim())) {
     note('They answered yes to holding a licence, but none of the disciplines they chose are licensed ones. '
        + 'Often this means the discipline was mis-ticked, so ask what the licence is in.');
   }
-  if (!licensedCats.length && /\blicen[sc]/i.test(blob + ' ' + licenceText)) {
+  if (!dietetics && !licensedCats.length && /\blicen[sc]/i.test(blob + ' ' + licenceText)) {
     note('None of the disciplines here are licensed, yet the application uses the word licensed. '
        + 'Worth reading closely before it becomes a published claim.');
   }
@@ -594,6 +599,21 @@ async function commitFiles(env, message, files, attempt = 0) {
 
 // ---------------------------------------------------------------- email
 
+/** A plain-text copy of an email. Links keep their address in brackets, so a
+ *  mail client that hides styled buttons still shows where they go. */
+function htmlToText(html) {
+  return html
+    .replace(/<a\b[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi, (m, href, label) =>
+      `${label.replace(/<[^>]+>/g, '').trim()} (${href.replace(/&amp;/g, '&')})`)
+    .replace(/<\/t[dh]>\s*<t[dh][^>]*>/gi, ': ')
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<\/(p|h[1-6]|div|tr|li)>/gi, '\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&#8599;/g, '')
+    .replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+
 async function sendEmail(env, { to, subject, html, replyTo }) {
   if (!env.RESEND_API_KEY || !to) return { skipped: true };
   const res = await fetch('https://api.resend.com/emails', {
@@ -604,7 +624,7 @@ async function sendEmail(env, { to, subject, html, replyTo }) {
     },
     body: JSON.stringify({
       from: env.MAIL_FROM || 'FindWell Directory <noreply@findwelldirectory.com>',
-      to: [to], subject, html,
+      to: [to], subject, html, text: htmlToText(html),
       // Always replyable: MAIL_FROM may be a noreply address, so point
       // replies at a mailbox someone actually reads.
       reply_to: replyTo || env.ADMIN_EMAIL || undefined,
@@ -622,7 +642,8 @@ FindWell Directory — a network of holistic health care providers<br>
 const receivedEmail = (s) => shell(`<h2 style="font-size:20px;margin:0 0 12px">We have your application</h2>
 <p>Thank you for applying to the FindWell Directory. We have your details for <strong>${esc(s.practice)}</strong>.</p>
 <p>We review each application and check credentials and license numbers against the issuing board before publishing. We will email you as soon as your listing is live, and will only be in touch before then if we have a question.</p>
-<p>If anything you sent needs correcting, just reply to this email.</p>`);
+<p>If anything you sent needs correcting, just reply to this email.</p>
+<p style="margin-top:24px">Warmly,<br>Amita Nathwani and Emma Vasseur<br>FindWell Directory</p>`);
 
 const publishedEmail = (s, url, joinUrl) => shell(`<h2 style="font-size:20px;margin:0 0 12px">Your listing is live</h2>
 <p>Thank you for joining the FindWell Directory. Your listing for <strong>${esc(s.practice)}</strong> is now published:</p>
@@ -635,7 +656,7 @@ const publishedEmail = (s, url, joinUrl) => shell(`<h2 style="font-size:20px;mar
 <p style="margin:0 0 12px"><a href="${esc(joinUrl)}" style="display:inline-block;background:#2e5f5c;color:#fff;text-decoration:none;padding:10px 18px;border-radius:6px;font-weight:600">Invite a colleague to join</a></p>
 <p style="margin:0;font-size:14px;color:#5f7473">You are welcome to forward this email as it is. The link above works for anyone.</p>
 </div>
-<p style="margin-top:24px">Warmly,<br>Amita Nathwani<br>FindWell Directory</p>`);
+<p style="margin-top:24px">Warmly,<br>Amita Nathwani and Emma Vasseur<br>FindWell Directory</p>`);
 
 function adminEmail(s, approveUrl, declineUrl, checks = [], places = []) {
   const tone = { flag: ['#c23a4b', 'Look at this'], note: ['#9a6b1f', 'Worth a look'], ok: ['#2e5f5c', 'Clear'] };
@@ -664,6 +685,7 @@ function adminEmailBody(s, approveUrl, declineUrl, checkBlock) {
 <p style="margin:0 0 20px">
 <a href="${esc(approveUrl)}" style="display:inline-block;background:#2e5f5c;color:#fff;text-decoration:none;padding:11px 20px;border-radius:6px;font-weight:600;margin-right:8px">Approve &amp; publish</a>
 <a href="${esc(declineUrl)}" style="display:inline-block;background:#fff;color:#c23a4b;border:1px solid #c23a4b;text-decoration:none;padding:10px 19px;border-radius:6px;font-weight:600">Decline</a></p>
+<p style="margin:-8px 0 20px;font-size:13px;color:#5f7473">Buttons not showing? <a href="${esc(approveUrl)}" style="color:#2e5f5c">Approve this application</a> or <a href="${esc(declineUrl)}" style="color:#c23a4b">decline it</a>.</p>
 ${checkBlock}
 <table style="border-collapse:collapse;font-size:14px">
 ${row('Scope', s.scope.join(', '))}

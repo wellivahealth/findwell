@@ -906,3 +906,10 @@ body{ min-height:100vh; display:flex; flex-direction:column; }
 .ha-social{ display:flex; flex-wrap:wrap; gap:.4rem 1rem; padding:.5rem 0; font-size:.94rem; }
 .ha-contact .hint{ border-top:1px solid var(--line); padding-top:.8rem; margin-top:.6rem; }
 .ha-claim{ font-size:.9rem; color:var(--ink-soft); }
+
+/* join form: the verification invitation and the licence-number reminder */
+.verify-ask{ margin:0 0 1.4rem; background:oklch(0.955 0.028 155); border-color:oklch(0.86 0.05 155); color:oklch(0.34 0.06 160); }
+.verify-ask p{ margin:0; }
+.verify-ask p + p{ margin-top:.5rem; }
+.verify-ask b{ color:oklch(0.30 0.07 160); }
+.licence-nudge{ margin:.45rem 0 0; font-size:.86rem; color:oklch(0.42 0.11 60); background:oklch(0.965 0.04 85); border-radius:var(--r-sm); padding:.45rem .65rem; }

@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=b88fb3d461">
+<link rel="stylesheet" href="/assets/site.css?v=9b746755e4">
 
 </head>
 <body data-view="join">
@@ -152,6 +152,10 @@
 
         <section class="form-section">
           <h2>Credentials &amp; experience</h2>
+          <div class="notice verify-ask">
+            <p><b>Would you like your listing to show as verified?</b> It gives patients more confidence when they are choosing a practitioner. Please include your state license number and any certifications or professional affiliations, and we will confirm them with the board or organisation that issued them.</p>
+            <p>If you do not have any of these, you will still be listed, and your details will show as you reported them.</p>
+          </div>
           <div class="form-grid">
             <div class="field">
             <span class="lbl">Do you hold a state license? *</span>
@@ -165,7 +169,8 @@
             <div class="field"></div>
             <div class="field full"><label for="j-license">State license number(s)</label>
               <input class="control" id="j-license" name="State(s) and license number(s)" placeholder="Arizona, LAC-010717">
-              <p class="hint">Include the state. Leave blank if your discipline has no state licensure.</p></div>
+              <p class="hint">Include the state. Leave blank if your discipline has no state licensure.</p>
+              <p class="licence-nudge" id="licence-nudge" hidden>You said you hold a state license. Adding the number lets us confirm it with the board, so your listing can show as verified.</p></div>
             <div class="field full"><label for="j-certs">Certifications and professional affiliations</label>
               <textarea class="control" id="j-certs" name="Certificates or affiliations" placeholder="NAMA Board Certified, Dipl. O.M. (NCCAOM), NBC-HWC, AHG Registered Herbalist, professional memberships&hellip;"></textarea>
               <p class="hint">Please fill this in whether or not you are licensed — board certifications and diplomate status belong here, and they appear on your listing.</p></div>
@@ -341,6 +346,6 @@
     </div>
   </div>
 </footer>
-<script src="/assets/app.js?v=b06797a5b4" defer></script>
+<script src="/assets/app.js?v=ce9526a731" defer></script>
 </body>
 </html>

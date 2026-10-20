@@ -1494,12 +1494,17 @@ def page_join():
 
         <section class="form-section">
           <h2>Credentials &amp; experience</h2>
+          <div class="notice verify-ask">
+            <p><b>Would you like your listing to show as verified?</b> It gives patients more confidence when they are choosing a practitioner. Please include your state license number and any certifications or professional affiliations, and we will confirm them with the board or organisation that issued them.</p>
+            <p>If you do not have any of these, you will still be listed, and your details will show as you reported them.</p>
+          </div>
           <div class="form-grid">
             {yesno("licensed", "Do you hold a state license?", "Several disciplines here have no licensure route. Answering No is expected and is published as such.")}
             <div class="field"></div>
             <div class="field full"><label for="j-license">State license number(s)</label>
               <input class="control" id="j-license" name="State(s) and license number(s)" placeholder="Arizona, LAC-010717">
-              <p class="hint">Include the state. Leave blank if your discipline has no state licensure.</p></div>
+              <p class="hint">Include the state. Leave blank if your discipline has no state licensure.</p>
+              <p class="licence-nudge" id="licence-nudge" hidden>You said you hold a state license. Adding the number lets us confirm it with the board, so your listing can show as verified.</p></div>
             <div class="field full"><label for="j-certs">Certifications and professional affiliations</label>
               <textarea class="control" id="j-certs" name="Certificates or affiliations" placeholder="NAMA Board Certified, Dipl. O.M. (NCCAOM), NBC-HWC, AHG Registered Herbalist, professional memberships&hellip;"></textarea>
               <p class="hint">Please fill this in whether or not you are licensed \u2014 board certifications and diplomate status belong here, and they appear on your listing.</p></div>

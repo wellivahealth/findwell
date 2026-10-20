@@ -335,6 +335,16 @@
   };
   var cats = [], pays = [];
 
+  /* a gentle reminder, never a block: licensed, but no number given */
+  function nudgeLicence() {
+    var n = $('licence-nudge');
+    if (n) n.hidden = !(radio('licensed') === 'Yes' && !val('j-license'));
+  }
+  Array.prototype.forEach.call(form.querySelectorAll('input[name="licensed"]'), function (r) {
+    r.addEventListener('change', nudgeLicence);
+  });
+  if ($('j-license')) $('j-license').addEventListener('input', nudgeLicence);
+
   function toggler(attr, bucket, carrierId, errKey) {
     Array.prototype.forEach.call(form.querySelectorAll('[' + attr + ']'), function (c) {
       c.addEventListener('click', function () {

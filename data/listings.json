@@ -1552,5 +1552,42 @@
     "blurb": "Chiropractic First is the top chiropractor in Campbell, CA, providing personalized chiropractic care to help patients relieve pain, improve mobility, and support long-term wellness through natural, non-invasive treatments for patients of all ages.",
     "long": "Chiropractic First is the top chiropractor in Campbell, CA, helping patients achieve lasting pain relief, improved mobility, and better overall wellness. The practice provides personalized chiropractic care, spinal decompression, prenatal and pediatric chiropractic care, HEIT therapy, auto injury treatment, and athlete care. Their experienced team treats back pain, neck pain, sciatica, headaches, joint pain, sports injuries, and other musculoskeletal conditions using natural, non-invasive techniques tailored to each patient. With a patient-focused approach, comprehensive evaluations, and customized treatment plans, Chiropractic First is committed to restoring mobility, supporting long-term health, and helping individuals and families live healthier, more active lives.",
     "verified": false
+  },
+  {
+    "slug": "lani-page-deguia-nutrition",
+    "name": "Lani Page deGuia Nutrition",
+    "person": "Marilaine deGuia",
+    "logo": "/assets/img/providers/lani-page-deguia-nutrition.jpg",
+    "categories": [
+      "Nutrition",
+      "Herbalism"
+    ],
+    "city": "Stone Ridge",
+    "state": "DC",
+    "zip": "20105-3034",
+    "address": "",
+    "country": "United States",
+    "lat": null,
+    "lng": null,
+    "telehealth": true,
+    "phone": "(571) 758-4757",
+    "email": "info@lpdnutrition.com",
+    "website": "https://lpdnutrition.com/",
+    "social": [
+      "https://www.instagram.com/lanithenutritionist",
+      "https://www.linkedin.com/in/marilaine-deguia-cns-ldn-msacn-ms-ed-09281b4/"
+    ],
+    "credentials": "Certified Nutrition Specialist, The American Nutrition Association\r\nPerimenopause and Menopause Certificate, Integrative Women's Health Institute",
+    "licensure": "Maryland, DX7150",
+    "training": "B.A. Biology and B.A. Psychology, University of Virginia\r\nM.S. Education, Old Dominion University\r\nM.S. Applied Clinical Nutrition, Northeast College of Health Sciences",
+    "integrative_training": "M.S. Applied Clinical Nutrition, Northeast College of Health Sciences",
+    "since": 2023,
+    "affiliations": "Certified Nutrition Specialist, The American Nutrition Association\r\nPerimenopause and Menopause Certificate, Integrative Women's Health Institute",
+    "pricing": "Insurance accepted: Aetna, CareFirst BC/BS, Blue Cross Blue Shield Plans, Sentara Health Plans, United Healthcare, Cigna\r\nSelf-Pay and HSA: see current packages https://my.practicebetter.io/#/65a03bc5a638220e1dd4d757/bookings",
+    "payments": "Insurance, Cash, Credit Cards, HSA/FSA",
+    "insurance": "Accepted — verify your plan with the practice",
+    "blurb": "I am a culture-centered functional nutritionist who addresses for the root causes of your health conditions. My nutrition therapy plans are personalized and include a multifaceted approach combining applied clinical nutrition, clinical herbalism, nutrient deficiency analysis, functional lab testing, and lifestyle modifications (physical activity, stress management, and sleep quality).  I specialize in women's health (peri/menopause), autoimmune disease, metabolic disease (diabetes, cholesterol, hypertension), and GI conditions. Insurance accepted.",
+    "long": "I am a board licensed Certified Nutrition Specialist and licensed dietitian nutritionist who provides a functional nutrition approach, sensitive to culture and race. I look for the root causes to your health issues through a multifactorial approach. I provide medical nutrition therapy for women's health, perimenopause/menopause, autoimmune disease, metabolic conditions like diabetes and hypertension, inflammation, and GI issues. My goal is to help you understand how to live an anti-inflammatory lifestyle and develop systems in your life to make optimized health sustainable.\r\n\r\nMy approach is multifactorial and I work with you to reduce inflammation, improve and optimize gut health, restore core metabolic imbalances and nutrient deficiencies, increase physical activity, improve sleep quality, and improve stress management. I provide personalized meal plans, clinical herbalism recommendations, functional lab testing, and more.\r\n\r\nI take Aetna, CareFirst BC/BS, Blue Cross Blue Shield, Sentara Health Plans, Cigna, United Healthcare, HSA, and self-pay.",
+    "verified": false
   }
 ]

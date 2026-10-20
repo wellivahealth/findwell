@@ -1257,7 +1257,7 @@ def page_practice_types():
     cards = ""
     for d in DISCIPLINES:
         n = cat_count(d["key"])
-        art = (img_tag(d["img"], "", "96px", widths=(500,)) if (d.get("img") or "").startswith("/assets/img/disciplines/")
+        art = (img_tag(d["img"], "", "88px", widths=(500,)) if d.get("img")
                else f'<span class="fw-icon">{DISC_ICONS.get(d["key"], SPRIG_SMALL)}</span>')
         if n:
             cards += f"""<a class="fw-disc" href="/practice-types/{d['slug']}/">{art}<span>

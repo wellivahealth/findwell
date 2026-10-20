@@ -18,14 +18,14 @@
 <meta property="og:image" content="https://findwelldirectory.com/assets/img/share-card.jpg?v=05213c9754">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="FindWell Directory — a practitioner with a client, and the line: licensure, training, years in practice and pricing on every listing.">
+<meta property="og:image:alt" content="FindWell Directory: licensure, training, years in practice and pricing on every listing.">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://findwelldirectory.com/assets/img/share-card.jpg?v=05213c9754">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=9b746755e4">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Young+Serif&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=dde4514abe">
 
 </head>
 <body data-view="directory">
@@ -33,61 +33,55 @@
 
 <header class="masthead">
   <div class="wrap masthead-in">
-    <a class="mark" href="/" aria-label="FindWell Directory — home">
-      <img src="/assets/img/logo-800.png?v=5aed8c1fd5"
-           srcset="/assets/img/logo-400.png?v=d921f92fa5 400w, /assets/img/logo-800.png?v=5aed8c1fd5 800w"
-           sizes="(max-width:900px) 190px, 280px" width="965" height="289"
-           alt="FindWell Directory — a network of holistic health care providers">
-    </a>
+    <a class="mark" href="/" aria-label="FindWell Directory, home"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 36C20 24 22 14 32 6C34 18 30 30 20 36Z" fill="#7f9a6c"/><path d="M20 36C20 26 17 18 8 12C7 24 11 32 20 36Z" fill="#2f4a35"/></svg><span>FindWell</span></a>
     <button class="burger" id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
-      <div class="nav-group">
-        <button type="button" class="nav-toggle" id="find-toggle" aria-expanded="false"
-                aria-controls="find-menu" data-active="1">
-          Find a provider <span class="caret" aria-hidden="true">&#9662;</span>
-        </button>
-        <ul class="nav-menu" id="find-menu"><li><a href="/practice-types/">By discipline</a></li><li><a href="/locations/" aria-current="page">By location</a></li></ul>
-      </div><a href="/about/">Who we are</a><a href="/articles/">Articles</a><a href="/advertise/">Advertise with us</a>
-      <a class="cta" href="/join/">Join the directory</a>
+      <a href="/directory/" aria-current="page">Find care</a><a href="/practice-types/">Disciplines</a><a href="/verification/">How we verify</a><a href="/about/">About us</a><a href="/articles/">Articles</a>
+      <a class="cta" href="/join/">List your practice</a>
     </nav>
   </div>
 </header>
 
 <main id="main">
-  <div class="wrap">
-    <p class="crumb"><a href="/">Home</a> / <a href="/locations/">Locations</a> / Michigan</p>
-    <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin:.6rem 0 1.4rem">Michigan</h1>
-    <p class="lede" style="margin:-.8rem 0 1.8rem">3 listed in Michigan — Pontiac, Whitmore Lake, Ypsilanti.</p>
-    <div class="dir">
+  <section class="pg-head">
+    <svg class="pg-leaf" viewBox="0 0 200 320" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" aria-hidden="true"><path d="M100 312C100 220 100 120 100 12"/><path d="M100 30C58 62 30 122 40 200C48 258 88 298 100 312C112 298 152 258 160 200C170 122 142 62 100 30Z"/><path d="M100 80C84 90 70 104 60 122M100 120C80 132 62 150 50 172M100 160C82 172 66 190 56 214M100 200C86 212 74 228 68 248M100 80C116 90 130 104 140 122M100 120C120 132 138 150 150 172M100 160C118 172 134 190 144 214M100 200C114 212 126 228 132 248"/></svg>
+    <div class="wrap pg-head-in">
+      <p class="crumb"><a href="/">Home</a> / <a href="/locations/">Locations</a> / Michigan</p>
+      <h1>Michigan</h1>
+      <p class="pg-lede">3 listed in Michigan — Pontiac, Whitmore Lake, Ypsilanti.</p>
+    </div>
+  </section>
+  <div class="wrap dir">
       <aside class="rail" id="rail">
-        <button class="rail-toggle" id="rail-toggle" aria-expanded="false">Filters<span>▾</span></button>
+        <button class="rail-toggle" id="rail-toggle" aria-expanded="false">Narrow it down<span aria-hidden="true">&#9662;</span></button>
         <div class="rail-body">
-          <div class="field" style="margin-bottom:1.6rem">
-            <label for="f-q">Keyword</label>
-            <input class="control" id="f-q" type="search" placeholder="Name, condition, credential">
+          <p class="rail-title">Narrow it down</p>
+          <div class="field">
+            <label for="f-q">Name or keyword</label>
+            <input class="control" id="f-q" type="search" placeholder="e.g. digestion, sciatica">
           </div>
-          <fieldset><legend>Discipline</legend><label class="check"><input type="checkbox" data-cat="Ayurveda"> Ayurveda<span class="n">5</span></label><label class="check"><input type="checkbox" data-cat="Acupuncture"> Acupuncture<span class="n">9</span></label><label class="check"><input type="checkbox" data-cat="TCM"> TCM<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="Naturopathy"> Licensed naturopaths<span class="n">2</span></label><label class="check"><input type="checkbox" data-cat="IntegrativeMedicine"> Integrative &amp; functional medicine (MD, DO, NP, PA, RN)<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="Counseling"> Counselors<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="Coaching"> Health &amp; wellness coaches<span class="n">13</span></label><label class="check"><input type="checkbox" data-cat="Massage"> Massage therapy<span class="n">2</span></label><label class="check"><input type="checkbox" data-cat="Bodywork"> Body work<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="EnergyMedicine"> Energy healers<span class="n">11</span></label><label class="check"><input type="checkbox" data-cat="Chiropractic"> Chiropractors<span class="n">5</span></label><label class="check"><input type="checkbox" data-cat="Nutrition"> Nutritionists<span class="n">8</span></label><label class="check"><input type="checkbox" data-cat="Herbalism"> Herbology<span class="n">8</span></label><label class="check check-empty"><input type="checkbox" data-cat="Farms" disabled> Local farmers<span class="n">0</span></label><label class="check check-empty"><input type="checkbox" data-cat="Grocers" disabled> Local grocers<span class="n">0</span></label></fieldset>
+          <fieldset><legend>Kind of care</legend><label class="check"><input type="checkbox" data-cat="Ayurveda"> Ayurveda<span class="n">5</span></label><label class="check"><input type="checkbox" data-cat="Acupuncture"> Acupuncture<span class="n">9</span></label><label class="check"><input type="checkbox" data-cat="TCM"> Chinese medicine<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="Naturopathy"> Naturopathic doctors<span class="n">2</span></label><label class="check"><input type="checkbox" data-cat="IntegrativeMedicine"> Integrative medicine<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="Counseling"> Counseling<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="Coaching"> Health coaching<span class="n">13</span></label><label class="check"><input type="checkbox" data-cat="Massage"> Massage<span class="n">2</span></label><label class="check"><input type="checkbox" data-cat="Bodywork"> Body work<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="EnergyMedicine"> Energy work<span class="n">11</span></label><label class="check"><input type="checkbox" data-cat="Chiropractic"> Chiropractic<span class="n">5</span></label><label class="check"><input type="checkbox" data-cat="Nutrition"> Nutrition<span class="n">8</span></label><label class="check"><input type="checkbox" data-cat="Herbalism"> Herbal medicine<span class="n">8</span></label><label class="check check-empty"><input type="checkbox" data-cat="Farms" disabled> Local farms<span class="n">0</span></label><label class="check check-empty"><input type="checkbox" data-cat="Grocers" disabled> Local grocers<span class="n">0</span></label></fieldset>
           <fieldset><legend>State</legend>
             <select class="control" id="f-state"><option value="">All states</option><option value="AZ">Arizona (15)</option><option value="CA">California (7)</option><option value="CO">Colorado (3)</option><option value="FL">Florida (3)</option><option value="GA">Georgia (3)</option><option value="ID">Idaho (1)</option><option value="IL">Illinois (1)</option><option value="IN">Indiana (1)</option><option value="MA">Massachusetts (1)</option><option value="MI">Michigan (3)</option><option value="NH">New Hampshire (1)</option><option value="OH">Ohio (1)</option><option value="OK">Oklahoma (1)</option><option value="TN">Tennessee (2)</option><option value="TX">Texas (1)</option><option value="VA">Virginia (1)</option><option value="WA">Washington (1)</option><option value="WI">Wisconsin (1)</option></select>
           </fieldset>
           <fieldset><legend>Distance</legend>
             <input class="control" id="f-zip" type="text" inputmode="numeric" placeholder="ZIP code">
-            <label class="lbl" for="f-radius" style="margin-top:.7rem">Within 50 miles</label>
-            <input id="f-radius" type="range" min="5" max="500" step="5" value="50" style="width:100%;accent-color:var(--brand)">
-            <button class="btn btn-ghost btn-sm" id="f-near" style="width:100%;margin-top:.6rem">Use my location</button>
+            <label class="lbl" for="f-radius">Within 50 miles</label>
+            <input id="f-radius" type="range" min="5" max="500" step="5" value="50">
+            <button class="btn btn-ghost btn-sm" id="f-near" type="button">Use my location</button>
             <p class="hint" id="geo-msg"></p>
           </fieldset>
-          <fieldset><legend>Format</legend>
+          <fieldset><legend>Show only</legend>
             <label class="check"><input type="checkbox" id="f-tele"> Offers telehealth</label>
           </fieldset>
-          <button class="btn btn-ghost btn-sm" id="f-clear" style="width:100%">Clear all filters</button>
+          <button class="btn btn-ghost btn-sm" id="f-clear" type="button">Clear all filters</button>
         </div>
       </aside>
-      <section>
+      <section class="dir-main">
         <div class="results-bar">
           <p class="results-count" aria-live="polite"><b id="count">3</b> <span id="count-word">practitioners</span><span id="count-where"></span></p>
           <div class="sort">
-            <label for="f-sort">Sort</label>
+            <label for="f-sort">Sort by</label>
             <select class="control" id="f-sort">
               <option value="name">Name</option>
               <option value="years">Years in practice</option>
@@ -95,75 +89,35 @@
             </select>
           </div>
         </div>
-        <p class="results-note">Every listing states how its credentials were established — checked with the issuing board, or as reported by the practitioner. <a href="/verification/">What that means</a>.</p>
         <div class="active-filters" id="active-filters"></div>
         <ul class="records" id="records"><li class="record" data-cats="EnergyMedicine"
       data-city="Ypsilanti" data-state="MI" data-tele="0"
       data-lat="42.240974213822" data-lng="-83.613582436426" data-since="2019"
-      data-name="Hidden Healing Reiki" data-text="hidden healing reiki jenn lane ypsilanti mi 48197 level 3 reiki master certified 3 reiki levels, 2 attunement, 6 years of practice before opening business. holistic approach: the practice integrates traditional reiki with intuitive guidance and meticulous chakra balancing to support emotional, energetic, and spiritual well-being. no state licensure exists for this discipline energy healers">
-    <article class="record-in">
-      <div class="record-head">
-        <div class="avatar avatar-mono" aria-hidden="true">HH</div>
-        <div>
-          <h3 class="record-name"><a href="/provider/hidden-healing-reiki/">Hidden Healing Reiki</a></h3>
-          <p class="record-person"><b>Jenn Lane</b></p>
-          <p class="record-where">Ypsilanti, MI 48197 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/energy-work/">Energy healers</a></div>
-        </div>
+      data-name="Hidden Healing Reiki" data-text="hidden healing reiki jenn lane ypsilanti mi 48197 level 3 reiki master certified 3 reiki levels, 2 attunement, 6 years of practice before opening business. holistic approach: the practice integrates traditional reiki with intuitive guidance and meticulous chakra balancing to support emotional, energetic, and spiritual well-being. no state licensure exists for this discipline energy healers energy work">
+    <article class="rec">
+      <div class="avatar avatar-mono" aria-hidden="true">HH</div>
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/hidden-healing-reiki/">Hidden Healing Reiki</a></h3>
+        <p class="rec-meta">Jenn Lane · Ypsilanti, MI · Since 2019 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Holistic Approach: The practice integrates traditional Reiki with intuitive guidance and meticulous chakra balancing to support emotional, energetic, and spiritual well-b…</p>
+        <div class="fw-tags"><span class="fw-tag">Energy work</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Level 3 Reiki Master Certified</dd>
-        <dt>Licensure</dt><dd>No state licensure exists for this discipline</dd>
-        
-        <dt>In practice</dt><dd>7 yrs (since 2019)</dd>
-        <dt>Fees</dt><dd>30 minutes-$45</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-reported"><b>As reported by the practitioner.</b> Not independently verified — <a href="/verification/">what this means</a>.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/hidden-healing-reiki/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:7343293326">(734) 329-3326</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:hiddenhealingreiki@gmail.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://hiddenhealingreiki.my.canva.site/?utm_source=ig&amp;utm_medium=social&amp;utm_content=link_in_bio&amp;fbclid=PAb21jcAUf8qFwZG9mAmV4dG4DYWVtAjExAHNydGMGYXBwX2lkDzU2NzA2NzM0MzM1MjQyNwABp9nA1nTw3Z7X-pG8XAZybfAQntXFBbdpN3Ungmzg0ph3cg4bZqSeDw1rd7wQ_aem_QCLH_i-m5g12f8OFy6viGg" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$45</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="Coaching"
       data-city="Pontiac" data-state="MI" data-tele="1"
       data-lat="42.6389216" data-lng="-83.2910468" data-since="2025"
       data-name="Natural Kare and Wellness, LLC." data-text="natural kare and wellness, llc. natasha muir-kennedy pontiac mi 48340 n/a ms applied clinical nutrition 
-bs health education and health promotion natural kare &amp; wellness provides personalized nutrition and wellness support to help individuals make healthier, sustainable lifestyle changes. i focus on nutrition, education, healthy, wealth management, good health, women’s, and chronic disease prevention to practical, whole-food nutrition, and behavior-change strategies no state licensure exists for this discipline health &amp; wellness coaches">
-    <article class="record-in">
-      <div class="record-head">
-        <img class="avatar" src="/assets/img/providers/natural-kare-and-wellness-llc.png?v=e9f1b60a5d" alt="Natural Kare and Wellness, LLC. logo" loading="lazy" decoding="async" width="200" height="200">
-        <div>
-          <h3 class="record-name"><a href="/provider/natural-kare-and-wellness-llc/">Natural Kare and Wellness, LLC.</a></h3>
-          <p class="record-person"><b>Natasha Muir-Kennedy</b></p>
-          <p class="record-where">Pontiac, MI 48340 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/health-wellness-coaching/">Health &amp; wellness coaches</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+bs health education and health promotion natural kare &amp; wellness provides personalized nutrition and wellness support to help individuals make healthier, sustainable lifestyle changes. i focus on nutrition, education, healthy, wealth management, good health, women’s, and chronic disease prevention to practical, whole-food nutrition, and behavior-change strategies no state licensure exists for this discipline health &amp; wellness coaches health coaching">
+    <article class="rec">
+      <img class="avatar" src="/assets/img/providers/natural-kare-and-wellness-llc.png?v=e9f1b60a5d" alt="Natural Kare and Wellness, LLC. logo" loading="lazy" decoding="async" width="200" height="200">
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/natural-kare-and-wellness-llc/">Natural Kare and Wellness, LLC.</a></h3>
+        <p class="rec-meta">Natasha Muir-Kennedy · Pontiac, MI · Since 2025 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Natural Kare &amp; Wellness provides personalized nutrition and wellness support to help individuals make healthier, sustainable lifestyle changes. I focus on nutrition, educ…</p>
+        <div class="fw-tags"><span class="fw-tag">Health coaching</span><span class="fw-tag">Telehealth</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">N/A</dd>
-        <dt>Licensure</dt><dd>No state licensure exists for this discipline</dd>
-        
-        <dt>In practice</dt><dd>1 yrs (since 2025)</dd>
-        <dt>Fees</dt><dd>• Intitial Nutrition &amp; Wellness Consultation — $50 
-60 minutes
-• Follow-Up Sessions— $40
-45 minutes 
-• 3-Sessions Wellness Package — $125
-One initial 60- minute session + two 45-minutes follow-ups
-• 5-Session Wellness Package —$200
-One initial 60-minute session + four 45-minute follow-ups</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-reported"><b>As reported by the practitioner.</b> Not independently verified — <a href="/verification/">what this means</a>.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/natural-kare-and-wellness-llc/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:2489346024">(248) 934-6024</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:naturalkareandwellness@gmail.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://naturalkareandwell.wixsite.com/natural-kare-and-wel" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$50</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="Nutrition"
       data-city="Whitmore Lake" data-state="MI" data-tele="1"
@@ -177,83 +131,51 @@ applied functional medicine in clinical practice (afmcp) — the institute for f
 professional training &amp; affiliations
 advanced microbiome manipulation — microbiome restoration centre (2026)
 medical academy of pediatric &amp; special needs (maps) — professional education
-clinical education associate — designs for health university of western states, master of science in human nutrition and functional medicine anastasia dosov nutrition &amp; wellness consulting is an integrative and functional nutrition practice specializing in gastrointestinal health, gut microbiome restoration, metabolic health, and pediatric nutrition, with a particular focus on autism spectrum disorder (asd) and adhd. our services include comprehensive nutritional assessments, advanced functional laboratory testing, and personalized dietary and nutraceutical interventions tailored to each individual&#x27;s needs. we combine evidence-informed clinical nutrition with a whole-person approach to address contributing factors, support physiological function, and promote long-term health and well-being. 164.023958 nutritionists">
-    <article class="record-in">
-      <div class="record-head">
-        <img class="avatar" src="/assets/img/providers/anastasia-dosov-nutrition-and-wellness-consulting-llc.jpg?v=fafcfa3d4f" alt="Anastasia Dosov Nutrition and Wellness Consulting, LLC logo" loading="lazy" decoding="async" width="200" height="200">
-        <div>
-          <h3 class="record-name"><a href="/provider/anastasia-dosov-nutrition-and-wellness-consulting-llc/">Anastasia Dosov Nutrition and Wellness Consulting, LLC</a></h3>
-          <p class="record-person"><b>Anastasia Dosov</b></p>
-          <p class="record-where">Whitmore Lake, MI 48189 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/nutrition/">Nutritionists</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+clinical education associate — designs for health university of western states, master of science in human nutrition and functional medicine anastasia dosov nutrition &amp; wellness consulting is an integrative and functional nutrition practice specializing in gastrointestinal health, gut microbiome restoration, metabolic health, and pediatric nutrition, with a particular focus on autism spectrum disorder (asd) and adhd. our services include comprehensive nutritional assessments, advanced functional laboratory testing, and personalized dietary and nutraceutical interventions tailored to each individual&#x27;s needs. we combine evidence-informed clinical nutrition with a whole-person approach to address contributing factors, support physiological function, and promote long-term health and well-being. 164.023958 nutritionists nutrition">
+    <article class="rec">
+      <img class="avatar" src="/assets/img/providers/anastasia-dosov-nutrition-and-wellness-consulting-llc.jpg?v=fafcfa3d4f" alt="Anastasia Dosov Nutrition and Wellness Consulting, LLC logo" loading="lazy" decoding="async" width="200" height="200">
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/anastasia-dosov-nutrition-and-wellness-consulting-llc/">Anastasia Dosov Nutrition and Wellness Consulting, LLC</a></h3>
+        <p class="rec-meta">Anastasia Dosov · Whitmore Lake, MI · Since 2021 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Anastasia Dosov Nutrition &amp; Wellness Consulting is an integrative and functional nutrition practice specializing in gastrointestinal health, gut microbiome restoration, m…</p>
+        <div class="fw-tags"><span class="fw-tag">Nutrition</span><span class="fw-tag">Telehealth</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Professional Credentials &amp; Certifications
-Certified Nutrition Specialist (CNS)
-Licensed Dietitian Nutritionist (LDN) — Illinois and Maryland
-Master of Science in Human Nutrition and Functional Medicine — University of Western States
-Applied Functional Medicine in Clinical Practice (AFMCP) — The Institute for Functional Medicine
-
-Professional Training &amp; Affiliations
-Advanced Microbiome Manipulation — Microbiome Restoration Centre (2026)
-Medical Academy of Pediatric &amp; Special Needs (MAPS) — Professional Education
-Clinical Education Associate — Designs for Health</dd>
-        <dt>Licensure</dt><dd>164.023958</dd>
-        
-        <dt>In practice</dt><dd>5 yrs (since 2021)</dd>
-        <dt>Fees</dt><dd>Initial visit, follow-ups</dd>
-        <dt>Insurance</dt><dd>Accepted — verify your plan with the practice</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-reported"><b>As reported by the practitioner.</b> Not independently verified — <a href="/verification/">what this means</a>.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/anastasia-dosov-nutrition-and-wellness-consulting-llc/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:3133388099">(313) 338-8099</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:contact@anastasiadosov.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://www.anastasiadosov.com/" target="_blank" rel="noopener">Website</a>
-      </div>
+      
     </article>
   </li></ul>
+        <p class="results-note">Every listing says how its credentials were established: checked with the issuing board, or as reported by the practitioner. <a href="/verification/">What that means</a></p>
         <p class="back-link"><a href="/locations/">&larr; All locations</a></p>
-        <div class="empty" id="empty" hidden style="margin-top:2rem">
+        <div class="empty" id="empty" hidden>
           <h3>No practitioners match those filters</h3>
-          <p>Try widening the distance, removing a discipline, or searching a nearby city. Telehealth listings serve patients anywhere in their state.</p>
-          <p style="margin-top:1.2rem"><button class="btn btn-dark btn-sm" id="empty-clear">Clear filters</button></p>
+          <p>Try widening the distance, choosing another kind of care, or searching a nearby city. Many practitioners also offer telehealth.</p>
+          <p><button class="btn btn-dark btn-sm" id="empty-clear" type="button">Clear filters</button></p>
         </div>
       </section>
-    </div>
   </div>
-  <div style="height:4rem"></div>
 </main>
 
 <footer class="foot">
-  <div class="wrap">
-    <div class="foot-in">
-      <div>
-        <span class="foot-mark"><img src="/assets/img/logo-400.png?v=d921f92fa5" width="965" height="289" alt="FindWell Directory" loading="lazy" decoding="async"></span>
-        <p class="foot-blurb">A network of holistic and integrative practitioners. No commissions, no listing fees, no lead-selling.</p>
-      </div>
-      <div>
-        <h4>Find care</h4>
-        <a href="/practice-types/">By discipline</a>
-        <a href="/locations/">By location</a>
-      </div>
-      <div>
-        <h4>More</h4>
-        <a href="/join/">Join the directory</a>
-        <a href="/about/">Who we are</a>
-        <a href="/articles/">Articles</a>
-        <a href="/advertise/">Advertise with us</a>
-        <a href="/verification/">What verification means</a>
-        <a href="mailto:info@findwelldirectory.com">info@findwelldirectory.com</a>
-      </div>
+  <div class="wrap foot-in">
+    <div class="foot-about">
+      <span class="foot-name">FindWell</span>
+      <p>A free directory of holistic and integrative practitioners in the United States and Canada. No commissions, no listing fees, no lead selling.</p>
     </div>
-    <div class="foot-legal">
-      <span>&copy; 2026 FindWell Directory.</span>
-      <span>Listings are informational and are not a referral, endorsement, or medical advice.</span>
+    <div class="foot-col">
+      <a href="/directory/">Find care</a>
+      <a href="/practice-types/">Disciplines</a>
+      <a href="/locations/">Locations</a>
+      <a href="/verification/">How we verify</a>
+      <a href="/articles/">Articles</a>
+    </div>
+    <div class="foot-col">
+      <a href="/join/">List your practice</a>
+      <a href="/about/">About us</a>
+      <a href="/advertise/">Advertise with us</a>
+      <a href="mailto:info@findwelldirectory.com">info@findwelldirectory.com</a>
     </div>
   </div>
+  <div class="wrap foot-legal">&copy; 2026 FindWell Directory. Listings are informational and are not a referral, endorsement or medical advice.</div>
 </footer>
-<script src="/assets/app.js?v=ce9526a731" defer></script>
+<script src="/assets/app.js?v=01595e339a" defer></script>
 </body>
 </html>

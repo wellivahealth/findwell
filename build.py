@@ -686,29 +686,69 @@ HERO = f"""<picture>
            width="2000" height="1250" alt="" aria-hidden="true" fetchpriority="high">
     </picture>"""
 
+# ---------------------------------------------------------------------------
+# Botanical line drawings, used as quiet decoration (Oct 2026 redesign).
+LEAF_MARK = ('<svg width="34" height="34" viewBox="0 0 40 40" fill="none" aria-hidden="true">'
+             '<path d="M20 36C20 24 22 14 32 6C34 18 30 30 20 36Z" fill="#7f9a6c"/>'
+             '<path d="M20 36C20 26 17 18 8 12C7 24 11 32 20 36Z" fill="#2f4a35"/></svg>')
+LEAF_VEIN = ('<svg viewBox="0 0 200 320" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" aria-hidden="true">'
+             '<path d="M100 312C100 220 100 120 100 12"/>'
+             '<path d="M100 30C58 62 30 122 40 200C48 258 88 298 100 312C112 298 152 258 160 200C170 122 142 62 100 30Z"/>'
+             '<path d="M100 80C84 90 70 104 60 122M100 120C80 132 62 150 50 172M100 160C82 172 66 190 56 214M100 200C86 212 74 228 68 248'
+             'M100 80C116 90 130 104 140 122M100 120C120 132 138 150 150 172M100 160C118 172 134 190 144 214M100 200C114 212 126 228 132 248"/></svg>')
+SPRIG = ('<svg viewBox="0 0 60 100" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" aria-hidden="true">'
+         '<path d="M30 98C30 70 32 40 40 4"/><path d="M31 80C22 76 16 70 14 60C22 60 28 66 31 80Z"/>'
+         '<path d="M32 62C40 60 46 54 48 44C40 44 34 50 32 62Z"/><path d="M33 44C25 40 20 34 19 24C27 25 32 32 33 44Z"/>'
+         '<path d="M36 26C42 23 46 17 46 9C40 11 36 17 36 26Z"/></svg>')
+SPRIG_SMALL = ('<svg class="fw-ico" width="40" height="56" viewBox="0 0 60 100" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">'
+               '<path d="M30 98C30 70 32 40 40 4"/><path d="M31 80C22 76 16 70 14 60C22 60 28 66 31 80Z"/>'
+               '<path d="M32 62C40 60 46 54 48 44C40 44 34 50 32 62Z"/><path d="M33 44C25 40 20 34 19 24C27 25 32 32 33 44Z"/></svg>')
+LEAF_PAIR = ('<svg class="fw-ico" width="40" height="56" viewBox="0 0 60 100" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">'
+             '<path d="M30 98C30 60 30 30 30 6"/><path d="M30 60C18 50 14 36 16 22C26 30 30 44 30 60Z"/>'
+             '<path d="M30 60C42 50 46 36 44 22C34 30 30 44 30 60Z"/></svg>')
+BUD = ('<svg class="fw-ico" width="40" height="56" viewBox="0 0 60 100" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">'
+       '<circle cx="30" cy="30" r="16"/><path d="M30 46V98M30 70C22 66 16 60 14 52M30 80C38 76 44 70 46 62"/></svg>')
+LEAF_ICON = ('<svg class="fw-leaf-ic" width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">'
+             '<path d="M5 19C5 11 10 5 20 4C20 13 14 19 5 19Z"/></svg>')
+def _ic(path):
+    return ('<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" '
+            f'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{path}</svg>')
+DISC_ICONS = {
+    "Acupuncture": _ic('<path d="M12 21V4"/><circle cx="12" cy="4" r="1.6"/>'),
+    "TCM": SPRIG_SMALL, "Naturopathy": LEAF_PAIR, "Herbalism": BUD,
+    "Counseling": _ic('<path d="M4 12h3l3-7 4 14 3-7h3"/>'),
+    "Bodywork": _ic('<path d="M7 11V6a2 2 0 0 1 4 0v5M11 10V5a2 2 0 0 1 4 0v6M15 10a2 2 0 0 1 4 0v3a8 8 0 0 1-8 8 7 7 0 0 1-6-4l-2-4a2 2 0 0 1 3-2l2 2"/>'),
+    "EnergyMedicine": _ic('<circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>'),
+    "Chiropractic": _ic('<path d="M12 3v18M8 7h8M7 12h10M8 17h8"/>'),
+    "Farms": _ic('<path d="M3 20h18M6 20V10l6-5 6 5v10"/>'),
+    "Grocers": _ic('<path d="M4 7h16l-1.5 11a2 2 0 0 1-2 1.7h-9a2 2 0 0 1-2-1.7Z"/><path d="M9 7a3 3 0 0 1 6 0"/>'),
+}
+# Friendlier names for the disciplines, used wherever a reader sees them.
+FRIENDLY = {"Ayurveda": "Ayurveda", "Acupuncture": "Acupuncture", "TCM": "Chinese medicine",
+            "Naturopathy": "Naturopathic doctors", "IntegrativeMedicine": "Integrative medicine",
+            "Counseling": "Counseling", "Coaching": "Health coaching", "Nutrition": "Nutrition",
+            "Massage": "Massage", "Bodywork": "Body work", "EnergyMedicine": "Energy work",
+            "Chiropractic": "Chiropractic", "Herbalism": "Herbal medicine",
+            "Farms": "Local farms", "Grocers": "Local grocers"}
+def friendly(key):
+    return FRIENDLY.get(key) or next((d["label"] for d in DISCIPLINES if d["key"] == key), key)
+DISC_BLURBS = {"Ayurveda": "training and certification shown", "Acupuncture": "licensed acupuncturists",
+               "TCM": "herbs, tuina and qigong", "Naturopathy": "licensed ND or NMD",
+               "IntegrativeMedicine": "MD, DO, NP, PA and RN", "Counseling": "licensed therapists",
+               "Coaching": "board-certified coaches", "Nutrition": "dietitians and nutritionists",
+               "Massage": "licensed massage therapists", "Bodywork": "craniosacral, tuina and more",
+               "EnergyMedicine": "Reiki and biofield therapies", "Chiropractic": "licensed doctors of chiropractic",
+               "Herbalism": "herbalists and educators", "Farms": "growers and CSAs", "Grocers": "local and co-op stores"}
+
 def shell(title, desc, path, body, view="", extra_head=""):
     """Wrap page content in the shared chrome. `path` is the canonical URL path."""
-    # "Find a provider" opens a menu of the three ways in; the rest are plain links.
-    find_links = [("/practice-types/", "By discipline"),
-                  ("/locations/", "By location")]
-    find_active = (any(path.startswith(h) for h, _ in find_links)
-                   or path.startswith("/directory/"))
-    submenu = "".join(
-        f'<li><a href="{h}"{" aria-current=\"page\"" if path.startswith(h) else ""}>{t}</a></li>'
-        for h, t in find_links)
-
-    nav = [("/about/", "Who we are"), ("/articles/", "Articles"),
-           ("/advertise/", "Advertise with us")]
-    navhtml = f"""<div class="nav-group">
-        <button type="button" class="nav-toggle" id="find-toggle" aria-expanded="false"
-                aria-controls="find-menu"{' data-active="1"' if find_active else ''}>
-          Find a provider <span class="caret" aria-hidden="true">&#9662;</span>
-        </button>
-        <ul class="nav-menu" id="find-menu">{submenu}</ul>
-      </div>""" + "".join(
-        f'<a href="{h}"{" aria-current=\"page\"" if path.startswith(h) else ""}>{t}</a>'
-        for h, t in nav)
-
+    links = [("/directory/", "Find care"), ("/practice-types/", "Disciplines"),
+             ("/verification/", "How we verify"), ("/about/", "About us"),
+             ("/articles/", "Articles")]
+    def cur(h):
+        hit = path.startswith(h) or (h == "/directory/" and path.startswith(("/provider/", "/locations/")))
+        return ' aria-current="page"' if hit else ""
+    navhtml = "".join(f'<a href="{h}"{cur(h)}>{t}</a>' for h, t in links)
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -726,13 +766,13 @@ def shell(title, desc, path, body, view="", extra_head=""):
 <meta property="og:image" content="{SITE}/assets/img/share-card.jpg?v={CARD_V}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="FindWell Directory — a practitioner with a client, and the line: licensure, training, years in practice and pricing on every listing.">
+<meta property="og:image:alt" content="FindWell Directory: licensure, training, years in practice and pricing on every listing.">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="{SITE}/assets/img/share-card.jpg?v={CARD_V}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Young+Serif&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css?v={CSS_V}">
 {extra_head}
 </head>
@@ -741,13 +781,11 @@ def shell(title, desc, path, body, view="", extra_head=""):
 
 <header class="masthead">
   <div class="wrap masthead-in">
-    <a class="mark" href="/" aria-label="FindWell Directory — home">
-      {LOGO_MARKUP}
-    </a>
+    <a class="mark" href="/" aria-label="FindWell Directory, home">{LEAF_MARK}<span>FindWell</span></a>
     <button class="burger" id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
       {navhtml}
-      <a class="cta" href="/join/">Join the directory</a>
+      <a class="cta" href="/join/">List your practice</a>
     </nav>
   </div>
 </header>
@@ -757,37 +795,33 @@ def shell(title, desc, path, body, view="", extra_head=""):
 </main>
 
 <footer class="foot">
-  <div class="wrap">
-    <div class="foot-in">
-      <div>
-        <span class="foot-mark"><img src="/assets/img/logo-400.png?v={_v("assets/img/logo-400.png")}" width="965" height="289" alt="FindWell Directory" loading="lazy" decoding="async"></span>
-        <p class="foot-blurb">A network of holistic and integrative practitioners. No commissions, no listing fees, no lead-selling.</p>
-      </div>
-      <div>
-        <h4>Find care</h4>
-        <a href="/practice-types/">By discipline</a>
-        <a href="/locations/">By location</a>
-      </div>
-      <div>
-        <h4>More</h4>
-        <a href="/join/">Join the directory</a>
-        <a href="/about/">Who we are</a>
-        <a href="/articles/">Articles</a>
-        <a href="/advertise/">Advertise with us</a>
-        <a href="/verification/">What verification means</a>
-        <a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a>
-      </div>
+  <div class="wrap foot-in">
+    <div class="foot-about">
+      <span class="foot-name">FindWell</span>
+      <p>A free directory of holistic and integrative practitioners in the United States and Canada. No commissions, no listing fees, no lead selling.</p>
     </div>
-    <div class="foot-legal">
-      <span>&copy; {YEAR} FindWell Directory.</span>
-      <span>Listings are informational and are not a referral, endorsement, or medical advice.</span>
+    <div class="foot-col">
+      <a href="/directory/">Find care</a>
+      <a href="/practice-types/">Disciplines</a>
+      <a href="/locations/">Locations</a>
+      <a href="/verification/">How we verify</a>
+      <a href="/articles/">Articles</a>
+    </div>
+    <div class="foot-col">
+      <a href="/join/">List your practice</a>
+      <a href="/about/">About us</a>
+      <a href="/advertise/">Advertise with us</a>
+      <a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a>
     </div>
   </div>
+  <div class="wrap foot-legal">&copy; {YEAR} FindWell Directory. Listings are informational and are not a referral, endorsement or medical advice.</div>
 </footer>
 <script src="/assets/app.js?v={JS_V}" defer></script>
 </body>
 </html>
 """
+
+
 
 # ---------------------------------------------------------------------------
 def console_html():
@@ -819,7 +853,7 @@ def console_html():
   </form>"""
 
 def tags_html(p):
-    t = "".join(f'<a class="tag" href="/practice-types/{disc(c)["slug"]}/">{E(disc(c)["label"])}</a>'
+    t = "".join(f'<a class="tag" href="/practice-types/{disc(c)["slug"]}/">{E(friendly(c))}</a>'
                 for c in p["categories"])
     if p["telehealth"]:
         t += '<span class="tag tag-tele">Telehealth</span>'
@@ -903,42 +937,30 @@ def val(x, dash="—"):
     return E(x) if x else dash
 
 def record_html(p):
-    years = years_text(p, "yrs")
     hay = " ".join([p["name"], p["person"], p["city"], p["state"], p["zip"],
                     p["credentials"], p["training"], p["blurb"], p["licensure"]] +
-                   [disc(c)["label"] for c in p["categories"]]).lower()
-    where = f'{E(p["city"])}, {E(p["state"])} {E(p["zip"])}'
+                   [disc(c)["label"] for c in p["categories"]] +
+                   [friendly(c) for c in p["categories"]]).lower()
+    fee = fee_from(p)
+    meta = " · ".join(x for x in [E(p["person"]) if p["person"] and p["person"] != p["name"] else "",
+                                         f'{E(p["city"])}, {E(p["state"])}', since_txt(p)] if x)
     return f"""<li class="record" data-cats="{' '.join(p['categories'])}"
       data-city="{E(p['city'])}" data-state="{p['state']}" data-tele="{1 if p['telehealth'] else 0}"
       data-lat="{p['lat']}" data-lng="{p['lng']}" data-since="{p['since']}"
       data-name="{E(p['name'])}" data-text="{E(hay)}">
-    <article class="record-in">
-      <div class="record-head">
-        {avatar(p)}
-        <div>
-          <h3 class="record-name"><a href="/provider/{p['slug']}/">{E(p['name'])}</a></h3>
-          <p class="record-person"><b>{E(p['person'])}</b></p>
-          <p class="record-where">{where} <span class="record-dist"></span></p>
-          {tags_html(p)}
-        </div>
+    <article class="rec">
+      {avatar(p)}
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/{p['slug']}/">{E(p['name'])}</a></h3>
+        <p class="rec-meta">{meta} <span class="record-dist"></span></p>
+        <p class="rec-blurb">{E((p.get('blurb') or '')[:170])}{'…' if len(p.get('blurb') or '') > 170 else ''}</p>
+        <div class="fw-tags">{chips_html(p, 3)}{verify_tag(p)}</div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="{'' if (p['credentials'] or '').strip() not in ('', '—') else 'na'}">{val(p['credentials'])}</dd>
-        <dt>Licensure</dt><dd>{val(p['licensure'])}</dd>
-        {integrative_row(p)}
-        <dt>In practice</dt><dd>{years}</dd>
-        <dt>Fees</dt><dd>{val(p['pricing'])}</dd>
-        <dt>Insurance</dt><dd>{E(p['insurance'])}</dd>
-      </dl>
-      <div class="record-verify">{verification_line(p)}</div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/{p['slug']}/">Full record</a>
-        {f'<a class="btn btn-ghost btn-sm" href="tel:{"".join(ch for ch in p["phone"] if ch.isdigit())}">{E(p["phone"])}</a>' if p["phone"] else ""}
-        <a class="btn btn-ghost btn-sm" href="mailto:{E(p['email'])}">Email</a>
-        {f'<a class="btn btn-ghost btn-sm" href="{E(p["website"])}" target="_blank" rel="noopener">Website</a>' if p["website"] else ""}
-      </div>
+      {f'<div class="rec-fee"><span class="rec-fee-n">{E(fee)}</span><span class="rec-fee-l">from</span></div>' if fee else ''}
     </article>
   </li>"""
+
+
 
 # ---------------------------------------------------------------------------
 # Direction A (Oct 2026): practitioner-forward home and listing pages.
@@ -1011,119 +1033,147 @@ HERO_FIGURE = f"""<picture>
            width="1400" height="875" alt="A practitioner smiling in a sunlit practice room" fetchpriority="high">
     </picture>"""
 
+def page_head(h1, lede="", trail=None, h1_html=None):
+    """The sage band at the top of every inner page: crumbs, heading, a line of
+    introduction, and a faint leaf drawing."""
+    crumbs = crumbs_html(trail) if trail else ""
+    return f"""  <section class="pg-head">
+    {LEAF_VEIN.replace('<svg ', '<svg class="pg-leaf" ', 1)}
+    <div class="wrap pg-head-in">
+      {crumbs}
+      <h1>{h1_html or E(h1)}</h1>
+      {f'<p class="pg-lede">{lede}</p>' if lede else ''}
+    </div>
+  </section>"""
+
+
+def verify_tag(p):
+    """Short honey-coloured tag for cards. Nothing at all when unconfirmed."""
+    v = p.get("verification")
+    if not (v and v.get("source")):
+        return ""
+    src = v["source"]
+    lic = re.search(r"(?i)board of (examiners|chiropractic|medicine|nursing|behavioral|registration|osteopathic)|"
+                    r"acupuncture board|massage therapy board|department of health|dca licen|medical board|"
+                    r"naturopathic physicians", src)
+    return f'<span class="fw-tag fw-tag-ok">{"License confirmed" if lic else "Credentials confirmed"}</span>'
+
+
+def chips_html(p, n=3):
+    t = "".join(f'<span class="fw-tag">{E(friendly(c))}</span>' for c in p["categories"][:n])
+    if p["telehealth"]:
+        t += '<span class="fw-tag">Telehealth</span>'
+    return t
+
+
+def fee_from(p):
+    m = re.search(r"\$\s?\d[\d,]*(?:\.\d\d)?", p.get("pricing") or "")
+    return m.group(0).replace(" ", "") if m else ""
+
+
+def since_txt(p):
+    try:
+        y = int(p.get("since"))
+        return f"Since {y}" if 1900 < y <= YEAR else ""
+    except (TypeError, ValueError):
+        return ""
+
+
+def wide_card(p):
+    meta = " · ".join(x for x in [E(p["person"]) if p["person"] and p["person"] != p["name"] else "",
+                                         f'{E(p["city"])}, {E(p["state"])}', since_txt(p)] if x)
+    return f"""<a class="fw-card" href="/provider/{p['slug']}/">
+        {avatar(p)}
+        <span class="fw-card-body">
+          <span class="fw-card-name">{E(p['name'])}</span>
+          <span class="fw-card-meta">{meta}</span>
+          <span class="fw-tags">{chips_html(p, 2)}{verify_tag(p)}</span>
+        </span>
+      </a>"""
+
+
 def page_home():
-    feat = _featured()
-    seeds = [p for p in PROVIDERS if p["slug"] in SEED_SLUGS]
     approved = [p for p in PROVIDERS if p["slug"] not in SEED_SLUGS]
     recent = [p for p in reversed(approved) if _has_logo(p)][:6]
     if len(recent) < 6:
-        recent += [p for p in reversed(approved + seeds) if p not in recent][:6 - len(recent)]
+        recent += [p for p in reversed(PROVIDERS) if p not in recent][:6 - len(recent)]
+    faces = [p for p in PROVIDERS if _has_logo(p) and (p.get("logo") or "").startswith("/")
+             and (p.get("verification") or {}).get("source")][:4]
     whereopts = "".join(f'<option value="{E(state_name(ab))}">' for ab in STATES)
-
     live = [d for d in DISCIPLINES if cat_count(d["key"])]
-    tiles = [d for d in live if (d.get("img") or "").startswith("/assets/img/disciplines/")]
-    rest = [d for d in live if d not in tiles]
-    tiles_html = "".join(
-        f'<a class="ha-tile" href="/practice-types/{d["slug"]}/">'
-        f'{img_tag(d["img"], "", "(max-width:700px) 46vw, 230px", widths=(500, 750))}'
-        f'<span class="ha-tile-name">{E(d["label"])}</span>'
-        f'<span class="ha-tile-n">{cat_count(d["key"])} listed</span></a>' for d in tiles)
-    rest_html = "".join(
-        f'<a class="ha-pill" href="/practice-types/{d["slug"]}/">{E(d["label"])} '
-        f'<span class="n">{cat_count(d["key"])}</span></a>' for d in rest)
-    popular = [d for d in live if d["key"] in ("Ayurveda", "Acupuncture", "Nutrition")]
-    popular_html = "".join(f'<a class="ha-pill" href="/practice-types/{d["slug"]}/">{E(d["label"])}</a>'
-                           for d in popular)
-
-    feat_html = ""
-    sample_html = ""
-    if feat:
-        feat_html = f"""<a class="ha-feature" href="/provider/{feat['slug']}/">
-        <span class="ha-eyebrow">Featured practitioner</span>
-        <span class="ha-card-head">{avatar(feat)}<span class="ha-card-id">
-          <span class="ha-card-name">{E(feat['name'])}</span>
-          <span class="ha-card-person">{E(feat['person'])} &middot; {E(feat['city'])}, {E(feat['state'])}</span></span></span>
-        <span class="ha-feature-verify">{verify_short(feat)}</span>
-      </a>"""
-        fees = fee_items(feat)
-        rows = [("Licensure", feat.get("licensure")), ("Training", feat.get("training")),
-                ("In practice", years_text(feat, "years")), ("Fees", fees[0] if fees else ""),
-                ("Insurance", feat.get("insurance"))]
-        sample_html = "".join(f'<div class="ha-rec-row"><span class="k">{k}</span><span>{val(v)}</span></div>'
-                              for k, v in rows)
-
-    body = f"""  <section class="ha-hero">
-    <div class="wrap ha-hero-in">
-      <div class="ha-hero-copy rise rise-1">
-        <p class="ha-eyebrow">A free directory of holistic practitioners</p>
-        <h1>Meet the practitioner <em>before</em> you book.</h1>
-        <p class="ha-lede">Every listing shows licensure, training, years in practice, what a visit costs and whether insurance applies, in the same place every time.</p>
-        <form class="ha-search" id="console" action="/directory/" method="get">
-          <label class="ha-field"><span>What</span>
-            <input id="c-q" name="q" type="search" placeholder="Ayurveda, acupuncture, a name"></label>
-          <label class="ha-field"><span>Where</span>
+    tiles = [d for d in live if (d.get("img") or "").startswith("/assets/img/disciplines/")][:5]
+    circles = "".join(
+        f'<a class="fw-circle" href="/practice-types/{d["slug"]}/">'
+        f'{img_tag(d["img"], "", "160px", widths=(500,))}<span>{E(friendly(d["key"]))}</span></a>'
+        for d in tiles)
+    more = len(DISCIPLINES) - len(tiles)
+    faces_html = "".join(avatar(p) for p in faces)
+    body = f"""  <section class="fw-hero">
+    {LEAF_VEIN.replace('<svg ', '<svg class="fw-hero-leaf" ', 1)}
+    <div class="wrap fw-hero-in">
+      <div class="fw-hero-copy rise rise-1">
+        <h1>Meet your practitioner <i>before</i> you book</h1>
+        <p class="fw-hero-lede">Holistic and integrative care, with training, fees and licenses laid out plainly, so you can choose with confidence.</p>
+        <form class="fw-search" id="console" action="/directory/" method="get">
+          <label class="fw-search-f"><span>What kind of care?</span>
+            <input id="c-q" name="q" type="search" placeholder="Ayurveda, acupuncture, nutrition"></label>
+          <span class="fw-search-div" aria-hidden="true"></span>
+          <label class="fw-search-f"><span>Where?</span>
             <input id="c-loc" name="where" type="text" placeholder="City, state or ZIP" list="where-list"></label>
           <datalist id="where-list">{whereopts}</datalist>
-          <button class="btn btn-primary ha-go" type="submit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Search</button>
-          <div class="ha-popular"><span>Popular:</span>{popular_html}<a class="ha-pill" href="/directory/?tele=1">Telehealth</a>
-            <button type="button" class="ha-pill" data-near="1">Use my location</button></div>
+          <button class="fw-search-go" type="submit">Search</button>
         </form>
+        <div class="fw-faces"><span class="fw-faces-row">{faces_html}</span>
+          <span>{len(PROVIDERS)} practitioners in {len(STATES)} states, and growing
+          &middot; <button type="button" class="fw-linkbtn" data-near="1" form="console">Use my location</button></span></div>
       </div>
-      <div class="ha-hero-art rise rise-2">
+      <div class="fw-hero-art rise rise-2">
         {HERO_FIGURE}
-        {feat_html}
+        {SPRIG.replace('<svg ', '<svg class="fw-hero-sprig" ', 1)}
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap">
-      <div class="ha-head"><h2>Recently joined</h2><a href="/directory/">See all {len(PROVIDERS)} practitioners</a></div>
-      <div class="ha-cards">{"".join(card_html(p) for p in recent)}</div>
+  <section class="wrap fw-sec fw-center">
+    <h2>What kind of care are you looking for?</h2>
+    <p class="fw-sub">{len(DISCIPLINES)} disciplines, each with its own page.</p>
+    <div class="fw-circles">{circles}
+      <a class="fw-circle" href="/practice-types/"><span class="fw-circle-more">and {more} more</span><span>See all</span></a>
     </div>
   </section>
 
-  <section class="section ha-tight-top">
-    <div class="wrap">
-      <div class="ha-head"><h2>Browse by discipline</h2><a href="/practice-types/">All {len(live)} disciplines</a></div>
-      <div class="ha-tiles">{tiles_html}</div>
-      <div class="ha-pills">{rest_html}</div>
+  <section class="wrap fw-sec">
+    <div class="fw-head"><h2>Recently joined</h2><a href="/directory/">See all practitioners</a></div>
+    <div class="fw-cards">{"".join(wide_card(p) for p in recent)}</div>
+  </section>
+
+  <section class="fw-band">
+    <div class="wrap fw-promises">
+      <div>{SPRIG_SMALL}<h3>Checked where it counts</h3>
+        <p>Licenses are confirmed with the state board that issued them, and the listing says when.</p></div>
+      <div>{LEAF_PAIR}<h3>Honest about every tradition</h3>
+        <p>Where a discipline has no license, we show training and certification instead, and say so plainly.</p></div>
+      <div>{BUD}<h3>Nothing in between</h3>
+        <p>You contact the practice directly. No commissions, no fees and no one paying for your details.</p></div>
     </div>
   </section>
 
-  <section class="ha-facts">
-    <div class="wrap ha-facts-in">
-      <div class="ha-facts-copy">
-        <h2>The same facts, on every listing</h2>
-        <p>There is no central record for care outside insurance, so a first appointment is often a guess. We ask every practitioner the same questions and check licences with the issuing board. Where a discipline has no licence, we say so plainly.</p>
-        <p><a href="/verification/">What verification means here</a></p>
-      </div>
-      <div class="ha-rec">{sample_html}</div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap ha-duo">
-      <div class="ha-duo-card">
-        <p class="ha-eyebrow">For patients</p>
-        <h3>Contact goes straight to the practice</h3>
-        <p>Phone, email and website on every listing. Nothing routes through us, and nobody pays for your details.</p>
-        <a class="btn btn-dark" href="/directory/">Find a practitioner</a>
-      </div>
-      <div class="ha-duo-card ha-duo-dark">
-        <p class="ha-eyebrow">For practitioners</p>
-        <h3>Listing is free, and always will be</h3>
-        <p>No paid placement and no leads sold. The application takes about ten minutes, and we confirm your licence with the board.</p>
-        <a class="btn btn-primary" href="/join/">Join the directory</a>
-      </div>
+  <section class="wrap fw-sec">
+    <div class="fw-invite">
+      {SPRIG.replace('<svg ', '<svg class="fw-invite-sprig" ', 1)}
+      <div><h2>Are you a practitioner?</h2>
+        <p>Listing is free and always will be. No paid placement, no leads sold. It takes about ten minutes.</p></div>
+      <a class="btn btn-primary btn-lg" href="/join/">List your practice</a>
     </div>
   </section>"""
-    return shell("FindWell Directory — trusted holistic practitioners",
-                 "A searchable directory of vetted holistic and integrative practitioners. Filter by discipline, city or distance. Licensure, training, years in practice and pricing on every record.",
+    return shell("FindWell Directory — holistic practitioners you can check",
+                 "A free directory of holistic and integrative practitioners. Licensure, training, years in practice and pricing on every listing.",
                  "/", body, view="home",
                  extra_head=f'<link rel="preload" as="image" href="/assets/img/hero-1400.webp?v={IMG_V}" '
                             f'imagesrcset="/assets/img/hero-900.webp?v={IMG_V} 900w, /assets/img/hero-1400.webp?v={IMG_V} 1400w" '
-                            f'imagesizes="(max-width:900px) 100vw, 560px" type="image/webp">')
+                            f'imagesizes="(max-width:900px) 100vw, 470px" type="image/webp">')
+
+
 
 def crumbs_html(trail):
     """trail is [(label, href or None), ...]; the last item is the current page."""
@@ -1133,11 +1183,6 @@ def crumbs_html(trail):
 def page_directory(subset=None, title=None, desc=None, path="/directory/", heading=None,
                    intro="", trail=None, footer_link=None, current=None):
     rows = subset if subset is not None else PROVIDERS
-    # Every discipline is listed, so the filter also shows what the directory
-    # covers. Ones with nothing in them yet are dimmed and cannot be ticked,
-    # so nobody filters their way into an empty page.
-    # One discipline at a time. On a discipline's own page, choosing another
-    # goes to that discipline's page rather than narrowing this one.
     def _href(d):
         if not current:
             return ""
@@ -1146,46 +1191,44 @@ def page_directory(subset=None, title=None, desc=None, path="/directory/", headi
         f'<label class="check{"" if cat_count(d["key"]) else " check-empty"}">'
         f'<input type="checkbox" data-cat="{d["key"]}"{_href(d)}'
         f'{" checked" if d["key"] == current else ""}'
-        f'{"" if cat_count(d["key"]) else " disabled"}> {E(d["label"])}'
+        f'{"" if cat_count(d["key"]) else " disabled"}> {E(friendly(d["key"]))}'
         f'<span class="n">{cat_count(d["key"])}</span></label>'
         for d in DISCIPLINES)
     stateopts = "".join(
         f'<option value="{ab}">{E(state_name(ab))} ({len(in_state(ab))})</option>'
         for ab in STATES)
-    body = f"""  <div class="wrap">
-    {crumbs_html(trail or [("Home", "/"), (heading or "Directory", None)])}
-    <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin:.6rem 0 1.4rem">{E(heading or 'Provider directory')}</h1>
-    {f'<p class="lede" style="margin:-.8rem 0 1.8rem">{E(intro)}</p>' if intro else ''}
-    <div class="dir">
+    body = f"""{page_head(heading or 'Find care', E(intro) if intro else 'Every practitioner in the directory. Narrow it down by kind of care, place, or telehealth.', trail or [("Home", "/"), (heading or "Find care", None)])}
+  <div class="wrap dir">
       <aside class="rail" id="rail">
-        <button class="rail-toggle" id="rail-toggle" aria-expanded="false">Filters<span>▾</span></button>
+        <button class="rail-toggle" id="rail-toggle" aria-expanded="false">Narrow it down<span aria-hidden="true">&#9662;</span></button>
         <div class="rail-body">
-          <div class="field" style="margin-bottom:1.6rem">
-            <label for="f-q">Keyword</label>
-            <input class="control" id="f-q" type="search" placeholder="Name, condition, credential">
+          <p class="rail-title">Narrow it down</p>
+          <div class="field">
+            <label for="f-q">Name or keyword</label>
+            <input class="control" id="f-q" type="search" placeholder="e.g. digestion, sciatica">
           </div>
-          <fieldset><legend>Discipline</legend>{checks}</fieldset>
+          <fieldset><legend>Kind of care</legend>{checks}</fieldset>
           <fieldset><legend>State</legend>
             <select class="control" id="f-state"><option value="">All states</option>{stateopts}</select>
           </fieldset>
           <fieldset><legend>Distance</legend>
             <input class="control" id="f-zip" type="text" inputmode="numeric" placeholder="ZIP code">
-            <label class="lbl" for="f-radius" style="margin-top:.7rem">Within 50 miles</label>
-            <input id="f-radius" type="range" min="5" max="500" step="5" value="50" style="width:100%;accent-color:var(--brand)">
-            <button class="btn btn-ghost btn-sm" id="f-near" style="width:100%;margin-top:.6rem">Use my location</button>
+            <label class="lbl" for="f-radius">Within 50 miles</label>
+            <input id="f-radius" type="range" min="5" max="500" step="5" value="50">
+            <button class="btn btn-ghost btn-sm" id="f-near" type="button">Use my location</button>
             <p class="hint" id="geo-msg"></p>
           </fieldset>
-          <fieldset><legend>Format</legend>
+          <fieldset><legend>Show only</legend>
             <label class="check"><input type="checkbox" id="f-tele"> Offers telehealth</label>
           </fieldset>
-          <button class="btn btn-ghost btn-sm" id="f-clear" style="width:100%">Clear all filters</button>
+          <button class="btn btn-ghost btn-sm" id="f-clear" type="button">Clear all filters</button>
         </div>
       </aside>
-      <section>
+      <section class="dir-main">
         <div class="results-bar">
           <p class="results-count" aria-live="polite"><b id="count">{len(rows)}</b> <span id="count-word">{'practitioner' if len(rows) == 1 else 'practitioners'}</span><span id="count-where"></span></p>
           <div class="sort">
-            <label for="f-sort">Sort</label>
+            <label for="f-sort">Sort by</label>
             <select class="control" id="f-sort">
               <option value="name">Name</option>
               <option value="years">Years in practice</option>
@@ -1193,67 +1236,61 @@ def page_directory(subset=None, title=None, desc=None, path="/directory/", headi
             </select>
           </div>
         </div>
-        <p class="results-note">Every listing states how its credentials were established — checked with the issuing board, or as reported by the practitioner. <a href="/verification/">What that means</a>.</p>
         <div class="active-filters" id="active-filters"></div>
         <ul class="records" id="records">{"".join(record_html(p) for p in rows)}</ul>
+        <p class="results-note">Every listing says how its credentials were established: checked with the issuing board, or as reported by the practitioner. <a href="/verification/">What that means</a></p>
         {f'<p class="back-link"><a href="{footer_link[1]}">&larr; {E(footer_link[0])}</a></p>' if footer_link else ''}
-        <div class="empty" id="empty" hidden style="margin-top:2rem">
+        <div class="empty" id="empty" hidden>
           <h3>No practitioners match those filters</h3>
-          <p>Try widening the distance, removing a discipline, or searching a nearby city. Telehealth listings serve patients anywhere in their state.</p>
-          <p style="margin-top:1.2rem"><button class="btn btn-dark btn-sm" id="empty-clear">Clear filters</button></p>
+          <p>Try widening the distance, choosing another kind of care, or searching a nearby city. Many practitioners also offer telehealth.</p>
+          <p><button class="btn btn-dark btn-sm" id="empty-clear" type="button">Clear filters</button></p>
         </div>
       </section>
-    </div>
-  </div>
-  <div style="height:4rem"></div>"""
-    return shell(title or "Provider directory — FindWell Directory",
+  </div>"""
+    return shell(title or "Find care — FindWell Directory",
                  desc or "Every practitioner in the FindWell Directory, filterable by discipline, city, distance and telehealth availability.",
                  path, body, view="directory")
 
+
+
 def page_practice_types():
-    tiles = ""
+    cards = ""
     for d in DISCIPLINES:
         n = cat_count(d["key"])
-        frame = (f'<div class="tile-frame">{img_tag(d["img"], "", "(max-width:700px) 92vw, 320px", widths=(500, 750, 1000))}</div>'
-                 if d["img"] else f'<div class="tile-frame blank">{E(d["label"])}</div>')
-        go = (f'<span class="tile-go">View providers <span class="n">{n}</span> \u2192</span>'
-              if n else '<span class="tile-go none">No listings yet</span>')
-        tiles += f"""<li><a class="tile" href="/practice-types/{d['slug']}/">
-        {frame}<h3>{E(d['label'])}</h3><p>{E(d['note'])}</p>{go}</a></li>"""
-    body = f"""  <div class="wrap">
-    {crumbs_html([("Home", "/"), ("Find a practitioner", None)])}
-    <div class="section-tight">
-      <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Choose the type of practice</h1>
-      <p class="lede">Licensure varies by discipline. Where a profession is state licensed, the license number appears on the record. Where it is not, we publish training and certification instead — and say so plainly. <a href="/verification/">What verification means here</a>.</p>
-      <ul class="tiles">{tiles}</ul>
-    </div>
-  </div>
-  <div class="wrap" style="margin-top:.4rem">{console_html()}</div>
-  <div style="height:3rem"></div>"""
-    return shell("Browse by discipline \u2014 FindWell Directory",
-                 "Browse holistic practitioners by discipline: Ayurveda, acupuncture, TCM, integrative and functional medicine, chiropractic, body work, energy work, herbology and more.",
+        art = (img_tag(d["img"], "", "96px", widths=(500,)) if (d.get("img") or "").startswith("/assets/img/disciplines/")
+               else f'<span class="fw-icon">{DISC_ICONS.get(d["key"], SPRIG_SMALL)}</span>')
+        if n:
+            cards += f"""<a class="fw-disc" href="/practice-types/{d['slug']}/">{art}<span>
+          <span class="fw-disc-name">{E(friendly(d['key']))}</span>
+          <span class="fw-disc-sub">{n} practitioner{'s' if n != 1 else ''} &middot; {E(DISC_BLURBS.get(d['key'], ''))}</span></span></a>"""
+        else:
+            cards += f"""<div class="fw-disc fw-disc-soon">{art}<span>
+          <span class="fw-disc-name">{E(friendly(d['key']))}</span>
+          <span class="fw-disc-sub">Coming soon</span></span></div>"""
+    body = f"""{page_head("Every kind of care we list", f"{len(DISCIPLINES)} disciplines, from Ayurveda to your local farm. Choose one to see everyone who practises it.", [("Home", "/"), ("Disciplines", None)])}
+  <section class="wrap fw-sec"><div class="fw-discs">{cards}</div>
+    <p class="results-note">Licensure varies by discipline. Where a profession is licensed, we check the license with the state board. Where it is not, we show training and certification instead, and say so. <a href="/verification/">How we verify</a></p>
+  </section>"""
+    return shell("Disciplines — FindWell Directory",
+                 "Browse holistic practitioners by discipline: Ayurveda, acupuncture, Chinese medicine, nutrition, integrative medicine, chiropractic, body work, energy work, herbal medicine and more.",
                  "/practice-types/", body)
 
+
+
 def page_locations():
-    rows = ""
+    cards = ""
     for ab in STATES:
         n = len(in_state(ab))
-        rows += f"""<li><a class="index-row" href="/locations/{state_slug(ab)}/">
-        <span class="index-key">{ab}</span>
-        <span class="index-name">{E(state_name(ab))}<span class="index-sub">{E(' · '.join(cities_in(ab)))}</span></span>
-        <span class="index-n">{n}</span></a></li>"""
-    body = f"""  <div class="wrap">
-    {crumbs_html([("Home", "/"), ("Find a practitioner", "/practice-types/"), ("By location", None)])}
-    <div class="section-tight">
-      <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Browse by state</h1>
-      <p class="lede">Pick a state, then narrow by city or ZIP radius once you are there. {sum(1 for p in PROVIDERS if p['telehealth'])} listings also offer telehealth, which in most disciplines means anywhere in the state they are licensed.</p>
-      <ul class="index-list">{rows}</ul>
-    </div>
-  </div>
-  <div style="height:3rem"></div>"""
-    return shell("Browse by state — FindWell Directory",
-                 "Find holistic and integrative practitioners by state.",
-                 "/locations/", body)
+        cards += f"""<a class="fw-disc" href="/locations/{state_slug(ab)}/"><span class="fw-icon fw-icon-ab">{ab}</span><span>
+          <span class="fw-disc-name">{E(state_name(ab))}</span>
+          <span class="fw-disc-sub">{n} practitioner{'s' if n != 1 else ''} &middot; {E(', '.join(cities_in(ab))[:80])}</span></span></a>"""
+    tele = sum(1 for p in PROVIDERS if p['telehealth'])
+    body = f"""{page_head("Find care near you", f"Choose a state, then narrow by city or ZIP once you are there. {tele} practitioners also offer telehealth.", [("Home", "/"), ("Locations", None)])}
+  <section class="wrap fw-sec"><div class="fw-discs">{cards}</div></section>"""
+    return shell("Locations — FindWell Directory",
+                 "Find holistic and integrative practitioners by state.", "/locations/", body)
+
+
 
 def _social_label(u):
     host = u.split("//")[-1].replace("www.", "").split("/")[0].lower()
@@ -1269,43 +1306,41 @@ def page_provider(p):
     nearby.sort(key=lambda x: (not set(x["categories"]) & set(p["categories"]), not _has_logo(x)))
     nearby = nearby[:3]
     nearby_html = "".join(
-        f'<a class="ha-mini" href="/provider/{x["slug"]}/">{avatar(x)}<span><span class="ha-mini-name">{E(x["name"])}</span>'
-        f'<span class="ha-mini-sub">{E(", ".join(disc(c)["label"] for c in x["categories"][:2]))}</span></span></a>'
+        f'<a class="fw-mini" href="/provider/{x["slug"]}/">{avatar(x)}<span><span class="fw-mini-name">{E(x["name"])}</span>'
+        f'<span class="fw-mini-sub">{E(", ".join(friendly(c) for c in x["categories"][:2]))}</span></span></a>'
         for x in nearby)
     social = "".join(
-        f'<a href="{E(u)}" target="_blank" rel="noopener">'
-        f'{E(_social_label(u))}</a>'
+        f'<a href="{E(u)}" target="_blank" rel="noopener">{E(_social_label(u))}</a>'
         for u in p["social"] if u.startswith("http"))
     _disc = next((d for d in DISCIPLINES if d["key"] in p["categories"]), None)
-    disc_crumb = (f'<a href="/practice-types/{_disc["slug"]}/">{E(_disc["label"])}</a> / ' if _disc else "")
     phone_digits = "".join(ch for ch in (p["phone"] or "") if ch.isdigit())
     site_label = (p["website"] or "").split("//")[-1].replace("www.", "").rstrip("/")
-
     fees = fee_items(p)
     ins = (p.get("insurance") or "").strip()
-    facts = [("In practice", years.split(" (")[0] if years != "—" else "—"),
-             ("Fees", fees[0] if fees and len(fees[0]) <= 40 else ("See fees below" if fees else "Ask the practice")),
-             ("Insurance", "Accepted" if ins.lower().startswith("accepted") else (ins or "—")),
+    lead_fee = fees[0] if fees and len(fees[0]) <= 40 else ("See fees below" if fees else "Ask the practice")
+    facts = [("In practice", years.split(" (")[0] if years != "—" else "Not given"),
+             ("Fees", lead_fee),
+             ("Insurance", "Accepted" if ins.lower().startswith("accepted") else (ins or "Not given")),
              ("Telehealth", "Available" if p["telehealth"] else "In person only")]
-    facts_html = "".join(f'<div class="ha-fact"><span class="k">{k}</span><span class="v">{E(v)}</span></div>'
+    facts_html = "".join(f'<div class="fw-fact"><span class="k">{k}</span><span class="v">{E(v)}</span></div>'
                          for k, v in facts)
-
     v = p.get("verification")
     if v and v.get("source"):
         what = (v.get("what") or "").strip()
         detail = "" if re.match(r"(?i)^credentials? confirmed\b", what) else what
-        verify_html = f"""<div class="ha-verify ha-verify-ok">
-          <span class="ha-verify-ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-          <div><p class="ha-verify-t">Confirmed with {E(v['source'])}</p>
-          <p class="ha-verify-d">{E(detail) + ", " if detail else ""}checked {E(v.get('date', ''))}. <a href="/verification/">What this means</a></p></div></div>"""
+        verify_html = f"""<div class="fw-verify fw-verify-ok">{LEAF_ICON}
+          <div><p class="fw-verify-t">Confirmed with {E(v['source'])}</p>
+          <p class="fw-verify-d">{E(detail) + ", " if detail else ""}checked {E(v.get('date', ''))}. <a href="/verification/">What this means</a></p></div></div>"""
     else:
-        verify_html = """<div class="ha-verify">
-          <div><p class="ha-verify-t">As reported by the practitioner</p>
-          <p class="ha-verify-d">We publish what the practitioner told us and say so. <a href="/verification/">What this means</a></p></div></div>"""
-
-    fee_rows = "".join(f'<div class="ha-fee"><span>{E(x)}</span></div>' for x in fees) or \
-        '<div class="ha-fee"><span>Ask the practice about fees</span></div>'
-
+        verify_html = """<div class="fw-verify">
+          <div><p class="fw-verify-t">As reported by the practitioner</p>
+          <p class="fw-verify-d">We publish what the practitioner told us, and say so. <a href="/verification/">What this means</a></p></div></div>"""
+    fee_rows = "".join(f'<div class="fw-fee">{E(x)}</div>' for x in fees) or \
+        '<div class="fw-fee">Ask the practice about fees</div>'
+    integ = ""
+    if "IntegrativeMedicine" in p["categories"]:
+        iv = (p.get("integrative_training") or "").strip()
+        integ = f'<div class="fw-cred"><span class="k">Integrative training</span><span>{E(iv) if iv else "None reported"}</span></div>'
     ld = {"@context": "https://schema.org", "@type": "MedicalBusiness", "name": p["name"],
           "url": f"{SITE}/provider/{p['slug']}/", "telephone": p["phone"], "email": p["email"],
           "address": {"@type": "PostalAddress", "addressLocality": p["city"],
@@ -1313,64 +1348,69 @@ def page_provider(p):
           "description": p["blurb"]}
     if p["address"]:
         ld["address"]["streetAddress"] = p["address"].split(",")[0]
-    body = f"""  <section class="ha-prof">
-    <div class="wrap">
-      <p class="crumb"><a href="/">Home</a> / {disc_crumb}<a href="/locations/{state_slug(p['state'])}/">{E(state_name(p['state']))}</a> / {E(p['name'])}</p>
-      <div class="ha-prof-head">
+    trail = [("Home", "/")] + ([(friendly(_disc["key"]), f"/practice-types/{_disc['slug']}/")] if _disc else []) + [(p["name"], None)]
+    tags = "".join(f'<a class="fw-tag fw-tag-w" href="/practice-types/{disc(c)["slug"]}/">{E(friendly(c))}</a>' for c in p["categories"])
+    body = f"""  <section class="pg-head fw-prof">
+    {SPRIG.replace('<svg ', '<svg class="pg-leaf" ', 1)}
+    <div class="wrap pg-head-in">
+      {crumbs_html(trail)}
+      <div class="fw-prof-head">
         {avatar(p, True)}
-        <div class="ha-prof-id">
+        <div class="fw-prof-id">
           <h1>{E(p['name'])}</h1>
-          <p class="ha-prof-person">{E(p['person'])} &middot; {E(p['city'])}, {E(state_name(p['state']))}</p>
-          {tags_html(p)}
+          <p class="fw-prof-person">{E(p['person']) + ' &middot; ' if p['person'] and p['person'] != p['name'] else ''}{E(p['city'])}, {E(state_name(p['state']))}</p>
+          <div class="fw-tags">{tags}</div>
         </div>
-        <div class="ha-prof-actions">
-          {f'<a class="btn btn-primary" href="tel:{phone_digits}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Call {E(p["phone"])}</a>' if phone_digits else ""}
+        <div class="fw-prof-actions">
+          {f'<a class="btn btn-primary" href="tel:{phone_digits}">Call {E(p["phone"])}</a>' if phone_digits else ""}
           {f'<a class="btn btn-ghost" href="{E(p["website"])}" target="_blank" rel="noopener">Visit website</a>' if p["website"] else ""}
         </div>
       </div>
-      <div class="ha-facts-row">{facts_html}</div>
+      <div class="fw-facts">{facts_html}</div>
     </div>
   </section>
 
-  <div class="wrap ha-prof-body">
-    <div class="ha-prof-main">
+  <div class="wrap fw-prof-body">
+    <div class="fw-prof-main">
       {verify_html}
       <section><h2>About the practice</h2>
-        <p class="ha-bio">{E(p['blurb'])}</p>
-        {f'<p class="ha-bio ha-bio-soft">{E(p["long"])}</p>' if p['long'] else ''}
+        <p class="fw-bio">{E(p['blurb'])}</p>
+        {f'<p class="fw-bio fw-bio-soft">{E(p["long"])}</p>' if p['long'] else ''}
       </section>
       <section><h2>Fees</h2>
-        <div class="ha-fees">{fee_rows}
-          <div class="ha-fee-foot">Payment: {val((p['payments'] or '').rstrip('. '))}. Insurance: {val((p['insurance'] or '').rstrip('. '))}.</div></div>
+        <div class="fw-fees">{fee_rows}</div>
+        <p class="fw-fee-foot">Payment: {val((p['payments'] or '').rstrip('. '))}. Insurance: {val((p['insurance'] or '').rstrip('. '))}.</p>
       </section>
-      <section><h2>Practice record</h2>
-        <dl class="fields ha-record">
-          <dt>Credentials</dt><dd>{val(p['credentials'])}</dd>
-          <dt>Licensure</dt><dd>{val(p['licensure'])}</dd>
-          <dt>Training</dt><dd>{val(p['training'])}</dd>
-          {integrative_row(p)}
-          <dt>In practice</dt><dd>{years}</dd>
-          <dt>Affiliations</dt><dd>{val(p['affiliations'])}</dd>
-        </dl>
+      <section><h2>Training and credentials</h2>
+        <div class="fw-creds">
+          <div class="fw-cred"><span class="k">Credentials</span><span>{val(p['credentials'])}</span></div>
+          <div class="fw-cred"><span class="k">Licensure</span><span>{val(p['licensure'])}</span></div>
+          <div class="fw-cred"><span class="k">Training</span><span>{val(p['training'])}</span></div>
+          {integ}
+          <div class="fw-cred"><span class="k">In practice</span><span>{years}</span></div>
+          <div class="fw-cred"><span class="k">Memberships</span><span>{val(p['affiliations'])}</span></div>
+        </div>
       </section>
-      {f'<section><h2>Also in {E(p["city"])}</h2><div class="ha-minis">{nearby_html}</div></section>' if nearby else ''}
+      {f'<section><h2>Also in {E(p["city"])}</h2><div class="fw-minis">{nearby_html}</div></section>' if nearby else ''}
     </div>
-    <aside class="ha-prof-side">
-      <div class="panel ha-contact">
-        <h3>Contact the practice</h3>
-        {f'<div class="ha-c"><span class="k">Phone</span><a href="tel:{phone_digits}">{E(p["phone"])}</a></div>' if phone_digits else ""}
-        {f'<div class="ha-c"><span class="k">Email</span><a href="mailto:{E(p["email"])}">{E(p["email"])}</a></div>' if p["email"] else ""}
-        {f'<div class="ha-c"><span class="k">Website</span><a href="{E(p["website"])}" target="_blank" rel="noopener">{E(site_label)}</a></div>' if p["website"] else ""}
-        {f'<div class="ha-c"><span class="k">Address</span><span>{E(p["address"])}</span><a href="{maps}" target="_blank" rel="noopener">Open in Google Maps</a></div>' if p["address"] else '<div class="ha-c"><span class="k">Address</span><span>No public premises, visits by arrangement</span></div>'}
-        {f'<div class="ha-social">{social}</div>' if social else ""}
-        <p class="hint">FindWell takes no commission and receives nothing when you book.</p>
+    <aside class="fw-prof-side">
+      <div class="fw-contact">
+        <p class="fw-contact-t">Get in touch</p>
+        {f'<div class="fw-c"><span class="k">Phone</span><a href="tel:{phone_digits}">{E(p["phone"])}</a></div>' if phone_digits else ""}
+        {f'<div class="fw-c"><span class="k">Email</span><a href="mailto:{E(p["email"])}">{E(p["email"])}</a></div>' if p["email"] else ""}
+        {f'<div class="fw-c"><span class="k">Website</span><a href="{E(p["website"])}" target="_blank" rel="noopener">{E(site_label)}</a></div>' if p["website"] else ""}
+        {f'<div class="fw-c"><span class="k">Address</span><span>{E(p["address"])}</span><a href="{maps}" target="_blank" rel="noopener">Open in Google Maps</a></div>' if p["address"] else '<div class="fw-c"><span class="k">Address</span><span>No public premises, visits by arrangement</span></div>'}
+        {f'<div class="fw-social">{social}</div>' if social else ""}
+        <p class="fw-contact-note">FindWell takes no commission and receives nothing when you book.</p>
       </div>
-      <a class="ha-claim" href="mailto:{CONTACT_EMAIL}?subject={E(('Change to my listing: ' + p['name']).replace(' ', '%20'))}">Is this your practice? Request a change</a>
+      <a class="fw-claim" href="mailto:{CONTACT_EMAIL}?subject={E(('Change to my listing: ' + p['name']).replace(' ', '%20'))}">Is this your practice? Ask us to update it</a>
     </aside>
   </div>"""
     head = f'<script type="application/ld+json">{json.dumps(ld)}</script>'
     return shell(f"{p['name']} — {p['city']}, {p['state']} | FindWell Directory",
                  p["blurb"][:180], f"/provider/{p['slug']}/", body, extra_head=head)
+
+
 
 # --- Application form vocabulary, matching the live Squarespace form ---
 PAYMENT_METHODS = ["Insurance", "Cash", "Checks", "Credit Cards", "Debit Cards",
@@ -1404,12 +1444,9 @@ def page_join():
         '<option disabled>\u2014</option>' if c == "\u2014"
         else f'<option{" selected" if c == "United States" else ""}>{E(c)}</option>'
         for c in COUNTRIES)
-    body = f"""  <div class="wrap">
-    <p class="crumb"><a href="/">Home</a> / Join</p>
-    <div class="section-tight" style="max-width:860px">
-      <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Join the directory</h1>
-      <p class="lede">Listings are free. We publish exactly what you send \u2014 including the absence of a license where none exists for your discipline. Where we have checked a credential with the issuing board, your listing says so and names the date; where we have not, it says the details are as you reported them. <a href="/verification/">What verification means here</a>. Fields marked * are required.</p>
-
+    body = f"""{page_head("List your practice", "Listing is free and always will be. We publish exactly what you send, and where we check a credential with the issuing board, your listing says so and names the date. It takes about ten minutes.", [("Home", "/"), ("List your practice", None)])}
+  <div class="wrap join-wrap">
+    <div class="join-card">
       <div class="notice" id="join-gate" style="margin-top:2rem">
         <b>Listings are for individual practitioners.</b>
         Each listing carries one person's license, training and years in practice, which is what lets us tell a patient how those credentials were established. A practice as a whole cannot hold that, so practitioners who work together are listed side by side rather than as one entry. Practising under a business name is perfectly fine.
@@ -1444,9 +1481,14 @@ def page_join():
         <input type="hidden" name="_subject" id="j-subject" value="Directory application">
         <input type="hidden" name="Referred by" id="j-ref">
         <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+        <div class="join-progress" id="join-progress" hidden>
+          <p class="join-step-label" id="join-step-label">Step 1 of 5</p>
+          <div class="join-bar" aria-hidden="true"><span id="join-bar-fill"></span></div>
+        </div>
 
+        <div class="join-step" data-step="1" data-name="About you">
         <section class="form-section">
-          <h2>Provider name</h2>
+          <h2>Let's start with you</h2>
           <div class="form-grid">
             <div class="field"><label for="j-first">First name *</label><input class="control" id="j-first" name="First name" autocomplete="given-name" required><p class="err">Required.</p></div>
             <div class="field"><label for="j-last">Last name *</label><input class="control" id="j-last" name="Last name" autocomplete="family-name" required><p class="err">Required.</p></div>
@@ -1459,8 +1501,10 @@ def page_join():
           </div>
         </section>
 
+        </div>
+        <div class="join-step" data-step="2" data-name="Your practice">
         <section class="form-section">
-          <h2>Location</h2>
+          <h2>Where you practise</h2>
           <div class="form-grid">
             {yesno("physical", "Do you have a physical location?", "Answer No if you work from home or travel to clients.")}
             <div class="field"></div>
@@ -1479,7 +1523,7 @@ def page_join():
         </section>
 
         <section class="form-section">
-          <h2>Scope of practice</h2>
+          <h2>What you offer</h2>
           <div class="form-grid">
             <div class="field full"><span class="lbl">Which of the following best describes your services? *</span>
               <p class="hint" style="margin:-.15rem 0 .7rem">Select all that apply.</p>
@@ -1493,7 +1537,18 @@ def page_join():
         </section>
 
         <section class="form-section">
-          <h2>Credentials &amp; experience</h2>
+          <h2>Your listing page</h2>
+          <div class="form-grid">
+            <div class="field full"><label for="j-long">Give a description of your practice or business *</label>
+              <textarea class="control" id="j-long" name="Listing description" style="min-height:170px" required></textarea>
+              <p class="hint"><span id="wordcount">0</span> / 150 words. This appears on your own listing page.</p>
+              <p class="err">Required.</p></div>
+          </div>
+        </section>
+        </div>
+        <div class="join-step" data-step="3" data-name="Your training">
+        <section class="form-section">
+          <h2>Your training and credentials</h2>
           <div class="notice verify-ask">
             <p><b>Would you like your listing to show as verified?</b> It gives patients more confidence when they are choosing a practitioner. Please include your state license number and any certifications or professional affiliations, and we will confirm them with the board or organisation that issued them.</p>
             <p>If you do not have any of these, you will still be listed, and your details will show as you reported them.</p>
@@ -1517,8 +1572,10 @@ def page_join():
           </div>
         </section>
 
+        </div>
+        <div class="join-step" data-step="4" data-name="Fees">
         <section class="form-section">
-          <h2>Pricing &amp; insurance</h2>
+          <h2>Fees and payment</h2>
           <div class="form-grid">
             <div class="field full"><span class="lbl">Which of the following payments do you accept? *</span>
               <p class="hint" style="margin:-.15rem 0 .7rem">Select all that apply.</p>
@@ -1531,24 +1588,9 @@ def page_join():
           </div>
         </section>
 
-        <section class="form-section">
-          <h2>Listing description</h2>
-          <div class="form-grid">
-            <div class="field full"><label for="j-long">Give a description of your practice or business *</label>
-              <textarea class="control" id="j-long" name="Listing description" style="min-height:170px" required></textarea>
-              <p class="hint"><span id="wordcount">0</span> / 150 words. This appears on your own listing page.</p>
-              <p class="err">Required.</p></div>
-            <div class="field full"><label for="j-files">Media</label>
-              <input class="control file" id="j-files" name="Logo or headshot" type="file"
-                     accept="image/*" multiple>
-              <p class="hint">Upload your logo and/or headshot \u2014 maximum 2 images, 10 MB each. PNG or JPEG, square and 500px or larger works best.</p>
-              <p class="err" data-for="files">Choose no more than two images, 10 MB each.</p>
-              <p class="hint" id="file-list" style="margin-top:.4rem"></p></div>
-          </div>
-        </section>
 
         <section class="form-section internal">
-          <h2>Additional questions \u2014 not published</h2>
+          <h2>A few questions just for us</h2>
           <p class="hint" style="margin:-.4rem 0 1.2rem">These answers help us plan the directory. They never appear on your listing or anywhere public.</p>
           <div class="form-grid">
             <div class="field full"><label for="j-size">What is the desired size of your business or practice? *</label><textarea class="control" id="j-size" name="Desired size of practice" placeholder="Days per week, patient or customer numbers, or any other metric." required></textarea><p class="err">Required.</p></div>
@@ -1566,8 +1608,21 @@ def page_join():
           </div>
         </section>
 
+        </div>
+        <div class="join-step" data-step="5" data-name="Review and send">
         <section class="form-section">
-          <h2>Confirmation</h2>
+          <h2>Your logo or photo</h2>
+          <div class="form-grid">
+            <div class="field full"><label for="j-files">Media</label>
+              <input class="control file" id="j-files" name="Logo or headshot" type="file"
+                     accept="image/*" multiple>
+              <p class="hint">Upload your logo and/or headshot \u2014 maximum 2 images, 10 MB each. PNG or JPEG, square and 500px or larger works best.</p>
+              <p class="err" data-for="files">Choose no more than two images, 10 MB each.</p>
+              <p class="hint" id="file-list" style="margin-top:.4rem"></p></div>
+          </div>
+        </section>
+        <section class="form-section">
+          <h2>Confirm and send</h2>
           <label class="check attest" for="j-attest">
             <input type="checkbox" id="j-attest" name="Attestation" value="Agreed" required>
             <span>I confirm that the credentials, licenses, certifications and training I have
@@ -1577,11 +1632,16 @@ def page_join():
             unverified listings are published as reported by me.</span>
           </label>
           <p class="err" data-for="attest">This confirmation is required.</p>
+          <div class="join-next-note"><b>What happens next</b> We will email you to say we have your application. Amita or Emma will review it, confirm your license or certification where we can, and email you again as soon as your listing is live.</div>
         </section>
+        </div>
 
-        <div style="display:flex;gap:.7rem;flex-wrap:wrap;margin-top:2rem;align-items:center">
-          <button class="btn btn-primary" type="submit">Send</button>
+        <div class="join-nav">
+          <button class="btn btn-ghost" type="button" id="j-back" hidden>Back</button>
+          <span class="join-nav-gap"></span>
           <span class="hint" id="join-msg"></span>
+          <button class="btn btn-primary" type="button" id="j-next" hidden>Continue</button>
+          <button class="btn btn-primary" type="submit" id="j-send">Send my application</button>
         </div>
       </form>
 
@@ -1591,6 +1651,11 @@ def page_join():
         <p style="margin-top:.8rem" id="join-mail-wrap" hidden><a class="btn btn-dark btn-sm" id="join-mail" href="#">Open in email</a></p>
       </div>
     </div>
+    <aside class="join-aside">
+      {LEAF_VEIN.replace('<svg ', '<svg class="join-aside-leaf" ', 1)}
+      <div class="fw-panel fw-panel-sage"><h3>Free, always</h3><p>No paid placement and no leads sold. Patients contact you directly.</p></div>
+      <div class="fw-panel"><h3>Who can join</h3><p>Individual practitioners offering care in the United States or Canada. We do not list products.</p></div>
+    </aside>
   </div>
   <script>(function(){{
     var q=new URLSearchParams(location.search);
@@ -1632,8 +1697,7 @@ def page_join():
       }}else{{document.execCommand("copy");done();}}
     }});
     refresh();
-  }})();</script>
-  <div style="height:3rem"></div>"""
+  }})();</script>"""
     return shell("Join the directory \u2014 FindWell Directory",
                  "Practitioners: apply for a free listing in the FindWell Directory.",
                  "/join/", body, view="join")
@@ -1666,47 +1730,32 @@ ABOUT_PICTURE = f"""<picture>
         </picture>"""
 
 def page_about():
-    body = f"""  <section class="page-banner">
-    {ABOUT_BANNER}
-    <div class="wrap page-banner-in">
-      <p class="crumb banner-crumb"><a href="/">Home</a> / Who we are</p>
-      <h1>Who we are</h1>
-      <p class="page-banner-lede">Prevention, transparency, and a direct line between practitioners and the people looking for them.</p>
-    </div>
+    team = [("Amita Nathwani", "CEO"), ("Emma Vasseur", "Practitioner Liaison"), ("Sachin Bedi", "CTO")]
+    team_html = "".join(f'<div class="fw-person"><span class="fw-mono">{E(initials(n))}</span>'
+                        f'<span><span class="fw-person-name">{E(n)}</span><span class="fw-person-role">{E(r)}</span></span></div>'
+                        for n, r in team)
+    body = f"""{page_head("Who we are", "Prevention, transparency, and a direct line between practitioners and the people looking for them.", [("Home", "/"), ("About us", None)])}
+  <section class="wrap page-body">
+    <p class="fw-big">FindWell Directory was born out of a simple but urgent mission: to change the conversation around healthcare in our country. Too often, access to healing is filtered through layers of insurance systems, hidden costs, and a pharmaceutical-driven model that doesn't reflect the diverse ways people actually seek wellness. We believe health should be rooted in prevention, transparency, and the empowerment of individuals to choose what works best for their bodies and their lives.</p>
+    <p class="fw-big fw-soft">This project grew out of our work with Welliva Health, a new approach to healthcare financing that focuses on integrative and lifestyle-based care. While Welliva develops an alternative model of coverage, FindWell serves as its natural partner: a place where practitioners and patients connect directly, without middlemen. Practitioners openly share their credentials, services and pricing, and the people using the directory help us see the real needs in communities across the country.</p>
+    <a class="fw-welliva" href="https://wellivahealth.com/" target="_blank" rel="noopener"><span>Health assurance for whole-person care</span><span>wellivahealth.com &rarr;</span></a>
   </section>
-
-  <div class="wrap">
-    <div class="section-tight" style="max-width:70ch">
-      <p class="lede">FindWell Directory was born out of a simple but urgent mission: to change the conversation around healthcare in our country. Too often, access to healing is filtered through layers of insurance systems, hidden costs, and a pharmaceutical-driven model that doesn't reflect the diverse ways people actually seek wellness. We believe health should be rooted in prevention, transparency, and the empowerment of individuals to choose what works best for their bodies and their lives.</p>
-
-      <p class="lede" style="margin-top:1.1rem">This project grew out of our work with Welliva Health, a new approach to healthcare financing that focuses exclusively on integrative and lifestyle-based care rather than the conventional, pharmaceutical-dependent system. While Welliva is developing an alternative model of coverage, FindWell Directory serves as its natural partner: a platform where providers and patients can connect directly, without middlemen. Here, practitioners openly share their credentials, services, and pricing, while users of the directory help us identify the real needs in communities across the country. Together, this network builds the foundation for a healthcare landscape that values prevention, choice, and trust.</p>
-
-      <aside class="partner">
-        <a href="https://wellivahealth.com/" target="_blank" rel="noopener">
-          <img src="{WELLIVA_LOGO}" alt="Welliva Health" width="360" height="96" loading="lazy" decoding="async">
-        </a>
-        <div>
-          <p class="partner-lede">Health Assurance for whole-person care.</p>
-          <p><a class="partner-link" href="https://wellivahealth.com/" target="_blank" rel="noopener">wellivahealth.com &rarr;</a></p>
-        </div>
-      </aside>
-
-      <h2 style="font-size:1.35rem;margin:2.6rem 0 .8rem">What we verify</h2>
-      <p class="lede">For licensed professions we check the license number against the issuing board and record the date of the check. For unlicensed disciplines there is no board to check, so we record the training programme, hours and any voluntary certification, and we say plainly that no licensure exists.</p>
-
-      <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">What we don't do</h2>
-      <p class="lede">We don't evaluate clinical claims, host reviews, or vouch for outcomes. A listing here means the credentials are as stated \u2014 nothing more. Complementary care works best alongside medical care, and this directory is built on the assumption that you have a physician too.</p>
-
-      <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">Get in touch</h2>
-      <p class="lede">Questions about a listing, a partnership, or the directory itself all come to one inbox: <a href="mailto:{CONTACT_EMAIL}?subject=FindWell%20enquiry">{CONTACT_EMAIL}</a>.</p>
-
-      <p style="margin-top:2.4rem"><a class="btn btn-dark" href="/practice-types/">Find a practitioner</a></p>
+  <section class="wrap fw-sec fw-center">
+    <h2>The people behind FindWell</h2>
+    <div class="fw-team">{team_html}</div>
+  </section>
+  <section class="fw-band">
+    <div class="wrap fw-three">
+      <div class="fw-panel"><h3>What we verify</h3><p>For licensed professions we check the license number with the board that issued it and note the date. Where a discipline has no license, we record the training, the hours and any certification, and say plainly that no license exists. <a href="/verification/">More about this</a></p></div>
+      <div class="fw-panel"><h3>What we don't do</h3><p>We don't evaluate clinical claims, host reviews, or vouch for outcomes. A listing means the credentials are as stated, nothing more. Complementary care works best alongside medical care, and we assume you have a physician too.</p></div>
+      <div class="fw-panel"><h3>Get in touch</h3><p>Questions about a listing, a partnership, or the directory itself all come to one inbox: <a href="mailto:{CONTACT_EMAIL}?subject=FindWell%20enquiry">{CONTACT_EMAIL}</a>.</p></div>
     </div>
-  </div>
-  <div style="height:3rem"></div>"""
-    return shell("Who we are \u2014 FindWell Directory",
+  </section>"""
+    return shell("About us — FindWell Directory",
                  "FindWell Directory exists to change the conversation around healthcare: prevention, transparency, and direct connection between practitioners and patients. A partner project to Welliva Health.",
                  "/about/", body)
+
+
 
 ARTICLES = [
     # Add posts here, newest first. `body` is raw HTML — paragraphs, h2s, lists.
@@ -1726,123 +1775,100 @@ def page_articles():
     if ARTICLES:
         inner = f'<ul class="index-list">{"".join(article_card(a) for a in ARTICLES)}</ul>'
     else:
-        inner = """<div class="empty" style="margin-top:2.4rem">
+        inner = """<div class="empty">
         <h3>Nothing published yet</h3>
-        <p>We are writing about how to choose a practitioner, what licensure does and
-        does not guarantee, and what integrative care costs. Check back shortly.</p>
-        <p style="margin-top:1.2rem"><a class="btn btn-dark btn-sm" href="/practice-types/">Find a practitioner instead</a></p>
+        <p>We are writing about how to choose a practitioner, what a license does and does not tell you, and what integrative care costs. Check back soon.</p>
+        <p><a class="btn btn-dark btn-sm" href="/directory/">Find a practitioner instead</a></p>
       </div>"""
-    body = f"""  <div class="wrap">
-    <p class="crumb"><a href="/">Home</a> / Articles</p>
-    <div class="section-tight">
-      <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Articles</h1>
-      <p class="lede">Plain explanations of how holistic and integrative care actually works \u2014 what the credentials mean, what questions to ask, and what things cost.</p>
-      {inner}
-      <div class="notice" style="margin-top:2.6rem">
-        <b>Write for FindWell.</b>
-        Practitioners and researchers are welcome to propose a piece on credentials, costs, or how a discipline works in practice.
-        <p style="margin-top:.8rem"><a class="btn btn-dark btn-sm" href="mailto:{CONTACT_EMAIL}?subject=Article%20proposal">Propose an article</a></p>
-      </div>
+    body = f"""{page_head("Articles", "Plain explanations of how holistic and integrative care works: what the credentials mean, what to ask, and what things cost.", [("Home", "/"), ("Articles", None)])}
+  <section class="wrap page-body">
+    {inner}
+    <div class="fw-panel fw-panel-sage">
+      <h3>Write for FindWell</h3>
+      <p>Practitioners and researchers are welcome to propose a piece on credentials, costs, or how a discipline works in practice.</p>
+      <p><a class="btn btn-dark btn-sm" href="mailto:{CONTACT_EMAIL}?subject=Article%20proposal">Propose an article</a></p>
     </div>
-  </div>
-  <div style="height:3rem"></div>"""
-    return shell("Articles \u2014 FindWell Directory",
+  </section>"""
+    return shell("Articles — FindWell Directory",
                  "Plain explanations of how holistic and integrative care works: credentials, questions to ask, and what care costs.",
                  "/articles/", body)
 
+
+
 def page_article(a):
-    body = f"""  <div class="wrap">
-    <p class="crumb"><a href="/">Home</a> / <a href="/articles/">Articles</a> / {E(a['title'])}</p>
-    <article class="section-tight" style="max-width:68ch">
-      <h1 style="font-size:clamp(1.9rem,4vw,2.7rem);margin-bottom:.6rem">{E(a['title'])}</h1>
-      <p class="crumb" style="padding:0 0 1.6rem">{E(a['date'])}{' \u00b7 ' + E(a['author']) if a.get('author') else ''}</p>
-      <div class="prose">{a['body']}</div>
-      <p style="margin-top:2.4rem"><a class="btn btn-dark" href="/articles/">All articles</a></p>
-    </article>
-  </div>
-  <div style="height:3rem"></div>"""
-    return shell(f"{a['title']} \u2014 FindWell Directory",
+    body = f"""{page_head(a['title'], E(a['date']) + (' &middot; ' + E(a['author']) if a.get('author') else ''), [("Home", "/"), ("Articles", "/articles/"), (a['title'], None)])}
+  <article class="wrap page-body prose">{a['body']}
+    <p><a class="btn btn-dark" href="/articles/">All articles</a></p>
+  </article>"""
+    return shell(f"{a['title']} — FindWell Directory",
                  a.get('summary', '')[:180], f"/articles/{a['slug']}/", body)
 
+
+
 def page_advertise():
-    body = f"""  <div class="wrap">
-    <p class="crumb"><a href="/">Home</a> / Advertise with us</p>
-    <div class="section-tight" style="max-width:70ch">
-      <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Advertise with us</h1>
-      <p class="lede">FindWell reaches people at the moment they are choosing a practitioner \u2014 comparing credentials, weighing cost, deciding who to call. If you serve that audience, we would like to hear from you.</p>
-
-      <h2 style="font-size:1.35rem;margin:2.6rem 0 .8rem">What we will never sell</h2>
-      <p class="lede">Placement in the directory. Listings are free, ordered by relevance and distance, and no practitioner can pay to rank higher, appear first, or be marked as recommended. We do not sell leads or share the contact details of people using the site. That rule is the reason the directory is worth advertising in at all, and it is not for sale.</p>
-
-      <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">What is available</h2>
-      <ul class="split-list">
-        <li><strong>Sponsored articles.</strong> Clearly labelled, editorially reviewed, and written to be useful rather than promotional.</li>
-        <li><strong>Display placements.</strong> On article pages and discipline pages, visually distinct from listings.</li>
-        <li><strong>Partnerships.</strong> Schools, professional associations, labs, dispensaries, and insurers building something aligned with integrative care.</li>
-      </ul>
-
-      <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">Get in touch</h2>
-      <p class="lede">Tell us who you are trying to reach and we will tell you honestly whether our audience is a fit. Rates depend on placement and season.</p>
-      <p style="margin-top:1.6rem">
-        <a class="btn btn-primary" href="mailto:{CONTACT_EMAIL}?subject=Advertising%20enquiry">Email us about advertising</a>
-      </p>
+    body = f"""{page_head("Advertise with us", "FindWell reaches people at the moment they are choosing a practitioner: comparing credentials, weighing cost, deciding who to call. If you serve that audience, we would like to hear from you.", [("Home", "/"), ("Advertise with us", None)])}
+  <section class="wrap page-body">
+    <div class="fw-panel fw-panel-honey">
+      <h2>What we will never sell</h2>
+      <p>Placement in the directory. Listings are free, ordered by relevance and distance, and no practitioner can pay to rank higher, appear first, or be marked as recommended. We do not sell leads or share the contact details of people using the site. That rule is the reason the directory is worth advertising in at all, and it is not for sale.</p>
     </div>
-  </div>
-  <div style="height:3rem"></div>"""
-    return shell("Advertise with us \u2014 FindWell Directory",
-                 "Reach people at the moment they are choosing a holistic practitioner. Sponsored articles, display placements and partnerships \u2014 never paid placement in the directory.",
+    <h2>What is available</h2>
+    <div class="fw-three fw-three-tight">
+      <div class="fw-panel"><h3>Sponsored articles</h3><p>Clearly labelled, editorially reviewed, and written to be useful rather than promotional.</p></div>
+      <div class="fw-panel"><h3>Display placements</h3><p>On article pages and discipline pages, set apart from listings.</p></div>
+      <div class="fw-panel"><h3>Partnerships</h3><p>Schools, professional associations, labs and insurers building something aligned with integrative care.</p></div>
+    </div>
+    <h2>Get in touch</h2>
+    <p>Tell us who you are trying to reach and we will tell you honestly whether our audience is a fit. Rates depend on placement and season.</p>
+    <p><a class="btn btn-primary" href="mailto:findwelldirectory@gmail.com?subject=Advertising%20enquiry">Email us about advertising</a></p>
+  </section>"""
+    return shell("Advertise with us — FindWell Directory",
+                 "Reach people at the moment they are choosing a holistic practitioner. Sponsored articles, display placements and partnerships, never paid placement in the directory.",
                  "/advertise/", body)
 
+
+
 def page_verification():
-    body = """  <div class="wrap">
-    <p class="crumb"><a href="/">Home</a> / What verification means</p>
-    <div class="section-tight" style="max-width:70ch">
-      <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">What verification means here</h1>
-      <p class="lede">Every listing says plainly how its credentials were established. There are two states, and neither is a badge.</p>
+    body = f"""{page_head("How we verify", "Every listing says plainly how its credentials were established. There are two states, and you will see one of them on every listing.", [("Home", "/"), ("How we verify", None)])}
+  <section class="wrap page-body">
+    <div class="fw-verify fw-verify-ok">{LEAF_ICON}<div>
+      <p class="fw-verify-t">Confirmed with the Arizona Acupuncture Board of Examiners</p>
+      <p class="fw-verify-d">License AC-4821, checked 25 Aug 2026.</p></div></div>
+    <p>We checked directly with the body that issued the credential, and we name that body and the date we checked. A credential can lapse after a check, which is why the date is there.</p>
+    <div class="fw-verify"><div>
+      <p class="fw-verify-t">As reported by the practitioner</p>
+      <p class="fw-verify-d">We publish what the practitioner told us, and say so.</p></div></div>
+    <p>The practitioner told us their credentials and we published what they said. This is a normal, lasting state for a listing here, not a queue we are working through.</p>
 
-      <div class="verify-example">
-        <p class="verify verify-reported"><b>As reported by the practitioner.</b> Not independently verified.</p>
-        <p>The practitioner told us their credentials and we published what they said. We have not checked it with anyone. This is a normal, permanent state for a listing here \u2014 not a queue we are working through.</p>
-      </div>
-
-      <div class="verify-example">
-        <p class="verify verify-confirmed"><b>License AC-4821 confirmed</b> with the Arizona Acupuncture Board of Examiners, 25 Aug 2026.</p>
-        <p>We checked directly with the body that issued the credential, and we name that body and the date we checked. A credential can lapse after a check, which is why the date is there.</p>
-      </div>
-
-      <h2 style="font-size:1.35rem;margin:2.6rem 0 .8rem">Three things people confuse</h2>
-      <ul class="split-list">
-        <li><strong>A state license</strong> is issued by a government board that can revoke it. Naturopathic physicians, acupuncturists, chiropractors, counselors and massage therapists are licensed in Arizona. A license number can be checked against the issuing board by anyone, including you.</li>
-        <li><strong>A certification</strong> comes from a private body with its own training requirements and assessment \u2014 NAMA board certification in Ayurveda, NBC-HWC for health coaches. Real, and meaningful, but no government stands behind it and nobody can be struck off a public register.</li>
-        <li><strong>A membership</strong> is something you join, usually by paying. It is not a credential, and we do not treat it as one, whatever it is called.</li>
-      </ul>
-
-      <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">Disciplines with no license at all</h2>
-      <p class="lede">Ayurveda, herbalism, energy work and end-of-life support have no state licensure anywhere in the United States. That is not a gap in our checking \u2014 there is no register to check. For those listings we publish the training programme, the hours and any voluntary certification, and we say that no licensure exists.</p>
-
-      <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">What practitioners agree to</h2>
-      <p class="lede">Everyone who applies confirms that the credentials they give us are accurate and current, and agrees to tell us if anything changes, lapses or is suspended. If you believe a listing is inaccurate, <a href="mailto:info@findwelldirectory.com?subject=Listing%20query">tell us</a> and we will look into it.</p>
-
-      <h2 style="font-size:1.35rem;margin:2.4rem 0 .8rem">What a listing is not</h2>
-      <p class="lede">A listing is not a referral, a recommendation, or a judgement about anyone's competence. We publish credentials as stated and, where we have checked them, we say who with and when. Choosing a practitioner remains yours to do.</p>
-
-      <p style="margin-top:2.4rem"><a class="btn btn-dark" href="/practice-types/">Find a practitioner</a></p>
+    <h2>Three things people confuse</h2>
+    <div class="fw-three fw-three-tight">
+      <div class="fw-panel">{SPRIG_SMALL}<h3>A state license</h3><p>Issued by a government board that can revoke it. Acupuncturists, chiropractors, naturopathic doctors, counselors and massage therapists are licensed. Anyone can check a license number with the board, including you.</p></div>
+      <div class="fw-panel">{LEAF_PAIR}<h3>A certification</h3><p>Comes from a private body with its own training and assessment, such as NAMA board certification in Ayurveda or NBC-HWC for health coaches. Real and meaningful, though no government stands behind it.</p></div>
+      <div class="fw-panel">{BUD}<h3>A membership</h3><p>Something you join, usually by paying. It is not a credential, and we do not treat it as one, whatever it is called.</p></div>
     </div>
-  </div>
-  <div style="height:3rem"></div>"""
-    return shell("What verification means \u2014 FindWell Directory",
-                 "How credentials on the FindWell Directory are established: what we check, what we don't, and the difference between a state license, a certification and a paid membership.",
+
+    <h2>Disciplines with no license at all</h2>
+    <p>Ayurveda, herbalism, energy work and end-of-life support have no state licensure anywhere in the United States. That is not a gap in our checking, because there is no register to check. For those listings we publish the training, the hours and any certification, and we say that no license exists.</p>
+
+    <h2>What practitioners agree to</h2>
+    <p>Everyone who applies confirms that the credentials they give us are accurate and current, and agrees to tell us if anything changes, lapses or is suspended. If you believe a listing is inaccurate, <a href="mailto:{CONTACT_EMAIL}?subject=Listing%20query">tell us</a> and we will look into it.</p>
+
+    <h2>What a listing is not</h2>
+    <p>A listing is not a referral, a recommendation, or a judgement about anyone's competence. We publish credentials as stated and, where we have checked them, we say who with and when. Choosing a practitioner remains yours to do.</p>
+    <p><a class="btn btn-dark" href="/directory/">Find a practitioner</a></p>
+  </section>"""
+    return shell("How we verify — FindWell Directory",
+                 "How credentials on the FindWell Directory are established: what we check, what we don't, and the difference between a state license, a certification and a membership.",
                  "/verification/", body)
 
+
+
 def page_404():
-    body = """  <div class="wrap section">
-    <div class="empty">
-      <h3>That page isn't here</h3>
-      <p>The link may be out of date, or the listing may have been removed.</p>
-      <p style="margin-top:1.2rem"><a class="btn btn-dark btn-sm" href="/practice-types/">Find a practitioner</a></p>
-    </div>
-  </div>"""
+    body = f"""{page_head("That page isn't here", "The link may be out of date, or the listing may have been removed.")}
+  <section class="wrap page-body"><p><a class="btn btn-dark" href="/directory/">Find a practitioner</a> <a class="btn btn-ghost" href="/">Go to the home page</a></p></section>"""
     return shell("Page not found — FindWell Directory", "Page not found.", "/404", body)
+
+
 
 # ---------------------------------------------------------------------------
 def write(path, content):
@@ -1889,8 +1915,8 @@ def main():
             title=f"{d['label']} practitioners — FindWell Directory",
             desc=f"{d['label']}: {d['note']}",
             path=f"/practice-types/{d['slug']}/",
-            heading=d["label"], intro=d["note"],
-            trail=[("Home", "/"), ("Disciplines", "/practice-types/"), (d["label"], None)],
+            heading=friendly(d["key"]), intro=d["note"].replace(" \u2014 ", ", ").replace(" — ", ", "),
+            trail=[("Home", "/"), ("Disciplines", "/practice-types/"), (friendly(d["key"]), None)],
             footer_link=("All disciplines", "/practice-types/"), current=d["key"])))
 
     for ab in STATES:

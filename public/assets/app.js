@@ -413,6 +413,83 @@
     if (el) el.style.display = on ? 'block' : 'none';
   }
 
+  /* ---------- five steps, one at a time ----------
+     Without JavaScript every step shows and the form works as one page. */
+  var steps = Array.prototype.slice.call(form.querySelectorAll('.join-step'));
+  var cur = 1;
+  var REQUIRED = ['j-first', 'j-last', 'j-practice', 'j-email', 'j-phone', 'j-website',
+                  'j-city', 'j-state', 'j-zip', 'j-short', 'j-since', 'j-training',
+                  'j-fees', 'j-long', 'j-size'];
+  var RADIOS = ['physical', 'licensed', 'telehealth', 'openins', 'ehr'];
+  function showStep(n, focus) {
+    cur = Math.max(1, Math.min(n, steps.length));
+    steps.forEach(function (st) { st.hidden = Number(st.dataset.step) !== cur; });
+    var prog = $('join-progress');
+    if (prog) prog.hidden = false;
+    var lab = $('join-step-label'), name = steps[cur - 1] ? steps[cur - 1].dataset.name : '';
+    if (lab) lab.textContent = 'Step ' + cur + ' of ' + steps.length + ' \u00b7 ' + name;
+    var fill = $('join-bar-fill');
+    if (fill) fill.style.width = (cur / steps.length * 100) + '%';
+    var back = $('j-back'), next = $('j-next'), send = $('j-send');
+    if (back) back.hidden = cur === 1;
+    if (next) next.hidden = cur === steps.length;
+    if (send) send.hidden = cur !== steps.length;
+    var gate = document.getElementById('join-gate');
+    if (gate) gate.style.display = cur === 1 ? '' : 'none';
+    var msg = $('join-msg'); if (msg) msg.textContent = '';
+    if (focus) {
+      var top = form.getBoundingClientRect().top + window.scrollY - 120;
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    }
+  }
+  function stepOk(st) {
+    var ok = true;
+    var need = REQUIRED.slice();
+    if (radio('physical') === 'Yes') need.push('j-addr1');
+    need.forEach(function (id) {
+      var el = $(id);
+      if (!el || !st.contains(el)) return;
+      var bad = !el.value.trim() ||
+                (el.type === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value));
+      el.setAttribute('aria-invalid', bad);
+      if (bad) ok = false;
+    });
+    RADIOS.forEach(function (n) {
+      if (!st.querySelector('input[name="' + n + '"]')) return;
+      var missing = !radio(n);
+      showErr('[data-for="' + n + '"]', missing);
+      if (missing) ok = false;
+    });
+    if (st.querySelector('#j-cats')) { showErr('[data-for="cats"]', !cats.length); if (!cats.length) ok = false; }
+    if (st.querySelector('#j-pay')) { showErr('[data-for="pay"]', !pays.length); if (!pays.length) ok = false; }
+    if (st.querySelector('#j-files') && !filesValid()) { showErr('[data-for="files"]', true); ok = false; }
+    return ok;
+  }
+  function firstProblemStep() {
+    for (var i = 0; i < steps.length; i++) {
+      var bad = steps[i].querySelector('[aria-invalid="true"]');
+      var errs = Array.prototype.filter.call(steps[i].querySelectorAll('.err[data-for]'),
+        function (e) { return e.style.display === 'block'; });
+      if (bad || errs.length) return i + 1;
+    }
+    return 0;
+  }
+  if (steps.length) {
+    showStep(1);
+    var nextBtn = $('j-next'), backBtn = $('j-back');
+    if (nextBtn) nextBtn.addEventListener('click', function () {
+      if (!stepOk(steps[cur - 1])) {
+        var m = $('join-msg');
+        if (m) m.textContent = 'A few answers are still needed, marked above.';
+        var firstBad = steps[cur - 1].querySelector('[aria-invalid="true"]');
+        if (firstBad) firstBad.scrollIntoView({ block: 'center' });
+        return;
+      }
+      showStep(cur + 1, true);
+    });
+    if (backBtn) backBtn.addEventListener('click', function () { showStep(cur - 1, true); });
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var ok = true;
@@ -448,7 +525,12 @@
 
     var msg = $('join-msg');
     if (!ok) {
-      msg.textContent = 'Some required answers are missing \u2014 they are marked above.';
+      if (steps.length) {
+        var where = firstProblemStep();
+        if (where && where !== cur) showStep(where, true);
+        msg = $('join-msg');
+      }
+      msg.textContent = 'A few answers are still needed, marked above.';
       var firstBad = form.querySelector('[aria-invalid="true"]');
       if (firstBad) firstBad.scrollIntoView({ block: 'center' });
       return;
@@ -526,7 +608,7 @@
       body: new FormData(form),
       headers: { Accept: 'application/json' }
     }).then(function (res) {
-      if (btn) { btn.disabled = false; btn.textContent = 'Send'; }
+      if (btn) { btn.disabled = false; btn.textContent = 'Send my application'; }
       if (!res.ok) return res.json().catch(function () { return {}; }).then(function (d) {
         throw new Error(d.error || 'rejected');
       });
@@ -542,8 +624,9 @@
       });
       if ($('j-cats-value')) $('j-cats-value').value = '';
       if ($('j-pay-value')) $('j-pay-value').value = '';
+      if (steps.length) { showStep(1); form.hidden = true; }
     }).catch(function (err) {
-      if (btn) { btn.disabled = false; btn.textContent = 'Send'; }
+      if (btn) { btn.disabled = false; btn.textContent = 'Send my application'; }
       fallback(err && err.message && err.message !== 'rejected'
         ? err.message : 'We could not reach the server.');
     });

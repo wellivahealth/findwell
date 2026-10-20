@@ -18,14 +18,14 @@
 <meta property="og:image" content="https://findwelldirectory.com/assets/img/share-card.jpg?v=05213c9754">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="FindWell Directory — a practitioner with a client, and the line: licensure, training, years in practice and pricing on every listing.">
+<meta property="og:image:alt" content="FindWell Directory: licensure, training, years in practice and pricing on every listing.">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://findwelldirectory.com/assets/img/share-card.jpg?v=05213c9754">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=9b746755e4">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Young+Serif&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=dde4514abe">
 
 </head>
 <body data-view="directory">
@@ -33,61 +33,55 @@
 
 <header class="masthead">
   <div class="wrap masthead-in">
-    <a class="mark" href="/" aria-label="FindWell Directory — home">
-      <img src="/assets/img/logo-800.png?v=5aed8c1fd5"
-           srcset="/assets/img/logo-400.png?v=d921f92fa5 400w, /assets/img/logo-800.png?v=5aed8c1fd5 800w"
-           sizes="(max-width:900px) 190px, 280px" width="965" height="289"
-           alt="FindWell Directory — a network of holistic health care providers">
-    </a>
+    <a class="mark" href="/" aria-label="FindWell Directory, home"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 36C20 24 22 14 32 6C34 18 30 30 20 36Z" fill="#7f9a6c"/><path d="M20 36C20 26 17 18 8 12C7 24 11 32 20 36Z" fill="#2f4a35"/></svg><span>FindWell</span></a>
     <button class="burger" id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
-      <div class="nav-group">
-        <button type="button" class="nav-toggle" id="find-toggle" aria-expanded="false"
-                aria-controls="find-menu" data-active="1">
-          Find a provider <span class="caret" aria-hidden="true">&#9662;</span>
-        </button>
-        <ul class="nav-menu" id="find-menu"><li><a href="/practice-types/" aria-current="page">By discipline</a></li><li><a href="/locations/">By location</a></li></ul>
-      </div><a href="/about/">Who we are</a><a href="/articles/">Articles</a><a href="/advertise/">Advertise with us</a>
-      <a class="cta" href="/join/">Join the directory</a>
+      <a href="/directory/">Find care</a><a href="/practice-types/" aria-current="page">Disciplines</a><a href="/verification/">How we verify</a><a href="/about/">About us</a><a href="/articles/">Articles</a>
+      <a class="cta" href="/join/">List your practice</a>
     </nav>
   </div>
 </header>
 
 <main id="main">
-  <div class="wrap">
-    <p class="crumb"><a href="/">Home</a> / <a href="/practice-types/">Disciplines</a> / Energy healers</p>
-    <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin:.6rem 0 1.4rem">Energy healers</h1>
-    <p class="lede" style="margin:-.8rem 0 1.8rem">Reiki, Eden Energy Medicine, biofield therapies. Training shown; no licensure exists.</p>
-    <div class="dir">
+  <section class="pg-head">
+    <svg class="pg-leaf" viewBox="0 0 200 320" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" aria-hidden="true"><path d="M100 312C100 220 100 120 100 12"/><path d="M100 30C58 62 30 122 40 200C48 258 88 298 100 312C112 298 152 258 160 200C170 122 142 62 100 30Z"/><path d="M100 80C84 90 70 104 60 122M100 120C80 132 62 150 50 172M100 160C82 172 66 190 56 214M100 200C86 212 74 228 68 248M100 80C116 90 130 104 140 122M100 120C120 132 138 150 150 172M100 160C118 172 134 190 144 214M100 200C114 212 126 228 132 248"/></svg>
+    <div class="wrap pg-head-in">
+      <p class="crumb"><a href="/">Home</a> / <a href="/practice-types/">Disciplines</a> / Energy work</p>
+      <h1>Energy work</h1>
+      <p class="pg-lede">Reiki, Eden Energy Medicine, biofield therapies. Training shown; no licensure exists.</p>
+    </div>
+  </section>
+  <div class="wrap dir">
       <aside class="rail" id="rail">
-        <button class="rail-toggle" id="rail-toggle" aria-expanded="false">Filters<span>▾</span></button>
+        <button class="rail-toggle" id="rail-toggle" aria-expanded="false">Narrow it down<span aria-hidden="true">&#9662;</span></button>
         <div class="rail-body">
-          <div class="field" style="margin-bottom:1.6rem">
-            <label for="f-q">Keyword</label>
-            <input class="control" id="f-q" type="search" placeholder="Name, condition, credential">
+          <p class="rail-title">Narrow it down</p>
+          <div class="field">
+            <label for="f-q">Name or keyword</label>
+            <input class="control" id="f-q" type="search" placeholder="e.g. digestion, sciatica">
           </div>
-          <fieldset><legend>Discipline</legend><label class="check"><input type="checkbox" data-cat="Ayurveda" data-href="/practice-types/ayurveda/"> Ayurveda<span class="n">5</span></label><label class="check"><input type="checkbox" data-cat="Acupuncture" data-href="/practice-types/acupuncture/"> Acupuncture<span class="n">9</span></label><label class="check"><input type="checkbox" data-cat="TCM" data-href="/practice-types/traditional-chinese-medicine/"> TCM<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="Naturopathy" data-href="/practice-types/naturopathic-medicine/"> Licensed naturopaths<span class="n">2</span></label><label class="check"><input type="checkbox" data-cat="IntegrativeMedicine" data-href="/practice-types/integrative-functional-medicine/"> Integrative &amp; functional medicine (MD, DO, NP, PA, RN)<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="Counseling" data-href="/practice-types/counseling/"> Counselors<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="Coaching" data-href="/practice-types/health-wellness-coaching/"> Health &amp; wellness coaches<span class="n">13</span></label><label class="check"><input type="checkbox" data-cat="Massage" data-href="/practice-types/massage-therapy/"> Massage therapy<span class="n">2</span></label><label class="check"><input type="checkbox" data-cat="Bodywork" data-href="/practice-types/body-work/"> Body work<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="EnergyMedicine" data-href="/directory/" checked> Energy healers<span class="n">11</span></label><label class="check"><input type="checkbox" data-cat="Chiropractic" data-href="/practice-types/chiropractic/"> Chiropractors<span class="n">5</span></label><label class="check"><input type="checkbox" data-cat="Nutrition" data-href="/practice-types/nutrition/"> Nutritionists<span class="n">8</span></label><label class="check"><input type="checkbox" data-cat="Herbalism" data-href="/practice-types/herbology/"> Herbology<span class="n">8</span></label><label class="check check-empty"><input type="checkbox" data-cat="Farms" data-href="/practice-types/local-farmers/" disabled> Local farmers<span class="n">0</span></label><label class="check check-empty"><input type="checkbox" data-cat="Grocers" data-href="/practice-types/local-grocers/" disabled> Local grocers<span class="n">0</span></label></fieldset>
+          <fieldset><legend>Kind of care</legend><label class="check"><input type="checkbox" data-cat="Ayurveda" data-href="/practice-types/ayurveda/"> Ayurveda<span class="n">5</span></label><label class="check"><input type="checkbox" data-cat="Acupuncture" data-href="/practice-types/acupuncture/"> Acupuncture<span class="n">9</span></label><label class="check"><input type="checkbox" data-cat="TCM" data-href="/practice-types/traditional-chinese-medicine/"> Chinese medicine<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="Naturopathy" data-href="/practice-types/naturopathic-medicine/"> Naturopathic doctors<span class="n">2</span></label><label class="check"><input type="checkbox" data-cat="IntegrativeMedicine" data-href="/practice-types/integrative-functional-medicine/"> Integrative medicine<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="Counseling" data-href="/practice-types/counseling/"> Counseling<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="Coaching" data-href="/practice-types/health-wellness-coaching/"> Health coaching<span class="n">13</span></label><label class="check"><input type="checkbox" data-cat="Massage" data-href="/practice-types/massage-therapy/"> Massage<span class="n">2</span></label><label class="check"><input type="checkbox" data-cat="Bodywork" data-href="/practice-types/body-work/"> Body work<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="EnergyMedicine" data-href="/directory/" checked> Energy work<span class="n">11</span></label><label class="check"><input type="checkbox" data-cat="Chiropractic" data-href="/practice-types/chiropractic/"> Chiropractic<span class="n">5</span></label><label class="check"><input type="checkbox" data-cat="Nutrition" data-href="/practice-types/nutrition/"> Nutrition<span class="n">8</span></label><label class="check"><input type="checkbox" data-cat="Herbalism" data-href="/practice-types/herbology/"> Herbal medicine<span class="n">8</span></label><label class="check check-empty"><input type="checkbox" data-cat="Farms" data-href="/practice-types/local-farmers/" disabled> Local farms<span class="n">0</span></label><label class="check check-empty"><input type="checkbox" data-cat="Grocers" data-href="/practice-types/local-grocers/" disabled> Local grocers<span class="n">0</span></label></fieldset>
           <fieldset><legend>State</legend>
             <select class="control" id="f-state"><option value="">All states</option><option value="AZ">Arizona (15)</option><option value="CA">California (7)</option><option value="CO">Colorado (3)</option><option value="FL">Florida (3)</option><option value="GA">Georgia (3)</option><option value="ID">Idaho (1)</option><option value="IL">Illinois (1)</option><option value="IN">Indiana (1)</option><option value="MA">Massachusetts (1)</option><option value="MI">Michigan (3)</option><option value="NH">New Hampshire (1)</option><option value="OH">Ohio (1)</option><option value="OK">Oklahoma (1)</option><option value="TN">Tennessee (2)</option><option value="TX">Texas (1)</option><option value="VA">Virginia (1)</option><option value="WA">Washington (1)</option><option value="WI">Wisconsin (1)</option></select>
           </fieldset>
           <fieldset><legend>Distance</legend>
             <input class="control" id="f-zip" type="text" inputmode="numeric" placeholder="ZIP code">
-            <label class="lbl" for="f-radius" style="margin-top:.7rem">Within 50 miles</label>
-            <input id="f-radius" type="range" min="5" max="500" step="5" value="50" style="width:100%;accent-color:var(--brand)">
-            <button class="btn btn-ghost btn-sm" id="f-near" style="width:100%;margin-top:.6rem">Use my location</button>
+            <label class="lbl" for="f-radius">Within 50 miles</label>
+            <input id="f-radius" type="range" min="5" max="500" step="5" value="50">
+            <button class="btn btn-ghost btn-sm" id="f-near" type="button">Use my location</button>
             <p class="hint" id="geo-msg"></p>
           </fieldset>
-          <fieldset><legend>Format</legend>
+          <fieldset><legend>Show only</legend>
             <label class="check"><input type="checkbox" id="f-tele"> Offers telehealth</label>
           </fieldset>
-          <button class="btn btn-ghost btn-sm" id="f-clear" style="width:100%">Clear all filters</button>
+          <button class="btn btn-ghost btn-sm" id="f-clear" type="button">Clear all filters</button>
         </div>
       </aside>
-      <section>
+      <section class="dir-main">
         <div class="results-bar">
           <p class="results-count" aria-live="polite"><b id="count">11</b> <span id="count-word">practitioners</span><span id="count-where"></span></p>
           <div class="sort">
-            <label for="f-sort">Sort</label>
+            <label for="f-sort">Sort by</label>
             <select class="control" id="f-sort">
               <option value="name">Name</option>
               <option value="years">Years in practice</option>
@@ -95,97 +89,48 @@
             </select>
           </div>
         </div>
-        <p class="results-note">Every listing states how its credentials were established — checked with the issuing board, or as reported by the practitioner. <a href="/verification/">What that means</a>.</p>
         <div class="active-filters" id="active-filters"></div>
         <ul class="records" id="records"><li class="record" data-cats="Acupuncture EnergyMedicine Herbalism"
       data-city="Tucson" data-state="AZ" data-tele="1"
       data-lat="32.3405" data-lng="-110.988" data-since="2003"
-      data-name="Celia Hildebrand Acupuncture" data-text="celia hildebrand acupuncture celia hildebrand, l.ac. tucson az 85704 clinical doctorate in east asian medicine; advanced reiki and bioenergy practitioner six years and 3,500+ hours of training resulting in a clinical doctorate specialising in trauma care, physical rehabilitation and emotional resilience. adjunctive methods include 25+ years with bioenergy and advanced reiki. intuitive full-body east asian medicine including acupuncture, tuina, gua sha, cupping, moxibustion and herbs. arizona licensed acupuncturist — az lac 001177 acupuncture energy healers herbology">
-    <article class="record-in">
-      <div class="record-head">
-        <picture><source type="image/webp" srcset="/assets/img/providers/celia-hildebrand-acupuncture.webp?v=a00780472e"><img class="avatar" src="/assets/img/providers/celia-hildebrand-acupuncture.png?v=aff7d9c18e" alt="Celia Hildebrand Acupuncture logo" loading="lazy" decoding="async" width="200" height="200"></picture>
-        <div>
-          <h3 class="record-name"><a href="/provider/celia-hildebrand-acupuncture/">Celia Hildebrand Acupuncture</a></h3>
-          <p class="record-person"><b>Celia Hildebrand, L.Ac.</b></p>
-          <p class="record-where">Tucson, AZ 85704 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/acupuncture/">Acupuncture</a><a class="tag" href="/practice-types/energy-work/">Energy healers</a><a class="tag" href="/practice-types/herbology/">Herbology</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+      data-name="Celia Hildebrand Acupuncture" data-text="celia hildebrand acupuncture celia hildebrand, l.ac. tucson az 85704 clinical doctorate in east asian medicine; advanced reiki and bioenergy practitioner six years and 3,500+ hours of training resulting in a clinical doctorate specialising in trauma care, physical rehabilitation and emotional resilience. adjunctive methods include 25+ years with bioenergy and advanced reiki. intuitive full-body east asian medicine including acupuncture, tuina, gua sha, cupping, moxibustion and herbs. arizona licensed acupuncturist — az lac 001177 acupuncture energy healers herbology acupuncture energy work herbal medicine">
+    <article class="rec">
+      <picture><source type="image/webp" srcset="/assets/img/providers/celia-hildebrand-acupuncture.webp?v=a00780472e"><img class="avatar" src="/assets/img/providers/celia-hildebrand-acupuncture.png?v=aff7d9c18e" alt="Celia Hildebrand Acupuncture logo" loading="lazy" decoding="async" width="200" height="200"></picture>
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/celia-hildebrand-acupuncture/">Celia Hildebrand Acupuncture</a></h3>
+        <p class="rec-meta">Celia Hildebrand, L.Ac. · Tucson, AZ · Since 2003 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Intuitive full-body East Asian medicine including acupuncture, tuina, gua sha, cupping, moxibustion and herbs.</p>
+        <div class="fw-tags"><span class="fw-tag">Acupuncture</span><span class="fw-tag">Energy work</span><span class="fw-tag">Herbal medicine</span><span class="fw-tag">Telehealth</span><span class="fw-tag fw-tag-ok">License confirmed</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Clinical doctorate in East Asian medicine; advanced Reiki and bioenergy practitioner</dd>
-        <dt>Licensure</dt><dd>Arizona licensed acupuncturist — AZ LAC 001177</dd>
-        
-        <dt>In practice</dt><dd>23 yrs (since 2003)</dd>
-        <dt>Fees</dt><dd>Initial intake and treatment, 1.5 hr $150 · Follow-up, 1 hr $125 · Auricular acupuncture, 30 min $35 · Targeted hands or feet session $50 · Reduced rates for family members and for compressed protocols requiring frequent visits</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b>: Arizona licensed acupuncturist — AZ LAC 001177 with the Arizona Acupuncture Board of Examiners, 22 Sept 2026.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/celia-hildebrand-acupuncture/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:5202832734">(520) 283-2734</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:celia@acufromtheheart.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="http://www.acufromtheheart.com" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$150</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="Bodywork EnergyMedicine Coaching"
       data-city="Tucson" data-state="AZ" data-tele="1"
       data-lat="32.266" data-lng="-110.906" data-since="2014"
-      data-name="Emma Vasseur: Wellbeing Coach" data-text="emma vasseur: wellbeing coach emma vasseur, nbc-hwc tucson az 85712 national board certified health &amp; wellness coach (nbc-hwc) ma, integrative health &amp; wellbeing coaching; biodynamic craniosacral education and training support for people who want to feel healthier and more energised by making sustainable changes to daily life, bridging the gap between knowing what supports wellbeing and consistently practising it. not a licensed counsellor; coaching and bodywork are unlicensed in az body work energy healers health &amp; wellness coaches">
-    <article class="record-in">
-      <div class="record-head">
-        <picture><source type="image/webp" srcset="/assets/img/providers/emma-vasseur-wellbeing.webp?v=56b5954b77"><img class="avatar" src="/assets/img/providers/emma-vasseur-wellbeing.png?v=d82c999d48" alt="Emma Vasseur: Wellbeing Coach logo" loading="lazy" decoding="async" width="200" height="200"></picture>
-        <div>
-          <h3 class="record-name"><a href="/provider/emma-vasseur-wellbeing/">Emma Vasseur: Wellbeing Coach</a></h3>
-          <p class="record-person"><b>Emma Vasseur, NBC-HWC</b></p>
-          <p class="record-where">Tucson, AZ 85712 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/body-work/">Body work</a><a class="tag" href="/practice-types/energy-work/">Energy healers</a><a class="tag" href="/practice-types/health-wellness-coaching/">Health &amp; wellness coaches</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+      data-name="Emma Vasseur: Wellbeing Coach" data-text="emma vasseur: wellbeing coach emma vasseur, nbc-hwc tucson az 85712 national board certified health &amp; wellness coach (nbc-hwc) ma, integrative health &amp; wellbeing coaching; biodynamic craniosacral education and training support for people who want to feel healthier and more energised by making sustainable changes to daily life, bridging the gap between knowing what supports wellbeing and consistently practising it. not a licensed counsellor; coaching and bodywork are unlicensed in az body work energy healers health &amp; wellness coaches body work energy work health coaching">
+    <article class="rec">
+      <picture><source type="image/webp" srcset="/assets/img/providers/emma-vasseur-wellbeing.webp?v=56b5954b77"><img class="avatar" src="/assets/img/providers/emma-vasseur-wellbeing.png?v=d82c999d48" alt="Emma Vasseur: Wellbeing Coach logo" loading="lazy" decoding="async" width="200" height="200"></picture>
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/emma-vasseur-wellbeing/">Emma Vasseur: Wellbeing Coach</a></h3>
+        <p class="rec-meta">Emma Vasseur, NBC-HWC · Tucson, AZ · Since 2014 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Support for people who want to feel healthier and more energised by making sustainable changes to daily life, bridging the gap between knowing what supports wellbeing and…</p>
+        <div class="fw-tags"><span class="fw-tag">Body work</span><span class="fw-tag">Energy work</span><span class="fw-tag">Health coaching</span><span class="fw-tag">Telehealth</span><span class="fw-tag fw-tag-ok">Credentials confirmed</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">National Board Certified Health &amp; Wellness Coach (NBC-HWC)</dd>
-        <dt>Licensure</dt><dd>Not a licensed counsellor; coaching and bodywork are unlicensed in AZ</dd>
-        
-        <dt>In practice</dt><dd>12 yrs (since 2014)</dd>
-        <dt>Fees</dt><dd>Coaching, 3-month package $375/month ($1,125 total), six 50-minute sessions with email support · Biodynamic craniosacral, 60 min $95 · Evolutionary astrology reading, 60 min $125 or 90 min $150 · Coaching and astrology package $475/month for 3 months</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b> with the National Board for Health &amp; Wellness Coaching, 23 Sept 2026.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/emma-vasseur-wellbeing/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:6126954063">(612) 695-4063</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:hello@emmavasseur.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="http://emmavasseur.com" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$375</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="EnergyMedicine Coaching"
       data-city="Tucson" data-state="AZ" data-tele="1"
       data-lat="32.339" data-lng="-110.995" data-since="2006"
-      data-name="Healing Options" data-text="healing options amy schill, eem-ap tucson az 85704 reiki master teacher; eden energy medicine advanced practitioner (eem-ap); certified nutrition coach; bach flower remedy practitioner eden method four-year certification programme graduate; reiki master teacher attunement i believe in the body&#x27;s natural ability to heal and regain balance, and find it essential to focus on the whole being: body, mind and spirit. no state licensure exists for energy medicine energy healers health &amp; wellness coaches">
-    <article class="record-in">
-      <div class="record-head">
-        <div class="avatar avatar-mono" aria-hidden="true">HO</div>
-        <div>
-          <h3 class="record-name"><a href="/provider/healing-options/">Healing Options</a></h3>
-          <p class="record-person"><b>Amy Schill, EEM-AP</b></p>
-          <p class="record-where">Tucson, AZ 85704 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/energy-work/">Energy healers</a><a class="tag" href="/practice-types/health-wellness-coaching/">Health &amp; wellness coaches</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+      data-name="Healing Options" data-text="healing options amy schill, eem-ap tucson az 85704 reiki master teacher; eden energy medicine advanced practitioner (eem-ap); certified nutrition coach; bach flower remedy practitioner eden method four-year certification programme graduate; reiki master teacher attunement i believe in the body&#x27;s natural ability to heal and regain balance, and find it essential to focus on the whole being: body, mind and spirit. no state licensure exists for energy medicine energy healers health &amp; wellness coaches energy work health coaching">
+    <article class="rec">
+      <div class="avatar avatar-mono" aria-hidden="true">HO</div>
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/healing-options/">Healing Options</a></h3>
+        <p class="rec-meta">Amy Schill, EEM-AP · Tucson, AZ · Since 2006 <span class="record-dist"></span></p>
+        <p class="rec-blurb">I believe in the body&#x27;s natural ability to heal and regain balance, and find it essential to focus on the whole being: body, mind and spirit.</p>
+        <div class="fw-tags"><span class="fw-tag">Energy work</span><span class="fw-tag">Health coaching</span><span class="fw-tag">Telehealth</span><span class="fw-tag fw-tag-ok">Credentials confirmed</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Reiki Master Teacher; Eden Energy Medicine Advanced Practitioner (EEM-AP); Certified Nutrition Coach; Bach Flower Remedy Practitioner</dd>
-        <dt>Licensure</dt><dd>No state licensure exists for energy medicine</dd>
-        
-        <dt>In practice</dt><dd>20 yrs (since 2006)</dd>
-        <dt>Fees</dt><dd>$150 per hour</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b> with the National Board for Health &amp; Wellness Coaching, 22 Sept 2026.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/healing-options/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:5205489713">(520) 548-9713</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:amy@healingoptions.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="http://healingoptions.com" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$150</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="EnergyMedicine Counseling Coaching"
       data-city="Richmond" data-state="CA" data-tele="1"
@@ -220,94 +165,44 @@ tapas acupressure basics - hch institute 2011
 
 energy boundaries &amp; chakra clearing - hch institute 2011
 
-ericksonian pain management - hch institute 2011 lucy seligman is a certified coach and hypnotherapist who works with people who feel overwhelmed, stuck, anxious, or uncertain about what comes next. using coaching, hypnotherapy, mindfulness, and other mind-body tools, she helps clients quiet the noise, uncover what is getting in the way, and find greater clarity, confidence, and ease as they move forward. no state licensure exists for this discipline energy healers counselors health &amp; wellness coaches">
-    <article class="record-in">
-      <div class="record-head">
-        <img class="avatar" src="/assets/img/providers/coaching-with-lucy.png?v=e8781e00d0" alt="Coaching With Lucy logo" loading="lazy" decoding="async" width="200" height="200">
-        <div>
-          <h3 class="record-name"><a href="/provider/coaching-with-lucy/">Coaching With Lucy</a></h3>
-          <p class="record-person"><b>Lucy Seligman</b></p>
-          <p class="record-where">Richmond, CA 94805 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/energy-work/">Energy healers</a><a class="tag" href="/practice-types/counseling/">Counselors</a><a class="tag" href="/practice-types/health-wellness-coaching/">Health &amp; wellness coaches</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+ericksonian pain management - hch institute 2011 lucy seligman is a certified coach and hypnotherapist who works with people who feel overwhelmed, stuck, anxious, or uncertain about what comes next. using coaching, hypnotherapy, mindfulness, and other mind-body tools, she helps clients quiet the noise, uncover what is getting in the way, and find greater clarity, confidence, and ease as they move forward. no state licensure exists for this discipline energy healers counselors health &amp; wellness coaches energy work counseling health coaching">
+    <article class="rec">
+      <img class="avatar" src="/assets/img/providers/coaching-with-lucy.png?v=e8781e00d0" alt="Coaching With Lucy logo" loading="lazy" decoding="async" width="200" height="200">
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/coaching-with-lucy/">Coaching With Lucy</a></h3>
+        <p class="rec-meta">Lucy Seligman · Richmond, CA · Since 2011 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Lucy Seligman is a certified coach and hypnotherapist who works with people who feel overwhelmed, stuck, anxious, or uncertain about what comes next. Using coaching, hypn…</p>
+        <div class="fw-tags"><span class="fw-tag">Energy work</span><span class="fw-tag">Counseling</span><span class="fw-tag">Health coaching</span><span class="fw-tag">Telehealth</span><span class="fw-tag fw-tag-ok">Credentials confirmed</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">ICF Associate Certified Coach (ACC); Certified Clinical Hypnotherapist (CCHT)</dd>
-        <dt>Licensure</dt><dd>No state licensure exists for this discipline</dd>
-        
-        <dt>In practice</dt><dd>15 yrs (since 2011)</dd>
-        <dt>Fees</dt><dd>Based on the needs of the client it can differ based on the package and number of sessions needed.
-
-I offer a free 20 minute connection call. - https://cal.com/lucy-seligman/connection-call</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b> with the International Coaching Federation, 23 Sept 2026.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/coaching-with-lucy/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:5107103917">(510) 710-3917</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:Lucy@Lucyseligman.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://lucyseligman.com/" target="_blank" rel="noopener">Website</a>
-      </div>
+      
     </article>
   </li><li class="record" data-cats="EnergyMedicine Counseling Coaching"
       data-city="Tulsa" data-state="OK" data-tele="1"
       data-lat="36.1563122" data-lng="-95.9927516" data-since="2021"
-      data-name="Therapy with Z, LLC" data-text="therapy with z, llc z. hamilton avery tulsa ok 74110 licensed clinical social worker (lcsw); board certified telemental health provider (bc-tmh); certified massage therapist (cmt); certified yoga teacher (cyt-1000); trauma-informed yoga teacher (tiyt) master of social work (msw); bachelor of science in psychology; associate of applied science in pre-nursing. advanced training in clinical social work, psychotherapy, integrated behavioral health, crisis intervention, trauma-informed care, mindfulness, and complementary and alternative medicine. therapy with z, llc provides inclusive, person-centered online psychotherapy for adolescents (13+), adults, and older adults. we specialize in anxiety, depression, trauma, chronic illness and pain, grief, and lgbtqia+ affirming care, offering compassionate, evidence-based support tailored to each client&#x27;s unique needs and goals. telehealth services are available in oklahoma, florida, south carolina, and idaho. oklahoma (22645), florida (tpsw7232), south carolina (2089), and idaho (9081435). energy healers counselors health &amp; wellness coaches">
-    <article class="record-in">
-      <div class="record-head">
-        <img class="avatar" src="/assets/img/providers/therapy-with-z-llc.jpg?v=984ec8afe8" alt="Therapy with Z, LLC logo" loading="lazy" decoding="async" width="200" height="200">
-        <div>
-          <h3 class="record-name"><a href="/provider/therapy-with-z-llc/">Therapy with Z, LLC</a></h3>
-          <p class="record-person"><b>Z. Hamilton Avery</b></p>
-          <p class="record-where">Tulsa, OK 74110 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/energy-work/">Energy healers</a><a class="tag" href="/practice-types/counseling/">Counselors</a><a class="tag" href="/practice-types/health-wellness-coaching/">Health &amp; wellness coaches</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+      data-name="Therapy with Z, LLC" data-text="therapy with z, llc z. hamilton avery tulsa ok 74110 licensed clinical social worker (lcsw); board certified telemental health provider (bc-tmh); certified massage therapist (cmt); certified yoga teacher (cyt-1000); trauma-informed yoga teacher (tiyt) master of social work (msw); bachelor of science in psychology; associate of applied science in pre-nursing. advanced training in clinical social work, psychotherapy, integrated behavioral health, crisis intervention, trauma-informed care, mindfulness, and complementary and alternative medicine. therapy with z, llc provides inclusive, person-centered online psychotherapy for adolescents (13+), adults, and older adults. we specialize in anxiety, depression, trauma, chronic illness and pain, grief, and lgbtqia+ affirming care, offering compassionate, evidence-based support tailored to each client&#x27;s unique needs and goals. telehealth services are available in oklahoma, florida, south carolina, and idaho. oklahoma (22645), florida (tpsw7232), south carolina (2089), and idaho (9081435). energy healers counselors health &amp; wellness coaches energy work counseling health coaching">
+    <article class="rec">
+      <img class="avatar" src="/assets/img/providers/therapy-with-z-llc.jpg?v=984ec8afe8" alt="Therapy with Z, LLC logo" loading="lazy" decoding="async" width="200" height="200">
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/therapy-with-z-llc/">Therapy with Z, LLC</a></h3>
+        <p class="rec-meta">Z. Hamilton Avery · Tulsa, OK · Since 2021 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Therapy with Z, LLC provides inclusive, person-centered online psychotherapy for adolescents (13+), adults, and older adults. We specialize in anxiety, depression, trauma…</p>
+        <div class="fw-tags"><span class="fw-tag">Energy work</span><span class="fw-tag">Counseling</span><span class="fw-tag">Health coaching</span><span class="fw-tag">Telehealth</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Licensed Clinical Social Worker (LCSW); Board Certified TeleMental Health Provider (BC-TMH); Certified Massage Therapist (CMT); Certified Yoga Teacher (CYT-1000); Trauma-Informed Yoga Teacher (TIYT)</dd>
-        <dt>Licensure</dt><dd>Oklahoma (22645), Florida (TPSW7232), South Carolina (2089), and Idaho (9081435).</dd>
-        
-        <dt>In practice</dt><dd>5 yrs (since 2021)</dd>
-        <dt>Fees</dt><dd>Individual psychotherapy: $75 for 30-minute sessions or $150 for 60-minute sessions. Insurance is accepted through participating networks, with copays, coinsurance, and deductibles varying by plan. A complimentary 15-minute consultation is available.</dd>
-        <dt>Insurance</dt><dd>Accepted — verify your plan with the practice</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-reported"><b>As reported by the practitioner.</b> Not independently verified — <a href="/verification/">what this means</a>.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/therapy-with-z-llc/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:9182128373">(918) 212-8373</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:z@therapywithz.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://www.therapywithz.com" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$75</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="EnergyMedicine"
       data-city="Ypsilanti" data-state="MI" data-tele="0"
       data-lat="42.240974213822" data-lng="-83.613582436426" data-since="2019"
-      data-name="Hidden Healing Reiki" data-text="hidden healing reiki jenn lane ypsilanti mi 48197 level 3 reiki master certified 3 reiki levels, 2 attunement, 6 years of practice before opening business. holistic approach: the practice integrates traditional reiki with intuitive guidance and meticulous chakra balancing to support emotional, energetic, and spiritual well-being. no state licensure exists for this discipline energy healers">
-    <article class="record-in">
-      <div class="record-head">
-        <div class="avatar avatar-mono" aria-hidden="true">HH</div>
-        <div>
-          <h3 class="record-name"><a href="/provider/hidden-healing-reiki/">Hidden Healing Reiki</a></h3>
-          <p class="record-person"><b>Jenn Lane</b></p>
-          <p class="record-where">Ypsilanti, MI 48197 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/energy-work/">Energy healers</a></div>
-        </div>
+      data-name="Hidden Healing Reiki" data-text="hidden healing reiki jenn lane ypsilanti mi 48197 level 3 reiki master certified 3 reiki levels, 2 attunement, 6 years of practice before opening business. holistic approach: the practice integrates traditional reiki with intuitive guidance and meticulous chakra balancing to support emotional, energetic, and spiritual well-being. no state licensure exists for this discipline energy healers energy work">
+    <article class="rec">
+      <div class="avatar avatar-mono" aria-hidden="true">HH</div>
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/hidden-healing-reiki/">Hidden Healing Reiki</a></h3>
+        <p class="rec-meta">Jenn Lane · Ypsilanti, MI · Since 2019 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Holistic Approach: The practice integrates traditional Reiki with intuitive guidance and meticulous chakra balancing to support emotional, energetic, and spiritual well-b…</p>
+        <div class="fw-tags"><span class="fw-tag">Energy work</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Level 3 Reiki Master Certified</dd>
-        <dt>Licensure</dt><dd>No state licensure exists for this discipline</dd>
-        
-        <dt>In practice</dt><dd>7 yrs (since 2019)</dd>
-        <dt>Fees</dt><dd>30 minutes-$45</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-reported"><b>As reported by the practitioner.</b> Not independently verified — <a href="/verification/">what this means</a>.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/hidden-healing-reiki/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:7343293326">(734) 329-3326</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:hiddenhealingreiki@gmail.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://hiddenhealingreiki.my.canva.site/?utm_source=ig&amp;utm_medium=social&amp;utm_content=link_in_bio&amp;fbclid=PAb21jcAUf8qFwZG9mAmV4dG4DYWVtAjExAHNydGMGYXBwX2lkDzU2NzA2NzM0MzM1MjQyNwABp9nA1nTw3Z7X-pG8XAZybfAQntXFBbdpN3Ungmzg0ph3cg4bZqSeDw1rd7wQ_aem_QCLH_i-m5g12f8OFy6viGg" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$45</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="EnergyMedicine"
       data-city="Spirit Lake" data-state="ID" data-tele="1"
@@ -320,211 +215,109 @@ state-certified educator — california and idaho, beginning in 1997 certified b
 reconnective healing® foundational practitioner
 brain gym® consultant
 touch for health® proficiency
-state-certified educator in california and idaho, beginning in 1997 at my healing garden, i offer personalized distance energy healing and remote quantum biofeedback sessions, along with energy scans &amp; chakra clearing and intuitive readings. i also offer private healing retreats at my healing sanctuary in the mountains of north idaho. no state licensure exists for this discipline energy healers">
-    <article class="record-in">
-      <div class="record-head">
-        <img class="avatar" src="/assets/img/providers/my-healing-garden.jpg?v=80edc8e58a" alt="My Healing Garden logo" loading="lazy" decoding="async" width="200" height="200">
-        <div>
-          <h3 class="record-name"><a href="/provider/my-healing-garden/">My Healing Garden</a></h3>
-          <p class="record-person"><b>Carmen Croitoru</b></p>
-          <p class="record-where">Spirit Lake, ID 83869 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/energy-work/">Energy healers</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+state-certified educator in california and idaho, beginning in 1997 at my healing garden, i offer personalized distance energy healing and remote quantum biofeedback sessions, along with energy scans &amp; chakra clearing and intuitive readings. i also offer private healing retreats at my healing sanctuary in the mountains of north idaho. no state licensure exists for this discipline energy healers energy work">
+    <article class="rec">
+      <img class="avatar" src="/assets/img/providers/my-healing-garden.jpg?v=80edc8e58a" alt="My Healing Garden logo" loading="lazy" decoding="async" width="200" height="200">
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/my-healing-garden/">My Healing Garden</a></h3>
+        <p class="rec-meta">Carmen Croitoru · Spirit Lake, ID · Since 2012 <span class="record-dist"></span></p>
+        <p class="rec-blurb">At My Healing Garden, I offer personalized distance energy healing and remote Quantum Biofeedback sessions, along with Energy Scans &amp; Chakra Clearing and Intuitive Readin…</p>
+        <div class="fw-tags"><span class="fw-tag">Energy work</span><span class="fw-tag">Telehealth</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Certified Biofeedback Specialist (CBS) — The Board of Advanced Natural Health Sciences
-Reconnective Healing® Foundational Practitioner — The Reconnection
-Brain Gym® Consultant — Brain Gym International / Educational Kinesiology Foundation
-Touch for Health® Proficiency — Touch for Health
-State-Certified Educator — California and Idaho, beginning in 1997</dd>
-        <dt>Licensure</dt><dd>No state licensure exists for this discipline</dd>
-        
-        <dt>In practice</dt><dd>14 yrs (since 2012)</dd>
-        <dt>Fees</dt><dd>Fees vary depending on the service and number of sessions needed. I offer a complimentary 30-minute Connection Call to discuss your needs and available options.</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-reported"><b>As reported by the practitioner.</b> Not independently verified — <a href="/verification/">what this means</a>.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/my-healing-garden/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:2083522283">(208) 352-2283</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:MyHealingGarden333@gmail.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://myhealinggarden.net/" target="_blank" rel="noopener">Website</a>
-      </div>
+      
     </article>
   </li><li class="record" data-cats="Coaching EnergyMedicine Counseling"
       data-city="Concord" data-state="NH" data-tele="1"
       data-lat="43.207178" data-lng="-71.537476" data-since="2008"
-      data-name="Stone Spirit Healing Arts" data-text="stone spirit healing arts jacinda jackson concord nh 03301 lcmhc, rm masters in clinical mental health counseling and reiki master, masters in fine arts stone spirit healing arts offers intuitive tarot readings, spiritual guidance, and a unique, experiential approach to reiki energy healing that incorporates art, creativity, and self-expression. as a reiki master and licensed mental health counselor with over 20 years of experience, i blend intuition, spiritual wisdom, and creative exploration to support self-discovery, emotional balance, personal growth, and a deeper connection with your authentic self. nh1211 health &amp; wellness coaches energy healers counselors">
-    <article class="record-in">
-      <div class="record-head">
-        <img class="avatar" src="/assets/img/providers/stone-spirit-healing-arts.jpg?v=91dee388f1" alt="Stone Spirit Healing Arts logo" loading="lazy" decoding="async" width="200" height="200">
-        <div>
-          <h3 class="record-name"><a href="/provider/stone-spirit-healing-arts/">Stone Spirit Healing Arts</a></h3>
-          <p class="record-person"><b>Jacinda Jackson</b></p>
-          <p class="record-where">Concord, NH 03301 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/health-wellness-coaching/">Health &amp; wellness coaches</a><a class="tag" href="/practice-types/energy-work/">Energy healers</a><a class="tag" href="/practice-types/counseling/">Counselors</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+      data-name="Stone Spirit Healing Arts" data-text="stone spirit healing arts jacinda jackson concord nh 03301 lcmhc, rm masters in clinical mental health counseling and reiki master, masters in fine arts stone spirit healing arts offers intuitive tarot readings, spiritual guidance, and a unique, experiential approach to reiki energy healing that incorporates art, creativity, and self-expression. as a reiki master and licensed mental health counselor with over 20 years of experience, i blend intuition, spiritual wisdom, and creative exploration to support self-discovery, emotional balance, personal growth, and a deeper connection with your authentic self. nh1211 health &amp; wellness coaches energy healers counselors health coaching energy work counseling">
+    <article class="rec">
+      <img class="avatar" src="/assets/img/providers/stone-spirit-healing-arts.jpg?v=91dee388f1" alt="Stone Spirit Healing Arts logo" loading="lazy" decoding="async" width="200" height="200">
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/stone-spirit-healing-arts/">Stone Spirit Healing Arts</a></h3>
+        <p class="rec-meta">Jacinda Jackson · Concord, NH · Since 2008 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Stone Spirit Healing Arts offers intuitive tarot readings, spiritual guidance, and a unique, experiential approach to Reiki energy healing that incorporates art, creativi…</p>
+        <div class="fw-tags"><span class="fw-tag">Health coaching</span><span class="fw-tag">Energy work</span><span class="fw-tag">Counseling</span><span class="fw-tag">Telehealth</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">LCMHC, RM</dd>
-        <dt>Licensure</dt><dd>NH1211</dd>
-        
-        <dt>In practice</dt><dd>18 yrs (since 2008)</dd>
-        <dt>Fees</dt><dd>$44 per 30 minutes</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-reported"><b>As reported by the practitioner.</b> Not independently verified — <a href="/verification/">what this means</a>.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/stone-spirit-healing-arts/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:6038565737">(603) 856-5737</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:jcndas@gmail.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://steep-fog-f3bd.jacindatarot603.workers.dev/" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$44</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="EnergyMedicine"
       data-city="Duluth" data-state="GA" data-tele="0"
       data-lat="34.0028569" data-lng="-84.1441046" data-since="2014"
-      data-name="Aurivel Healing" data-text="aurivel healing kieu trinh mack duluth ga 30096 certificate from quantum touch trained by quantum touch teachers i offer hands-on energy healing using quantum-touch techniques for people seeking an alternative approach to relaxation and pain relief. experience the benefits of energy work for yourself. no state licensure exists for this discipline energy healers">
-    <article class="record-in">
-      <div class="record-head">
-        <img class="avatar" src="/assets/img/providers/aurivel-healing.png?v=9593333813" alt="Aurivel Healing logo" loading="lazy" decoding="async" width="200" height="200">
-        <div>
-          <h3 class="record-name"><a href="/provider/aurivel-healing/">Aurivel Healing</a></h3>
-          <p class="record-person"><b>Kieu Trinh Mack</b></p>
-          <p class="record-where">Duluth, GA 30096 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/energy-work/">Energy healers</a></div>
-        </div>
+      data-name="Aurivel Healing" data-text="aurivel healing kieu trinh mack duluth ga 30096 certificate from quantum touch trained by quantum touch teachers i offer hands-on energy healing using quantum-touch techniques for people seeking an alternative approach to relaxation and pain relief. experience the benefits of energy work for yourself. no state licensure exists for this discipline energy healers energy work">
+    <article class="rec">
+      <img class="avatar" src="/assets/img/providers/aurivel-healing.png?v=9593333813" alt="Aurivel Healing logo" loading="lazy" decoding="async" width="200" height="200">
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/aurivel-healing/">Aurivel Healing</a></h3>
+        <p class="rec-meta">Kieu Trinh Mack · Duluth, GA · Since 2014 <span class="record-dist"></span></p>
+        <p class="rec-blurb">I offer hands-on energy healing using Quantum-Touch techniques for people seeking an alternative approach to relaxation and pain relief. Experience the benefits of energy…</p>
+        <div class="fw-tags"><span class="fw-tag">Energy work</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Certificate from Quantum Touch</dd>
-        <dt>Licensure</dt><dd>No state licensure exists for this discipline</dd>
-        
-        <dt>In practice</dt><dd>12 yrs (since 2014)</dd>
-        <dt>Fees</dt><dd>30-minute energy-healing session $50
-Travel within 10 miles Included
-10–20 miles Add $10
-20–30 miles Add $20
-Over 30 miles Quote individually</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-reported"><b>As reported by the practitioner.</b> Not independently verified — <a href="/verification/">what this means</a>.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/aurivel-healing/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:4702376614">(470) 237-6614</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:Dynamicimpact360@gmail.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="no website" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$50</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="EnergyMedicine"
       data-city="Columbus" data-state="OH" data-tele="1"
       data-lat="39.9622601" data-lng="-83.0007065" data-since="None"
       data-name="Love &amp; Light Palms" data-text="love &amp; light palms charla woods-favors columbus oh 43207 usui shiki ryoho reiki — first degree (level i), october 26, 2025; advanced degree (level ii), march 29, 2026. both awarded by the reiki center for healing arts, columbus, ohio. trained in usui shiki ryoho reiki at the reiki center for healing arts, 1540 west fifth avenue, columbus, ohio, under linda haley, rmt, executive director. completed first degree training on october 26, 2025, and advanced degree training on march 29, 2026. training hours are not specified on the certificates. love &amp; light palms is a holistic wellness practice based in columbus, ohio, offering usui reiki healing, chakra balancing, aura cleansing, and akashic records readings. services focus on relaxation, energetic balance, personal reflection, and overall well-being.
 
-in-person reiki experiences are available in columbus, with distance reiki offered to clients regardless of location. each experience is designed to provide a peaceful, compassionate, and welcoming environment. no state licensure exists for this discipline energy healers">
-    <article class="record-in">
-      <div class="record-head">
-        <img class="avatar" src="/assets/img/providers/love-light-palms.jpg?v=0e8711825a" alt="Love &amp; Light Palms logo" loading="lazy" decoding="async" width="200" height="200">
-        <div>
-          <h3 class="record-name"><a href="/provider/love-light-palms/">Love &amp; Light Palms</a></h3>
-          <p class="record-person"><b>Charla Woods-FAvors</b></p>
-          <p class="record-where">Columbus, OH 43207 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/energy-work/">Energy healers</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+in-person reiki experiences are available in columbus, with distance reiki offered to clients regardless of location. each experience is designed to provide a peaceful, compassionate, and welcoming environment. no state licensure exists for this discipline energy healers energy work">
+    <article class="rec">
+      <img class="avatar" src="/assets/img/providers/love-light-palms.jpg?v=0e8711825a" alt="Love &amp; Light Palms logo" loading="lazy" decoding="async" width="200" height="200">
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/love-light-palms/">Love &amp; Light Palms</a></h3>
+        <p class="rec-meta">Charla Woods-FAvors · Columbus, OH <span class="record-dist"></span></p>
+        <p class="rec-blurb">Love &amp; Light Palms is a holistic wellness practice based in Columbus, Ohio, offering Usui Reiki Healing, Chakra Balancing, Aura Cleansing, and Akashic Records Readings. S…</p>
+        <div class="fw-tags"><span class="fw-tag">Energy work</span><span class="fw-tag">Telehealth</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Usui Shiki Ryoho Reiki — First Degree (Level I), October 26, 2025; Advanced Degree (Level II), March 29, 2026. Both awarded by The Reiki Center for Healing Arts, Columbus, Ohio.</dd>
-        <dt>Licensure</dt><dd>No state licensure exists for this discipline</dd>
-        
-        <dt>In practice</dt><dd>—</dd>
-        <dt>Fees</dt><dd>Complimentary 20-minute first-time Reiki experience available by appointment, in person or at a distance. Reiki Healing: 30-minute in-person sessions starting at $45; 60-minute in-person sessions $80. Distance Reiki sessions and additional holistic wellness services are available. Pricing varies by service and duration. Visit www.loveandlightpalms.com or our Vagaro booking page for current service options and pricing.</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-reported"><b>As reported by the practitioner.</b> Not independently verified — <a href="/verification/">what this means</a>.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/love-light-palms/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:2162440188">(216) 244-0188</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:loveandlightpalms@gmail.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://www.loveandlightpalms.com" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$45</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="EnergyMedicine Bodywork"
       data-city="Tucson" data-state="AZ" data-tele="1"
       data-lat="32.2228765" data-lng="-110.974847" data-since="2006"
-      data-name="Sacred Circle Institute" data-text="sacred circle institute desiree maultsby tucson az 85730-3103 certificate in process art, the painting experience (stewart cubley); certificate in somatic embodiment and regulation strategies (linda thai, 12 weeks), certified holistic sexuality educator (institute of sexuality education and enlightenment. master&#x27;s in transpersonal psychology, sofia university (formerly institute of transpersonal psychology); massage therapy training and arizona licensure; clinical trauma specialist training; former spiritual wellness practitioner, canyon ranch tucson for women who have spent years holding everyone else, desiree maultsby, mtp, offers a place to finally slow down. the nervous system regulation work blends qi gong, breathwork, guided visualization, and process art, grounded in more than two decades of somatic and expressive arts practice. through sacred circle institute, she leads women’s retreats, creative circles, and private sessions in tucson and online. no state licensure exists for this discipline energy healers body work">
-    <article class="record-in">
-      <div class="record-head">
-        <img class="avatar" src="/assets/img/providers/sacred-circle-institute.png?v=7499d4d621" alt="Sacred Circle Institute logo" loading="lazy" decoding="async" width="200" height="200">
-        <div>
-          <h3 class="record-name"><a href="/provider/sacred-circle-institute/">Sacred Circle Institute</a></h3>
-          <p class="record-person"><b>Desiree Maultsby</b></p>
-          <p class="record-where">Tucson, AZ 85730-3103 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/energy-work/">Energy healers</a><a class="tag" href="/practice-types/body-work/">Body work</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+      data-name="Sacred Circle Institute" data-text="sacred circle institute desiree maultsby tucson az 85730-3103 certificate in process art, the painting experience (stewart cubley); certificate in somatic embodiment and regulation strategies (linda thai, 12 weeks), certified holistic sexuality educator (institute of sexuality education and enlightenment. master&#x27;s in transpersonal psychology, sofia university (formerly institute of transpersonal psychology); massage therapy training and arizona licensure; clinical trauma specialist training; former spiritual wellness practitioner, canyon ranch tucson for women who have spent years holding everyone else, desiree maultsby, mtp, offers a place to finally slow down. the nervous system regulation work blends qi gong, breathwork, guided visualization, and process art, grounded in more than two decades of somatic and expressive arts practice. through sacred circle institute, she leads women’s retreats, creative circles, and private sessions in tucson and online. no state licensure exists for this discipline energy healers body work energy work body work">
+    <article class="rec">
+      <img class="avatar" src="/assets/img/providers/sacred-circle-institute.png?v=7499d4d621" alt="Sacred Circle Institute logo" loading="lazy" decoding="async" width="200" height="200">
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/sacred-circle-institute/">Sacred Circle Institute</a></h3>
+        <p class="rec-meta">Desiree Maultsby · Tucson, AZ · Since 2006 <span class="record-dist"></span></p>
+        <p class="rec-blurb">For women who have spent years holding everyone else, Desiree Maultsby, MTP, offers a place to finally slow down. The nervous system regulation work blends qi gong, breat…</p>
+        <div class="fw-tags"><span class="fw-tag">Energy work</span><span class="fw-tag">Body work</span><span class="fw-tag">Telehealth</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Certificate in Process Art, The Painting Experience (Stewart Cubley); Certificate in Somatic Embodiment and Regulation Strategies (Linda Thai, 12 weeks), Certified Holistic Sexuality Educator (Institute of Sexuality Education and Enlightenment.</dd>
-        <dt>Licensure</dt><dd>No state licensure exists for this discipline</dd>
-        
-        <dt>In practice</dt><dd>20 yrs (since 2006)</dd>
-        <dt>Fees</dt><dd>1. Come Home to Your Body: Private Sessions
-Move from overwhelm into calm, grounded presence. These one-on-one sessions are for women ready to stop running on empty. Through qi gong, breathwork, guided visualization, and creative expression, you’ll learn to calm your system, feel at home in your body, and move through life with more ease and clarity. In person or virtual. 60 min: $175 · 90 min: $250
-
-Private Studio Journeys (1:1 packages)
-3 sessions: $495 · 6 sessions: $950
-
-Organizations &amp; Communities
-Workshops from $500; facilitation and consulting quoted per engagement</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-reported"><b>As reported by the practitioner.</b> Not independently verified — <a href="/verification/">what this means</a>.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/sacred-circle-institute/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:5206039457">(520) 603-9457</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:sacredcircleinstitute@gmail.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://sacredcircleinstitute.com" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$175</span><span class="rec-fee-l">from</span></div>
     </article>
   </li></ul>
+        <p class="results-note">Every listing says how its credentials were established: checked with the issuing board, or as reported by the practitioner. <a href="/verification/">What that means</a></p>
         <p class="back-link"><a href="/practice-types/">&larr; All disciplines</a></p>
-        <div class="empty" id="empty" hidden style="margin-top:2rem">
+        <div class="empty" id="empty" hidden>
           <h3>No practitioners match those filters</h3>
-          <p>Try widening the distance, removing a discipline, or searching a nearby city. Telehealth listings serve patients anywhere in their state.</p>
-          <p style="margin-top:1.2rem"><button class="btn btn-dark btn-sm" id="empty-clear">Clear filters</button></p>
+          <p>Try widening the distance, choosing another kind of care, or searching a nearby city. Many practitioners also offer telehealth.</p>
+          <p><button class="btn btn-dark btn-sm" id="empty-clear" type="button">Clear filters</button></p>
         </div>
       </section>
-    </div>
   </div>
-  <div style="height:4rem"></div>
 </main>
 
 <footer class="foot">
-  <div class="wrap">
-    <div class="foot-in">
-      <div>
-        <span class="foot-mark"><img src="/assets/img/logo-400.png?v=d921f92fa5" width="965" height="289" alt="FindWell Directory" loading="lazy" decoding="async"></span>
-        <p class="foot-blurb">A network of holistic and integrative practitioners. No commissions, no listing fees, no lead-selling.</p>
-      </div>
-      <div>
-        <h4>Find care</h4>
-        <a href="/practice-types/">By discipline</a>
-        <a href="/locations/">By location</a>
-      </div>
-      <div>
-        <h4>More</h4>
-        <a href="/join/">Join the directory</a>
-        <a href="/about/">Who we are</a>
-        <a href="/articles/">Articles</a>
-        <a href="/advertise/">Advertise with us</a>
-        <a href="/verification/">What verification means</a>
-        <a href="mailto:info@findwelldirectory.com">info@findwelldirectory.com</a>
-      </div>
+  <div class="wrap foot-in">
+    <div class="foot-about">
+      <span class="foot-name">FindWell</span>
+      <p>A free directory of holistic and integrative practitioners in the United States and Canada. No commissions, no listing fees, no lead selling.</p>
     </div>
-    <div class="foot-legal">
-      <span>&copy; 2026 FindWell Directory.</span>
-      <span>Listings are informational and are not a referral, endorsement, or medical advice.</span>
+    <div class="foot-col">
+      <a href="/directory/">Find care</a>
+      <a href="/practice-types/">Disciplines</a>
+      <a href="/locations/">Locations</a>
+      <a href="/verification/">How we verify</a>
+      <a href="/articles/">Articles</a>
+    </div>
+    <div class="foot-col">
+      <a href="/join/">List your practice</a>
+      <a href="/about/">About us</a>
+      <a href="/advertise/">Advertise with us</a>
+      <a href="mailto:info@findwelldirectory.com">info@findwelldirectory.com</a>
     </div>
   </div>
+  <div class="wrap foot-legal">&copy; 2026 FindWell Directory. Listings are informational and are not a referral, endorsement or medical advice.</div>
 </footer>
-<script src="/assets/app.js?v=ce9526a731" defer></script>
+<script src="/assets/app.js?v=01595e339a" defer></script>
 </body>
 </html>

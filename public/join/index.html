@@ -18,14 +18,14 @@
 <meta property="og:image" content="https://findwelldirectory.com/assets/img/share-card.jpg?v=05213c9754">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="FindWell Directory — a practitioner with a client, and the line: licensure, training, years in practice and pricing on every listing.">
+<meta property="og:image:alt" content="FindWell Directory: licensure, training, years in practice and pricing on every listing.">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://findwelldirectory.com/assets/img/share-card.jpg?v=05213c9754">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=9b746755e4">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Young+Serif&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=dde4514abe">
 
 </head>
 <body data-view="join">
@@ -33,33 +33,26 @@
 
 <header class="masthead">
   <div class="wrap masthead-in">
-    <a class="mark" href="/" aria-label="FindWell Directory — home">
-      <img src="/assets/img/logo-800.png?v=5aed8c1fd5"
-           srcset="/assets/img/logo-400.png?v=d921f92fa5 400w, /assets/img/logo-800.png?v=5aed8c1fd5 800w"
-           sizes="(max-width:900px) 190px, 280px" width="965" height="289"
-           alt="FindWell Directory — a network of holistic health care providers">
-    </a>
+    <a class="mark" href="/" aria-label="FindWell Directory, home"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 36C20 24 22 14 32 6C34 18 30 30 20 36Z" fill="#7f9a6c"/><path d="M20 36C20 26 17 18 8 12C7 24 11 32 20 36Z" fill="#2f4a35"/></svg><span>FindWell</span></a>
     <button class="burger" id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
-      <div class="nav-group">
-        <button type="button" class="nav-toggle" id="find-toggle" aria-expanded="false"
-                aria-controls="find-menu">
-          Find a provider <span class="caret" aria-hidden="true">&#9662;</span>
-        </button>
-        <ul class="nav-menu" id="find-menu"><li><a href="/practice-types/">By discipline</a></li><li><a href="/locations/">By location</a></li></ul>
-      </div><a href="/about/">Who we are</a><a href="/articles/">Articles</a><a href="/advertise/">Advertise with us</a>
-      <a class="cta" href="/join/">Join the directory</a>
+      <a href="/directory/">Find care</a><a href="/practice-types/">Disciplines</a><a href="/verification/">How we verify</a><a href="/about/">About us</a><a href="/articles/">Articles</a>
+      <a class="cta" href="/join/">List your practice</a>
     </nav>
   </div>
 </header>
 
 <main id="main">
-  <div class="wrap">
-    <p class="crumb"><a href="/">Home</a> / Join</p>
-    <div class="section-tight" style="max-width:860px">
-      <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:.8rem">Join the directory</h1>
-      <p class="lede">Listings are free. We publish exactly what you send — including the absence of a license where none exists for your discipline. Where we have checked a credential with the issuing board, your listing says so and names the date; where we have not, it says the details are as you reported them. <a href="/verification/">What verification means here</a>. Fields marked * are required.</p>
-
+  <section class="pg-head">
+    <svg class="pg-leaf" viewBox="0 0 200 320" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" aria-hidden="true"><path d="M100 312C100 220 100 120 100 12"/><path d="M100 30C58 62 30 122 40 200C48 258 88 298 100 312C112 298 152 258 160 200C170 122 142 62 100 30Z"/><path d="M100 80C84 90 70 104 60 122M100 120C80 132 62 150 50 172M100 160C82 172 66 190 56 214M100 200C86 212 74 228 68 248M100 80C116 90 130 104 140 122M100 120C120 132 138 150 150 172M100 160C118 172 134 190 144 214M100 200C114 212 126 228 132 248"/></svg>
+    <div class="wrap pg-head-in">
+      <p class="crumb"><a href="/">Home</a> / List your practice</p>
+      <h1>List your practice</h1>
+      <p class="pg-lede">Listing is free and always will be. We publish exactly what you send, and where we check a credential with the issuing board, your listing says so and names the date. It takes about ten minutes.</p>
+    </div>
+  </section>
+  <div class="wrap join-wrap">
+    <div class="join-card">
       <div class="notice" id="join-gate" style="margin-top:2rem">
         <b>Listings are for individual practitioners.</b>
         Each listing carries one person's license, training and years in practice, which is what lets us tell a patient how those credentials were established. A practice as a whole cannot hold that, so practitioners who work together are listed side by side rather than as one entry. Practising under a business name is perfectly fine.
@@ -94,9 +87,14 @@
         <input type="hidden" name="_subject" id="j-subject" value="Directory application">
         <input type="hidden" name="Referred by" id="j-ref">
         <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+        <div class="join-progress" id="join-progress" hidden>
+          <p class="join-step-label" id="join-step-label">Step 1 of 5</p>
+          <div class="join-bar" aria-hidden="true"><span id="join-bar-fill"></span></div>
+        </div>
 
+        <div class="join-step" data-step="1" data-name="About you">
         <section class="form-section">
-          <h2>Provider name</h2>
+          <h2>Let's start with you</h2>
           <div class="form-grid">
             <div class="field"><label for="j-first">First name *</label><input class="control" id="j-first" name="First name" autocomplete="given-name" required><p class="err">Required.</p></div>
             <div class="field"><label for="j-last">Last name *</label><input class="control" id="j-last" name="Last name" autocomplete="family-name" required><p class="err">Required.</p></div>
@@ -109,8 +107,10 @@
           </div>
         </section>
 
+        </div>
+        <div class="join-step" data-step="2" data-name="Your practice">
         <section class="form-section">
-          <h2>Location</h2>
+          <h2>Where you practise</h2>
           <div class="form-grid">
             <div class="field">
             <span class="lbl">Do you have a physical location? *</span>
@@ -137,7 +137,7 @@
         </section>
 
         <section class="form-section">
-          <h2>Scope of practice</h2>
+          <h2>What you offer</h2>
           <div class="form-grid">
             <div class="field full"><span class="lbl">Which of the following best describes your services? *</span>
               <p class="hint" style="margin:-.15rem 0 .7rem">Select all that apply.</p>
@@ -151,7 +151,18 @@
         </section>
 
         <section class="form-section">
-          <h2>Credentials &amp; experience</h2>
+          <h2>Your listing page</h2>
+          <div class="form-grid">
+            <div class="field full"><label for="j-long">Give a description of your practice or business *</label>
+              <textarea class="control" id="j-long" name="Listing description" style="min-height:170px" required></textarea>
+              <p class="hint"><span id="wordcount">0</span> / 150 words. This appears on your own listing page.</p>
+              <p class="err">Required.</p></div>
+          </div>
+        </section>
+        </div>
+        <div class="join-step" data-step="3" data-name="Your training">
+        <section class="form-section">
+          <h2>Your training and credentials</h2>
           <div class="notice verify-ask">
             <p><b>Would you like your listing to show as verified?</b> It gives patients more confidence when they are choosing a practitioner. Please include your state license number and any certifications or professional affiliations, and we will confirm them with the board or organisation that issued them.</p>
             <p>If you do not have any of these, you will still be listed, and your details will show as you reported them.</p>
@@ -183,8 +194,10 @@
           </div>
         </section>
 
+        </div>
+        <div class="join-step" data-step="4" data-name="Fees">
         <section class="form-section">
-          <h2>Pricing &amp; insurance</h2>
+          <h2>Fees and payment</h2>
           <div class="form-grid">
             <div class="field full"><span class="lbl">Which of the following payments do you accept? *</span>
               <p class="hint" style="margin:-.15rem 0 .7rem">Select all that apply.</p>
@@ -205,24 +218,9 @@
           </div>
         </section>
 
-        <section class="form-section">
-          <h2>Listing description</h2>
-          <div class="form-grid">
-            <div class="field full"><label for="j-long">Give a description of your practice or business *</label>
-              <textarea class="control" id="j-long" name="Listing description" style="min-height:170px" required></textarea>
-              <p class="hint"><span id="wordcount">0</span> / 150 words. This appears on your own listing page.</p>
-              <p class="err">Required.</p></div>
-            <div class="field full"><label for="j-files">Media</label>
-              <input class="control file" id="j-files" name="Logo or headshot" type="file"
-                     accept="image/*" multiple>
-              <p class="hint">Upload your logo and/or headshot — maximum 2 images, 10 MB each. PNG or JPEG, square and 500px or larger works best.</p>
-              <p class="err" data-for="files">Choose no more than two images, 10 MB each.</p>
-              <p class="hint" id="file-list" style="margin-top:.4rem"></p></div>
-          </div>
-        </section>
 
         <section class="form-section internal">
-          <h2>Additional questions — not published</h2>
+          <h2>A few questions just for us</h2>
           <p class="hint" style="margin:-.4rem 0 1.2rem">These answers help us plan the directory. They never appear on your listing or anywhere public.</p>
           <div class="form-grid">
             <div class="field full"><label for="j-size">What is the desired size of your business or practice? *</label><textarea class="control" id="j-size" name="Desired size of practice" placeholder="Days per week, patient or customer numbers, or any other metric." required></textarea><p class="err">Required.</p></div>
@@ -248,8 +246,21 @@
           </div>
         </section>
 
+        </div>
+        <div class="join-step" data-step="5" data-name="Review and send">
         <section class="form-section">
-          <h2>Confirmation</h2>
+          <h2>Your logo or photo</h2>
+          <div class="form-grid">
+            <div class="field full"><label for="j-files">Media</label>
+              <input class="control file" id="j-files" name="Logo or headshot" type="file"
+                     accept="image/*" multiple>
+              <p class="hint">Upload your logo and/or headshot — maximum 2 images, 10 MB each. PNG or JPEG, square and 500px or larger works best.</p>
+              <p class="err" data-for="files">Choose no more than two images, 10 MB each.</p>
+              <p class="hint" id="file-list" style="margin-top:.4rem"></p></div>
+          </div>
+        </section>
+        <section class="form-section">
+          <h2>Confirm and send</h2>
           <label class="check attest" for="j-attest">
             <input type="checkbox" id="j-attest" name="Attestation" value="Agreed" required>
             <span>I confirm that the credentials, licenses, certifications and training I have
@@ -259,11 +270,16 @@
             unverified listings are published as reported by me.</span>
           </label>
           <p class="err" data-for="attest">This confirmation is required.</p>
+          <div class="join-next-note"><b>What happens next</b> We will email you to say we have your application. Amita or Emma will review it, confirm your license or certification where we can, and email you again as soon as your listing is live.</div>
         </section>
+        </div>
 
-        <div style="display:flex;gap:.7rem;flex-wrap:wrap;margin-top:2rem;align-items:center">
-          <button class="btn btn-primary" type="submit">Send</button>
+        <div class="join-nav">
+          <button class="btn btn-ghost" type="button" id="j-back" hidden>Back</button>
+          <span class="join-nav-gap"></span>
           <span class="hint" id="join-msg"></span>
+          <button class="btn btn-primary" type="button" id="j-next" hidden>Continue</button>
+          <button class="btn btn-primary" type="submit" id="j-send">Send my application</button>
         </div>
       </form>
 
@@ -273,6 +289,11 @@
         <p style="margin-top:.8rem" id="join-mail-wrap" hidden><a class="btn btn-dark btn-sm" id="join-mail" href="#">Open in email</a></p>
       </div>
     </div>
+    <aside class="join-aside">
+      <svg class="join-aside-leaf" viewBox="0 0 200 320" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" aria-hidden="true"><path d="M100 312C100 220 100 120 100 12"/><path d="M100 30C58 62 30 122 40 200C48 258 88 298 100 312C112 298 152 258 160 200C170 122 142 62 100 30Z"/><path d="M100 80C84 90 70 104 60 122M100 120C80 132 62 150 50 172M100 160C82 172 66 190 56 214M100 200C86 212 74 228 68 248M100 80C116 90 130 104 140 122M100 120C120 132 138 150 150 172M100 160C118 172 134 190 144 214M100 200C114 212 126 228 132 248"/></svg>
+      <div class="fw-panel fw-panel-sage"><h3>Free, always</h3><p>No paid placement and no leads sold. Patients contact you directly.</p></div>
+      <div class="fw-panel"><h3>Who can join</h3><p>Individual practitioners offering care in the United States or Canada. We do not list products.</p></div>
+    </aside>
   </div>
   <script>(function(){
     var q=new URLSearchParams(location.search);
@@ -315,37 +336,30 @@
     });
     refresh();
   })();</script>
-  <div style="height:3rem"></div>
 </main>
 
 <footer class="foot">
-  <div class="wrap">
-    <div class="foot-in">
-      <div>
-        <span class="foot-mark"><img src="/assets/img/logo-400.png?v=d921f92fa5" width="965" height="289" alt="FindWell Directory" loading="lazy" decoding="async"></span>
-        <p class="foot-blurb">A network of holistic and integrative practitioners. No commissions, no listing fees, no lead-selling.</p>
-      </div>
-      <div>
-        <h4>Find care</h4>
-        <a href="/practice-types/">By discipline</a>
-        <a href="/locations/">By location</a>
-      </div>
-      <div>
-        <h4>More</h4>
-        <a href="/join/">Join the directory</a>
-        <a href="/about/">Who we are</a>
-        <a href="/articles/">Articles</a>
-        <a href="/advertise/">Advertise with us</a>
-        <a href="/verification/">What verification means</a>
-        <a href="mailto:info@findwelldirectory.com">info@findwelldirectory.com</a>
-      </div>
+  <div class="wrap foot-in">
+    <div class="foot-about">
+      <span class="foot-name">FindWell</span>
+      <p>A free directory of holistic and integrative practitioners in the United States and Canada. No commissions, no listing fees, no lead selling.</p>
     </div>
-    <div class="foot-legal">
-      <span>&copy; 2026 FindWell Directory.</span>
-      <span>Listings are informational and are not a referral, endorsement, or medical advice.</span>
+    <div class="foot-col">
+      <a href="/directory/">Find care</a>
+      <a href="/practice-types/">Disciplines</a>
+      <a href="/locations/">Locations</a>
+      <a href="/verification/">How we verify</a>
+      <a href="/articles/">Articles</a>
+    </div>
+    <div class="foot-col">
+      <a href="/join/">List your practice</a>
+      <a href="/about/">About us</a>
+      <a href="/advertise/">Advertise with us</a>
+      <a href="mailto:info@findwelldirectory.com">info@findwelldirectory.com</a>
     </div>
   </div>
+  <div class="wrap foot-legal">&copy; 2026 FindWell Directory. Listings are informational and are not a referral, endorsement or medical advice.</div>
 </footer>
-<script src="/assets/app.js?v=ce9526a731" defer></script>
+<script src="/assets/app.js?v=01595e339a" defer></script>
 </body>
 </html>

@@ -18,14 +18,14 @@
 <meta property="og:image" content="https://findwelldirectory.com/assets/img/share-card.jpg?v=05213c9754">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="FindWell Directory — a practitioner with a client, and the line: licensure, training, years in practice and pricing on every listing.">
+<meta property="og:image:alt" content="FindWell Directory: licensure, training, years in practice and pricing on every listing.">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://findwelldirectory.com/assets/img/share-card.jpg?v=05213c9754">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=9b746755e4">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Young+Serif&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=dde4514abe">
 
 </head>
 <body data-view="directory">
@@ -33,61 +33,55 @@
 
 <header class="masthead">
   <div class="wrap masthead-in">
-    <a class="mark" href="/" aria-label="FindWell Directory — home">
-      <img src="/assets/img/logo-800.png?v=5aed8c1fd5"
-           srcset="/assets/img/logo-400.png?v=d921f92fa5 400w, /assets/img/logo-800.png?v=5aed8c1fd5 800w"
-           sizes="(max-width:900px) 190px, 280px" width="965" height="289"
-           alt="FindWell Directory — a network of holistic health care providers">
-    </a>
+    <a class="mark" href="/" aria-label="FindWell Directory, home"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 36C20 24 22 14 32 6C34 18 30 30 20 36Z" fill="#7f9a6c"/><path d="M20 36C20 26 17 18 8 12C7 24 11 32 20 36Z" fill="#2f4a35"/></svg><span>FindWell</span></a>
     <button class="burger" id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
-      <div class="nav-group">
-        <button type="button" class="nav-toggle" id="find-toggle" aria-expanded="false"
-                aria-controls="find-menu" data-active="1">
-          Find a provider <span class="caret" aria-hidden="true">&#9662;</span>
-        </button>
-        <ul class="nav-menu" id="find-menu"><li><a href="/practice-types/" aria-current="page">By discipline</a></li><li><a href="/locations/">By location</a></li></ul>
-      </div><a href="/about/">Who we are</a><a href="/articles/">Articles</a><a href="/advertise/">Advertise with us</a>
-      <a class="cta" href="/join/">Join the directory</a>
+      <a href="/directory/">Find care</a><a href="/practice-types/" aria-current="page">Disciplines</a><a href="/verification/">How we verify</a><a href="/about/">About us</a><a href="/articles/">Articles</a>
+      <a class="cta" href="/join/">List your practice</a>
     </nav>
   </div>
 </header>
 
 <main id="main">
-  <div class="wrap">
-    <p class="crumb"><a href="/">Home</a> / <a href="/practice-types/">Disciplines</a> / TCM</p>
-    <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin:.6rem 0 1.4rem">TCM</h1>
-    <p class="lede" style="margin:-.8rem 0 1.8rem">Traditional Chinese Medicine — Dipl. O.M.</p>
-    <div class="dir">
+  <section class="pg-head">
+    <svg class="pg-leaf" viewBox="0 0 200 320" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" aria-hidden="true"><path d="M100 312C100 220 100 120 100 12"/><path d="M100 30C58 62 30 122 40 200C48 258 88 298 100 312C112 298 152 258 160 200C170 122 142 62 100 30Z"/><path d="M100 80C84 90 70 104 60 122M100 120C80 132 62 150 50 172M100 160C82 172 66 190 56 214M100 200C86 212 74 228 68 248M100 80C116 90 130 104 140 122M100 120C120 132 138 150 150 172M100 160C118 172 134 190 144 214M100 200C114 212 126 228 132 248"/></svg>
+    <div class="wrap pg-head-in">
+      <p class="crumb"><a href="/">Home</a> / <a href="/practice-types/">Disciplines</a> / Chinese medicine</p>
+      <h1>Chinese medicine</h1>
+      <p class="pg-lede">Traditional Chinese Medicine, Dipl. O.M.</p>
+    </div>
+  </section>
+  <div class="wrap dir">
       <aside class="rail" id="rail">
-        <button class="rail-toggle" id="rail-toggle" aria-expanded="false">Filters<span>▾</span></button>
+        <button class="rail-toggle" id="rail-toggle" aria-expanded="false">Narrow it down<span aria-hidden="true">&#9662;</span></button>
         <div class="rail-body">
-          <div class="field" style="margin-bottom:1.6rem">
-            <label for="f-q">Keyword</label>
-            <input class="control" id="f-q" type="search" placeholder="Name, condition, credential">
+          <p class="rail-title">Narrow it down</p>
+          <div class="field">
+            <label for="f-q">Name or keyword</label>
+            <input class="control" id="f-q" type="search" placeholder="e.g. digestion, sciatica">
           </div>
-          <fieldset><legend>Discipline</legend><label class="check"><input type="checkbox" data-cat="Ayurveda" data-href="/practice-types/ayurveda/"> Ayurveda<span class="n">5</span></label><label class="check"><input type="checkbox" data-cat="Acupuncture" data-href="/practice-types/acupuncture/"> Acupuncture<span class="n">9</span></label><label class="check"><input type="checkbox" data-cat="TCM" data-href="/directory/" checked> TCM<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="Naturopathy" data-href="/practice-types/naturopathic-medicine/"> Licensed naturopaths<span class="n">2</span></label><label class="check"><input type="checkbox" data-cat="IntegrativeMedicine" data-href="/practice-types/integrative-functional-medicine/"> Integrative &amp; functional medicine (MD, DO, NP, PA, RN)<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="Counseling" data-href="/practice-types/counseling/"> Counselors<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="Coaching" data-href="/practice-types/health-wellness-coaching/"> Health &amp; wellness coaches<span class="n">13</span></label><label class="check"><input type="checkbox" data-cat="Massage" data-href="/practice-types/massage-therapy/"> Massage therapy<span class="n">2</span></label><label class="check"><input type="checkbox" data-cat="Bodywork" data-href="/practice-types/body-work/"> Body work<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="EnergyMedicine" data-href="/practice-types/energy-work/"> Energy healers<span class="n">11</span></label><label class="check"><input type="checkbox" data-cat="Chiropractic" data-href="/practice-types/chiropractic/"> Chiropractors<span class="n">5</span></label><label class="check"><input type="checkbox" data-cat="Nutrition" data-href="/practice-types/nutrition/"> Nutritionists<span class="n">8</span></label><label class="check"><input type="checkbox" data-cat="Herbalism" data-href="/practice-types/herbology/"> Herbology<span class="n">8</span></label><label class="check check-empty"><input type="checkbox" data-cat="Farms" data-href="/practice-types/local-farmers/" disabled> Local farmers<span class="n">0</span></label><label class="check check-empty"><input type="checkbox" data-cat="Grocers" data-href="/practice-types/local-grocers/" disabled> Local grocers<span class="n">0</span></label></fieldset>
+          <fieldset><legend>Kind of care</legend><label class="check"><input type="checkbox" data-cat="Ayurveda" data-href="/practice-types/ayurveda/"> Ayurveda<span class="n">5</span></label><label class="check"><input type="checkbox" data-cat="Acupuncture" data-href="/practice-types/acupuncture/"> Acupuncture<span class="n">9</span></label><label class="check"><input type="checkbox" data-cat="TCM" data-href="/directory/" checked> Chinese medicine<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="Naturopathy" data-href="/practice-types/naturopathic-medicine/"> Naturopathic doctors<span class="n">2</span></label><label class="check"><input type="checkbox" data-cat="IntegrativeMedicine" data-href="/practice-types/integrative-functional-medicine/"> Integrative medicine<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="Counseling" data-href="/practice-types/counseling/"> Counseling<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="Coaching" data-href="/practice-types/health-wellness-coaching/"> Health coaching<span class="n">13</span></label><label class="check"><input type="checkbox" data-cat="Massage" data-href="/practice-types/massage-therapy/"> Massage<span class="n">2</span></label><label class="check"><input type="checkbox" data-cat="Bodywork" data-href="/practice-types/body-work/"> Body work<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="EnergyMedicine" data-href="/practice-types/energy-work/"> Energy work<span class="n">11</span></label><label class="check"><input type="checkbox" data-cat="Chiropractic" data-href="/practice-types/chiropractic/"> Chiropractic<span class="n">5</span></label><label class="check"><input type="checkbox" data-cat="Nutrition" data-href="/practice-types/nutrition/"> Nutrition<span class="n">8</span></label><label class="check"><input type="checkbox" data-cat="Herbalism" data-href="/practice-types/herbology/"> Herbal medicine<span class="n">8</span></label><label class="check check-empty"><input type="checkbox" data-cat="Farms" data-href="/practice-types/local-farmers/" disabled> Local farms<span class="n">0</span></label><label class="check check-empty"><input type="checkbox" data-cat="Grocers" data-href="/practice-types/local-grocers/" disabled> Local grocers<span class="n">0</span></label></fieldset>
           <fieldset><legend>State</legend>
             <select class="control" id="f-state"><option value="">All states</option><option value="AZ">Arizona (15)</option><option value="CA">California (7)</option><option value="CO">Colorado (3)</option><option value="FL">Florida (3)</option><option value="GA">Georgia (3)</option><option value="ID">Idaho (1)</option><option value="IL">Illinois (1)</option><option value="IN">Indiana (1)</option><option value="MA">Massachusetts (1)</option><option value="MI">Michigan (3)</option><option value="NH">New Hampshire (1)</option><option value="OH">Ohio (1)</option><option value="OK">Oklahoma (1)</option><option value="TN">Tennessee (2)</option><option value="TX">Texas (1)</option><option value="VA">Virginia (1)</option><option value="WA">Washington (1)</option><option value="WI">Wisconsin (1)</option></select>
           </fieldset>
           <fieldset><legend>Distance</legend>
             <input class="control" id="f-zip" type="text" inputmode="numeric" placeholder="ZIP code">
-            <label class="lbl" for="f-radius" style="margin-top:.7rem">Within 50 miles</label>
-            <input id="f-radius" type="range" min="5" max="500" step="5" value="50" style="width:100%;accent-color:var(--brand)">
-            <button class="btn btn-ghost btn-sm" id="f-near" style="width:100%;margin-top:.6rem">Use my location</button>
+            <label class="lbl" for="f-radius">Within 50 miles</label>
+            <input id="f-radius" type="range" min="5" max="500" step="5" value="50">
+            <button class="btn btn-ghost btn-sm" id="f-near" type="button">Use my location</button>
             <p class="hint" id="geo-msg"></p>
           </fieldset>
-          <fieldset><legend>Format</legend>
+          <fieldset><legend>Show only</legend>
             <label class="check"><input type="checkbox" id="f-tele"> Offers telehealth</label>
           </fieldset>
-          <button class="btn btn-ghost btn-sm" id="f-clear" style="width:100%">Clear all filters</button>
+          <button class="btn btn-ghost btn-sm" id="f-clear" type="button">Clear all filters</button>
         </div>
       </aside>
-      <section>
+      <section class="dir-main">
         <div class="results-bar">
           <p class="results-count" aria-live="polite"><b id="count">7</b> <span id="count-word">practitioners</span><span id="count-where"></span></p>
           <div class="sort">
-            <label for="f-sort">Sort</label>
+            <label for="f-sort">Sort by</label>
             <select class="control" id="f-sort">
               <option value="name">Name</option>
               <option value="years">Years in practice</option>
@@ -95,67 +89,34 @@
             </select>
           </div>
         </div>
-        <p class="results-note">Every listing states how its credentials were established — checked with the issuing board, or as reported by the practitioner. <a href="/verification/">What that means</a>.</p>
         <div class="active-filters" id="active-filters"></div>
         <ul class="records" id="records"><li class="record" data-cats="Acupuncture TCM Bodywork"
       data-city="Tucson" data-state="AZ" data-tele="0"
       data-lat="32.236" data-lng="-110.943" data-since="2021"
-      data-name="Hibiscus Acupuncture" data-text="hibiscus acupuncture frank harris, l.ac. tucson az 85719 masters in acupuncture and oriental medicine masters in acupuncture and oriental medicine relieving pain, illness and emotional imbalance by bringing body, mind and spirit into harmony with traditional east asian medicine, using acupuncture, tuina bodywork and herbal medicine. arizona licensed acupuncturist — az lac-010717 acupuncture tcm body work">
-    <article class="record-in">
-      <div class="record-head">
-        <picture><source type="image/webp" srcset="/assets/img/providers/hibiscus-acupuncture.webp?v=01eb2884f0"><img class="avatar" src="/assets/img/providers/hibiscus-acupuncture.png?v=af637a9267" alt="Hibiscus Acupuncture logo" loading="lazy" decoding="async" width="200" height="200"></picture>
-        <div>
-          <h3 class="record-name"><a href="/provider/hibiscus-acupuncture/">Hibiscus Acupuncture</a></h3>
-          <p class="record-person"><b>Frank Harris, L.Ac.</b></p>
-          <p class="record-where">Tucson, AZ 85719 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/acupuncture/">Acupuncture</a><a class="tag" href="/practice-types/traditional-chinese-medicine/">TCM</a><a class="tag" href="/practice-types/body-work/">Body work</a></div>
-        </div>
+      data-name="Hibiscus Acupuncture" data-text="hibiscus acupuncture frank harris, l.ac. tucson az 85719 masters in acupuncture and oriental medicine masters in acupuncture and oriental medicine relieving pain, illness and emotional imbalance by bringing body, mind and spirit into harmony with traditional east asian medicine, using acupuncture, tuina bodywork and herbal medicine. arizona licensed acupuncturist — az lac-010717 acupuncture tcm body work acupuncture chinese medicine body work">
+    <article class="rec">
+      <picture><source type="image/webp" srcset="/assets/img/providers/hibiscus-acupuncture.webp?v=01eb2884f0"><img class="avatar" src="/assets/img/providers/hibiscus-acupuncture.png?v=af637a9267" alt="Hibiscus Acupuncture logo" loading="lazy" decoding="async" width="200" height="200"></picture>
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/hibiscus-acupuncture/">Hibiscus Acupuncture</a></h3>
+        <p class="rec-meta">Frank Harris, L.Ac. · Tucson, AZ · Since 2021 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Relieving pain, illness and emotional imbalance by bringing body, mind and spirit into harmony with traditional East Asian medicine, using acupuncture, tuina bodywork and…</p>
+        <div class="fw-tags"><span class="fw-tag">Acupuncture</span><span class="fw-tag">Chinese medicine</span><span class="fw-tag">Body work</span><span class="fw-tag fw-tag-ok">License confirmed</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Masters in Acupuncture and Oriental Medicine</dd>
-        <dt>Licensure</dt><dd>Arizona licensed acupuncturist — AZ LAC-010717</dd>
-        
-        <dt>In practice</dt><dd>5 yrs (since 2021)</dd>
-        <dt>Fees</dt><dd>New patient intake $120 · Return visit $85</dd>
-        <dt>Insurance</dt><dd>Accepted — verify your plan with the practice</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b>: Arizona licensed acupuncturist — AZ LAC-010717 with the Arizona Acupuncture Board of Examiners, 23 Sept 2026.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/hibiscus-acupuncture/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:5206098488">(520) 609-8488</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:info@hibiscusacupuncture.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="http://www.hibiscusacupuncture.com" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$120</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="Acupuncture TCM Bodywork Herbalism"
       data-city="Tucson" data-state="AZ" data-tele="1"
       data-lat="32.2705" data-lng="-110.931" data-since="2004"
-      data-name="Catalina Acupuncture" data-text="catalina acupuncture nathan anderson, l.ac. tucson az 85716 master of traditional oriental medicine emperor&#x27;s college — master of traditional oriental medicine catalina acupuncture provides solutions for pain and illness, blending traditional chinese medicine with modern, results-driven techniques for chronic pain, injuries, stress and a range of health conditions. arizona acupuncture board of examiners #888 · originally licensed in california, california acupuncture board #9744 acupuncture tcm body work herbology">
-    <article class="record-in">
-      <div class="record-head">
-        <picture><source type="image/webp" srcset="/assets/img/providers/catalina-acupuncture.webp?v=00b2d66386"><img class="avatar" src="/assets/img/providers/catalina-acupuncture.png?v=f3fd73ba1f" alt="Catalina Acupuncture logo" loading="lazy" decoding="async" width="200" height="200"></picture>
-        <div>
-          <h3 class="record-name"><a href="/provider/catalina-acupuncture/">Catalina Acupuncture</a></h3>
-          <p class="record-person"><b>Nathan Anderson, L.Ac.</b></p>
-          <p class="record-where">Tucson, AZ 85716 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/acupuncture/">Acupuncture</a><a class="tag" href="/practice-types/traditional-chinese-medicine/">TCM</a><a class="tag" href="/practice-types/body-work/">Body work</a><a class="tag" href="/practice-types/herbology/">Herbology</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+      data-name="Catalina Acupuncture" data-text="catalina acupuncture nathan anderson, l.ac. tucson az 85716 master of traditional oriental medicine emperor&#x27;s college — master of traditional oriental medicine catalina acupuncture provides solutions for pain and illness, blending traditional chinese medicine with modern, results-driven techniques for chronic pain, injuries, stress and a range of health conditions. arizona acupuncture board of examiners #888 · originally licensed in california, california acupuncture board #9744 acupuncture tcm body work herbology acupuncture chinese medicine body work herbal medicine">
+    <article class="rec">
+      <picture><source type="image/webp" srcset="/assets/img/providers/catalina-acupuncture.webp?v=00b2d66386"><img class="avatar" src="/assets/img/providers/catalina-acupuncture.png?v=f3fd73ba1f" alt="Catalina Acupuncture logo" loading="lazy" decoding="async" width="200" height="200"></picture>
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/catalina-acupuncture/">Catalina Acupuncture</a></h3>
+        <p class="rec-meta">Nathan Anderson, L.Ac. · Tucson, AZ · Since 2004 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Catalina Acupuncture provides solutions for pain and illness, blending traditional Chinese medicine with modern, results-driven techniques for chronic pain, injuries, str…</p>
+        <div class="fw-tags"><span class="fw-tag">Acupuncture</span><span class="fw-tag">Chinese medicine</span><span class="fw-tag">Body work</span><span class="fw-tag">Telehealth</span><span class="fw-tag fw-tag-ok">License confirmed</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Master of Traditional Oriental Medicine</dd>
-        <dt>Licensure</dt><dd>Arizona Acupuncture Board of Examiners #888 · originally licensed in California, California Acupuncture Board #9744</dd>
-        
-        <dt>In practice</dt><dd>22 yrs (since 2004)</dd>
-        <dt>Fees</dt><dd>First visit, 90 min $150 · Return visits, 60 min $100 · Herbal medicine varies</dd>
-        <dt>Insurance</dt><dd>Accepted — verify your plan with the practice</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b>: Arizona Acupuncture Board of Examiners #888 · originally licensed in California, California Acupuncture Board #9744 with the Arizona Acupuncture Board of Examiners, 23 Sept 2026.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/catalina-acupuncture/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:5209990080">(520) 999-0080</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:CatalinaAcupuncturePLLC@gmail.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="http://www.CatalinaAcupuncture.com" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$150</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="Acupuncture TCM Herbalism IntegrativeMedicine"
       data-city="Tucson" data-state="AZ" data-tele="0"
@@ -163,33 +124,17 @@
       data-name="Common Roots Acupuncture" data-text="common roots acupuncture josh whiteley tucson az 85719 registered nurse (rn) · licensed acupuncturist and practitioner of chinese medicine master of science in acupuncture &amp; oriental medicine, southwest acupuncture college, boulder, colorado
 registered nurse, pima community college, tucson, arizona
 certified ayurvedic practitioner, the ayurvedic institute, albuquerque, new mexico we help people get out of pain, calm the nervous system, and return to the activities that matter most with results-driven care.
-led by registered nurse and licensed acupuncturist josh whiteley. our approach combines traditional acupuncture with modern, evidence-informed therapies like orthopedic dry needling, electro-acupuncture, and regenerative medicine injections. by addressing both the source of pain and the surrounding muscle and nerve patterns, we’re able to treat conditions like sciatica, injuries, and chronic pain more effectively and with longer-lasting results. arizona registered nurse and licensed acupuncturist — numbers not provided acupuncture tcm herbology integrative &amp; functional medicine (md, do, np, pa, rn)">
-    <article class="record-in">
-      <div class="record-head">
-        <img class="avatar" src="/assets/img/providers/common-roots-acupuncture.jpg?v=84053eae36" alt="Common Roots Acupuncture logo" loading="lazy" decoding="async" width="200" height="200">
-        <div>
-          <h3 class="record-name"><a href="/provider/common-roots-acupuncture/">Common Roots Acupuncture</a></h3>
-          <p class="record-person"><b>Josh Whiteley</b></p>
-          <p class="record-where">Tucson, AZ 85719 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/acupuncture/">Acupuncture</a><a class="tag" href="/practice-types/traditional-chinese-medicine/">TCM</a><a class="tag" href="/practice-types/herbology/">Herbology</a><a class="tag" href="/practice-types/integrative-functional-medicine/">Integrative &amp; functional medicine (MD, DO, NP, PA, RN)</a></div>
-        </div>
+led by registered nurse and licensed acupuncturist josh whiteley. our approach combines traditional acupuncture with modern, evidence-informed therapies like orthopedic dry needling, electro-acupuncture, and regenerative medicine injections. by addressing both the source of pain and the surrounding muscle and nerve patterns, we’re able to treat conditions like sciatica, injuries, and chronic pain more effectively and with longer-lasting results. arizona registered nurse and licensed acupuncturist — numbers not provided acupuncture tcm herbology integrative &amp; functional medicine (md, do, np, pa, rn) acupuncture chinese medicine herbal medicine integrative medicine">
+    <article class="rec">
+      <img class="avatar" src="/assets/img/providers/common-roots-acupuncture.jpg?v=84053eae36" alt="Common Roots Acupuncture logo" loading="lazy" decoding="async" width="200" height="200">
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/common-roots-acupuncture/">Common Roots Acupuncture</a></h3>
+        <p class="rec-meta">Josh Whiteley · Tucson, AZ · Since 2009 <span class="record-dist"></span></p>
+        <p class="rec-blurb">We help people get out of pain, calm the nervous system, and return to the activities that matter most with results-driven care.
+Led by Registered Nurse and Licensed Acu…</p>
+        <div class="fw-tags"><span class="fw-tag">Acupuncture</span><span class="fw-tag">Chinese medicine</span><span class="fw-tag">Herbal medicine</span><span class="fw-tag fw-tag-ok">License confirmed</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Registered Nurse (RN) · Licensed acupuncturist and practitioner of Chinese medicine</dd>
-        <dt>Licensure</dt><dd>Arizona registered nurse and licensed acupuncturist — numbers not provided</dd>
-        <dt>Integrative training</dt><dd class="na">None reported</dd>
-        <dt>In practice</dt><dd>17 yrs (since 2009)</dd>
-        <dt>Fees</dt><dd>Initial consultation and treatment: $135
-Follow up visits: $70-$100 (sliding scale)</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b>: Arizona licensed acupuncturist with the Arizona Acupuncture Board of Examiners, 19 Oct 2026.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/common-roots-acupuncture/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:5202769555">(520) 276-9555</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:hi@commonrootsacupuncture.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://commonrootsacupuncture.com" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$135</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="TCM Bodywork Massage"
       data-city="tucson" data-state="AZ" data-tele="1"
@@ -198,167 +143,93 @@ Follow up visits: $70-$100 (sliding scale)</dd>
 certified practitioner and instructor aobta bancroft school of massage therapy (1997-99)
 formal apprenticeship in traditional chinese medicine (1999-2015)
 auricular therapy (2006-09)
-certified qigong and taiji coach manual and movement therapy to relieve pain and improve quality of life. no state licensure exists for this discipline tcm body work massage therapy">
-    <article class="record-in">
-      <div class="record-head">
-        <picture><source type="image/webp" srcset="/assets/img/providers/tucson-manual-and-movement-therapy.webp?v=5592d8c3b6"><img class="avatar" src="/assets/img/providers/tucson-manual-and-movement-therapy.png?v=966c1b2bd3" alt="Tucson Manual and Movement Therapy logo" loading="lazy" decoding="async" width="200" height="200"></picture>
-        <div>
-          <h3 class="record-name"><a href="/provider/tucson-manual-and-movement-therapy/">Tucson Manual and Movement Therapy</a></h3>
-          <p class="record-person"><b>Jarrod Lash</b></p>
-          <p class="record-where">tucson, AZ 85712 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/traditional-chinese-medicine/">TCM</a><a class="tag" href="/practice-types/body-work/">Body work</a><a class="tag" href="/practice-types/massage-therapy/">Massage therapy</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+certified qigong and taiji coach manual and movement therapy to relieve pain and improve quality of life. no state licensure exists for this discipline tcm body work massage therapy chinese medicine body work massage">
+    <article class="rec">
+      <picture><source type="image/webp" srcset="/assets/img/providers/tucson-manual-and-movement-therapy.webp?v=5592d8c3b6"><img class="avatar" src="/assets/img/providers/tucson-manual-and-movement-therapy.png?v=966c1b2bd3" alt="Tucson Manual and Movement Therapy logo" loading="lazy" decoding="async" width="200" height="200"></picture>
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/tucson-manual-and-movement-therapy/">Tucson Manual and Movement Therapy</a></h3>
+        <p class="rec-meta">Jarrod Lash · tucson, AZ · Since 1999 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Manual and Movement Therapy to relieve pain and improve quality of life.</p>
+        <div class="fw-tags"><span class="fw-tag">Chinese medicine</span><span class="fw-tag">Body work</span><span class="fw-tag">Massage</span><span class="fw-tag">Telehealth</span><span class="fw-tag fw-tag-ok">Credentials confirmed</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Certified Massage Therapist (1999)
-Certified Practitioner and Instructor AOBTA</dd>
-        <dt>Licensure</dt><dd>No state licensure exists for this discipline</dd>
-        
-        <dt>In practice</dt><dd>27 yrs (since 1999)</dd>
-        <dt>Fees</dt><dd>$125/session for Manual or Movement Therapy
-$200 traction therapy</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b> with the Certified Practitioner in Asian bodywork (AOBTA), 23 Sept 2026.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/tucson-manual-and-movement-therapy/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:5204044869">(520) 404-4869</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:descendingdragoncommunity@gmail.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://www.descendingdragoncommunity.com/" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$125</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="Acupuncture TCM Naturopathy IntegrativeMedicine Coaching Ayurveda"
       data-city="Tampa" data-state="FL" data-tele="1"
       data-lat="27.929964451122" data-lng="-82.510388833841" data-since="2016"
-      data-name="Wholistic Medical Group" data-text="wholistic medical group duke mansell tampa fl 33629 nationally board certified by the nccaom (national certification commission for acupuncture and oriental medicine) doctor of oriental medicine (dom); acupuncture physician (ap), florida graduated summa cum laude from east west college of natural medicine’s traditional chinese medicine graduate program with a degree in acupuncture and oriental medicine. recipient of the tcm honor award for exceptional clinical skills. clinical training included the east west college of natural medicine health clinic and healthsouth rehabilitation hospital of sarasota. wholistic medical group is a tampa-based integrative healthcare practice founded by dr. duke mansell, dom, ap. we combine functional medicine, acupuncture, functional nutrition, dry needling and natural therapies to help patients with persistent concerns including digestive issues, chronic fatigue, pain and inflammation, hormone health, headaches and migraines. our approach looks beyond individual symptoms to understand contributing factors and support better overall function and long-term health. florida ap3763 acupuncture tcm licensed naturopaths integrative &amp; functional medicine (md, do, np, pa, rn) health &amp; wellness coaches ayurveda">
-    <article class="record-in">
-      <div class="record-head">
-        <img class="avatar" src="/assets/img/providers/wholistic-medical-group.png?v=9ff0195aae" alt="Wholistic Medical Group logo" loading="lazy" decoding="async" width="200" height="200">
-        <div>
-          <h3 class="record-name"><a href="/provider/wholistic-medical-group/">Wholistic Medical Group</a></h3>
-          <p class="record-person"><b>Duke Mansell</b></p>
-          <p class="record-where">Tampa, FL 33629 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/acupuncture/">Acupuncture</a><a class="tag" href="/practice-types/traditional-chinese-medicine/">TCM</a><a class="tag" href="/practice-types/naturopathic-medicine/">Licensed naturopaths</a><a class="tag" href="/practice-types/integrative-functional-medicine/">Integrative &amp; functional medicine (MD, DO, NP, PA, RN)</a><a class="tag" href="/practice-types/health-wellness-coaching/">Health &amp; wellness coaches</a><a class="tag" href="/practice-types/ayurveda/">Ayurveda</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+      data-name="Wholistic Medical Group" data-text="wholistic medical group duke mansell tampa fl 33629 nationally board certified by the nccaom (national certification commission for acupuncture and oriental medicine) doctor of oriental medicine (dom); acupuncture physician (ap), florida graduated summa cum laude from east west college of natural medicine’s traditional chinese medicine graduate program with a degree in acupuncture and oriental medicine. recipient of the tcm honor award for exceptional clinical skills. clinical training included the east west college of natural medicine health clinic and healthsouth rehabilitation hospital of sarasota. wholistic medical group is a tampa-based integrative healthcare practice founded by dr. duke mansell, dom, ap. we combine functional medicine, acupuncture, functional nutrition, dry needling and natural therapies to help patients with persistent concerns including digestive issues, chronic fatigue, pain and inflammation, hormone health, headaches and migraines. our approach looks beyond individual symptoms to understand contributing factors and support better overall function and long-term health. florida ap3763 acupuncture tcm licensed naturopaths integrative &amp; functional medicine (md, do, np, pa, rn) health &amp; wellness coaches ayurveda acupuncture chinese medicine naturopathic doctors integrative medicine health coaching ayurveda">
+    <article class="rec">
+      <img class="avatar" src="/assets/img/providers/wholistic-medical-group.png?v=9ff0195aae" alt="Wholistic Medical Group logo" loading="lazy" decoding="async" width="200" height="200">
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/wholistic-medical-group/">Wholistic Medical Group</a></h3>
+        <p class="rec-meta">Duke Mansell · Tampa, FL · Since 2016 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Wholistic Medical Group is a Tampa-based integrative healthcare practice founded by Dr. Duke Mansell, DOM, AP. We combine functional medicine, acupuncture, functional nut…</p>
+        <div class="fw-tags"><span class="fw-tag">Acupuncture</span><span class="fw-tag">Chinese medicine</span><span class="fw-tag">Naturopathic doctors</span><span class="fw-tag">Telehealth</span><span class="fw-tag fw-tag-ok">License confirmed</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Nationally Board Certified by the NCCAOM (National Certification Commission for Acupuncture and Oriental Medicine) Doctor of Oriental Medicine (DOM); Acupuncture Physician (AP), Florida</dd>
-        <dt>Licensure</dt><dd>Florida AP3763</dd>
-        <dt>Integrative training</dt><dd class="na">None reported</dd>
-        <dt>In practice</dt><dd>10 yrs (since 2016)</dd>
-        <dt>Fees</dt><dd>Initial appointment: $350. Follow-up appointments: $90. Four-visit follow-up package: $320. Monthly membership: $99. Free 15-minute consultation available. HSA/FSA accepted; superbills available for patients seeking possible out-of-network reimbursement.</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b>: Florida AP3763 with the Florida Board of Acupuncture, through the Department of Health licence search, 23 Sept 2026.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/wholistic-medical-group/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:8134443946">(813) 444-3946</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:info@wholisticmedicalgroup.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://www.wholisticmedicalgroup.com/" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$350</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="TCM Acupuncture Herbalism"
       data-city="Orlando" data-state="FL" data-tele="0"
       data-lat="28.518001102863" data-lng="-81.48238595252" data-since="2009"
-      data-name="Spectrum WellCare" data-text="spectrum wellcare ajay purohit orlando fl 32835 dtcm, mph, nccaom. doctorate in traditional chinese medicine, five branches university; master of public health in health systems management and bs in psychology, tulane university; acupuncture and chinese medicine training, florida college of integrative medicine. spectrum wellcare provides individualized acupuncture and traditional chinese medicine in metrowest orlando. ajay purohit is a florida-licensed acupuncture physician who offers acupuncture, personalized chinese herbal medicine, and related integrative services. florida, ap 2734. tcm acupuncture herbology">
-    <article class="record-in">
-      <div class="record-head">
-        <img class="avatar" src="/assets/img/providers/spectrum-wellcare.svg?v=b09f083014" alt="Spectrum WellCare logo" loading="lazy" decoding="async" width="200" height="200">
-        <div>
-          <h3 class="record-name"><a href="/provider/spectrum-wellcare/">Spectrum WellCare</a></h3>
-          <p class="record-person"><b>Ajay Purohit</b></p>
-          <p class="record-where">Orlando, FL 32835 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/traditional-chinese-medicine/">TCM</a><a class="tag" href="/practice-types/acupuncture/">Acupuncture</a><a class="tag" href="/practice-types/herbology/">Herbology</a></div>
-        </div>
+      data-name="Spectrum WellCare" data-text="spectrum wellcare ajay purohit orlando fl 32835 dtcm, mph, nccaom. doctorate in traditional chinese medicine, five branches university; master of public health in health systems management and bs in psychology, tulane university; acupuncture and chinese medicine training, florida college of integrative medicine. spectrum wellcare provides individualized acupuncture and traditional chinese medicine in metrowest orlando. ajay purohit is a florida-licensed acupuncture physician who offers acupuncture, personalized chinese herbal medicine, and related integrative services. florida, ap 2734. tcm acupuncture herbology chinese medicine acupuncture herbal medicine">
+    <article class="rec">
+      <img class="avatar" src="/assets/img/providers/spectrum-wellcare.svg?v=b09f083014" alt="Spectrum WellCare logo" loading="lazy" decoding="async" width="200" height="200">
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/spectrum-wellcare/">Spectrum WellCare</a></h3>
+        <p class="rec-meta">Ajay Purohit · Orlando, FL · Since 2009 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Spectrum WellCare provides individualized acupuncture and Traditional Chinese Medicine in MetroWest Orlando. Ajay Purohit is a Florida-licensed Acupuncture Physician who …</p>
+        <div class="fw-tags"><span class="fw-tag">Chinese medicine</span><span class="fw-tag">Acupuncture</span><span class="fw-tag">Herbal medicine</span><span class="fw-tag fw-tag-ok">License confirmed</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">DTCM, MPH, NCCAOM.</dd>
-        <dt>Licensure</dt><dd>Florida, AP 2734.</dd>
-        
-        <dt>In practice</dt><dd>17 yrs (since 2009)</dd>
-        <dt>Fees</dt><dd>Initial and follow-up visit rates vary. Call 407-347-5038 for current self-pay pricing. Insurance coverage and out-of-pocket costs depend on your plan.</dd>
-        <dt>Insurance</dt><dd>Accepted — verify your plan with the practice</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b>: Florida, AP 2734. with the Florida Board of Acupuncture, through the Department of Health licence search, 28 Sept 2026.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/spectrum-wellcare/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:4073475038">(407) 347-5038</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:spectrumwellcare@gmail.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://www.spectrumwellcareunited.com/" target="_blank" rel="noopener">Website</a>
-      </div>
+      
     </article>
   </li><li class="record" data-cats="TCM Acupuncture"
       data-city="Boston" data-state="MA" data-tele="0"
       data-lat="42.351555078147" data-lng="-71.06884342139" data-since="2009"
-      data-name="Chi Harmony Acupuncture" data-text="chi harmony acupuncture stephanie smith boston ma 02116 — maom, new england school of acupuncture 2009 chi harmony acupuncture is a boston acupuncture practice founded by licensed acupuncturist stephanie smith in 2009. located in downtown boston near the public garden, the practice offers individualized acupuncture care for pain and musculoskeletal concerns, stress and sleep, headaches and migraines, women’s health, fertility, digestive health, and general well-being. treatments may include acupuncture, electro-acupuncture, and cupping, based on each patient’s needs. massachusetts, 241960 tcm acupuncture">
-    <article class="record-in">
-      <div class="record-head">
-        <img class="avatar" src="/assets/img/providers/chi-harmony-acupuncture.png?v=d367761f63" alt="Chi Harmony Acupuncture logo" loading="lazy" decoding="async" width="200" height="200">
-        <div>
-          <h3 class="record-name"><a href="/provider/chi-harmony-acupuncture/">Chi Harmony Acupuncture</a></h3>
-          <p class="record-person"><b>Stephanie Smith</b></p>
-          <p class="record-where">Boston, MA 02116 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/traditional-chinese-medicine/">TCM</a><a class="tag" href="/practice-types/acupuncture/">Acupuncture</a></div>
-        </div>
+      data-name="Chi Harmony Acupuncture" data-text="chi harmony acupuncture stephanie smith boston ma 02116 — maom, new england school of acupuncture 2009 chi harmony acupuncture is a boston acupuncture practice founded by licensed acupuncturist stephanie smith in 2009. located in downtown boston near the public garden, the practice offers individualized acupuncture care for pain and musculoskeletal concerns, stress and sleep, headaches and migraines, women’s health, fertility, digestive health, and general well-being. treatments may include acupuncture, electro-acupuncture, and cupping, based on each patient’s needs. massachusetts, 241960 tcm acupuncture chinese medicine acupuncture">
+    <article class="rec">
+      <img class="avatar" src="/assets/img/providers/chi-harmony-acupuncture.png?v=d367761f63" alt="Chi Harmony Acupuncture logo" loading="lazy" decoding="async" width="200" height="200">
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/chi-harmony-acupuncture/">Chi Harmony Acupuncture</a></h3>
+        <p class="rec-meta">Stephanie Smith · Boston, MA · Since 2009 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Chi Harmony Acupuncture is a Boston acupuncture practice founded by licensed acupuncturist Stephanie Smith in 2009. Located in downtown Boston near the Public Garden, the…</p>
+        <div class="fw-tags"><span class="fw-tag">Chinese medicine</span><span class="fw-tag">Acupuncture</span><span class="fw-tag fw-tag-ok">License confirmed</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="na">—</dd>
-        <dt>Licensure</dt><dd>Massachusetts, 241960</dd>
-        
-        <dt>In practice</dt><dd>17 yrs (since 2009)</dd>
-        <dt>Fees</dt><dd>Acupuncture (60 minutes): $125
-Cosmetic Acupuncture (90 minutes): $175</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b>: Massachusetts, 241960 with Massachusetts Board of Registration in Medicine, 12 Oct 2026.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/chi-harmony-acupuncture/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:6172671055">(617) 267-1055</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:ChiHarmonyAcu@gmail.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://chiharmonyacu.com" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$125</span><span class="rec-fee-l">from</span></div>
     </article>
   </li></ul>
+        <p class="results-note">Every listing says how its credentials were established: checked with the issuing board, or as reported by the practitioner. <a href="/verification/">What that means</a></p>
         <p class="back-link"><a href="/practice-types/">&larr; All disciplines</a></p>
-        <div class="empty" id="empty" hidden style="margin-top:2rem">
+        <div class="empty" id="empty" hidden>
           <h3>No practitioners match those filters</h3>
-          <p>Try widening the distance, removing a discipline, or searching a nearby city. Telehealth listings serve patients anywhere in their state.</p>
-          <p style="margin-top:1.2rem"><button class="btn btn-dark btn-sm" id="empty-clear">Clear filters</button></p>
+          <p>Try widening the distance, choosing another kind of care, or searching a nearby city. Many practitioners also offer telehealth.</p>
+          <p><button class="btn btn-dark btn-sm" id="empty-clear" type="button">Clear filters</button></p>
         </div>
       </section>
-    </div>
   </div>
-  <div style="height:4rem"></div>
 </main>
 
 <footer class="foot">
-  <div class="wrap">
-    <div class="foot-in">
-      <div>
-        <span class="foot-mark"><img src="/assets/img/logo-400.png?v=d921f92fa5" width="965" height="289" alt="FindWell Directory" loading="lazy" decoding="async"></span>
-        <p class="foot-blurb">A network of holistic and integrative practitioners. No commissions, no listing fees, no lead-selling.</p>
-      </div>
-      <div>
-        <h4>Find care</h4>
-        <a href="/practice-types/">By discipline</a>
-        <a href="/locations/">By location</a>
-      </div>
-      <div>
-        <h4>More</h4>
-        <a href="/join/">Join the directory</a>
-        <a href="/about/">Who we are</a>
-        <a href="/articles/">Articles</a>
-        <a href="/advertise/">Advertise with us</a>
-        <a href="/verification/">What verification means</a>
-        <a href="mailto:info@findwelldirectory.com">info@findwelldirectory.com</a>
-      </div>
+  <div class="wrap foot-in">
+    <div class="foot-about">
+      <span class="foot-name">FindWell</span>
+      <p>A free directory of holistic and integrative practitioners in the United States and Canada. No commissions, no listing fees, no lead selling.</p>
     </div>
-    <div class="foot-legal">
-      <span>&copy; 2026 FindWell Directory.</span>
-      <span>Listings are informational and are not a referral, endorsement, or medical advice.</span>
+    <div class="foot-col">
+      <a href="/directory/">Find care</a>
+      <a href="/practice-types/">Disciplines</a>
+      <a href="/locations/">Locations</a>
+      <a href="/verification/">How we verify</a>
+      <a href="/articles/">Articles</a>
+    </div>
+    <div class="foot-col">
+      <a href="/join/">List your practice</a>
+      <a href="/about/">About us</a>
+      <a href="/advertise/">Advertise with us</a>
+      <a href="mailto:info@findwelldirectory.com">info@findwelldirectory.com</a>
     </div>
   </div>
+  <div class="wrap foot-legal">&copy; 2026 FindWell Directory. Listings are informational and are not a referral, endorsement or medical advice.</div>
 </footer>
-<script src="/assets/app.js?v=ce9526a731" defer></script>
+<script src="/assets/app.js?v=01595e339a" defer></script>
 </body>
 </html>

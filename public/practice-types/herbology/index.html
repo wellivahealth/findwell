@@ -18,14 +18,14 @@
 <meta property="og:image" content="https://findwelldirectory.com/assets/img/share-card.jpg?v=05213c9754">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="FindWell Directory — a practitioner with a client, and the line: licensure, training, years in practice and pricing on every listing.">
+<meta property="og:image:alt" content="FindWell Directory: licensure, training, years in practice and pricing on every listing.">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://findwelldirectory.com/assets/img/share-card.jpg?v=05213c9754">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=9b746755e4">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Young+Serif&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css?v=dde4514abe">
 
 </head>
 <body data-view="directory">
@@ -33,61 +33,55 @@
 
 <header class="masthead">
   <div class="wrap masthead-in">
-    <a class="mark" href="/" aria-label="FindWell Directory — home">
-      <img src="/assets/img/logo-800.png?v=5aed8c1fd5"
-           srcset="/assets/img/logo-400.png?v=d921f92fa5 400w, /assets/img/logo-800.png?v=5aed8c1fd5 800w"
-           sizes="(max-width:900px) 190px, 280px" width="965" height="289"
-           alt="FindWell Directory — a network of holistic health care providers">
-    </a>
+    <a class="mark" href="/" aria-label="FindWell Directory, home"><svg width="34" height="34" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 36C20 24 22 14 32 6C34 18 30 30 20 36Z" fill="#7f9a6c"/><path d="M20 36C20 26 17 18 8 12C7 24 11 32 20 36Z" fill="#2f4a35"/></svg><span>FindWell</span></a>
     <button class="burger" id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
-      <div class="nav-group">
-        <button type="button" class="nav-toggle" id="find-toggle" aria-expanded="false"
-                aria-controls="find-menu" data-active="1">
-          Find a provider <span class="caret" aria-hidden="true">&#9662;</span>
-        </button>
-        <ul class="nav-menu" id="find-menu"><li><a href="/practice-types/" aria-current="page">By discipline</a></li><li><a href="/locations/">By location</a></li></ul>
-      </div><a href="/about/">Who we are</a><a href="/articles/">Articles</a><a href="/advertise/">Advertise with us</a>
-      <a class="cta" href="/join/">Join the directory</a>
+      <a href="/directory/">Find care</a><a href="/practice-types/" aria-current="page">Disciplines</a><a href="/verification/">How we verify</a><a href="/about/">About us</a><a href="/articles/">Articles</a>
+      <a class="cta" href="/join/">List your practice</a>
     </nav>
   </div>
 </header>
 
 <main id="main">
-  <div class="wrap">
-    <p class="crumb"><a href="/">Home</a> / <a href="/practice-types/">Disciplines</a> / Herbology</p>
-    <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);margin:.6rem 0 1.4rem">Herbology</h1>
-    <p class="lede" style="margin:-.8rem 0 1.8rem">Registered herbalists and educators.</p>
-    <div class="dir">
+  <section class="pg-head">
+    <svg class="pg-leaf" viewBox="0 0 200 320" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" aria-hidden="true"><path d="M100 312C100 220 100 120 100 12"/><path d="M100 30C58 62 30 122 40 200C48 258 88 298 100 312C112 298 152 258 160 200C170 122 142 62 100 30Z"/><path d="M100 80C84 90 70 104 60 122M100 120C80 132 62 150 50 172M100 160C82 172 66 190 56 214M100 200C86 212 74 228 68 248M100 80C116 90 130 104 140 122M100 120C120 132 138 150 150 172M100 160C118 172 134 190 144 214M100 200C114 212 126 228 132 248"/></svg>
+    <div class="wrap pg-head-in">
+      <p class="crumb"><a href="/">Home</a> / <a href="/practice-types/">Disciplines</a> / Herbal medicine</p>
+      <h1>Herbal medicine</h1>
+      <p class="pg-lede">Registered herbalists and educators.</p>
+    </div>
+  </section>
+  <div class="wrap dir">
       <aside class="rail" id="rail">
-        <button class="rail-toggle" id="rail-toggle" aria-expanded="false">Filters<span>▾</span></button>
+        <button class="rail-toggle" id="rail-toggle" aria-expanded="false">Narrow it down<span aria-hidden="true">&#9662;</span></button>
         <div class="rail-body">
-          <div class="field" style="margin-bottom:1.6rem">
-            <label for="f-q">Keyword</label>
-            <input class="control" id="f-q" type="search" placeholder="Name, condition, credential">
+          <p class="rail-title">Narrow it down</p>
+          <div class="field">
+            <label for="f-q">Name or keyword</label>
+            <input class="control" id="f-q" type="search" placeholder="e.g. digestion, sciatica">
           </div>
-          <fieldset><legend>Discipline</legend><label class="check"><input type="checkbox" data-cat="Ayurveda" data-href="/practice-types/ayurveda/"> Ayurveda<span class="n">5</span></label><label class="check"><input type="checkbox" data-cat="Acupuncture" data-href="/practice-types/acupuncture/"> Acupuncture<span class="n">9</span></label><label class="check"><input type="checkbox" data-cat="TCM" data-href="/practice-types/traditional-chinese-medicine/"> TCM<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="Naturopathy" data-href="/practice-types/naturopathic-medicine/"> Licensed naturopaths<span class="n">2</span></label><label class="check"><input type="checkbox" data-cat="IntegrativeMedicine" data-href="/practice-types/integrative-functional-medicine/"> Integrative &amp; functional medicine (MD, DO, NP, PA, RN)<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="Counseling" data-href="/practice-types/counseling/"> Counselors<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="Coaching" data-href="/practice-types/health-wellness-coaching/"> Health &amp; wellness coaches<span class="n">13</span></label><label class="check"><input type="checkbox" data-cat="Massage" data-href="/practice-types/massage-therapy/"> Massage therapy<span class="n">2</span></label><label class="check"><input type="checkbox" data-cat="Bodywork" data-href="/practice-types/body-work/"> Body work<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="EnergyMedicine" data-href="/practice-types/energy-work/"> Energy healers<span class="n">11</span></label><label class="check"><input type="checkbox" data-cat="Chiropractic" data-href="/practice-types/chiropractic/"> Chiropractors<span class="n">5</span></label><label class="check"><input type="checkbox" data-cat="Nutrition" data-href="/practice-types/nutrition/"> Nutritionists<span class="n">8</span></label><label class="check"><input type="checkbox" data-cat="Herbalism" data-href="/directory/" checked> Herbology<span class="n">8</span></label><label class="check check-empty"><input type="checkbox" data-cat="Farms" data-href="/practice-types/local-farmers/" disabled> Local farmers<span class="n">0</span></label><label class="check check-empty"><input type="checkbox" data-cat="Grocers" data-href="/practice-types/local-grocers/" disabled> Local grocers<span class="n">0</span></label></fieldset>
+          <fieldset><legend>Kind of care</legend><label class="check"><input type="checkbox" data-cat="Ayurveda" data-href="/practice-types/ayurveda/"> Ayurveda<span class="n">5</span></label><label class="check"><input type="checkbox" data-cat="Acupuncture" data-href="/practice-types/acupuncture/"> Acupuncture<span class="n">9</span></label><label class="check"><input type="checkbox" data-cat="TCM" data-href="/practice-types/traditional-chinese-medicine/"> Chinese medicine<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="Naturopathy" data-href="/practice-types/naturopathic-medicine/"> Naturopathic doctors<span class="n">2</span></label><label class="check"><input type="checkbox" data-cat="IntegrativeMedicine" data-href="/practice-types/integrative-functional-medicine/"> Integrative medicine<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="Counseling" data-href="/practice-types/counseling/"> Counseling<span class="n">4</span></label><label class="check"><input type="checkbox" data-cat="Coaching" data-href="/practice-types/health-wellness-coaching/"> Health coaching<span class="n">13</span></label><label class="check"><input type="checkbox" data-cat="Massage" data-href="/practice-types/massage-therapy/"> Massage<span class="n">2</span></label><label class="check"><input type="checkbox" data-cat="Bodywork" data-href="/practice-types/body-work/"> Body work<span class="n">7</span></label><label class="check"><input type="checkbox" data-cat="EnergyMedicine" data-href="/practice-types/energy-work/"> Energy work<span class="n">11</span></label><label class="check"><input type="checkbox" data-cat="Chiropractic" data-href="/practice-types/chiropractic/"> Chiropractic<span class="n">5</span></label><label class="check"><input type="checkbox" data-cat="Nutrition" data-href="/practice-types/nutrition/"> Nutrition<span class="n">8</span></label><label class="check"><input type="checkbox" data-cat="Herbalism" data-href="/directory/" checked> Herbal medicine<span class="n">8</span></label><label class="check check-empty"><input type="checkbox" data-cat="Farms" data-href="/practice-types/local-farmers/" disabled> Local farms<span class="n">0</span></label><label class="check check-empty"><input type="checkbox" data-cat="Grocers" data-href="/practice-types/local-grocers/" disabled> Local grocers<span class="n">0</span></label></fieldset>
           <fieldset><legend>State</legend>
             <select class="control" id="f-state"><option value="">All states</option><option value="AZ">Arizona (15)</option><option value="CA">California (7)</option><option value="CO">Colorado (3)</option><option value="FL">Florida (3)</option><option value="GA">Georgia (3)</option><option value="ID">Idaho (1)</option><option value="IL">Illinois (1)</option><option value="IN">Indiana (1)</option><option value="MA">Massachusetts (1)</option><option value="MI">Michigan (3)</option><option value="NH">New Hampshire (1)</option><option value="OH">Ohio (1)</option><option value="OK">Oklahoma (1)</option><option value="TN">Tennessee (2)</option><option value="TX">Texas (1)</option><option value="VA">Virginia (1)</option><option value="WA">Washington (1)</option><option value="WI">Wisconsin (1)</option></select>
           </fieldset>
           <fieldset><legend>Distance</legend>
             <input class="control" id="f-zip" type="text" inputmode="numeric" placeholder="ZIP code">
-            <label class="lbl" for="f-radius" style="margin-top:.7rem">Within 50 miles</label>
-            <input id="f-radius" type="range" min="5" max="500" step="5" value="50" style="width:100%;accent-color:var(--brand)">
-            <button class="btn btn-ghost btn-sm" id="f-near" style="width:100%;margin-top:.6rem">Use my location</button>
+            <label class="lbl" for="f-radius">Within 50 miles</label>
+            <input id="f-radius" type="range" min="5" max="500" step="5" value="50">
+            <button class="btn btn-ghost btn-sm" id="f-near" type="button">Use my location</button>
             <p class="hint" id="geo-msg"></p>
           </fieldset>
-          <fieldset><legend>Format</legend>
+          <fieldset><legend>Show only</legend>
             <label class="check"><input type="checkbox" id="f-tele"> Offers telehealth</label>
           </fieldset>
-          <button class="btn btn-ghost btn-sm" id="f-clear" style="width:100%">Clear all filters</button>
+          <button class="btn btn-ghost btn-sm" id="f-clear" type="button">Clear all filters</button>
         </div>
       </aside>
-      <section>
+      <section class="dir-main">
         <div class="results-bar">
           <p class="results-count" aria-live="polite"><b id="count">8</b> <span id="count-word">practitioners</span><span id="count-where"></span></p>
           <div class="sort">
-            <label for="f-sort">Sort</label>
+            <label for="f-sort">Sort by</label>
             <select class="control" id="f-sort">
               <option value="name">Name</option>
               <option value="years">Years in practice</option>
@@ -95,127 +89,62 @@
             </select>
           </div>
         </div>
-        <p class="results-note">Every listing states how its credentials were established — checked with the issuing board, or as reported by the practitioner. <a href="/verification/">What that means</a>.</p>
         <div class="active-filters" id="active-filters"></div>
         <ul class="records" id="records"><li class="record" data-cats="Acupuncture EnergyMedicine Herbalism"
       data-city="Tucson" data-state="AZ" data-tele="1"
       data-lat="32.3405" data-lng="-110.988" data-since="2003"
-      data-name="Celia Hildebrand Acupuncture" data-text="celia hildebrand acupuncture celia hildebrand, l.ac. tucson az 85704 clinical doctorate in east asian medicine; advanced reiki and bioenergy practitioner six years and 3,500+ hours of training resulting in a clinical doctorate specialising in trauma care, physical rehabilitation and emotional resilience. adjunctive methods include 25+ years with bioenergy and advanced reiki. intuitive full-body east asian medicine including acupuncture, tuina, gua sha, cupping, moxibustion and herbs. arizona licensed acupuncturist — az lac 001177 acupuncture energy healers herbology">
-    <article class="record-in">
-      <div class="record-head">
-        <picture><source type="image/webp" srcset="/assets/img/providers/celia-hildebrand-acupuncture.webp?v=a00780472e"><img class="avatar" src="/assets/img/providers/celia-hildebrand-acupuncture.png?v=aff7d9c18e" alt="Celia Hildebrand Acupuncture logo" loading="lazy" decoding="async" width="200" height="200"></picture>
-        <div>
-          <h3 class="record-name"><a href="/provider/celia-hildebrand-acupuncture/">Celia Hildebrand Acupuncture</a></h3>
-          <p class="record-person"><b>Celia Hildebrand, L.Ac.</b></p>
-          <p class="record-where">Tucson, AZ 85704 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/acupuncture/">Acupuncture</a><a class="tag" href="/practice-types/energy-work/">Energy healers</a><a class="tag" href="/practice-types/herbology/">Herbology</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+      data-name="Celia Hildebrand Acupuncture" data-text="celia hildebrand acupuncture celia hildebrand, l.ac. tucson az 85704 clinical doctorate in east asian medicine; advanced reiki and bioenergy practitioner six years and 3,500+ hours of training resulting in a clinical doctorate specialising in trauma care, physical rehabilitation and emotional resilience. adjunctive methods include 25+ years with bioenergy and advanced reiki. intuitive full-body east asian medicine including acupuncture, tuina, gua sha, cupping, moxibustion and herbs. arizona licensed acupuncturist — az lac 001177 acupuncture energy healers herbology acupuncture energy work herbal medicine">
+    <article class="rec">
+      <picture><source type="image/webp" srcset="/assets/img/providers/celia-hildebrand-acupuncture.webp?v=a00780472e"><img class="avatar" src="/assets/img/providers/celia-hildebrand-acupuncture.png?v=aff7d9c18e" alt="Celia Hildebrand Acupuncture logo" loading="lazy" decoding="async" width="200" height="200"></picture>
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/celia-hildebrand-acupuncture/">Celia Hildebrand Acupuncture</a></h3>
+        <p class="rec-meta">Celia Hildebrand, L.Ac. · Tucson, AZ · Since 2003 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Intuitive full-body East Asian medicine including acupuncture, tuina, gua sha, cupping, moxibustion and herbs.</p>
+        <div class="fw-tags"><span class="fw-tag">Acupuncture</span><span class="fw-tag">Energy work</span><span class="fw-tag">Herbal medicine</span><span class="fw-tag">Telehealth</span><span class="fw-tag fw-tag-ok">License confirmed</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Clinical doctorate in East Asian medicine; advanced Reiki and bioenergy practitioner</dd>
-        <dt>Licensure</dt><dd>Arizona licensed acupuncturist — AZ LAC 001177</dd>
-        
-        <dt>In practice</dt><dd>23 yrs (since 2003)</dd>
-        <dt>Fees</dt><dd>Initial intake and treatment, 1.5 hr $150 · Follow-up, 1 hr $125 · Auricular acupuncture, 30 min $35 · Targeted hands or feet session $50 · Reduced rates for family members and for compressed protocols requiring frequent visits</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b>: Arizona licensed acupuncturist — AZ LAC 001177 with the Arizona Acupuncture Board of Examiners, 22 Sept 2026.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/celia-hildebrand-acupuncture/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:5202832734">(520) 283-2734</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:celia@acufromtheheart.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="http://www.acufromtheheart.com" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$150</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="Acupuncture TCM Bodywork Herbalism"
       data-city="Tucson" data-state="AZ" data-tele="1"
       data-lat="32.2705" data-lng="-110.931" data-since="2004"
-      data-name="Catalina Acupuncture" data-text="catalina acupuncture nathan anderson, l.ac. tucson az 85716 master of traditional oriental medicine emperor&#x27;s college — master of traditional oriental medicine catalina acupuncture provides solutions for pain and illness, blending traditional chinese medicine with modern, results-driven techniques for chronic pain, injuries, stress and a range of health conditions. arizona acupuncture board of examiners #888 · originally licensed in california, california acupuncture board #9744 acupuncture tcm body work herbology">
-    <article class="record-in">
-      <div class="record-head">
-        <picture><source type="image/webp" srcset="/assets/img/providers/catalina-acupuncture.webp?v=00b2d66386"><img class="avatar" src="/assets/img/providers/catalina-acupuncture.png?v=f3fd73ba1f" alt="Catalina Acupuncture logo" loading="lazy" decoding="async" width="200" height="200"></picture>
-        <div>
-          <h3 class="record-name"><a href="/provider/catalina-acupuncture/">Catalina Acupuncture</a></h3>
-          <p class="record-person"><b>Nathan Anderson, L.Ac.</b></p>
-          <p class="record-where">Tucson, AZ 85716 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/acupuncture/">Acupuncture</a><a class="tag" href="/practice-types/traditional-chinese-medicine/">TCM</a><a class="tag" href="/practice-types/body-work/">Body work</a><a class="tag" href="/practice-types/herbology/">Herbology</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+      data-name="Catalina Acupuncture" data-text="catalina acupuncture nathan anderson, l.ac. tucson az 85716 master of traditional oriental medicine emperor&#x27;s college — master of traditional oriental medicine catalina acupuncture provides solutions for pain and illness, blending traditional chinese medicine with modern, results-driven techniques for chronic pain, injuries, stress and a range of health conditions. arizona acupuncture board of examiners #888 · originally licensed in california, california acupuncture board #9744 acupuncture tcm body work herbology acupuncture chinese medicine body work herbal medicine">
+    <article class="rec">
+      <picture><source type="image/webp" srcset="/assets/img/providers/catalina-acupuncture.webp?v=00b2d66386"><img class="avatar" src="/assets/img/providers/catalina-acupuncture.png?v=f3fd73ba1f" alt="Catalina Acupuncture logo" loading="lazy" decoding="async" width="200" height="200"></picture>
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/catalina-acupuncture/">Catalina Acupuncture</a></h3>
+        <p class="rec-meta">Nathan Anderson, L.Ac. · Tucson, AZ · Since 2004 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Catalina Acupuncture provides solutions for pain and illness, blending traditional Chinese medicine with modern, results-driven techniques for chronic pain, injuries, str…</p>
+        <div class="fw-tags"><span class="fw-tag">Acupuncture</span><span class="fw-tag">Chinese medicine</span><span class="fw-tag">Body work</span><span class="fw-tag">Telehealth</span><span class="fw-tag fw-tag-ok">License confirmed</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Master of Traditional Oriental Medicine</dd>
-        <dt>Licensure</dt><dd>Arizona Acupuncture Board of Examiners #888 · originally licensed in California, California Acupuncture Board #9744</dd>
-        
-        <dt>In practice</dt><dd>22 yrs (since 2004)</dd>
-        <dt>Fees</dt><dd>First visit, 90 min $150 · Return visits, 60 min $100 · Herbal medicine varies</dd>
-        <dt>Insurance</dt><dd>Accepted — verify your plan with the practice</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b>: Arizona Acupuncture Board of Examiners #888 · originally licensed in California, California Acupuncture Board #9744 with the Arizona Acupuncture Board of Examiners, 23 Sept 2026.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/catalina-acupuncture/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:5209990080">(520) 999-0080</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:CatalinaAcupuncturePLLC@gmail.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="http://www.CatalinaAcupuncture.com" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$150</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="Ayurveda Herbalism"
       data-city="Tucson" data-state="AZ" data-tele="1"
       data-lat="32.262" data-lng="-110.906" data-since="2001"
-      data-name="AmitaAyurveda" data-text="amitaayurveda amita nathwani, ma tucson az 85712 ma in ayurveda; nama; ayurveda professionals of arizona ma in ayurveda ayurvedic assessment, dietary and lifestyle protocols, and herbal support. virtual visits available. no state licensure exists for ayurveda ayurveda herbology">
-    <article class="record-in">
-      <div class="record-head">
-        <img class="avatar" src="https://images.squarespace-cdn.com/content/v1/6877e1d8fb99bd2e2af8e1ed/1755282033154-A91OF7ETP49IX8QO83FV/amitaayurveda-logo-square-stack-notag-300dpi.png?format=500w" alt="AmitaAyurveda logo" loading="lazy" decoding="async">
-        <div>
-          <h3 class="record-name"><a href="/provider/amitaayurveda/">AmitaAyurveda</a></h3>
-          <p class="record-person"><b>Amita Nathwani, MA</b></p>
-          <p class="record-where">Tucson, AZ 85712 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/ayurveda/">Ayurveda</a><a class="tag" href="/practice-types/herbology/">Herbology</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+      data-name="AmitaAyurveda" data-text="amitaayurveda amita nathwani, ma tucson az 85712 ma in ayurveda; nama; ayurveda professionals of arizona ma in ayurveda ayurvedic assessment, dietary and lifestyle protocols, and herbal support. virtual visits available. no state licensure exists for ayurveda ayurveda herbology ayurveda herbal medicine">
+    <article class="rec">
+      <img class="avatar" src="https://images.squarespace-cdn.com/content/v1/6877e1d8fb99bd2e2af8e1ed/1755282033154-A91OF7ETP49IX8QO83FV/amitaayurveda-logo-square-stack-notag-300dpi.png?format=500w" alt="AmitaAyurveda logo" loading="lazy" decoding="async">
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/amitaayurveda/">AmitaAyurveda</a></h3>
+        <p class="rec-meta">Amita Nathwani, MA · Tucson, AZ · Since 2001 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Ayurvedic assessment, dietary and lifestyle protocols, and herbal support. Virtual visits available.</p>
+        <div class="fw-tags"><span class="fw-tag">Ayurveda</span><span class="fw-tag">Herbal medicine</span><span class="fw-tag">Telehealth</span><span class="fw-tag fw-tag-ok">Credentials confirmed</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">MA in Ayurveda; NAMA; Ayurveda Professionals of Arizona</dd>
-        <dt>Licensure</dt><dd>No state licensure exists for Ayurveda</dd>
-        
-        <dt>In practice</dt><dd>25 yrs (since 2001)</dd>
-        <dt>Fees</dt><dd>New patient $350 · Follow-up $135</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b> with Ayurveda Professionals of Arizona, 23 Sept 2026.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/amitaayurveda/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:9709462044">(970) 946-2044</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:info@suryawellbeing.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="http://amitaayurveda.com" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$350</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="Ayurveda Herbalism"
       data-city="Tucson" data-state="AZ" data-tele="1"
       data-lat="32.254" data-lng="-110.92" data-since="2013"
-      data-name="Ananda Ayurveda &amp; Yogalish" data-text="ananda ayurveda &amp; yogalish tanja bungardt-price tucson az 85716 nama board certified ayurvedic practitioner; certified e-ryt 500 yoga teacher; certified qigong teacher ayurvedic health counselor and ayurvedic practitioner, both at kanyakumari (wi); yoga teacher training at moksha yoga (il) ayurvedic consultations and education, including ceu provision for ncbtmb and yoga alliance. no state licensure exists for ayurveda ayurveda herbology">
-    <article class="record-in">
-      <div class="record-head">
-        <img class="avatar" src="https://images.squarespace-cdn.com/content/v1/6877e1d8fb99bd2e2af8e1ed/1758690526106-4QQ77VKMG8LITYP4QJ26/Ananda%252BLogo.jpg?format=500w" alt="Ananda Ayurveda &amp; Yogalish logo" loading="lazy" decoding="async">
-        <div>
-          <h3 class="record-name"><a href="/provider/ananda-ayurveda-yogalish/">Ananda Ayurveda &amp; Yogalish</a></h3>
-          <p class="record-person"><b>Tanja Bungardt-Price</b></p>
-          <p class="record-where">Tucson, AZ 85716 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/ayurveda/">Ayurveda</a><a class="tag" href="/practice-types/herbology/">Herbology</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+      data-name="Ananda Ayurveda &amp; Yogalish" data-text="ananda ayurveda &amp; yogalish tanja bungardt-price tucson az 85716 nama board certified ayurvedic practitioner; certified e-ryt 500 yoga teacher; certified qigong teacher ayurvedic health counselor and ayurvedic practitioner, both at kanyakumari (wi); yoga teacher training at moksha yoga (il) ayurvedic consultations and education, including ceu provision for ncbtmb and yoga alliance. no state licensure exists for ayurveda ayurveda herbology ayurveda herbal medicine">
+    <article class="rec">
+      <img class="avatar" src="https://images.squarespace-cdn.com/content/v1/6877e1d8fb99bd2e2af8e1ed/1758690526106-4QQ77VKMG8LITYP4QJ26/Ananda%252BLogo.jpg?format=500w" alt="Ananda Ayurveda &amp; Yogalish logo" loading="lazy" decoding="async">
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/ananda-ayurveda-yogalish/">Ananda Ayurveda &amp; Yogalish</a></h3>
+        <p class="rec-meta">Tanja Bungardt-Price · Tucson, AZ · Since 2013 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Ayurvedic consultations and education, including CEU provision for NCBTMB and Yoga Alliance.</p>
+        <div class="fw-tags"><span class="fw-tag">Ayurveda</span><span class="fw-tag">Herbal medicine</span><span class="fw-tag">Telehealth</span><span class="fw-tag fw-tag-ok">Credentials confirmed</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">NAMA Board Certified Ayurvedic Practitioner; Certified E-RYT 500 Yoga Teacher; Certified Qigong Teacher</dd>
-        <dt>Licensure</dt><dd>No state licensure exists for Ayurveda</dd>
-        
-        <dt>In practice</dt><dd>13 yrs (since 2013)</dd>
-        <dt>Fees</dt><dd>Ayurvedic consultation, two-meeting package $240 · Follow-up visits $120 · Panchakarma quoted as consultation plus per treatment</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b> with NAMA Certification Board, 22 Sept 2026.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/ananda-ayurveda-yogalish/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:5202890238">(520) 289-0238</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:YogalishAnanda@gmail.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="http://www.yogalish.com" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$240</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="Acupuncture TCM Herbalism IntegrativeMedicine"
       data-city="Tucson" data-state="AZ" data-tele="0"
@@ -223,99 +152,47 @@
       data-name="Common Roots Acupuncture" data-text="common roots acupuncture josh whiteley tucson az 85719 registered nurse (rn) · licensed acupuncturist and practitioner of chinese medicine master of science in acupuncture &amp; oriental medicine, southwest acupuncture college, boulder, colorado
 registered nurse, pima community college, tucson, arizona
 certified ayurvedic practitioner, the ayurvedic institute, albuquerque, new mexico we help people get out of pain, calm the nervous system, and return to the activities that matter most with results-driven care.
-led by registered nurse and licensed acupuncturist josh whiteley. our approach combines traditional acupuncture with modern, evidence-informed therapies like orthopedic dry needling, electro-acupuncture, and regenerative medicine injections. by addressing both the source of pain and the surrounding muscle and nerve patterns, we’re able to treat conditions like sciatica, injuries, and chronic pain more effectively and with longer-lasting results. arizona registered nurse and licensed acupuncturist — numbers not provided acupuncture tcm herbology integrative &amp; functional medicine (md, do, np, pa, rn)">
-    <article class="record-in">
-      <div class="record-head">
-        <img class="avatar" src="/assets/img/providers/common-roots-acupuncture.jpg?v=84053eae36" alt="Common Roots Acupuncture logo" loading="lazy" decoding="async" width="200" height="200">
-        <div>
-          <h3 class="record-name"><a href="/provider/common-roots-acupuncture/">Common Roots Acupuncture</a></h3>
-          <p class="record-person"><b>Josh Whiteley</b></p>
-          <p class="record-where">Tucson, AZ 85719 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/acupuncture/">Acupuncture</a><a class="tag" href="/practice-types/traditional-chinese-medicine/">TCM</a><a class="tag" href="/practice-types/herbology/">Herbology</a><a class="tag" href="/practice-types/integrative-functional-medicine/">Integrative &amp; functional medicine (MD, DO, NP, PA, RN)</a></div>
-        </div>
+led by registered nurse and licensed acupuncturist josh whiteley. our approach combines traditional acupuncture with modern, evidence-informed therapies like orthopedic dry needling, electro-acupuncture, and regenerative medicine injections. by addressing both the source of pain and the surrounding muscle and nerve patterns, we’re able to treat conditions like sciatica, injuries, and chronic pain more effectively and with longer-lasting results. arizona registered nurse and licensed acupuncturist — numbers not provided acupuncture tcm herbology integrative &amp; functional medicine (md, do, np, pa, rn) acupuncture chinese medicine herbal medicine integrative medicine">
+    <article class="rec">
+      <img class="avatar" src="/assets/img/providers/common-roots-acupuncture.jpg?v=84053eae36" alt="Common Roots Acupuncture logo" loading="lazy" decoding="async" width="200" height="200">
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/common-roots-acupuncture/">Common Roots Acupuncture</a></h3>
+        <p class="rec-meta">Josh Whiteley · Tucson, AZ · Since 2009 <span class="record-dist"></span></p>
+        <p class="rec-blurb">We help people get out of pain, calm the nervous system, and return to the activities that matter most with results-driven care.
+Led by Registered Nurse and Licensed Acu…</p>
+        <div class="fw-tags"><span class="fw-tag">Acupuncture</span><span class="fw-tag">Chinese medicine</span><span class="fw-tag">Herbal medicine</span><span class="fw-tag fw-tag-ok">License confirmed</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Registered Nurse (RN) · Licensed acupuncturist and practitioner of Chinese medicine</dd>
-        <dt>Licensure</dt><dd>Arizona registered nurse and licensed acupuncturist — numbers not provided</dd>
-        <dt>Integrative training</dt><dd class="na">None reported</dd>
-        <dt>In practice</dt><dd>17 yrs (since 2009)</dd>
-        <dt>Fees</dt><dd>Initial consultation and treatment: $135
-Follow up visits: $70-$100 (sliding scale)</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b>: Arizona licensed acupuncturist with the Arizona Acupuncture Board of Examiners, 19 Oct 2026.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/common-roots-acupuncture/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:5202769555">(520) 276-9555</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:hi@commonrootsacupuncture.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://commonrootsacupuncture.com" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$135</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="Acupuncture Herbalism Naturopathy"
       data-city="Palm Desert" data-state="CA" data-tele="1"
       data-lat="33.758044369252" data-lng="-116.373676742773" data-since="2002"
       data-name="Lotus Wellspring Healthcare" data-text="lotus wellspring healthcare sybil ihrig, dacm, l.ac., cch palm desert ca 92260 ncbahm acupuncture and herbal medicine
 cch, certified classical homeopath pacific college of oriental medicine: doctorate and master&#x27;s in acupuncture and chinese medicine
-american medical college of homeopathy: 3-year certificate program in classical homeopathy whole-person acupuncture care, traditional herbal medicine, and homeopathy, with subspecialties in fertility, women&#x27;s health, and neuroacupuncture. california acupuncture board #ac-8645 acupuncture herbology licensed naturopaths">
-    <article class="record-in">
-      <div class="record-head">
-        <img class="avatar" src="/assets/img/providers/lotus-wellspring-healthcare.png?v=c755087845" alt="Lotus Wellspring Healthcare logo" loading="lazy" decoding="async" width="200" height="200">
-        <div>
-          <h3 class="record-name"><a href="/provider/lotus-wellspring-healthcare/">Lotus Wellspring Healthcare</a></h3>
-          <p class="record-person"><b>Sybil Ihrig, DACM, L.Ac., CCH</b></p>
-          <p class="record-where">Palm Desert, CA 92260 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/acupuncture/">Acupuncture</a><a class="tag" href="/practice-types/herbology/">Herbology</a><a class="tag" href="/practice-types/naturopathic-medicine/">Licensed naturopaths</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+american medical college of homeopathy: 3-year certificate program in classical homeopathy whole-person acupuncture care, traditional herbal medicine, and homeopathy, with subspecialties in fertility, women&#x27;s health, and neuroacupuncture. california acupuncture board #ac-8645 acupuncture herbology licensed naturopaths acupuncture herbal medicine naturopathic doctors">
+    <article class="rec">
+      <img class="avatar" src="/assets/img/providers/lotus-wellspring-healthcare.png?v=c755087845" alt="Lotus Wellspring Healthcare logo" loading="lazy" decoding="async" width="200" height="200">
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/lotus-wellspring-healthcare/">Lotus Wellspring Healthcare</a></h3>
+        <p class="rec-meta">Sybil Ihrig, DACM, L.Ac., CCH · Palm Desert, CA · Since 2002 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Whole-person Acupuncture care, traditional herbal medicine, and Homeopathy, with subspecialties in Fertility, Women&#x27;s Health, and Neuroacupuncture.</p>
+        <div class="fw-tags"><span class="fw-tag">Acupuncture</span><span class="fw-tag">Herbal medicine</span><span class="fw-tag">Naturopathic doctors</span><span class="fw-tag">Telehealth</span><span class="fw-tag fw-tag-ok">License confirmed</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">NCBAHM Acupuncture and Herbal Medicine
-CCH, Certified Classical Homeopath</dd>
-        <dt>Licensure</dt><dd>California Acupuncture Board #AC-8645</dd>
-        
-        <dt>In practice</dt><dd>24 yrs (since 2002)</dd>
-        <dt>Fees</dt><dd>Initial visit (Acupuncture): $140
-Follow-up visits (Acupuncture): $95
-Initial Consult (Homeopathy): $350
-Follow-up Consults (Homeopathy): $95</dd>
-        <dt>Insurance</dt><dd>Not accepted</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b>: California licensed acupuncturist, AC 8645 with the California Acupuncture Board, through the DCA licence search, 19 Oct 2026.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/lotus-wellspring-healthcare/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:7608544242">(760) 854-4242</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:lotuswellspring@gmail.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://lotuswellspring.com" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$140</span><span class="rec-fee-l">from</span></div>
     </article>
   </li><li class="record" data-cats="TCM Acupuncture Herbalism"
       data-city="Orlando" data-state="FL" data-tele="0"
       data-lat="28.518001102863" data-lng="-81.48238595252" data-since="2009"
-      data-name="Spectrum WellCare" data-text="spectrum wellcare ajay purohit orlando fl 32835 dtcm, mph, nccaom. doctorate in traditional chinese medicine, five branches university; master of public health in health systems management and bs in psychology, tulane university; acupuncture and chinese medicine training, florida college of integrative medicine. spectrum wellcare provides individualized acupuncture and traditional chinese medicine in metrowest orlando. ajay purohit is a florida-licensed acupuncture physician who offers acupuncture, personalized chinese herbal medicine, and related integrative services. florida, ap 2734. tcm acupuncture herbology">
-    <article class="record-in">
-      <div class="record-head">
-        <img class="avatar" src="/assets/img/providers/spectrum-wellcare.svg?v=b09f083014" alt="Spectrum WellCare logo" loading="lazy" decoding="async" width="200" height="200">
-        <div>
-          <h3 class="record-name"><a href="/provider/spectrum-wellcare/">Spectrum WellCare</a></h3>
-          <p class="record-person"><b>Ajay Purohit</b></p>
-          <p class="record-where">Orlando, FL 32835 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/traditional-chinese-medicine/">TCM</a><a class="tag" href="/practice-types/acupuncture/">Acupuncture</a><a class="tag" href="/practice-types/herbology/">Herbology</a></div>
-        </div>
+      data-name="Spectrum WellCare" data-text="spectrum wellcare ajay purohit orlando fl 32835 dtcm, mph, nccaom. doctorate in traditional chinese medicine, five branches university; master of public health in health systems management and bs in psychology, tulane university; acupuncture and chinese medicine training, florida college of integrative medicine. spectrum wellcare provides individualized acupuncture and traditional chinese medicine in metrowest orlando. ajay purohit is a florida-licensed acupuncture physician who offers acupuncture, personalized chinese herbal medicine, and related integrative services. florida, ap 2734. tcm acupuncture herbology chinese medicine acupuncture herbal medicine">
+    <article class="rec">
+      <img class="avatar" src="/assets/img/providers/spectrum-wellcare.svg?v=b09f083014" alt="Spectrum WellCare logo" loading="lazy" decoding="async" width="200" height="200">
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/spectrum-wellcare/">Spectrum WellCare</a></h3>
+        <p class="rec-meta">Ajay Purohit · Orlando, FL · Since 2009 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Spectrum WellCare provides individualized acupuncture and Traditional Chinese Medicine in MetroWest Orlando. Ajay Purohit is a Florida-licensed Acupuncture Physician who …</p>
+        <div class="fw-tags"><span class="fw-tag">Chinese medicine</span><span class="fw-tag">Acupuncture</span><span class="fw-tag">Herbal medicine</span><span class="fw-tag fw-tag-ok">License confirmed</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">DTCM, MPH, NCCAOM.</dd>
-        <dt>Licensure</dt><dd>Florida, AP 2734.</dd>
-        
-        <dt>In practice</dt><dd>17 yrs (since 2009)</dd>
-        <dt>Fees</dt><dd>Initial and follow-up visit rates vary. Call 407-347-5038 for current self-pay pricing. Insurance coverage and out-of-pocket costs depend on your plan.</dd>
-        <dt>Insurance</dt><dd>Accepted — verify your plan with the practice</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-confirmed"><b>Credentials confirmed</b>: Florida, AP 2734. with the Florida Board of Acupuncture, through the Department of Health licence search, 28 Sept 2026.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/spectrum-wellcare/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:4073475038">(407) 347-5038</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:spectrumwellcare@gmail.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://www.spectrumwellcareunited.com/" target="_blank" rel="noopener">Website</a>
-      </div>
+      
     </article>
   </li><li class="record" data-cats="Nutrition Herbalism"
       data-city="Coral Springs" data-state="FL" data-tele="1"
@@ -323,74 +200,53 @@ Follow-up Consults (Homeopathy): $95</dd>
       data-name="S.T.E.P.S. Nutrition Group" data-text="s.t.e.p.s. nutrition group miriam wiener, ms, mph coral springs fl 33065 certified nutrition specialist: cns18274 licensed dietitian-nutritionist
 board-certified nutrition specialist miriam wiener, ms, mph, founded s.t.e.p.s. nutrition group to provide quality, evidence-based nutrition therapy for women and girls. 
 
-a licensed dietitian-nutritionist and board-certified nutrition specialist with over 30 years of experience, she is known for her warm approach and sympathetic ear, combined with highly effective tools and techniques that work. licensed dietitian-nutritionist: florida ldn10642 nutritionists herbology">
-    <article class="record-in">
-      <div class="record-head">
-        <picture><source type="image/webp" srcset="/assets/img/providers/steps-nutrition-group-photo.webp?v=e236f7c4cb"><img class="avatar" src="/assets/img/providers/steps-nutrition-group-photo.jpg?v=fb586e6896" alt="S.T.E.P.S. Nutrition Group logo" loading="lazy" decoding="async" width="200" height="200"></picture>
-        <div>
-          <h3 class="record-name"><a href="/provider/steps-nutrition-group/">S.T.E.P.S. Nutrition Group</a></h3>
-          <p class="record-person"><b>Miriam Wiener, MS, MPH</b></p>
-          <p class="record-where">Coral Springs, FL 33065 <span class="record-dist"></span></p>
-          <div class="record-tags"><a class="tag" href="/practice-types/nutrition/">Nutritionists</a><a class="tag" href="/practice-types/herbology/">Herbology</a><span class="tag tag-tele">Telehealth</span></div>
-        </div>
+a licensed dietitian-nutritionist and board-certified nutrition specialist with over 30 years of experience, she is known for her warm approach and sympathetic ear, combined with highly effective tools and techniques that work. licensed dietitian-nutritionist: florida ldn10642 nutritionists herbology nutrition herbal medicine">
+    <article class="rec">
+      <picture><source type="image/webp" srcset="/assets/img/providers/steps-nutrition-group-photo.webp?v=e236f7c4cb"><img class="avatar" src="/assets/img/providers/steps-nutrition-group-photo.jpg?v=fb586e6896" alt="S.T.E.P.S. Nutrition Group logo" loading="lazy" decoding="async" width="200" height="200"></picture>
+      <div class="rec-body">
+        <h3 class="record-name"><a href="/provider/steps-nutrition-group/">S.T.E.P.S. Nutrition Group</a></h3>
+        <p class="rec-meta">Miriam Wiener, MS, MPH · Coral Springs, FL · Since 1996 <span class="record-dist"></span></p>
+        <p class="rec-blurb">Miriam Wiener, MS, MPH, founded S.T.E.P.S. Nutrition Group to provide quality, evidence-based nutrition therapy for women and girls. 
+
+A licensed dietitian-nutritionist…</p>
+        <div class="fw-tags"><span class="fw-tag">Nutrition</span><span class="fw-tag">Herbal medicine</span><span class="fw-tag">Telehealth</span></div>
       </div>
-      <dl class="fields">
-        <dt>Credential</dt><dd class="">Certified Nutrition Specialist: CNS18274</dd>
-        <dt>Licensure</dt><dd>Licensed Dietitian-Nutritionist: Florida LDN10642</dd>
-        
-        <dt>In practice</dt><dd>30 yrs (since 1996)</dd>
-        <dt>Fees</dt><dd>Insurance-based practice. Cash-pay $450 for a comprehensive 90-minute initial consultation, $300 for a 60-minute follow-up, and $180 for a focused 30-minute check-in.</dd>
-        <dt>Insurance</dt><dd>Accepted: Aetna, Meritain, UnitedHealthcare, Cigna, Curative, Humana and Medicare. Verify your plan with the practice.</dd>
-      </dl>
-      <div class="record-verify"><p class="verify verify-reported"><b>As reported by the practitioner.</b> Not independently verified — <a href="/verification/">what this means</a>.</p></div>
-      <div class="record-actions">
-        <a class="btn btn-ghost btn-sm" href="/provider/steps-nutrition-group/">Full record</a>
-        <a class="btn btn-ghost btn-sm" href="tel:8008406373">(800) 840-6373</a>
-        <a class="btn btn-ghost btn-sm" href="mailto:support@stepsnutritiongroup.com">Email</a>
-        <a class="btn btn-ghost btn-sm" href="https://www.stepsnutritiongroup.com" target="_blank" rel="noopener">Website</a>
-      </div>
+      <div class="rec-fee"><span class="rec-fee-n">$450</span><span class="rec-fee-l">from</span></div>
     </article>
   </li></ul>
+        <p class="results-note">Every listing says how its credentials were established: checked with the issuing board, or as reported by the practitioner. <a href="/verification/">What that means</a></p>
         <p class="back-link"><a href="/practice-types/">&larr; All disciplines</a></p>
-        <div class="empty" id="empty" hidden style="margin-top:2rem">
+        <div class="empty" id="empty" hidden>
           <h3>No practitioners match those filters</h3>
-          <p>Try widening the distance, removing a discipline, or searching a nearby city. Telehealth listings serve patients anywhere in their state.</p>
-          <p style="margin-top:1.2rem"><button class="btn btn-dark btn-sm" id="empty-clear">Clear filters</button></p>
+          <p>Try widening the distance, choosing another kind of care, or searching a nearby city. Many practitioners also offer telehealth.</p>
+          <p><button class="btn btn-dark btn-sm" id="empty-clear" type="button">Clear filters</button></p>
         </div>
       </section>
-    </div>
   </div>
-  <div style="height:4rem"></div>
 </main>
 
 <footer class="foot">
-  <div class="wrap">
-    <div class="foot-in">
-      <div>
-        <span class="foot-mark"><img src="/assets/img/logo-400.png?v=d921f92fa5" width="965" height="289" alt="FindWell Directory" loading="lazy" decoding="async"></span>
-        <p class="foot-blurb">A network of holistic and integrative practitioners. No commissions, no listing fees, no lead-selling.</p>
-      </div>
-      <div>
-        <h4>Find care</h4>
-        <a href="/practice-types/">By discipline</a>
-        <a href="/locations/">By location</a>
-      </div>
-      <div>
-        <h4>More</h4>
-        <a href="/join/">Join the directory</a>
-        <a href="/about/">Who we are</a>
-        <a href="/articles/">Articles</a>
-        <a href="/advertise/">Advertise with us</a>
-        <a href="/verification/">What verification means</a>
-        <a href="mailto:info@findwelldirectory.com">info@findwelldirectory.com</a>
-      </div>
+  <div class="wrap foot-in">
+    <div class="foot-about">
+      <span class="foot-name">FindWell</span>
+      <p>A free directory of holistic and integrative practitioners in the United States and Canada. No commissions, no listing fees, no lead selling.</p>
     </div>
-    <div class="foot-legal">
-      <span>&copy; 2026 FindWell Directory.</span>
-      <span>Listings are informational and are not a referral, endorsement, or medical advice.</span>
+    <div class="foot-col">
+      <a href="/directory/">Find care</a>
+      <a href="/practice-types/">Disciplines</a>
+      <a href="/locations/">Locations</a>
+      <a href="/verification/">How we verify</a>
+      <a href="/articles/">Articles</a>
+    </div>
+    <div class="foot-col">
+      <a href="/join/">List your practice</a>
+      <a href="/about/">About us</a>
+      <a href="/advertise/">Advertise with us</a>
+      <a href="mailto:info@findwelldirectory.com">info@findwelldirectory.com</a>
     </div>
   </div>
+  <div class="wrap foot-legal">&copy; 2026 FindWell Directory. Listings are informational and are not a referral, endorsement or medical advice.</div>
 </footer>
-<script src="/assets/app.js?v=ce9526a731" defer></script>
+<script src="/assets/app.js?v=01595e339a" defer></script>
 </body>
 </html>

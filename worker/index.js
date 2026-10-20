@@ -1013,22 +1013,80 @@ ${coords.lat ? '' : '<p style="color:#c23a4b">The address could not be geocoded,
 <p style="font-size:14px"><a href="${base}/api/review?key=${encodeURIComponent(env.SIGNING_SECRET)}">Mark it verified</a> once you have checked the licence number.</p>`);
 }
 
+/** Why an application was declined, and the sentence the applicant reads.
+ *  `advertise` adds the line pointing them to advertising instead. */
+const DECLINE_REASONS = {
+  products: { label: 'A product, not a service',
+    text: 'FindWell lists practitioners who offer services directly to clients, and we are not accepting products on our site.',
+    advertise: true },
+  location: { label: 'Outside the United States and Canada',
+    text: 'At this time, we are listing practitioners in the United States and Canada only.',
+    advertise: false },
+  conventional: { label: 'Conventional physician without integrative training',
+    text: 'FindWell is a directory of holistic and integrative practitioners, and we are not able to list a conventional medical practice without integrative or holistic training.',
+    advertise: true },
+};
+
+const declineEmail = (s, reason) => {
+  const r = DECLINE_REASONS[reason];
+  return shell(`<p>Dear ${esc(s.first || 'applicant')},</p>
+<p>Thank you for applying to the FindWell Directory, and for your interest in our community.</p>
+<p>After reviewing your application, we are not able to publish a listing for <strong>${esc(s.practice)}</strong>. ${esc(r.text)}</p>
+${r.advertise ? '<p>Instead, please consider advertising your business on our website. To learn more, email us at <a href="mailto:findwelldirectory@gmail.com" style="color:#2e5f5c">findwelldirectory@gmail.com</a>.</p>' : ''}
+<p style="margin-top:24px">Warmly,<br>Amita Nathwani, CEO<br>Emma Vasseur, Practitioner Liaison<br>FindWell Directory</p>`);
+};
+
+/** Declining is two steps. Opening the link shows a choice of reason, so a
+ *  mail scanner that follows links cannot decline anything; the choice is
+ *  then sent as a POST, which removes the application and, unless "quietly"
+ *  was chosen, emails the applicant. */
 async function handleDecline(request, env) {
   const url = new URL(request.url);
-  const id = url.searchParams.get('id') || '';
-  if (!safeEqual((url.searchParams.get('sig') || '').trim(), await hmac((env.SIGNING_SECRET || '').trim(), id))) {
+  const params = request.method === 'POST'
+    ? new URLSearchParams(await request.text()) : url.searchParams;
+  const id = params.get('id') || '';
+  const sig = (params.get('sig') || '').trim();
+  if (!safeEqual(sig, await hmac((env.SIGNING_SECRET || '').trim(), id))) {
     return page('Invalid link', '<h1>That link is not valid</h1>', 403);
   }
   const pending = await readFile(env, `data/pending/${id}.json`);
   if (!pending) return page('Already handled', '<h1>Nothing to do</h1><p>Already approved or declined.</p>');
   const s = JSON.parse(fromB64(pending.content));
 
+  if (request.method !== 'POST') {
+    const opts = Object.entries(DECLINE_REASONS).map(([k, r], i) => `
+      <label style="display:block;padding:10px 12px;border:1px solid #dbe3e3;border-radius:8px;margin-bottom:8px;cursor:pointer">
+        <input type="radio" name="reason" value="${k}"${i === 0 ? ' checked' : ''}> <strong>${esc(r.label)}</strong>
+        <span style="display:block;font-size:14px;color:#4a5f5f;margin:4px 0 0 22px">${esc(r.text)}</span></label>`).join('');
+    return page('Decline application', `<h1>Decline ${esc(s.practice)}?</h1>
+      <p>${esc([s.first, s.last].filter(Boolean).join(' '))}${s.email ? ` &middot; ${esc(s.email)}` : ''}</p>
+      <form method="POST" action="/api/decline">
+        <input type="hidden" name="id" value="${esc(id)}"><input type="hidden" name="sig" value="${esc(sig)}">
+        <p style="font-weight:600;color:#17302f;margin-top:1rem">Choose the reason to send them</p>
+        ${opts}
+        <label style="display:block;padding:10px 12px;border:1px dashed #c0cccc;border-radius:8px;margin-bottom:14px;cursor:pointer">
+          <input type="radio" name="reason" value="quiet"> <strong>Decline without sending an email</strong>
+          <span style="display:block;font-size:14px;color:#4a5f5f;margin:4px 0 0 22px">For spam and test entries.</span></label>
+        <button type="submit" style="background:#c23a4b;color:#fff;border:0;padding:11px 20px;border-radius:6px;font-weight:600;font-size:15px;cursor:pointer">Decline</button>
+      </form>`);
+  }
+
+  const reason = params.get('reason') || 'quiet';
   const files = [{ path: `data/pending/${id}.json`, remove: true }];
   if (s.logo_ext) files.push({ path: `data/pending/${id}-logo.${s.logo_ext}`, remove: true });
   await commitFiles(env, `Decline application: ${s.practice}`, files);
 
-  return page('Declined',
-    '<h1>Declined</h1><p>Nothing was published and no email was sent to the applicant.</p>');
+  if (!DECLINE_REASONS[reason] || !s.email) {
+    return page('Declined', '<h1>Declined</h1><p>Nothing was published and no email was sent to the applicant.</p>');
+  }
+  const sent = await sendEmail(env, {
+    to: s.email, replyTo: env.ADMIN_EMAIL,
+    subject: 'Your FindWell Directory application',
+    html: declineEmail(s, reason),
+  });
+  return page('Declined', sent && sent.ok
+    ? `<h1>Declined</h1><p>Nothing was published, and ${esc(s.email)} has been sent a note explaining why.</p>`
+    : `<h1>Declined</h1><p>Nothing was published, but the email to ${esc(s.email)} did not go out. You may want to write to them directly.</p>`);
 }
 
 async function handlePending(request, env) {

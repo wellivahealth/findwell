@@ -1512,5 +1512,45 @@
     "blurb": "For women who have spent years holding everyone else, Desiree Maultsby, MTP, offers a place to finally slow down. The nervous system regulation work blends qi gong, breathwork, guided visualization, and process art, grounded in more than two decades of somatic and expressive arts practice. Through Sacred Circle Institute, she leads women’s retreats, creative circles, and private sessions in Tucson and online.",
     "long": "I’m Desiree Maultsby, a Brooklyn-born, Tucson-based facilitator with more than twenty years in somatic practice, ceremonial work, and expressive arts. Through Sacred Circle Institute, I help women come home to their bodies and reclaim their creative wisdom. My sessions weave qi gong, breathwork, guided visualization, and process art (painting, mixed media, writing, and movement) into a practice of presence rather than performance. No art experience is needed.\r\n\r\nMy work follows the PARC Process: Land, Listen, Make, Honor, Return. Together we slow down, settle the body, follow what wants to be made, and carry its wisdom back into daily life. I especially love working with women who have spent years holding everyone else and are ready to claim their own voice.\r\n\r\nOfferings include women’s retreats, private sessions, monthly online painting circles, group programs, and facilitation for organizations and communities.",
     "verified": false
+  },
+  {
+    "slug": "chiropractic-first",
+    "name": "Chiropractic First",
+    "person": "Dr. TJ Gudilin",
+    "logo": "/assets/img/providers/chiropractic-first.webp",
+    "categories": [
+      "Massage",
+      "Chiropractic"
+    ],
+    "city": "Campbell",
+    "state": "CA",
+    "zip": "95008",
+    "address": "3195 S Bascom Ave, Campbell, CA 95008, United States, Campbell, CA 95008",
+    "country": "United States",
+    "lat": 37.265308449497,
+    "lng": -121.941883748154,
+    "telehealth": false,
+    "phone": "(408) 559-1662",
+    "email": "chiropracticfirstseo@gmail.com",
+    "website": "https://chiropracticfirst.com/",
+    "social": [
+      "https://www.facebook.com/ChiropracticFirstCampbellChiropractors/",
+      "https://www.youtube.com/@ChiropracticFirstSJ",
+      "https://www.instagram.com/drgchiropracticfirst/",
+      "https://www.tiktok.com/@chiropracticfirstsj",
+      "https://www.linkedin.com/company/chiropractic-first/about/"
+    ],
+    "credentials": "—",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "Bachelor of Kinesiology",
+    "integrative_training": "",
+    "since": 2016,
+    "affiliations": "—",
+    "pricing": "Initial visit, follow-ups, packages",
+    "payments": "Cash, Credit Cards, Debit Cards, Paypal",
+    "insurance": "Not accepted",
+    "blurb": "Chiropractic First is the top chiropractor in Campbell, CA, providing personalized chiropractic care to help patients relieve pain, improve mobility, and support long-term wellness through natural, non-invasive treatments for patients of all ages.",
+    "long": "Chiropractic First is the top chiropractor in Campbell, CA, helping patients achieve lasting pain relief, improved mobility, and better overall wellness. The practice provides personalized chiropractic care, spinal decompression, prenatal and pediatric chiropractic care, HEIT therapy, auto injury treatment, and athlete care. Their experienced team treats back pain, neck pain, sciatica, headaches, joint pain, sports injuries, and other musculoskeletal conditions using natural, non-invasive techniques tailored to each patient. With a patient-focused approach, comprehensive evaluations, and customized treatment plans, Chiropractic First is committed to restoring mobility, supporting long-term health, and helping individuals and families live healthier, more active lives.",
+    "verified": false
   }
 ]

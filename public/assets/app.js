@@ -7,15 +7,92 @@
   var $  = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
-  /* Approximate ZIP centroids. Replace with a geocoding call when the
-     directory covers more ground than this. */
-  var ZIPS = {
-    '85704': [32.3390, -110.9950], '85712': [32.2620, -110.9060],
-    '85716': [32.2540, -110.9200], '85718': [32.3080, -110.9270],
-    '85719': [32.2360, -110.9430], '85749': [32.2830, -110.7420],
-    '85701': [32.2180, -110.9660], '85705': [32.2412, -110.9720],
-    '81428': [38.8686, -107.5931]
+  /* ---------- place lookup ----------
+     Turns "85704", "T2P 1J9", "Denver" or "Springfield, MO" into coordinates.
+     The lookup tables live in /assets/geo/ (built by make_geo.py) and are
+     fetched in small pieces only when someone searches. */
+  var STATE_NAMES = {
+    alabama:'AL', alaska:'AK', arizona:'AZ', arkansas:'AR', california:'CA',
+    colorado:'CO', connecticut:'CT', delaware:'DE', 'district of columbia':'DC',
+    florida:'FL', georgia:'GA', hawaii:'HI', idaho:'ID', illinois:'IL', indiana:'IN',
+    iowa:'IA', kansas:'KS', kentucky:'KY', louisiana:'LA', maine:'ME', maryland:'MD',
+    massachusetts:'MA', michigan:'MI', minnesota:'MN', mississippi:'MS', missouri:'MO',
+    montana:'MT', nebraska:'NE', nevada:'NV', 'new hampshire':'NH', 'new jersey':'NJ',
+    'new mexico':'NM', 'new york':'NY', 'north carolina':'NC', 'north dakota':'ND',
+    ohio:'OH', oklahoma:'OK', oregon:'OR', pennsylvania:'PA', 'rhode island':'RI',
+    'south carolina':'SC', 'south dakota':'SD', tennessee:'TN', texas:'TX', utah:'UT',
+    vermont:'VT', virginia:'VA', washington:'WA', 'west virginia':'WV',
+    wisconsin:'WI', wyoming:'WY'
   };
+  var PROVINCES = {
+    alberta:'AB', 'british columbia':'BC', manitoba:'MB', 'new brunswick':'NB',
+    newfoundland:'NL', 'newfoundland and labrador':'NL', 'nova scotia':'NS',
+    'northwest territories':'NT', nunavut:'NU', ontario:'ON', 'prince edward island':'PE',
+    quebec:'QC', 'québec':'QC', saskatchewan:'SK', yukon:'YT'
+  };
+  var REGIONS = {};
+  Object.keys(STATE_NAMES).forEach(function (k) { REGIONS[STATE_NAMES[k]] = 1; });
+  Object.keys(PROVINCES).forEach(function (k) { REGIONS[PROVINCES[k]] = 1; });
+  function regionCode(s) {
+    s = s.trim().toLowerCase().replace(/\./g, '');
+    if (STATE_NAMES[s]) return STATE_NAMES[s];
+    if (PROVINCES[s]) return PROVINCES[s];
+    if (s.length === 2 && REGIONS[s.toUpperCase()]) return s.toUpperCase();
+    return '';
+  }
+  var geoCache = {};
+  function geoFile(path) {
+    if (!geoCache[path]) geoCache[path] = fetch('/assets/geo/' + path)
+      .then(function (r) { return r.ok ? r.json() : {}; })
+      .catch(function () { delete geoCache[path]; return {}; });
+    return geoCache[path];
+  }
+  function normPlace(s) {
+    return s.toLowerCase().replace(/[.']/g, '').replace(/\bsaint\b/g, 'st')
+            .replace(/\s+/g, ' ').trim();
+  }
+  function titleCase(s) {
+    return s.replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+  }
+  /* resolves to {lat, lng, label}, {state: 'AZ'} for a bare US state, or null */
+  function geocode(text) {
+    var t = (text || '').trim();
+    if (!t) return Promise.resolve(null);
+    var z = t.match(/^(\d{5})(?:-\d{4})?$/);
+    if (z) return geoFile('zip/' + z[1].slice(0, 3) + '.json').then(function (d) {
+      var c = d[z[1]]; return c ? { lat: c[0], lng: c[1], label: z[1] } : null;
+    });
+    var pc = t.toUpperCase().match(/^([A-Z]\d[A-Z])\s*(\d[A-Z]\d)?$/);
+    if (pc) return geoFile('ca.json').then(function (d) {
+      var c = d[pc[1]]; return c ? { lat: c[0], lng: c[1], label: t.toUpperCase() } : null;
+    });
+    var US = {};
+    Object.keys(STATE_NAMES).forEach(function (k) { US[STATE_NAMES[k]] = 1; });
+    var lower = t.toLowerCase().replace(/\./g, '');
+    if (STATE_NAMES[lower]) return Promise.resolve({ state: STATE_NAMES[lower] });
+    if (/^[a-z]{2}$/.test(lower) && US[lower.toUpperCase()]) return Promise.resolve({ state: lower.toUpperCase() });
+    var city = t, region = '';
+    var parts = t.split(',');
+    if (parts.length > 1) { region = regionCode(parts.slice(1).join(',')); city = parts[0]; }
+    else {
+      var m = t.match(/^(.*\S)\s+([A-Za-z]{2})$/);
+      if (m && regionCode(m[2])) { city = m[1]; region = regionCode(m[2]); }
+    }
+    var key = normPlace(city);
+    if (!key) return Promise.resolve(null);
+    var letter = /[a-z]/.test(key[0]) ? key[0] : '0';
+    return geoFile('places/' + letter + '.json').then(function (d) {
+      var hits = d[key];
+      if (!hits || !hits.length) return null;
+      var hit = hits[0];
+      if (region) {
+        hit = null;
+        hits.forEach(function (h) { if (!hit && h[0] === region) hit = h; });
+        if (!hit) return null;
+      }
+      return { lat: hit[1], lng: hit[2], label: titleCase(city.trim()) + ', ' + hit[0] };
+    });
+  }
 
   /* ---------- menu ---------- */
   var burger = $('#burger'), nav = $('#nav');
@@ -65,8 +142,7 @@
       var loc = $('#c-loc').value.trim();
       var p = new URLSearchParams();
       if (q) p.set('q', q);
-      if (/^\d{5}$/.test(loc)) { p.set('zip', loc); p.set('radius', '50'); }
-      else if (loc) p.set('where', loc);
+      if (loc) p.set('where', loc);
       location.href = '/directory/' + (p.toString() ? '?' + p : '');
     });
     $$('[data-chip]', cons).forEach(function (c) {
@@ -81,6 +157,15 @@
       }, function (msg) { nearBtn.textContent = msg; });
     });
   }
+
+  /* "Use my location" on pages that hand off to the directory */
+  $$('[data-near-go]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      locate(function (lat, lng) {
+        location.href = '/directory/?lat=' + lat + '&lng=' + lng + '&radius=50&sort=distance';
+      }, function (msg) { btn.textContent = msg; });
+    });
+  });
 
   function locate(ok, fail) {
     if (!navigator.geolocation) return fail('Location unavailable');
@@ -107,21 +192,6 @@
   var records = $$('.record', list);
   var state = { q: '', cats: [], city: '', st: '', tele: false, sort: 'name', near: null, radius: 50, label: '' };
 
-  /* Full state names -> abbreviations, so "Arizona", "arizona" and "AZ" all work. */
-  var STATE_NAMES = {
-    alabama:'AL', alaska:'AK', arizona:'AZ', arkansas:'AR', california:'CA',
-    colorado:'CO', connecticut:'CT', delaware:'DE', 'district of columbia':'DC',
-    florida:'FL', georgia:'GA', hawaii:'HI', idaho:'ID', illinois:'IL', indiana:'IN',
-    iowa:'IA', kansas:'KS', kentucky:'KY', louisiana:'LA', maine:'ME', maryland:'MD',
-    massachusetts:'MA', michigan:'MI', minnesota:'MN', mississippi:'MS', missouri:'MO',
-    montana:'MT', nebraska:'NE', nevada:'NV', 'new hampshire':'NH', 'new jersey':'NJ',
-    'new mexico':'NM', 'new york':'NY', 'north carolina':'NC', 'north dakota':'ND',
-    ohio:'OH', oklahoma:'OK', oregon:'OR', pennsylvania:'PA', 'rhode island':'RI',
-    'south carolina':'SC', 'south dakota':'SD', tennessee:'TN', texas:'TX', utah:'UT',
-    vermont:'VT', virginia:'VA', washington:'WA', 'west virginia':'WV',
-    wisconsin:'WI', wyoming:'WY'
-  };
-
   var params = new URLSearchParams(location.search);
   state.q = params.get('q') || '';
   state.cats = (params.get('cat') || '').split(',').filter(Boolean).slice(0, 1);
@@ -129,10 +199,10 @@
   state.st = (params.get('state') || '').toUpperCase();
   state.tele = params.get('tele') === '1';
   state.sort = params.get('sort') || 'name';
-  state.radius = Number(params.get('radius') || 50);
-  var zip = params.get('zip');
-  if (zip && ZIPS[zip]) { state.near = ZIPS[zip]; state.label = zip; state.sort = 'distance'; }
-  else if (params.get('lat') && params.get('lng')) {
+  state.radius = params.has('radius') ? Number(params.get('radius')) : 50;
+  if ([10, 25, 50, 100, 250, 0].indexOf(state.radius) < 0) state.radius = 50;
+  state.typed = '';
+  if (params.get('lat') && params.get('lng')) {
     state.near = [Number(params.get('lat')), Number(params.get('lng'))];
     state.label = 'your location'; state.sort = 'distance';
   }
@@ -141,27 +211,39 @@
   if ($('#f-q')) $('#f-q').value = state.q;
   if ($('#f-state')) $('#f-state').value = state.st;
   if ($('#f-tele')) $('#f-tele').checked = state.tele;
-  if ($('#f-radius')) $('#f-radius').value = state.radius;
-  if ($('#f-zip') && /^\d{5}$/.test(state.label)) $('#f-zip').value = state.label;
+  if ($('#f-radius')) $('#f-radius').value = String(state.radius);
   $$('[data-cat]').forEach(function (cb) {
     if (!cb.dataset.href) cb.checked = state.cats.indexOf(cb.dataset.cat) > -1;
   });
-  var where = params.get('where');
-  if (where) {
-    var w = where.trim().toLowerCase();
-    var abbrev = STATE_NAMES[w] || (w.length === 2 ? w.toUpperCase() : '');
-    var knownStates = records.map(function (r) { return r.dataset.state; });
-    var knownCities = records.map(function (r) { return r.dataset.city.toLowerCase(); });
-    if (abbrev && knownStates.indexOf(abbrev) > -1) state.st = abbrev;
-    else if (knownCities.indexOf(w) > -1) {
-      state.city = records[knownCities.indexOf(w)].dataset.city;
-    } else state.q = state.q ? state.q + ' ' + where : where;
-    if ($('#f-state')) $('#f-state').value = state.st;
-    if ($('#f-q')) $('#f-q').value = state.q;
-  }
+  var geoMsg = $('#geo-msg');
+  function say(m) { if (geoMsg) geoMsg.textContent = m || ''; }
 
-  var rLabel = $('label[for="f-radius"]');
-  if (rLabel) rLabel.textContent = 'Within ' + state.radius + ' miles';
+  /* look up a typed place and apply it: a US state becomes the state
+     filter, anything else becomes a distance search around that spot */
+  function goTo(text, quiet) {
+    text = (text || '').trim();
+    if (!text) { state.near = null; state.label = ''; state.typed = ''; state.sort = 'name'; say(''); apply(); return; }
+    say('Looking that up\u2026');
+    geocode(text).then(function (g) {
+      if (!g) {
+        say('We couldn\u2019t find \u201C' + text + '\u201D. Try a ZIP or postal code, or add the state, e.g. Springfield, MO.');
+        return;
+      }
+      say('');
+      if (g.state) {
+        state.st = g.state; state.city = ''; state.near = null; state.label = ''; state.typed = '';
+        if (state.sort === 'distance') state.sort = 'name';
+        if ($('#f-state')) $('#f-state').value = g.state;
+      } else {
+        state.near = [g.lat, g.lng]; state.label = g.label; state.typed = text;
+        state.st = ''; state.city = ''; state.sort = 'distance';
+        if ($('#f-state') && !quiet) $('#f-state').value = '';
+      }
+      if ($('#f-where')) $('#f-where').value = g.state ? '' : text;
+      apply();
+    });
+  }
+  var startPlace = params.get('near') || params.get('where') || params.get('zip') || '';
 
   function syncURL() {
     var p = new URLSearchParams();
@@ -172,7 +254,7 @@
     if (state.tele) p.set('tele', '1');
     if (state.sort !== 'name') p.set('sort', state.sort);
     if (state.near) {
-      if (/^\d{5}$/.test(state.label)) p.set('zip', state.label);
+      if (state.typed) p.set('near', state.typed);
       else { p.set('lat', state.near[0]); p.set('lng', state.near[1]); }
       p.set('radius', state.radius);
     }
@@ -181,7 +263,7 @@
 
   function apply() {
     var q = state.q.trim().toLowerCase();
-    var shown = [];
+    var shown = [], nearest = null;
 
     records.forEach(function (el) {
       var d = el.dataset, ok = true;
@@ -196,8 +278,13 @@
 
       var dist = null;
       if (ok && state.near) {
-        dist = miles(state.near[0], state.near[1], Number(d.lat), Number(d.lng));
-        if (dist > state.radius) ok = false;
+        var la = parseFloat(d.lat), ln = parseFloat(d.lng);
+        dist = (isFinite(la) && isFinite(ln)) ? miles(state.near[0], state.near[1], la, ln) : null;
+        if (dist === null) ok = false;
+        else {
+          if (nearest === null || dist < nearest) nearest = dist;
+          if (state.radius && dist > state.radius) ok = false;
+        }
       }
       el._dist = dist;
       var span = $('.record-dist', el);
@@ -216,8 +303,26 @@
 
     $('#count').textContent = shown.length;
     $('#count-word').textContent = shown.length === 1 ? 'practitioner' : 'practitioners';
-    $('#count-where').textContent = state.near ? ' within ' + state.radius + ' mi of ' + state.label : '';
+    $('#count-where').textContent = !state.near ? '' :
+      state.radius ? ' within ' + state.radius + ' mi of ' + state.label : ' nearest to ' + state.label;
     $('#empty').hidden = shown.length > 0;
+    var wider = $('#empty-wider'), emsg = $('#empty-msg');
+    if (wider && emsg) {
+      var widen = null;
+      if (!shown.length && state.near && nearest !== null) {
+        widen = [10, 25, 50, 100, 250].filter(function (r) { return r >= nearest; })[0] || 0;
+      }
+      wider.hidden = widen === null;
+      if (widen !== null) {
+        emsg.textContent = 'The closest match is about ' + Math.round(nearest) + ' miles from ' + state.label +
+          '. Many practitioners also see people by telehealth.';
+        var wb = $('#empty-widen');
+        wb.textContent = widen ? 'Show within ' + widen + ' miles' : 'Show at any distance';
+        wb.onclick = function () { state.radius = widen; if ($('#f-radius')) $('#f-radius').value = String(widen); apply(); };
+      } else {
+        emsg.textContent = 'Try widening the distance, choosing another kind of care, or searching a nearby city. Many practitioners also offer telehealth.';
+      }
+    }
     var distOpt = $('#f-sort option[value="distance"]');
     if (distOpt) distOpt.disabled = !state.near;
     if ($('#f-sort')) $('#f-sort').value = mode;
@@ -241,7 +346,7 @@
       bits.push(['state', sel ? sel.textContent.replace(/\s*\(\d+\)$/, '') : state.st]);
     }
     if (state.tele) bits.push(['tele', 'Telehealth']);
-    if (state.near) bits.push(['near', state.radius + ' mi of ' + state.label]);
+    if (state.near) bits.push(['near', state.radius ? state.radius + ' mi of ' + state.label : 'Near ' + state.label]);
     box.innerHTML = bits.map(function (b) {
       return '<span class="tagx">' + b[1] +
              '<button data-drop="' + b[0] + '" aria-label="Remove filter">\u00D7</button></span>';
@@ -253,7 +358,7 @@
         else if (k === 'city') { state.city = ''; }
         else if (k === 'state') { state.st = ''; if ($('#f-state')) $('#f-state').value = ''; }
         else if (k === 'tele') { state.tele = false; if ($('#f-tele')) $('#f-tele').checked = false; }
-        else if (k === 'near') { state.near = null; state.label = ''; state.sort = 'name'; if ($('#f-zip')) $('#f-zip').value = ''; }
+        else if (k === 'near') { state.near = null; state.label = ''; state.typed = ''; state.sort = 'name'; if ($('#f-where')) $('#f-where').value = ''; }
         else if (k.indexOf('cat:') === 0) {
           var key = k.slice(4);
           state.cats = state.cats.filter(function (c) { return c !== key; });
@@ -293,30 +398,27 @@
   });
   if ($('#f-tele')) $('#f-tele').addEventListener('change', function (e) { state.tele = e.target.checked; apply(); });
   if ($('#f-sort')) $('#f-sort').addEventListener('change', function (e) { state.sort = e.target.value; apply(); });
-  if ($('#f-radius')) {
-    $('#f-radius').addEventListener('input', function (e) {
-      if (rLabel) rLabel.textContent = 'Within ' + e.target.value + ' miles';
-    });
-    $('#f-radius').addEventListener('change', function (e) { state.radius = Number(e.target.value); apply(); });
-  }
-  if ($('#f-zip')) $('#f-zip').addEventListener('change', function (e) {
-    var z = e.target.value.trim();
-    if (ZIPS[z]) { state.near = ZIPS[z]; state.label = z; state.sort = 'distance'; apply(); }
-    else if ($('#geo-msg')) $('#geo-msg').textContent = 'No coordinates for that ZIP yet.';
+  if ($('#f-radius')) $('#f-radius').addEventListener('change', function (e) {
+    state.radius = Number(e.target.value); apply();
+  });
+  if ($('#where-bar')) $('#where-bar').addEventListener('submit', function (e) {
+    e.preventDefault();
+    goTo($('#f-where').value);
   });
   if ($('#f-near')) $('#f-near').addEventListener('click', function () {
     locate(function (lat, lng) {
       state.near = [Number(lat), Number(lng)];
-      state.label = 'your location'; state.sort = 'distance';
-      if ($('#geo-msg')) $('#geo-msg').textContent = '';
-      apply();
-    }, function (m) { if ($('#geo-msg')) $('#geo-msg').textContent = m; });
+      state.label = 'your location'; state.typed = ''; state.sort = 'distance';
+      if ($('#f-where')) $('#f-where').value = '';
+      say(''); apply();
+    }, say);
   });
   function clearAll() { location.href = location.pathname; }
   if ($('#f-clear')) $('#f-clear').addEventListener('click', clearAll);
   if ($('#empty-clear')) $('#empty-clear').addEventListener('click', clearAll);
 
   apply();
+  if (startPlace) { if ($('#f-where')) $('#f-where').value = startPlace; goTo(startPlace, true); }
 })();
 
 /* ---------- join form ----------

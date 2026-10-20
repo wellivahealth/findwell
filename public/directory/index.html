@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Young+Serif&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=07de62708e">
+<link rel="stylesheet" href="/assets/site.css?v=e2d9d6a81f">
 
 </head>
 <body data-view="directory">
@@ -39,7 +39,7 @@
            alt="FindWell Directory — a network of holistic health care providers"></a>
     <button class="burger" id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
-      <a href="/directory/" aria-current="page">Find care</a><a href="/practice-types/">Disciplines</a><a href="/verification/">How we verify</a><a href="/about/">About us</a><a href="/articles/">Articles</a>
+      <a href="/directory/" aria-current="page">Find care</a><a href="/locations/">Locations</a><a href="/practice-types/">Disciplines</a><a href="/verification/">How we verify</a><a href="/about/">About us</a><a href="/articles/">Articles</a>
       <a class="cta" href="/join/">List your practice</a>
     </nav>
   </div>
@@ -52,7 +52,7 @@
       <span class="pg-art-wrap"><svg class="pg-art" viewBox="0 -40 240 240" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="100" cy="98" r="58"/><circle cx="100" cy="98" r="50" opacity=".5"/><path d="M142 140L196 194M150 132L204 186M196 194C200 198 206 198 208 194C212 190 210 186 204 186"/><g transform="translate(96 136) rotate(0) scale(1.15)"><path d="M0 0C0-22 2-44 8-64"/><path d="M1-16C-8-19-14-25-16-34C-8-34-2-28 1-16Z"/><path d="M3-32C12-34 18-40 20-50C12-50 6-44 3-32Z"/><path d="M5-48C-2-51-7-57-8-65C-1-64 4-58 5-48Z"/></g></svg></span>
       <p class="crumb"><a href="/">Home</a> / Find care</p>
       <h1>Find care</h1>
-      <p class="pg-lede">Every practitioner in the directory. Narrow it down by kind of care, place, or telehealth.</p>
+      <p class="pg-lede">Every practitioner in the directory. Tell us where you are, then narrow it down by kind of care or telehealth.</p>
     </div>
   </section>
   <div class="wrap dir">
@@ -68,13 +68,6 @@
           <fieldset><legend>State</legend>
             <select class="control" id="f-state"><option value="">All states</option><option value="AZ">Arizona (15)</option><option value="CA">California (7)</option><option value="CO">Colorado (3)</option><option value="FL">Florida (3)</option><option value="GA">Georgia (3)</option><option value="ID">Idaho (1)</option><option value="IL">Illinois (1)</option><option value="IN">Indiana (1)</option><option value="MA">Massachusetts (1)</option><option value="MI">Michigan (3)</option><option value="NH">New Hampshire (1)</option><option value="OH">Ohio (1)</option><option value="OK">Oklahoma (1)</option><option value="TN">Tennessee (2)</option><option value="TX">Texas (1)</option><option value="VA">Virginia (1)</option><option value="WA">Washington (1)</option><option value="WI">Wisconsin (1)</option></select>
           </fieldset>
-          <fieldset><legend>Distance</legend>
-            <input class="control" id="f-zip" type="text" inputmode="numeric" placeholder="ZIP code">
-            <label class="lbl" for="f-radius">Within 50 miles</label>
-            <input id="f-radius" type="range" min="5" max="500" step="5" value="50">
-            <button class="btn btn-ghost btn-sm" id="f-near" type="button">Use my location</button>
-            <p class="hint" id="geo-msg"></p>
-          </fieldset>
           <fieldset><legend>Show only</legend>
             <label class="check"><input type="checkbox" id="f-tele"> Offers telehealth</label>
           </fieldset>
@@ -82,6 +75,22 @@
         </div>
       </aside>
       <section class="dir-main">
+        <form class="where-bar" id="where-bar" role="search">
+          <label class="where-label" for="f-where">Where are you?</label>
+          <div class="where-row">
+            <input class="control where-input" id="f-where" type="text" placeholder="City, ZIP or postal code" autocomplete="off" enterkeyhint="search">
+            <select class="control where-radius" id="f-radius" aria-label="Distance">
+              <option value="10">Within 10 miles</option>
+              <option value="25">Within 25 miles</option>
+              <option value="50" selected>Within 50 miles</option>
+              <option value="100">Within 100 miles</option>
+              <option value="250">Within 250 miles</option>
+              <option value="0">Any distance</option>
+            </select>
+            <button class="btn btn-dark where-go" type="submit">Search</button>
+          </div>
+          <p class="where-foot"><button type="button" class="fw-linkbtn" id="f-near">Use my location</button><span class="where-msg" id="geo-msg" aria-live="polite"></span></p>
+        </form>
         <div class="results-bar">
           <p class="results-count" aria-live="polite"><b id="count">47</b> <span id="count-word">practitioners</span><span id="count-where"></span></p>
           <div class="sort">
@@ -284,7 +293,7 @@ american medical college of homeopathy: 3-year certificate program in classical 
     </article>
   </li><li class="record" data-cats="Ayurveda"
       data-city="Longmont" data-state="CO" data-tele="1"
-      data-lat="None" data-lng="None" data-since="1996"
+      data-lat="40.167" data-lng="-105.101" data-since="1996"
       data-name="Awakened Living" data-text="awakened living nibodhi haas longmont co 80504 nama board certified
 american naturopathic medicine board certified / anmcab (american naturopathic medicine certification and accreditation board): certified traditional naturopath
 
@@ -524,7 +533,7 @@ with a deep focus on somatic hydrotherapy and trauma-informed bodywork, shamika 
     </article>
   </li><li class="record" data-cats="EnergyMedicine Counseling Coaching"
       data-city="Richmond" data-state="CA" data-tele="1"
-      data-lat="None" data-lng="None" data-since="2011"
+      data-lat="37.936" data-lng="-122.348" data-since="2011"
       data-name="Coaching With Lucy" data-text="coaching with lucy lucy seligman richmond ca 94805 icf associate certified coach (acc); certified clinical hypnotherapist (ccht) masters-level studies in social work, san jose state university
 
 bachelor of arts in east asian languages and culture, usc
@@ -568,7 +577,7 @@ ericksonian pain management - hch institute 2011 lucy seligman is a certified co
     </article>
   </li><li class="record" data-cats="Coaching"
       data-city="Scottsdale" data-state="AZ" data-tele="1"
-      data-lat="None" data-lng="None" data-since="2021"
+      data-lat="33.522" data-lng="-111.899" data-since="2021"
       data-name="Working On Calm, LLC" data-text="working on calm, llc melissa lewis-duarte scottsdale az 85258 nbc-hwc ph.d. in organizational behavior from claremont graduate university as an integrative wellness coach, melissa lewis-duarte, phd, nbc-hwc, combines evidence-based stress management, behavior change, and integrative wellness strategies to help clients who are functioning but not flourishing turn what they already know into simple, realistic habits they can actually sustain. rather than adding more to an already overwhelming to-do list, she focuses on small changes that decrease stress, increase resilience, and improve overall well-being. no state licensure exists for this discipline health &amp; wellness coaches health coaching">
     <article class="rec">
       <img class="avatar" src="/assets/img/providers/working-on-calm-llc.jpg?v=6a2701212a" alt="Working On Calm, LLC logo" loading="lazy" decoding="async" width="200" height="200">
@@ -582,7 +591,7 @@ ericksonian pain management - hch institute 2011 lucy seligman is a certified co
     </article>
   </li><li class="record" data-cats="Coaching"
       data-city="Yakima" data-state="WA" data-tele="1"
-      data-lat="None" data-lng="None" data-since="2014"
+      data-lat="46.602" data-lng="-120.574" data-since="2014"
       data-name="Seniors Planning | Expert Help for Medicare &amp; Care Decisions" data-text="seniors planning | expert help for medicare &amp; care decisions zain taha yakima wa 98901 — primary training and educational background seniors planning provides medicare guidance and retirement healthcare planning services for seniors in yakima, wa. we help individuals understand and compare medicare advantage plans, medicare supplement insurance, and prescription drug plans while providing personalized support to help them make informed healthcare coverage decisions. 19500128 health &amp; wellness coaches health coaching">
     <article class="rec">
       <img class="avatar" src="/assets/img/providers/seniors-planning-expert-help-for-medicare-care-decisions.png?v=62e4a6a4e0" alt="Seniors Planning | Expert Help for Medicare &amp; Care Decisions logo" loading="lazy" decoding="async" width="200" height="200">
@@ -1036,7 +1045,8 @@ master&#x27;s degree, human nutrition, university of bridgeport, ct at the whole
         
         <div class="empty" id="empty" hidden>
           <h3>No practitioners match those filters</h3>
-          <p>Try widening the distance, choosing another kind of care, or searching a nearby city. Many practitioners also offer telehealth.</p>
+          <p id="empty-msg">Try widening the distance, choosing another kind of care, or searching a nearby city. Many practitioners also offer telehealth.</p>
+          <p id="empty-wider" hidden><button class="btn btn-ghost btn-sm" id="empty-widen" type="button"></button></p>
           <p><button class="btn btn-dark btn-sm" id="empty-clear" type="button">Clear filters</button></p>
         </div>
       </section>
@@ -1065,6 +1075,6 @@ master&#x27;s degree, human nutrition, university of bridgeport, ct at the whole
   </div>
   <div class="wrap foot-legal">&copy; 2026 FindWell Directory. Listings are informational and are not a referral, endorsement or medical advice.</div>
 </footer>
-<script src="/assets/app.js?v=01595e339a" defer></script>
+<script src="/assets/app.js?v=af95abd34b" defer></script>
 </body>
 </html>

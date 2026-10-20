@@ -602,6 +602,32 @@ def _apply_corrections():
 _merge_approved()
 _apply_corrections()
 
+
+def _fill_coords():
+    """Listings without a street address have no coordinates. Place them at
+    their city's centre (from the location-search tables) so a distance
+    search still finds them."""
+    geo = os.path.join(OUT, "assets", "geo", "places")
+    for p in PROVIDERS:
+        if p.get("lat") not in (None, "") and p.get("lng") not in (None, ""):
+            continue
+        city = re.sub(r"\s+", " ", (p.get("city") or "").lower().replace(".", "").replace("'", "")).strip()
+        city = re.sub(r"\bsaint\b", "st", city)
+        if not city:
+            continue
+        path = os.path.join(geo, (city[0] if city[0].isalpha() else "0") + ".json")
+        try:
+            hits = json.load(open(path, encoding="utf-8")).get(city, [])
+        except OSError:
+            continue
+        for region, lat, lng in hits:
+            if region == p.get("state"):
+                p["lat"], p["lng"] = lat, lng
+                break
+
+
+_fill_coords()
+
 E = html.escape
 
 def disc(key):
@@ -623,7 +649,12 @@ def in_state(ab):
     return [p for p in PROVIDERS if p["state"] == ab]
 
 def cities_in(ab):
-    return sorted({p["city"] for p in in_state(ab)})
+    seen = {}
+    for p in in_state(ab):
+        c = (p["city"] or "").strip()
+        if c and c.lower() not in seen:
+            seen[c.lower()] = c.title() if c == c.lower() or c == c.upper() else c
+    return sorted(seen.values())
 
 def img_tag(url, alt, sizes, cls="", widths=(500, 750, 1000, 1500), lazy=True):
     """A remote URL gets Squarespace's ?format= resize parameter. A local stem
@@ -870,11 +901,11 @@ DISC_DRAWING = {"Ayurveda": "mortar", "Herbalism": "mortar", "Acupuncture": "nee
 
 def shell(title, desc, path, body, view="", extra_head=""):
     """Wrap page content in the shared chrome. `path` is the canonical URL path."""
-    links = [("/directory/", "Find care"), ("/practice-types/", "Disciplines"),
+    links = [("/directory/", "Find care"), ("/locations/", "Locations"), ("/practice-types/", "Disciplines"),
              ("/verification/", "How we verify"), ("/about/", "About us"),
              ("/articles/", "Articles")]
     def cur(h):
-        hit = path.startswith(h) or (h == "/directory/" and path.startswith(("/provider/", "/locations/")))
+        hit = path.startswith(h) or (h == "/directory/" and path.startswith("/provider/"))
         return ' aria-current="page"' if hit else ""
     navhtml = "".join(f'<a href="{h}"{cur(h)}>{t}</a>' for h, t in links)
     return f"""<!DOCTYPE html>
@@ -1074,7 +1105,7 @@ def record_html(p):
                                          f'{E(p["city"])}, {E(p["state"])}', since_txt(p)] if x)
     return f"""<li class="record" data-cats="{' '.join(p['categories'])}"
       data-city="{E(p['city'])}" data-state="{p['state']}" data-tele="{1 if p['telehealth'] else 0}"
-      data-lat="{p['lat']}" data-lng="{p['lng']}" data-since="{p['since']}"
+      data-lat="{p['lat'] if p['lat'] is not None else ''}" data-lng="{p['lng'] if p['lng'] is not None else ''}" data-since="{p['since']}"
       data-name="{E(p['name'])}" data-text="{E(hay)}">
     <article class="rec">
       {avatar(p)}
@@ -1326,7 +1357,7 @@ def page_directory(subset=None, title=None, desc=None, path="/directory/", headi
     stateopts = "".join(
         f'<option value="{ab}">{E(state_name(ab))} ({len(in_state(ab))})</option>'
         for ab in STATES)
-    body = f"""{page_head(heading or 'Find care', E(intro) if intro else 'Every practitioner in the directory. Narrow it down by kind of care, place, or telehealth.', trail or [("Home", "/"), (heading or "Find care", None)], art=art or (DISC_DRAWING.get(current) if current else "find"))}
+    body = f"""{page_head(heading or 'Find care', E(intro) if intro else 'Every practitioner in the directory. Tell us where you are, then narrow it down by kind of care or telehealth.', trail or [("Home", "/"), (heading or "Find care", None)], art=art or (DISC_DRAWING.get(current) if current else "find"))}
   <div class="wrap dir">
       <aside class="rail" id="rail">
         <button class="rail-toggle" id="rail-toggle" aria-expanded="false">Narrow it down<span aria-hidden="true">&#9662;</span></button>
@@ -1340,13 +1371,6 @@ def page_directory(subset=None, title=None, desc=None, path="/directory/", headi
           <fieldset><legend>State</legend>
             <select class="control" id="f-state"><option value="">All states</option>{stateopts}</select>
           </fieldset>
-          <fieldset><legend>Distance</legend>
-            <input class="control" id="f-zip" type="text" inputmode="numeric" placeholder="ZIP code">
-            <label class="lbl" for="f-radius">Within 50 miles</label>
-            <input id="f-radius" type="range" min="5" max="500" step="5" value="50">
-            <button class="btn btn-ghost btn-sm" id="f-near" type="button">Use my location</button>
-            <p class="hint" id="geo-msg"></p>
-          </fieldset>
           <fieldset><legend>Show only</legend>
             <label class="check"><input type="checkbox" id="f-tele"> Offers telehealth</label>
           </fieldset>
@@ -1354,6 +1378,22 @@ def page_directory(subset=None, title=None, desc=None, path="/directory/", headi
         </div>
       </aside>
       <section class="dir-main">
+        <form class="where-bar" id="where-bar" role="search">
+          <label class="where-label" for="f-where">Where are you?</label>
+          <div class="where-row">
+            <input class="control where-input" id="f-where" type="text" placeholder="City, ZIP or postal code" autocomplete="off" enterkeyhint="search">
+            <select class="control where-radius" id="f-radius" aria-label="Distance">
+              <option value="10">Within 10 miles</option>
+              <option value="25">Within 25 miles</option>
+              <option value="50" selected>Within 50 miles</option>
+              <option value="100">Within 100 miles</option>
+              <option value="250">Within 250 miles</option>
+              <option value="0">Any distance</option>
+            </select>
+            <button class="btn btn-dark where-go" type="submit">Search</button>
+          </div>
+          <p class="where-foot"><button type="button" class="fw-linkbtn" id="f-near">Use my location</button><span class="where-msg" id="geo-msg" aria-live="polite"></span></p>
+        </form>
         <div class="results-bar">
           <p class="results-count" aria-live="polite"><b id="count">{len(rows)}</b> <span id="count-word">{'practitioner' if len(rows) == 1 else 'practitioners'}</span><span id="count-where"></span></p>
           <div class="sort">
@@ -1371,7 +1411,8 @@ def page_directory(subset=None, title=None, desc=None, path="/directory/", headi
         {f'<p class="back-link"><a href="{footer_link[1]}">&larr; {E(footer_link[0])}</a></p>' if footer_link else ''}
         <div class="empty" id="empty" hidden>
           <h3>No practitioners match those filters</h3>
-          <p>Try widening the distance, choosing another kind of care, or searching a nearby city. Many practitioners also offer telehealth.</p>
+          <p id="empty-msg">Try widening the distance, choosing another kind of care, or searching a nearby city. Many practitioners also offer telehealth.</p>
+          <p id="empty-wider" hidden><button class="btn btn-ghost btn-sm" id="empty-widen" type="button"></button></p>
           <p><button class="btn btn-dark btn-sm" id="empty-clear" type="button">Clear filters</button></p>
         </div>
       </section>
@@ -1414,8 +1455,19 @@ def page_locations():
           <span class="fw-disc-name">{E(state_name(ab))}</span>
           <span class="fw-disc-sub">{n} practitioner{'s' if n != 1 else ''} &middot; {E(', '.join(cities_in(ab))[:80])}</span></span></a>"""
     tele = sum(1 for p in PROVIDERS if p['telehealth'])
-    body = f"""{page_head("Find care near you", f"Choose a state, then narrow by city or ZIP once you are there. {tele} practitioners also offer telehealth.", [("Home", "/"), ("Locations", None)], art="desert")}
-  <section class="wrap fw-sec"><div class="fw-discs">{cards}</div></section>"""
+    body = f"""{page_head("Find care near you", f"Search from where you are, or browse by state. {tele} practitioners also offer telehealth, so distance needn't decide it.", [("Home", "/"), ("Locations", None)], art="desert")}
+  <section class="wrap fw-sec">
+    <form class="where-bar where-bar-lg" action="/directory/" method="get" role="search">
+      <label class="where-label" for="loc-where">Where are you?</label>
+      <div class="where-row">
+        <input class="control where-input" id="loc-where" name="where" type="text" placeholder="City, ZIP or postal code" autocomplete="off" enterkeyhint="search" required>
+        <button class="btn btn-dark where-go" type="submit">Find practitioners</button>
+      </div>
+      <p class="where-foot"><button type="button" class="fw-linkbtn" data-near-go="1">Use my location</button></p>
+    </form>
+    <h2 class="loc-h">Or browse by state</h2>
+    <div class="fw-discs">{cards}</div>
+  </section>"""
     return shell("Locations — FindWell Directory",
                  "Find holistic and integrative practitioners by state.", "/locations/", body)
 

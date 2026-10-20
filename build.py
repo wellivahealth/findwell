@@ -781,7 +781,7 @@ def shell(title, desc, path, body, view="", extra_head=""):
 
 <header class="masthead">
   <div class="wrap masthead-in">
-    <a class="mark" href="/" aria-label="FindWell Directory, home">{LEAF_MARK}<span>FindWell</span></a>
+    <a class="mark" href="/" aria-label="FindWell Directory, home">{LOGO_MARKUP}</a>
     <button class="burger" id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
       {navhtml}
@@ -797,7 +797,7 @@ def shell(title, desc, path, body, view="", extra_head=""):
 <footer class="foot">
   <div class="wrap foot-in">
     <div class="foot-about">
-      <span class="foot-name">FindWell</span>
+      <span class="foot-mark"><img src="/assets/img/logo-400.png?v={_v("assets/img/logo-400.png")}" width="965" height="289" alt="FindWell Directory" loading="lazy" decoding="async"></span>
       <p>A free directory of holistic and integrative practitioners in the United States and Canada. No commissions, no listing fees, no lead selling.</p>
     </div>
     <div class="foot-col">

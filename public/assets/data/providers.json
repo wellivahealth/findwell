@@ -610,5 +610,166 @@
    "recorded_at": "2026-10-12T03:34:07.419Z"
   },
   "seed": false
+ },
+ {
+  "slug": "stone-spirit-healing-arts",
+  "name": "Stone Spirit Healing Arts",
+  "person": "Jacinda Jackson",
+  "city": "Concord",
+  "state": "NH",
+  "categories": [
+   "Coaching",
+   "EnergyMedicine",
+   "Counseling"
+  ],
+  "licensure": "NH1211",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "anastasia-dosov-nutrition-and-wellness-consulting-llc",
+  "name": "Anastasia Dosov Nutrition and Wellness Consulting, LLC",
+  "person": "Anastasia Dosov",
+  "city": "Whitmore Lake",
+  "state": "MI",
+  "categories": [
+   "Nutrition"
+  ],
+  "licensure": "164.023958",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "barefoot-nurse-nutritionist",
+  "name": "Barefoot Nurse Nutritionist",
+  "person": "Erika Dycus",
+  "city": "Woodstock",
+  "state": "IL",
+  "categories": [
+   "IntegrativeMedicine",
+   "Nutrition"
+  ],
+  "licensure": "Illinois RN: 041.374248; Illinois LDN: 164.009162",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "emma-harvie-nutrition",
+  "name": "Emma Harvie Nutrition",
+  "person": "Emma Harvie",
+  "city": "Atlanta",
+  "state": "GA",
+  "categories": [
+   "Nutrition"
+  ],
+  "licensure": "Minnestoa - N243, Florida - #406",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "wildflower-nutrition-llc",
+  "name": "Wildflower Nutrition LLC",
+  "person": "Stephanie Hands",
+  "city": "Gypsum",
+  "state": "CO",
+  "categories": [
+   "Nutrition"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "aurivel-healing",
+  "name": "Aurivel Healing",
+  "person": "Kieu Trinh Mack",
+  "city": "Duluth",
+  "state": "GA",
+  "categories": [
+   "EnergyMedicine"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "fuel-nourish-thrive",
+  "name": "Fuel, Nourish, Thrive",
+  "person": "Lindley Wells",
+  "city": "San Francisco",
+  "state": "CA",
+  "categories": [
+   "Nutrition"
+  ],
+  "licensure": "Massachusetts LDN5057",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "love-light-palms",
+  "name": "Love & Light Palms",
+  "person": "Charla Woods-FAvors",
+  "city": "Columbus",
+  "state": "OH",
+  "categories": [
+   "EnergyMedicine"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "steps-nutrition-group",
+  "name": "S.T.E.P.S. Nutrition Group",
+  "person": "Miriam Wiener, MS, MPH",
+  "city": "Beverly Hills",
+  "state": "CA",
+  "categories": [
+   "Nutrition",
+   "Herbalism"
+  ],
+  "licensure": "State licensed \u2014 number not provided",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "the-whole-story-llc",
+  "name": "The Whole Story LLC",
+  "person": "Elizabeth Quinn",
+  "city": "South Hill",
+  "state": "VA",
+  "categories": [
+   "Nutrition",
+   "Coaching"
+  ],
+  "licensure": "Maryland DX5327; Pennsylvania DN009331; Illinois 164.025294; North Carolina NU000042",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "hudson-spine-health",
+  "name": "Hudson Spine & Health",
+  "person": "Travis Johnson",
+  "city": "Hudson",
+  "state": "WI",
+  "categories": [
+   "Chiropractic"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "basic-habits",
+  "name": "Basic Habits",
+  "person": "Isbel Cano",
+  "city": "Pharr",
+  "state": "TX",
+  "categories": [
+   "Nutrition"
+  ],
+  "licensure": "State licensed \u2014 number not provided",
+  "verification": null,
+  "seed": false
  }
 ]

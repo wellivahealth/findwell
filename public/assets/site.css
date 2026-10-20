@@ -739,3 +739,170 @@ body{ min-height:100vh; display:flex; flex-direction:column; }
 .record-dist{ color:var(--accent); }
 .tile-go.none{ color:var(--muted); }
 .pagehead{ padding:1.6rem 0 0; }
+
+/* ============================================================
+   Direction A (Oct 2026): practitioner-forward home and listing
+   ============================================================ */
+.ha-eyebrow{ margin:0; font-family:var(--ff-mono); font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; color:var(--brand); }
+
+/* hero */
+.ha-hero{ background:var(--surface-sunk); }
+.ha-hero-in{ display:flex; flex-wrap:wrap; gap:clamp(2rem,4vw,3.4rem); align-items:center; padding-block:clamp(2.6rem,6vw,4.4rem) clamp(3rem,6vw,4.8rem); }
+.ha-hero-copy{ flex:1 1 440px; min-width:0; display:flex; flex-direction:column; gap:1.35rem; }
+.ha-hero-copy h1{ font-size:clamp(2.4rem,5.4vw,3.7rem); line-height:1.04; letter-spacing:-0.025em; }
+.ha-hero-copy h1 em{ color:var(--accent); }
+.ha-lede{ margin:0; font-size:clamp(1.05rem,1.6vw,1.2rem); color:var(--ink-soft); max-width:34rem; }
+.ha-search{
+  display:flex; flex-wrap:wrap; gap:.5rem; align-items:stretch;
+  background:var(--surface); border:1px solid var(--line-strong); border-radius:var(--r-lg);
+  padding:.5rem; box-shadow:0 10px 30px oklch(0.245 0.035 195 / .08);
+}
+.ha-field{ flex:1 1 150px; display:flex; flex-direction:column; gap:.1rem; padding:.45rem .8rem; }
+.ha-field + .ha-field{ border-left:1px solid var(--line); }
+.ha-field span{ font-family:var(--ff-mono); font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); }
+.ha-field input{ border:0; outline:0; background:transparent; font-size:1.05rem; padding:.2rem 0; min-width:0; }
+.ha-field:focus-within{ box-shadow:inset 0 -2px 0 var(--brand); }
+.ha-go{ min-height:3.4rem; padding-inline:1.6rem; font-size:1rem; }
+.ha-popular{ flex:1 1 100%; display:flex; flex-wrap:wrap; align-items:center; gap:.4rem; padding:.35rem .5rem .2rem; border-top:1px solid var(--line); }
+.ha-popular > span{ font-size:.86rem; color:var(--ink-soft); margin-right:.2rem; }
+@media (max-width:620px){ .ha-field + .ha-field{ border-left:0; border-top:1px solid var(--line); } .ha-go{ flex:1 1 100%; } }
+
+.ha-pill{
+  display:inline-flex; align-items:center; gap:.35rem; font:inherit; font-size:.88rem; line-height:1.2;
+  padding:.42rem .8rem; border:1px solid var(--line-strong); border-radius:100px;
+  background:var(--surface); color:var(--ink); text-decoration:none; cursor:pointer;
+  transition:border-color .16s var(--ease), color .16s var(--ease);
+}
+.ha-pill:hover{ border-color:var(--brand); color:var(--brand); }
+.ha-pill .n{ font-family:var(--ff-mono); font-size:.74rem; color:var(--muted); }
+
+.ha-hero-art{ flex:1 1 400px; min-width:0; position:relative; padding-bottom:3.4rem; }
+.ha-hero-img{ width:100%; height:clamp(300px,36vw,440px); object-fit:cover; object-position:60% 25%; border-radius:14px; }
+.ha-feature{
+  position:absolute; left:-1.5rem; bottom:0; width:min(340px, 92%);
+  display:flex; flex-direction:column; gap:.75rem; padding:1.1rem;
+  background:var(--surface); border:1px solid var(--line); border-radius:12px;
+  text-decoration:none; color:var(--ink); box-shadow:0 18px 40px oklch(0.245 0.035 195 / .16);
+  transition:transform .2s var(--ease);
+}
+.ha-feature:hover{ transform:translateY(-2px); }
+.ha-feature .avatar{ width:56px; height:56px; }
+.ha-feature-verify .ha-ok{ background:oklch(0.95 0.03 155); border-radius:var(--r-md); padding:.45rem .6rem; }
+@media (max-width:900px){
+  .ha-hero-art{ padding-bottom:0; }
+  .ha-feature{ position:relative; left:auto; bottom:auto; width:auto; margin:-2.6rem .8rem 0; }
+}
+
+/* section heads */
+.ha-head{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:.8rem 1.6rem; margin-bottom:1.6rem; }
+.ha-head a{ font-weight:600; font-size:.95rem; color:var(--brand); }
+.ha-tight-top{ padding-top:0; }
+
+/* practitioner cards */
+.ha-cards{ display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 310px), 1fr)); gap:1.1rem; }
+.ha-card{
+  display:flex; flex-direction:column; gap:.85rem; padding:1.2rem;
+  background:var(--surface); border:1px solid var(--line); border-radius:12px;
+  text-decoration:none; color:var(--ink);
+  transition:border-color .18s var(--ease), box-shadow .18s var(--ease), transform .18s var(--ease);
+}
+.ha-card:hover{ border-color:var(--line-strong); box-shadow:0 12px 28px oklch(0.245 0.035 195 / .08); transform:translateY(-2px); }
+.ha-card-head{ display:flex; gap:.9rem; align-items:center; }
+.ha-card .avatar{ width:72px; height:72px; border-radius:10px; }
+.ha-card-id{ display:flex; flex-direction:column; min-width:0; }
+.ha-card-name{ font-family:var(--ff-display); font-size:1.32rem; line-height:1.15; letter-spacing:-0.012em; }
+.ha-card-person{ font-size:.9rem; color:var(--ink-soft); }
+.ha-chips{ display:flex; flex-wrap:wrap; gap:.35rem; }
+.ha-chip{ font-size:.8rem; padding:.18rem .55rem; border-radius:4px; background:var(--surface-sunk); color:var(--ink); }
+.ha-chip-tele{ background:oklch(0.95 0.025 235); color:oklch(0.40 0.08 235); }
+.ha-card-meta{ display:flex; justify-content:space-between; gap:1rem; font-size:.88rem; color:var(--ink-soft); border-top:1px solid var(--line); padding-top:.75rem; margin-top:auto; }
+.ha-card-verify{ font-size:.82rem; }
+.ha-ok{ display:inline-flex; align-items:flex-start; gap:.4rem; color:oklch(0.42 0.09 155); }
+.ha-ok svg{ flex:none; margin-top:.2rem; }
+.ha-note{ color:var(--ink-soft); }
+
+/* discipline tiles */
+.ha-tiles{ display:grid; grid-template-columns:repeat(auto-fill, minmax(min(46%, 200px), 1fr)); gap:1rem; }
+.ha-tile{ display:flex; flex-direction:column; gap:.2rem; text-decoration:none; color:var(--ink); }
+.ha-tile img{ width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:10px; margin-bottom:.5rem; transition:opacity .18s var(--ease); }
+.ha-tile:hover img{ opacity:.9; }
+.ha-tile-name{ font-family:var(--ff-display); font-size:1.25rem; line-height:1.15; }
+.ha-tile-n{ font-family:var(--ff-mono); font-size:.74rem; color:var(--muted); }
+.ha-pills{ display:flex; flex-wrap:wrap; gap:.5rem .55rem; margin-top:1.4rem; }
+
+/* same facts */
+.ha-facts{ background:var(--surface); border-block:1px solid var(--line); }
+.ha-facts-in{ display:flex; flex-wrap:wrap; gap:clamp(2rem,4vw,3rem); align-items:center; padding-block:clamp(3rem,6vw,4.5rem); }
+.ha-facts-copy{ flex:1 1 340px; min-width:0; }
+.ha-facts-copy h2{ font-size:clamp(1.6rem,3.2vw,2.3rem); letter-spacing:-0.02em; margin-bottom:1rem; }
+.ha-facts-copy p{ color:var(--ink-soft); font-size:1.03rem; }
+.ha-facts-copy a{ font-weight:600; }
+.ha-rec{ flex:1 1 480px; min-width:0; border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+.ha-rec-row{ display:grid; grid-template-columns:9.5rem minmax(0,1fr); border-bottom:1px solid var(--line); }
+.ha-rec-row:last-child{ border-bottom:0; }
+.ha-rec-row > span{ padding:.85rem 1.1rem; }
+.ha-rec-row .k{ font-family:var(--ff-mono); font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); background:var(--bg); }
+@media (max-width:520px){ .ha-rec-row{ grid-template-columns:1fr; } .ha-rec-row .k{ padding-bottom:.3rem; } }
+
+/* patients and practitioners */
+.ha-duo{ display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap:1.2rem; }
+.ha-duo-card{ background:var(--surface-sunk); border-radius:14px; padding:clamp(1.6rem,3vw,2.3rem); display:flex; flex-direction:column; gap:.9rem; align-items:flex-start; }
+.ha-duo-card h3{ font-size:1.85rem; line-height:1.15; }
+.ha-duo-card p{ margin:0; color:var(--ink-soft); }
+.ha-duo-dark{ background:var(--brand-deep); color:var(--on-brand); }
+.ha-duo-dark .ha-eyebrow, .ha-duo-dark p{ color:var(--on-brand-soft); }
+
+/* ---------- listing page ---------- */
+.ha-prof{ background:var(--surface); border-bottom:1px solid var(--line); padding-bottom:2.2rem; }
+.ha-prof .crumb{ padding-bottom:1.4rem; }
+.ha-prof-head{ display:flex; flex-wrap:wrap; gap:1.4rem 1.8rem; align-items:center; }
+.ha-prof-head .avatar-lg{ width:132px; height:132px; border-radius:16px; margin:0; padding:8px; }
+.ha-prof-head .avatar-lg.avatar-mono{ font-size:2.6rem; }
+.ha-prof-id{ flex:1 1 380px; min-width:0; }
+.ha-prof-id h1{ font-size:clamp(2.1rem,4.6vw,3.2rem); line-height:1.05; letter-spacing:-0.025em; }
+.ha-prof-person{ margin:.4rem 0 0; font-size:1.12rem; color:var(--ink-soft); }
+.ha-prof-actions{ display:flex; flex-wrap:wrap; gap:.6rem; }
+.ha-prof-actions .btn{ min-height:3rem; }
+.ha-facts-row{ display:grid; grid-template-columns:repeat(auto-fit, minmax(min(45%, 190px), 1fr)); gap:.75rem; margin-top:1.8rem; }
+.ha-fact{ background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:.85rem 1rem; display:flex; flex-direction:column; gap:.1rem; min-width:0; }
+.ha-fact .k{ font-family:var(--ff-mono); font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); }
+.ha-fact .v{ font-family:var(--ff-display); font-size:1.4rem; line-height:1.2; overflow-wrap:anywhere; }
+
+.ha-prof-body{ display:flex; flex-wrap:wrap; gap:2rem; align-items:flex-start; padding-block:2.4rem 4rem; }
+.ha-prof-main{ flex:999 1 540px; min-width:0; display:flex; flex-direction:column; gap:2.2rem; }
+.ha-prof-main h2{ font-size:1.75rem; letter-spacing:-0.015em; margin-bottom:.8rem; }
+.ha-prof-side{ flex:1 1 300px; min-width:0; display:flex; flex-direction:column; gap:.9rem; }
+
+.ha-verify{ display:flex; gap:.9rem; align-items:flex-start; border:1px solid var(--line); background:var(--surface-sunk); border-radius:10px; padding:1rem 1.15rem; }
+.ha-verify p{ margin:0; }
+.ha-verify-t{ font-weight:600; }
+.ha-verify-d{ font-size:.94rem; color:var(--ink-soft); }
+.ha-verify-ok{ background:oklch(0.955 0.028 155); border-color:oklch(0.86 0.05 155); }
+.ha-verify-ok .ha-verify-t{ color:oklch(0.36 0.08 155); }
+.ha-verify-ok .ha-verify-d, .ha-verify-ok .ha-verify-d a{ color:oklch(0.40 0.07 155); }
+.ha-verify-ic{ flex:none; width:32px; height:32px; border-radius:50%; background:var(--ok); display:grid; place-items:center; }
+
+.ha-bio{ font-size:1.1rem; line-height:1.65; max-width:66ch; }
+.ha-bio-soft{ color:var(--ink-soft); }
+
+.ha-fees{ background:var(--surface); border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+.ha-fee{ padding:.85rem 1.1rem; border-bottom:1px solid var(--line); }
+.ha-fee-foot{ padding:.85rem 1.1rem; font-size:.93rem; color:var(--ink-soft); background:var(--bg); }
+
+.ha-record{ font-size:1rem; gap:.9rem 1.6rem; border-top:1px solid var(--line-strong); padding-top:1rem; }
+.ha-record dt{ font-size:.72rem; }
+
+.ha-minis{ display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap:.8rem; }
+.ha-mini{ display:flex; gap:.8rem; align-items:center; padding:.8rem; background:var(--surface); border:1px solid var(--line); border-radius:10px; text-decoration:none; color:var(--ink); }
+.ha-mini:hover{ border-color:var(--brand); }
+.ha-mini .avatar{ width:52px; height:52px; }
+.ha-mini-name{ display:block; font-weight:600; line-height:1.25; }
+.ha-mini-sub{ display:block; font-size:.86rem; color:var(--ink-soft); }
+
+.ha-contact h3{ font-size:1.3rem; }
+.ha-c{ display:flex; flex-direction:column; gap:.1rem; padding:.55rem 0; }
+.ha-c .k{ font-family:var(--ff-mono); font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); }
+.ha-c a{ overflow-wrap:anywhere; }
+.ha-social{ display:flex; flex-wrap:wrap; gap:.4rem 1rem; padding:.5rem 0; font-size:.94rem; }
+.ha-contact .hint{ border-top:1px solid var(--line); padding-top:.8rem; margin-top:.6rem; }
+.ha-claim{ font-size:.9rem; color:var(--ink-soft); }

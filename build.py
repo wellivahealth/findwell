@@ -428,6 +428,11 @@ def normalise(r):
             num = num.lstrip("#").strip() or lic
             r["licensure"] = f"{board} #{num}"
 
+    # a name typed inside quotation marks
+    nm = (r.get("name") or "").strip()
+    if len(nm) > 2 and nm[0] in "\"'\u201c" and nm[-1] in "\"'\u201d":
+        r["name"] = nm[1:-1].strip()
+
     # tidy a phone number typed as a run of digits
     ph = re.sub(r"\D", "", r.get("phone") or "")
     if len(ph) == 11 and ph.startswith("1"):
@@ -934,58 +939,189 @@ def record_html(p):
   </li>"""
 
 # ---------------------------------------------------------------------------
+# Direction A (Oct 2026): practitioner-forward home and listing pages.
+
+def _has_logo(p):
+    logo = p.get("logo") or ""
+    if not logo:
+        return False
+    if not logo.startswith("/"):
+        return True
+    full = os.path.join(OUT, logo.lstrip("/"))
+    return os.path.exists(full) and os.path.getsize(full) >= 100
+
+def labels_html(p, cls="ha-chip"):
+    """Discipline labels as plain text, for use inside a card that is itself a link."""
+    t = "".join(f'<span class="{cls}">{E(disc(c)["label"])}</span>' for c in p["categories"])
+    if p["telehealth"]:
+        t += f'<span class="{cls} {cls}-tele">Telehealth</span>'
+    return t
+
+def verify_short(p):
+    """One line for a card. Never claims more than the full listing does."""
+    v = p.get("verification")
+    if v and v.get("source"):
+        src = re.sub(r"(?i)^the\s+", "", v["source"]).split(",")[0]
+        return ('<span class="ha-ok"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" '
+                'stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" '
+                f'aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Confirmed with {E(src)}</span>')
+    if re.search(r"(?i)no state licensure", p.get("licensure") or ""):
+        return '<span class="ha-note">No state licensure exists &middot; training shown</span>'
+    return '<span class="ha-note">Credentials as reported by the practitioner</span>'
+
+def card_html(p):
+    since = p.get("since")
+    try:
+        since_txt = f"Since {int(since)}" if 1900 < int(since) <= YEAR else ""
+    except (TypeError, ValueError):
+        since_txt = ""
+    return f"""<a class="ha-card" href="/provider/{p['slug']}/">
+        <div class="ha-card-head">{avatar(p)}<div class="ha-card-id">
+          <span class="ha-card-name">{E(p['name'])}</span>
+          <span class="ha-card-person">{E(p['person'])}</span></div></div>
+        <div class="ha-chips">{labels_html(p)}</div>
+        <div class="ha-card-meta"><span>{E(p['city'])}, {E(p['state'])}</span><span>{since_txt}</span></div>
+        <div class="ha-card-verify">{verify_short(p)}</div>
+      </a>"""
+
+def fee_items(p):
+    """The fee text split into lines a reader can scan."""
+    raw = (p.get("pricing") or "").strip()
+    if raw in ("", ".", "—", "-"):
+        return []
+    parts = re.split(r"\s*·\s*|\r?\n+", raw)
+    return [x.strip() for x in parts if x.strip()]
+
+def _featured():
+    """The hero card: a confirmed listing with a logo, most recently checked."""
+    def tidy(p):
+        f = fee_items(p)
+        return bool(f) and len(f[0]) <= 48 and not re.search(r"(?i)no state licensure", p.get("licensure") or "")
+    pool = [p for p in PROVIDERS if _has_logo(p) and (p.get("verification") or {}).get("source")]
+    pool.sort(key=lambda p: (tidy(p), p["verification"].get("recorded_at") or ""), reverse=True)
+    return pool[0] if pool else (PROVIDERS[0] if PROVIDERS else None)
+
+HERO_FIGURE = f"""<picture>
+      <source type="image/webp" sizes="(max-width:900px) 100vw, 560px"
+              srcset="/assets/img/hero-900.webp?v={IMG_V} 900w, /assets/img/hero-1400.webp?v={IMG_V} 1400w">
+      <img class="ha-hero-img" src="/assets/img/hero-1400.jpg?v={IMG_V}" sizes="(max-width:900px) 100vw, 560px"
+           srcset="/assets/img/hero-900.jpg?v={IMG_V} 900w, /assets/img/hero-1400.jpg?v={IMG_V} 1400w"
+           width="1400" height="875" alt="A practitioner smiling in a sunlit practice room" fetchpriority="high">
+    </picture>"""
+
 def page_home():
-    ndisc = sum(1 for d in DISCIPLINES if cat_count(d["key"]))
-    body = f"""  <section class="hero">
-    {HERO}
-    <div class="wrap hero-in">
-      <div class="hero-panel rise rise-1">
-        <h1>Find trusted holistic practitioners <em>whose credentials you can read</em> before you call.</h1>
-        <p class="hero-lede">Every listing shows licensure, where they trained, how long they have practised, what a visit costs, and whether they bill insurance. No commissions, no paid placement, no lead selling.</p>
-        <div class="hero-stats">
-          <div><span class="n">{len(DISCIPLINES)}</span><span class="l">disciplines</span></div>
-          <div><span class="n">80+</span><span class="l">modalities</span></div>
-          <div><span class="n">50</span><span class="l">states, open to all</span></div>
-          <div><span class="n em">Unlimited</span><span class="l">practitioners &middot; always free</span></div>
-        </div>
+    feat = _featured()
+    seeds = [p for p in PROVIDERS if p["slug"] in SEED_SLUGS]
+    approved = [p for p in PROVIDERS if p["slug"] not in SEED_SLUGS]
+    recent = [p for p in reversed(approved) if _has_logo(p)][:6]
+    if len(recent) < 6:
+        recent += [p for p in reversed(approved + seeds) if p not in recent][:6 - len(recent)]
+    whereopts = "".join(f'<option value="{E(state_name(ab))}">' for ab in STATES)
+
+    live = [d for d in DISCIPLINES if cat_count(d["key"])]
+    tiles = [d for d in live if (d.get("img") or "").startswith("/assets/img/disciplines/")]
+    rest = [d for d in live if d not in tiles]
+    tiles_html = "".join(
+        f'<a class="ha-tile" href="/practice-types/{d["slug"]}/">'
+        f'{img_tag(d["img"], "", "(max-width:700px) 46vw, 230px", widths=(500, 750))}'
+        f'<span class="ha-tile-name">{E(d["label"])}</span>'
+        f'<span class="ha-tile-n">{cat_count(d["key"])} listed</span></a>' for d in tiles)
+    rest_html = "".join(
+        f'<a class="ha-pill" href="/practice-types/{d["slug"]}/">{E(d["label"])} '
+        f'<span class="n">{cat_count(d["key"])}</span></a>' for d in rest)
+    popular = [d for d in live if d["key"] in ("Ayurveda", "Acupuncture", "Nutrition")]
+    popular_html = "".join(f'<a class="ha-pill" href="/practice-types/{d["slug"]}/">{E(d["label"])}</a>'
+                           for d in popular)
+
+    feat_html = ""
+    sample_html = ""
+    if feat:
+        feat_html = f"""<a class="ha-feature" href="/provider/{feat['slug']}/">
+        <span class="ha-eyebrow">Featured practitioner</span>
+        <span class="ha-card-head">{avatar(feat)}<span class="ha-card-id">
+          <span class="ha-card-name">{E(feat['name'])}</span>
+          <span class="ha-card-person">{E(feat['person'])} &middot; {E(feat['city'])}, {E(feat['state'])}</span></span></span>
+        <span class="ha-feature-verify">{verify_short(feat)}</span>
+      </a>"""
+        fees = fee_items(feat)
+        rows = [("Licensure", feat.get("licensure")), ("Training", feat.get("training")),
+                ("In practice", years_text(feat, "years")), ("Fees", fees[0] if fees else ""),
+                ("Insurance", feat.get("insurance"))]
+        sample_html = "".join(f'<div class="ha-rec-row"><span class="k">{k}</span><span>{val(v)}</span></div>'
+                              for k, v in rows)
+
+    body = f"""  <section class="ha-hero">
+    <div class="wrap ha-hero-in">
+      <div class="ha-hero-copy rise rise-1">
+        <p class="ha-eyebrow">A free directory of holistic practitioners</p>
+        <h1>Meet the practitioner <em>before</em> you book.</h1>
+        <p class="ha-lede">Every listing shows licensure, training, years in practice, what a visit costs and whether insurance applies, in the same place every time.</p>
+        <form class="ha-search" id="console" action="/directory/" method="get">
+          <label class="ha-field"><span>What</span>
+            <input id="c-q" name="q" type="search" placeholder="Ayurveda, acupuncture, a name"></label>
+          <label class="ha-field"><span>Where</span>
+            <input id="c-loc" name="where" type="text" placeholder="City, state or ZIP" list="where-list"></label>
+          <datalist id="where-list">{whereopts}</datalist>
+          <button class="btn btn-primary ha-go" type="submit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Search</button>
+          <div class="ha-popular"><span>Popular:</span>{popular_html}<a class="ha-pill" href="/directory/?tele=1">Telehealth</a>
+            <button type="button" class="ha-pill" data-near="1">Use my location</button></div>
+        </form>
+      </div>
+      <div class="ha-hero-art rise rise-2">
+        {HERO_FIGURE}
+        {feat_html}
       </div>
     </div>
-  </section>
-
-  <section class="console-strip">
-    <div class="wrap rise rise-2">{console_html()}</div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <h2>How it works</h2>
-      <div class="steps">
-        <div class="step"><h3>Search <span aria-hidden="true">&rarr;</span></h3><p>By discipline, state, ZIP radius or telehealth availability. Combine as many filters as you need.</p></div>
-        <div class="step"><h3>Compare <span aria-hidden="true">&rarr;</span></h3><p>Licensure, training, years in practice, fees and insurance status — in the same place on every listing, with a plain statement of how the credentials were established.</p></div>
-        <div class="step"><h3>Contact <span aria-hidden="true">&rarr;</span></h3><p>Phone, email and website go straight to the practice. Nothing routes through us and no one pays for your details.</p></div>
-      </div>
+      <div class="ha-head"><h2>Recently joined</h2><a href="/directory/">See all {len(PROVIDERS)} practitioners</a></div>
+      <div class="ha-cards">{"".join(card_html(p) for p in recent)}</div>
     </div>
   </section>
 
-  <section class="band-feature">
-    {BANNER_PICTURE}
-    <div class="wrap band-feature-in">
-      <h2>About the directory</h2>
-      <p>There is no centralised system for non-insurance-based care, which makes a first appointment a guess. We collect the same facts from every practitioner and publish them in the same shape, so the comparison is yours to make.</p>
-      <ul>
-        <li>Every listing carries state licensure where it applies, years in practice, pricing structure, insurance status and direct contact details.</li>
-        <li>For disciplines with no licensure route \u2014 Ayurveda, herbalism, energy medicine \u2014 we publish training and voluntary certification instead, and say plainly that no license exists.</li>
-        <li>No middlemen, no commissions, no listing fees. Nothing routes through us and no one pays for placement.</li>
-      </ul>
-      <p style="margin-top:1.8rem"><a class="btn btn-primary" href="/practice-types/">Find a practitioner</a></p>
+  <section class="section ha-tight-top">
+    <div class="wrap">
+      <div class="ha-head"><h2>Browse by discipline</h2><a href="/practice-types/">All {len(live)} disciplines</a></div>
+      <div class="ha-tiles">{tiles_html}</div>
+      <div class="ha-pills">{rest_html}</div>
+    </div>
+  </section>
+
+  <section class="ha-facts">
+    <div class="wrap ha-facts-in">
+      <div class="ha-facts-copy">
+        <h2>The same facts, on every listing</h2>
+        <p>There is no central record for care outside insurance, so a first appointment is often a guess. We ask every practitioner the same questions and check licences with the issuing board. Where a discipline has no licence, we say so plainly.</p>
+        <p><a href="/verification/">What verification means here</a></p>
+      </div>
+      <div class="ha-rec">{sample_html}</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap ha-duo">
+      <div class="ha-duo-card">
+        <p class="ha-eyebrow">For patients</p>
+        <h3>Contact goes straight to the practice</h3>
+        <p>Phone, email and website on every listing. Nothing routes through us, and nobody pays for your details.</p>
+        <a class="btn btn-dark" href="/directory/">Find a practitioner</a>
+      </div>
+      <div class="ha-duo-card ha-duo-dark">
+        <p class="ha-eyebrow">For practitioners</p>
+        <h3>Listing is free, and always will be</h3>
+        <p>No paid placement and no leads sold. The application takes about ten minutes, and we confirm your licence with the board.</p>
+        <a class="btn btn-primary" href="/join/">Join the directory</a>
+      </div>
     </div>
   </section>"""
     return shell("FindWell Directory — trusted holistic practitioners",
                  "A searchable directory of vetted holistic and integrative practitioners. Filter by discipline, city or distance. Licensure, training, years in practice and pricing on every record.",
                  "/", body, view="home",
                  extra_head=f'<link rel="preload" as="image" href="/assets/img/hero-1400.webp?v={IMG_V}" '
-                            f'imagesrcset="/assets/img/hero-900.webp?v={IMG_V} 900w, /assets/img/hero-1400.webp?v={IMG_V} 1400w, '
-                            f'/assets/img/hero-2000.webp?v={IMG_V} 2000w" imagesizes="100vw" type="image/webp">')
+                            f'imagesrcset="/assets/img/hero-900.webp?v={IMG_V} 900w, /assets/img/hero-1400.webp?v={IMG_V} 1400w" '
+                            f'imagesizes="(max-width:900px) 100vw, 560px" type="image/webp">')
 
 def crumbs_html(trail):
     """trail is [(label, href or None), ...]; the last item is the current page."""
@@ -1110,22 +1246,57 @@ def page_locations():
                  "Find holistic and integrative practitioners by state.",
                  "/locations/", body)
 
+def _social_label(u):
+    host = u.split("//")[-1].replace("www.", "").split("/")[0].lower()
+    known = {"facebook.com": "Facebook", "instagram.com": "Instagram", "linkedin.com": "LinkedIn",
+             "youtube.com": "YouTube", "tiktok.com": "TikTok", "x.com": "X", "twitter.com": "X",
+             "pinterest.com": "Pinterest", "threads.net": "Threads"}
+    return known.get(host, host)
+
 def page_provider(p):
     years = years_text(p, "years")
     maps = "https://www.google.com/maps/search/?api=1&query=" + (p["address"] or p["name"]).replace(" ", "+")
-    nearby = [x for x in PROVIDERS if x["city"] == p["city"] and x["slug"] != p["slug"]][:4]
+    nearby = [x for x in PROVIDERS if x["city"].lower() == p["city"].lower() and x["slug"] != p["slug"]]
+    nearby.sort(key=lambda x: (not set(x["categories"]) & set(p["categories"]), not _has_logo(x)))
+    nearby = nearby[:3]
     nearby_html = "".join(
-        f'<div class="contact-row"><span class="k">{E(disc(x["categories"][0])["label"].split()[0])}</span>'
-        f'<a href="/provider/{x["slug"]}/">{E(x["name"])}</a></div>' for x in nearby) or \
-        '<p class="hint">No other listings in this city yet.</p>'
+        f'<a class="ha-mini" href="/provider/{x["slug"]}/">{avatar(x)}<span><span class="ha-mini-name">{E(x["name"])}</span>'
+        f'<span class="ha-mini-sub">{E(", ".join(disc(c)["label"] for c in x["categories"][:2]))}</span></span></a>'
+        for x in nearby)
     social = "".join(
-        f'<div class="contact-row"><span class="k">Social</span><a href="{E(u)}" target="_blank" rel="noopener">'
-        f'{E(u.split("//")[-1].replace("www.", "").rstrip("/"))}</a></div>'
+        f'<a href="{E(u)}" target="_blank" rel="noopener">'
+        f'{E(_social_label(u))}</a>'
         for u in p["social"] if u.startswith("http"))
-    # first discipline with a page of its own, so the crumb lands among colleagues
     _disc = next((d for d in DISCIPLINES if d["key"] in p["categories"]), None)
-    disc_crumb = (f'<a href="/practice-types/{_disc["slug"]}/">{E(_disc["label"])}</a> / '
-                  if _disc else "")
+    disc_crumb = (f'<a href="/practice-types/{_disc["slug"]}/">{E(_disc["label"])}</a> / ' if _disc else "")
+    phone_digits = "".join(ch for ch in (p["phone"] or "") if ch.isdigit())
+    site_label = (p["website"] or "").split("//")[-1].replace("www.", "").rstrip("/")
+
+    fees = fee_items(p)
+    ins = (p.get("insurance") or "").strip()
+    facts = [("In practice", years.split(" (")[0] if years != "—" else "—"),
+             ("Fees", fees[0] if fees and len(fees[0]) <= 40 else ("See fees below" if fees else "Ask the practice")),
+             ("Insurance", "Accepted" if ins.lower().startswith("accepted") else (ins or "—")),
+             ("Telehealth", "Available" if p["telehealth"] else "In person only")]
+    facts_html = "".join(f'<div class="ha-fact"><span class="k">{k}</span><span class="v">{E(v)}</span></div>'
+                         for k, v in facts)
+
+    v = p.get("verification")
+    if v and v.get("source"):
+        what = (v.get("what") or "").strip()
+        detail = "" if re.match(r"(?i)^credentials? confirmed\b", what) else what
+        verify_html = f"""<div class="ha-verify ha-verify-ok">
+          <span class="ha-verify-ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <div><p class="ha-verify-t">Confirmed with {E(v['source'])}</p>
+          <p class="ha-verify-d">{E(detail) + ", " if detail else ""}checked {E(v.get('date', ''))}. <a href="/verification/">What this means</a></p></div></div>"""
+    else:
+        verify_html = """<div class="ha-verify">
+          <div><p class="ha-verify-t">As reported by the practitioner</p>
+          <p class="ha-verify-d">We publish what the practitioner told us and say so. <a href="/verification/">What this means</a></p></div></div>"""
+
+    fee_rows = "".join(f'<div class="ha-fee"><span>{E(x)}</span></div>' for x in fees) or \
+        '<div class="ha-fee"><span>Ask the practice about fees</span></div>'
+
     ld = {"@context": "https://schema.org", "@type": "MedicalBusiness", "name": p["name"],
           "url": f"{SITE}/provider/{p['slug']}/", "telephone": p["phone"], "email": p["email"],
           "address": {"@type": "PostalAddress", "addressLocality": p["city"],
@@ -1133,49 +1304,60 @@ def page_provider(p):
           "description": p["blurb"]}
     if p["address"]:
         ld["address"]["streetAddress"] = p["address"].split(",")[0]
-    body = f"""  <div class="wrap">
-    <p class="crumb"><a href="/">Home</a> / <a href="/practice-types/">Find a practitioner</a> / {disc_crumb}{E(p['name'])}</p>
-    <div class="detail">
-      <div>
+    body = f"""  <section class="ha-prof">
+    <div class="wrap">
+      <p class="crumb"><a href="/">Home</a> / {disc_crumb}<a href="/locations/{state_slug(p['state'])}/">{E(state_name(p['state']))}</a> / {E(p['name'])}</p>
+      <div class="ha-prof-head">
         {avatar(p, True)}
-        <h1>{E(p['name'])}</h1>
-        <p class="detail-person">{E(p['person'])}</p>
-        {tags_html(p)}
-        {verification_line(p)}
-        <p class="detail-bio" style="margin-top:1.6rem">{E(p['blurb'])}</p>
-        {f'<p class="detail-bio">{E(p["long"])}</p>' if p['long'] else ''}
-        <div class="detail-fields">
-          <h3 style="font-family:var(--ff-display);font-size:1.15rem;margin-bottom:1rem;padding-bottom:.6rem;border-bottom:1px solid var(--line)">Practice record</h3>
-          <dl class="fields">
-            <dt>Credentials</dt><dd>{val(p['credentials'])}</dd>
-            <dt>Licensure</dt><dd>{val(p['licensure'])}</dd>
-            <dt>Training</dt><dd>{val(p['training'])}</dd>
-            {integrative_row(p)}
-            <dt>In practice</dt><dd>{years}</dd>
-            <dt>Affiliations</dt><dd>{val(p['affiliations'])}</dd>
-            <dt>Fees</dt><dd>{val(p['pricing'])}</dd>
-            <dt>Payment</dt><dd>{val(p['payments'])}</dd>
-            <dt>Insurance</dt><dd>{val(p['insurance'])}</dd>
-            <dt>Telehealth</dt><dd>{'Yes' if p['telehealth'] else 'In person only'}</dd>
-          </dl>
+        <div class="ha-prof-id">
+          <h1>{E(p['name'])}</h1>
+          <p class="ha-prof-person">{E(p['person'])} &middot; {E(p['city'])}, {E(state_name(p['state']))}</p>
+          {tags_html(p)}
+        </div>
+        <div class="ha-prof-actions">
+          {f'<a class="btn btn-primary" href="tel:{phone_digits}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Call {E(p["phone"])}</a>' if phone_digits else ""}
+          {f'<a class="btn btn-ghost" href="{E(p["website"])}" target="_blank" rel="noopener">Visit website</a>' if p["website"] else ""}
         </div>
       </div>
-      <div>
-        <div class="panel">
-          <h3>Contact the practice</h3>
-          {f'<div class="contact-row"><span class="k">Phone</span><a href="tel:{"".join(ch for ch in p["phone"] if ch.isdigit())}">{E(p["phone"])}</a></div>' if p["phone"] else ""}
-          <div class="contact-row"><span class="k">Email</span><a href="mailto:{E(p['email'])}">{E(p['email'])}</a></div>
-          <div class="contact-row"><span class="k">Web</span><a href="{E(p['website'])}" target="_blank" rel="noopener">{E(p['website'].split('//')[-1].replace('www.', '').rstrip('/'))}</a></div>
-          {f'<div class="contact-row"><span class="k">Address</span><a href="{maps}" target="_blank" rel="noopener">{E(p["address"])}</a></div>' if p["address"] else '<div class="contact-row"><span class="k">Address</span><span>No public premises — visits by arrangement</span></div>'}
-          {social}
-          <p class="hint" style="margin-top:1rem">FindWell takes no commission and receives nothing when you book.</p>
-        </div>
-        <div class="panel">
-          <h3>Nearby in {E(p['city'])}</h3>
-          {nearby_html}
-        </div>
-      </div>
+      <div class="ha-facts-row">{facts_html}</div>
     </div>
+  </section>
+
+  <div class="wrap ha-prof-body">
+    <div class="ha-prof-main">
+      {verify_html}
+      <section><h2>About the practice</h2>
+        <p class="ha-bio">{E(p['blurb'])}</p>
+        {f'<p class="ha-bio ha-bio-soft">{E(p["long"])}</p>' if p['long'] else ''}
+      </section>
+      <section><h2>Fees</h2>
+        <div class="ha-fees">{fee_rows}
+          <div class="ha-fee-foot">Payment: {val(p['payments'])}. Insurance: {val(p['insurance'])}.</div></div>
+      </section>
+      <section><h2>Practice record</h2>
+        <dl class="fields ha-record">
+          <dt>Credentials</dt><dd>{val(p['credentials'])}</dd>
+          <dt>Licensure</dt><dd>{val(p['licensure'])}</dd>
+          <dt>Training</dt><dd>{val(p['training'])}</dd>
+          {integrative_row(p)}
+          <dt>In practice</dt><dd>{years}</dd>
+          <dt>Affiliations</dt><dd>{val(p['affiliations'])}</dd>
+        </dl>
+      </section>
+      {f'<section><h2>Also in {E(p["city"])}</h2><div class="ha-minis">{nearby_html}</div></section>' if nearby else ''}
+    </div>
+    <aside class="ha-prof-side">
+      <div class="panel ha-contact">
+        <h3>Contact the practice</h3>
+        {f'<div class="ha-c"><span class="k">Phone</span><a href="tel:{phone_digits}">{E(p["phone"])}</a></div>' if phone_digits else ""}
+        {f'<div class="ha-c"><span class="k">Email</span><a href="mailto:{E(p["email"])}">{E(p["email"])}</a></div>' if p["email"] else ""}
+        {f'<div class="ha-c"><span class="k">Website</span><a href="{E(p["website"])}" target="_blank" rel="noopener">{E(site_label)}</a></div>' if p["website"] else ""}
+        {f'<div class="ha-c"><span class="k">Address</span><span>{E(p["address"])}</span><a href="{maps}" target="_blank" rel="noopener">Open in Google Maps</a></div>' if p["address"] else '<div class="ha-c"><span class="k">Address</span><span>No public premises, visits by arrangement</span></div>'}
+        {f'<div class="ha-social">{social}</div>' if social else ""}
+        <p class="hint">FindWell takes no commission and receives nothing when you book.</p>
+      </div>
+      <a class="ha-claim" href="mailto:{CONTACT_EMAIL}?subject={E(('Change to my listing: ' + p['name']).replace(' ', '%20'))}">Is this your practice? Request a change</a>
+    </aside>
   </div>"""
     head = f'<script type="application/ld+json">{json.dumps(ld)}</script>'
     return shell(f"{p['name']} — {p['city']}, {p['state']} | FindWell Directory",

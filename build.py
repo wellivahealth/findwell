@@ -778,12 +778,12 @@ DRAWINGS = {
             '<path d="M120 40C72 74 46 128 58 182C66 204 98 214 120 214C142 214 174 204 182 182C194 128 168 74 120 40Z"/>'
             '<path d="M120 90C104 98 92 110 84 126M120 130C102 138 88 152 80 168M120 90C136 98 148 110 156 126"/>'
             '<circle cx="168" cy="166" r="30"/><path d="M154 166L164 176L184 154"/>',
-  # About us: a seedling with roots spreading below the soil
-  "hands": '<path d="M30 132H210"/><path d="M48 132C60 124 72 124 84 132M150 132C164 122 178 122 192 132" opacity=".6"/>'
-           '<path d="M120 132V62"/><path d="M120 92C100 92 86 78 84 58C104 58 118 72 120 92Z"/>'
-           '<path d="M120 78C140 78 154 64 156 44C136 44 122 58 120 78Z"/>'
-           '<path d="M120 132C118 152 106 164 92 172C80 178 70 190 68 204M120 132C122 154 134 168 150 176C162 182 170 194 172 206'
-           'M120 132V196M106 158C96 156 86 160 80 166M136 160C146 156 156 158 164 164M120 168C112 176 108 186 108 198M120 176C128 184 132 192 132 202"/>',
+  # About us: a young plant unfurling from the ground
+  "hands": '<path d="M96 238C104 230 136 230 144 238"/>'
+           '<path d="M120 236C118 200 122 160 120 112C119 92 124 76 134 66"/>'
+           '<path d="M120 176C96 178 74 166 64 142C88 138 112 150 120 176Z"/><path d="M120 176C108 164 92 156 74 150"/>'
+           '<path d="M121 150C144 150 164 136 172 112C148 110 126 124 121 150Z"/><path d="M121 150C134 138 150 128 166 118"/>'
+           '<path d="M134 66C124 58 120 46 124 34C136 40 140 54 134 66Z"/><path d="M134 66C142 58 154 56 162 60C156 70 144 72 134 66Z"/>',
   # Articles: an open book with a sprig rising from the spine
   "book": '<path d="M120 176C96 162 64 158 30 164V68C64 62 96 66 120 80C144 66 176 62 210 68V164C176 158 144 162 120 176Z"/>'
           '<path d="M120 80V176"/><path d="M50 92C70 88 90 90 106 98M50 112C70 108 90 110 106 118M134 98C150 90 170 88 190 92M134 118C150 110 170 108 190 112"/>'
@@ -846,10 +846,22 @@ DRAWINGS = {
             '<circle cx="138" cy="104" r="16"/><path d="M138 88C138 80 142 74 148 72"/>' + _DLEAF(150, 72, 60, .5),
 }
 
+DRAW_BASE = {"find": 200, "bundle": 214, "mortar": 216, "desert": 211, "verify": 216, "hands": 239,
+             "book": 196, "branch": 204, "join": 213, "lost": 216, "needles": 206, "root": 220,
+             "bowl": 214, "stones": 216, "heart": 206, "sun": 215, "fern": 223, "path": 215, "basket": 204}
+
 def drawing(key, cls="pg-art"):
-    return (f'<svg class="{cls}" viewBox="0 0 240 240" fill="none" stroke="currentColor" stroke-width="1.6" '
+    vy = DRAW_BASE.get(key, 240) - 240
+    return (f'<svg class="{cls}" viewBox="0 {vy} 240 240" fill="none" stroke="currentColor" stroke-width="1.6" '
             f'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{DRAWINGS[key]}</svg>')
 
+
+GROUND_SPRIGS = "".join(
+    f'<svg class="pg-sprig" style="left:{x}%;width:{w}px;height:{round(w * 1.66)}px;transform:rotate({r}deg);opacity:{o}" '
+    'viewBox="0 0 60 100" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">'
+    '<path d="M30 98C30 70 32 40 40 4"/><path d="M31 80C22 76 16 70 14 60C22 60 28 66 31 80Z"/>'
+    '<path d="M32 62C40 60 46 54 48 44C40 44 34 50 32 62Z"/><path d="M33 44C25 40 20 34 19 24C27 25 32 32 33 44Z"/></svg>'
+    for x, w, r, o in ((2, 46, -6, .45), (41, 58, -8, .7), (48.5, 40, 10, .5), (93, 66, 6, .6)))
 
 DISC_DRAWING = {"Ayurveda": "mortar", "Herbalism": "mortar", "Acupuncture": "needles", "TCM": "root",
                 "Naturopathy": "bundle", "IntegrativeMedicine": "heart", "Counseling": "hands",
@@ -1154,6 +1166,7 @@ def page_head(h1, lede="", trail=None, h1_html=None, art=None):
     introduction, and a faint leaf drawing."""
     crumbs = crumbs_html(trail) if trail else ""
     return f"""  <section class="pg-head">
+    <div class="pg-ground" aria-hidden="true">{GROUND_SPRIGS}</div>
     <div class="wrap pg-head-in{' pg-has-art' if art else ''}">
       {f'<span class="pg-art-wrap">{drawing(art)}</span>' if art else ''}
       {crumbs}

@@ -740,6 +740,122 @@ DISC_BLURBS = {"Ayurveda": "training and certification shown", "Acupuncture": "l
                "EnergyMedicine": "Reiki and biofield therapies", "Chiropractic": "licensed doctors of chiropractic",
                "Herbalism": "herbalists and educators", "Farms": "growers and CSAs", "Grocers": "local and co-op stores"}
 
+# ---------------------------------------------------------------------------
+# A line drawing for each page banner, in the same hand as the plants. viewBox 0 0 240 240, stroke only.
+_DLEAF = lambda x, y, r=0, s=1: (f'<g transform="translate({x} {y}) rotate({r}) scale({s})">'
+                               '<path d="M0 0C-10-14-10-34 0-48C10-34 10-14 0 0Z"/><path d="M0 0V-44"/></g>')
+
+def _dsprig(x, y, r=0, s=1):
+    return (f'<g transform="translate({x} {y}) rotate({r}) scale({s})">'
+            '<path d="M0 0C0-22 2-44 8-64"/>'
+            '<path d="M1-16C-8-19-14-25-16-34C-8-34-2-28 1-16Z"/>'
+            '<path d="M3-32C12-34 18-40 20-50C12-50 6-44 3-32Z"/>'
+            '<path d="M5-48C-2-51-7-57-8-65C-1-64 4-58 5-48Z"/></g>')
+
+DRAWINGS = {
+  # Find care: a magnifying glass with a sprig growing inside the lens
+  "find": '<circle cx="100" cy="98" r="58"/><circle cx="100" cy="98" r="50" opacity=".5"/>'
+          '<path d="M142 140L196 194M150 132L204 186M196 194C200 198 206 198 208 194C212 190 210 186 204 186"/>'
+          + _dsprig(96, 136, 0, 1.15),
+  # Disciplines: a bundle of herbs tied with twine
+  "bundle": '<path d="M120 212C118 170 112 120 92 70M120 212C121 166 122 112 124 56M120 212C124 168 134 120 156 76"/>'
+            + _DLEAF(92, 74, -30, .9) + _DLEAF(80, 104, -60, .7) + _DLEAF(124, 60, 0, 1) + _DLEAF(110, 96, -40, .7)
+            + _DLEAF(156, 80, 30, .9) + _DLEAF(140, 108, 55, .7)
+            + '<path d="M106 170C114 176 128 176 136 170M106 178C114 184 128 184 136 178"/>'
+              '<path d="M136 174C150 172 160 180 156 190M106 174C94 176 88 186 94 194"/>',
+  # Ayurveda and herbal medicine: mortar and pestle with herbs
+  "mortar": '<path d="M44 128H196C196 172 164 200 120 200C76 200 44 172 44 128Z"/><path d="M40 128H200"/>'
+            '<path d="M92 200L86 214H154L148 200"/>'
+            '<path d="M150 56L170 44C176 40 184 46 180 52L134 128"/>'
+            + _dsprig(68, 128, -18, .9) + _DLEAF(98, 128, 10, .6),
+  # Locations: a saguaro under mountains, with a map pin
+  "desert": '<path d="M20 168L70 112L98 140L132 96L184 152L220 128"/>'
+            '<path d="M150 210V120C150 112 162 112 162 120V210M150 170H138C132 170 130 166 130 160V140C130 134 138 134 138 140V158H150M162 156H172V132C172 126 180 126 180 132V156C180 164 176 168 170 168H162"/>'
+            '<path d="M14 210H226"/>'
+            '<path d="M70 70C70 54 82 44 94 44C106 44 118 54 118 70C118 90 94 112 94 112C94 112 70 90 70 70Z"/><circle cx="94" cy="70" r="9"/>',
+  # How we verify: a leaf with a check mark
+  "verify": '<path d="M120 214C120 150 120 90 120 26"/>'
+            '<path d="M120 40C72 74 46 128 58 182C66 204 98 214 120 214C142 214 174 204 182 182C194 128 168 74 120 40Z"/>'
+            '<path d="M120 90C104 98 92 110 84 126M120 130C102 138 88 152 80 168M120 90C136 98 148 110 156 126"/>'
+            '<circle cx="168" cy="166" r="30"/><path d="M154 166L164 176L184 154"/>',
+  # About us: a seedling with roots spreading below the soil
+  "hands": '<path d="M30 132H210"/><path d="M48 132C60 124 72 124 84 132M150 132C164 122 178 122 192 132" opacity=".6"/>'
+           '<path d="M120 132V62"/><path d="M120 92C100 92 86 78 84 58C104 58 118 72 120 92Z"/>'
+           '<path d="M120 78C140 78 154 64 156 44C136 44 122 58 120 78Z"/>'
+           '<path d="M120 132C118 152 106 164 92 172C80 178 70 190 68 204M120 132C122 154 134 168 150 176C162 182 170 194 172 206'
+           'M120 132V196M106 158C96 156 86 160 80 166M136 160C146 156 156 158 164 164M120 168C112 176 108 186 108 198M120 176C128 184 132 192 132 202"/>',
+  # Articles: an open book with a sprig rising from the spine
+  "book": '<path d="M120 176C96 162 64 158 30 164V68C64 62 96 66 120 80C144 66 176 62 210 68V164C176 158 144 162 120 176Z"/>'
+          '<path d="M120 80V176"/><path d="M50 92C70 88 90 90 106 98M50 112C70 108 90 110 106 118M134 98C150 90 170 88 190 92M134 118C150 110 170 108 190 112"/>'
+          + _dsprig(120, 78, 0, .95),
+  # Advertise: a flowering branch
+  "branch": '<path d="M24 200C70 176 112 140 140 96C156 72 176 54 204 44"/>'
+            '<path d="M92 158C86 140 90 124 102 114M140 96C150 112 166 118 182 114"/>'
+            + _DLEAF(70, 180, -110, .7) + _DLEAF(118, 132, -150, .6) + _DLEAF(170, 66, 60, .6)
+            + ''.join(f'<g transform="translate({x} {y})"><circle r="6"/>'
+                      + ''.join(f'<ellipse rx="7" ry="12" transform="rotate({a}) translate(0 -14)"/>' for a in (0, 72, 144, 216, 288))
+                      + '</g>' for x, y in ((102, 108), (186, 108), (206, 40))),
+  # List your practice: a watering can and a sprout
+  "join": '<path d="M40 110H128V176C128 186 120 192 110 192H58C48 192 40 186 40 176Z"/>'
+          '<path d="M128 132L176 96L182 104L128 148"/><path d="M174 90L188 108"/><path d="M60 110C60 82 108 82 108 110"/>'
+          '<path d="M186 114V118M194 124V130M180 128V134"/>'
+          '<path d="M164 212H220M176 212L172 188H212L208 212"/><path d="M192 188V162"/>'
+          '<path d="M192 172C182 172 174 164 172 154C182 154 190 162 192 172Z"/><path d="M192 166C202 166 210 158 212 148C202 148 194 156 192 166Z"/>',
+  # Not found: a fallen leaf by a winding path
+  "lost": '<path d="M20 214C70 200 60 170 110 160C160 150 150 120 210 110" stroke-dasharray="2 9"/>'
+          '<g transform="translate(120 96) rotate(-60)"><path d="M0 60C-30 30-30-20 0-60C30-20 30 30 0 60Z"/><path d="M0 70V-56M0-10L-16-26M0 10L16-6M0 30L-14 16"/></g>',
+  # Acupuncture: three fine needles above a lotus
+  "needles": '<path d="M84 40L100 140M120 30V140M156 40L140 140"/><circle cx="84" cy="36" r="5"/><circle cx="120" cy="26" r="5"/><circle cx="156" cy="36" r="5"/>'
+             '<path d="M120 200C104 184 104 164 120 150C136 164 136 184 120 200Z"/>'
+             '<path d="M120 200C98 196 84 180 84 160C104 162 116 178 120 200Z"/><path d="M120 200C142 196 156 180 156 160C136 162 124 178 120 200Z"/>'
+             '<path d="M120 200C92 204 66 194 54 176C78 172 104 182 120 200Z"/><path d="M120 200C148 204 174 194 186 176C162 172 136 182 120 200Z"/>',
+  # Chinese medicine: a ginseng root with leaves
+  "root": '<path d="M120 120C108 140 106 162 112 184C116 196 110 208 98 216M118 160C104 168 92 182 86 200M124 150C140 160 150 176 154 196M114 186C126 194 132 206 132 218"/>'
+          '<path d="M120 120V40"/>' + _DLEAF(120, 74, -50, 1) + _DLEAF(120, 74, 50, 1) + _DLEAF(120, 74, 0, 1.1)
+          + '<circle cx="120" cy="34" r="4"/><circle cx="112" cy="40" r="4"/><circle cx="128" cy="40" r="4"/>',
+  # Nutrition: a bowl of fruit and greens
+  "bowl": '<path d="M36 128H204C204 174 168 200 120 200C72 200 36 174 36 128Z"/><path d="M96 200L92 212H148L144 200"/>'
+          '<circle cx="84" cy="112" r="16"/><circle cx="116" cy="106" r="20"/><circle cx="154" cy="114" r="14"/>'
+          '<path d="M116 86C116 76 120 68 128 62"/>' + _DLEAF(130, 62, 50, .6) + _DLEAF(70, 126, -55, .7) + _DLEAF(176, 126, 55, .7),
+  # Massage and body work: stacked smooth stones with a leaf
+  "stones": '<ellipse cx="120" cy="196" rx="74" ry="18"/><ellipse cx="120" cy="164" rx="56" ry="15"/>'
+            '<ellipse cx="120" cy="136" rx="40" ry="12"/><ellipse cx="120" cy="113" rx="26" ry="10"/>'
+            + _dsprig(120, 104, 8, 1.05),
+  # Integrative medicine, naturopathy, counseling: a heart of two leaves
+  "heart": '<path d="M120 204C82 176 44 144 44 104C44 76 64 56 88 56C104 56 116 66 120 80C124 66 136 56 152 56C176 56 196 76 196 104C196 144 158 176 120 204Z"/>'
+           '<path d="M120 80V200M120 110C104 104 90 94 80 80M120 140C100 132 84 118 72 104M120 110C136 104 150 94 160 80M120 140C140 132 156 118 168 104"/>',
+  # Energy work: a sun over a sprouting leaf
+  "sun": '<circle cx="120" cy="92" r="32"/>'
+         + ''.join(f'<path d="M120 46V30" transform="rotate({a} 120 92)"/>' for a in range(0, 360, 30))
+         + '<path d="M120 214V160"/><path d="M120 180C102 180 90 168 88 150C106 150 118 162 120 180Z"/><path d="M120 170C138 170 150 158 152 140C134 140 122 152 120 170Z"/><path d="M60 214H180"/>',
+  # Chiropractic: a fern frond, like a gentle spine
+  "fern": '<path d="M120 222C116 160 122 90 120 18"/>' + ''.join(
+          f'<path d="M120 {y}C{120-w} {y-6} {120-w*1.6} {y-4} {120-w*2} {y+2}C{120-w*1.6} {y+8} {120-w} {y+6} 120 {y}Z"/>'
+          f'<path d="M120 {y-12}C{120+w} {y-18} {120+w*1.6} {y-16} {120+w*2} {y-10}C{120+w*1.6} {y-4} {120+w} {y-6} 120 {y-12}Z"/>'
+          for y, w in ((200, 26), (172, 24), (144, 21), (116, 18), (88, 14), (60, 10), (36, 6))),
+  # Health coaching: a winding path toward a rising sun
+  "path": '<path d="M70 214C90 180 150 176 140 150C130 126 92 130 104 108C112 94 128 92 132 84"/>'
+          '<path d="M150 214C160 186 186 176 172 150C160 128 124 130 128 110C130 100 134 94 136 84"/>'
+          '<path d="M60 84H180"/><path d="M96 84C96 64 108 52 120 52C132 52 144 64 144 84"/>'
+          + ''.join(f'<path d="M120 42V32" transform="rotate({a} 120 84)"/>' for a in (-60, -30, 0, 30, 60))
+          + _dsprig(56, 214, -10, .8) + _dsprig(188, 214, 12, .8),
+  # Local farms and grocers: a basket of vegetables
+  "basket": '<path d="M44 120H196L182 202H58Z"/><path d="M50 150H190M54 178H186M88 120L94 202M120 120V202M152 120L146 202"/>'
+            '<path d="M70 120C70 70 170 70 170 120"/>'
+            '<path d="M96 120L84 76L108 112"/><path d="M84 76C76 66 78 54 86 50M84 76C90 64 100 60 106 62"/>'
+            '<circle cx="138" cy="104" r="16"/><path d="M138 88C138 80 142 74 148 72"/>' + _DLEAF(150, 72, 60, .5),
+}
+
+def drawing(key, cls="pg-art"):
+    return (f'<svg class="{cls}" viewBox="0 0 240 240" fill="none" stroke="currentColor" stroke-width="1.6" '
+            f'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{DRAWINGS[key]}</svg>')
+
+
+DISC_DRAWING = {"Ayurveda": "mortar", "Herbalism": "mortar", "Acupuncture": "needles", "TCM": "root",
+                "Naturopathy": "bundle", "IntegrativeMedicine": "heart", "Counseling": "hands",
+                "Coaching": "path", "Nutrition": "bowl", "Massage": "stones", "Bodywork": "stones",
+                "EnergyMedicine": "sun", "Chiropractic": "fern", "Farms": "basket", "Grocers": "basket"}
+
 def shell(title, desc, path, body, view="", extra_head=""):
     """Wrap page content in the shared chrome. `path` is the canonical URL path."""
     links = [("/directory/", "Find care"), ("/practice-types/", "Disciplines"),
@@ -1033,13 +1149,13 @@ HERO_FIGURE = f"""<picture>
            width="1400" height="875" alt="A practitioner smiling in a sunlit practice room" fetchpriority="high">
     </picture>"""
 
-def page_head(h1, lede="", trail=None, h1_html=None):
+def page_head(h1, lede="", trail=None, h1_html=None, art=None):
     """The sage band at the top of every inner page: crumbs, heading, a line of
     introduction, and a faint leaf drawing."""
     crumbs = crumbs_html(trail) if trail else ""
     return f"""  <section class="pg-head">
-    {LEAF_VEIN.replace('<svg ', '<svg class="pg-leaf" ', 1)}
-    <div class="wrap pg-head-in">
+    <div class="wrap pg-head-in{' pg-has-art' if art else ''}">
+      {f'<span class="pg-art-wrap">{drawing(art)}</span>' if art else ''}
       {crumbs}
       <h1>{h1_html or E(h1)}</h1>
       {f'<p class="pg-lede">{lede}</p>' if lede else ''}
@@ -1181,7 +1297,7 @@ def crumbs_html(trail):
     return '<p class="crumb">' + " / ".join(parts) + "</p>"
 
 def page_directory(subset=None, title=None, desc=None, path="/directory/", heading=None,
-                   intro="", trail=None, footer_link=None, current=None):
+                   intro="", trail=None, footer_link=None, current=None, art=None):
     rows = subset if subset is not None else PROVIDERS
     def _href(d):
         if not current:
@@ -1197,7 +1313,7 @@ def page_directory(subset=None, title=None, desc=None, path="/directory/", headi
     stateopts = "".join(
         f'<option value="{ab}">{E(state_name(ab))} ({len(in_state(ab))})</option>'
         for ab in STATES)
-    body = f"""{page_head(heading or 'Find care', E(intro) if intro else 'Every practitioner in the directory. Narrow it down by kind of care, place, or telehealth.', trail or [("Home", "/"), (heading or "Find care", None)])}
+    body = f"""{page_head(heading or 'Find care', E(intro) if intro else 'Every practitioner in the directory. Narrow it down by kind of care, place, or telehealth.', trail or [("Home", "/"), (heading or "Find care", None)], art=art or (DISC_DRAWING.get(current) if current else "find"))}
   <div class="wrap dir">
       <aside class="rail" id="rail">
         <button class="rail-toggle" id="rail-toggle" aria-expanded="false">Narrow it down<span aria-hidden="true">&#9662;</span></button>
@@ -1267,7 +1383,7 @@ def page_practice_types():
             cards += f"""<div class="fw-disc fw-disc-soon">{art}<span>
           <span class="fw-disc-name">{E(friendly(d['key']))}</span>
           <span class="fw-disc-sub">Coming soon</span></span></div>"""
-    body = f"""{page_head("Every kind of care we list", f"{len(DISCIPLINES)} disciplines, from Ayurveda to your local farm. Choose one to see everyone who practises it.", [("Home", "/"), ("Disciplines", None)])}
+    body = f"""{page_head("Every kind of care we list", f"{len(DISCIPLINES)} disciplines, from Ayurveda to your local farm. Choose one to see everyone who practises it.", [("Home", "/"), ("Disciplines", None)], art="bundle")}
   <section class="wrap fw-sec"><div class="fw-discs">{cards}</div>
     <p class="results-note">Licensure varies by discipline. Where a profession is licensed, we check the license with the state board. Where it is not, we show training and certification instead, and say so. <a href="/verification/">How we verify</a></p>
   </section>"""
@@ -1285,7 +1401,7 @@ def page_locations():
           <span class="fw-disc-name">{E(state_name(ab))}</span>
           <span class="fw-disc-sub">{n} practitioner{'s' if n != 1 else ''} &middot; {E(', '.join(cities_in(ab))[:80])}</span></span></a>"""
     tele = sum(1 for p in PROVIDERS if p['telehealth'])
-    body = f"""{page_head("Find care near you", f"Choose a state, then narrow by city or ZIP once you are there. {tele} practitioners also offer telehealth.", [("Home", "/"), ("Locations", None)])}
+    body = f"""{page_head("Find care near you", f"Choose a state, then narrow by city or ZIP once you are there. {tele} practitioners also offer telehealth.", [("Home", "/"), ("Locations", None)], art="desert")}
   <section class="wrap fw-sec"><div class="fw-discs">{cards}</div></section>"""
     return shell("Locations — FindWell Directory",
                  "Find holistic and integrative practitioners by state.", "/locations/", body)
@@ -1444,7 +1560,7 @@ def page_join():
         '<option disabled>\u2014</option>' if c == "\u2014"
         else f'<option{" selected" if c == "United States" else ""}>{E(c)}</option>'
         for c in COUNTRIES)
-    body = f"""{page_head("List your practice", "Listing is free and always will be. We publish exactly what you send, and where we check a credential with the issuing board, your listing says so and names the date. It takes about ten minutes.", [("Home", "/"), ("List your practice", None)])}
+    body = f"""{page_head("List your practice", "Listing is free and always will be. We publish exactly what you send, and where we check a credential with the issuing board, your listing says so and names the date. It takes about ten minutes.", [("Home", "/"), ("List your practice", None)], art="join")}
   <div class="wrap join-wrap">
     <div class="join-card">
       <div class="notice" id="join-gate" style="margin-top:2rem">
@@ -1734,7 +1850,7 @@ def page_about():
     team_html = "".join(f'<div class="fw-person"><span class="fw-mono">{E(initials(n))}</span>'
                         f'<span><span class="fw-person-name">{E(n)}</span><span class="fw-person-role">{E(r)}</span></span></div>'
                         for n, r in team)
-    body = f"""{page_head("Who we are", "Prevention, transparency, and a direct line between practitioners and the people looking for them.", [("Home", "/"), ("About us", None)])}
+    body = f"""{page_head("Who we are", "Prevention, transparency, and a direct line between practitioners and the people looking for them.", [("Home", "/"), ("About us", None)], art="hands")}
   <section class="wrap page-body">
     <p class="fw-big">FindWell Directory was born out of a simple but urgent mission: to change the conversation around healthcare in our country. Too often, access to healing is filtered through layers of insurance systems, hidden costs, and a pharmaceutical-driven model that doesn't reflect the diverse ways people actually seek wellness. We believe health should be rooted in prevention, transparency, and the empowerment of individuals to choose what works best for their bodies and their lives.</p>
     <p class="fw-big fw-soft">This project grew out of our work with Welliva Health, a new approach to healthcare financing that focuses on integrative and lifestyle-based care. While Welliva develops an alternative model of coverage, FindWell serves as its natural partner: a place where practitioners and patients connect directly, without middlemen. Practitioners openly share their credentials, services and pricing, and the people using the directory help us see the real needs in communities across the country.</p>
@@ -1780,7 +1896,7 @@ def page_articles():
         <p>We are writing about how to choose a practitioner, what a license does and does not tell you, and what integrative care costs. Check back soon.</p>
         <p><a class="btn btn-dark btn-sm" href="/directory/">Find a practitioner instead</a></p>
       </div>"""
-    body = f"""{page_head("Articles", "Plain explanations of how holistic and integrative care works: what the credentials mean, what to ask, and what things cost.", [("Home", "/"), ("Articles", None)])}
+    body = f"""{page_head("Articles", "Plain explanations of how holistic and integrative care works: what the credentials mean, what to ask, and what things cost.", [("Home", "/"), ("Articles", None)], art="book")}
   <section class="wrap page-body">
     {inner}
     <div class="fw-panel fw-panel-sage">
@@ -1796,7 +1912,7 @@ def page_articles():
 
 
 def page_article(a):
-    body = f"""{page_head(a['title'], E(a['date']) + (' &middot; ' + E(a['author']) if a.get('author') else ''), [("Home", "/"), ("Articles", "/articles/"), (a['title'], None)])}
+    body = f"""{page_head(a['title'], E(a['date']) + (' &middot; ' + E(a['author']) if a.get('author') else ''), [("Home", "/"), ("Articles", "/articles/"), (a['title'], None)], art="book")}
   <article class="wrap page-body prose">{a['body']}
     <p><a class="btn btn-dark" href="/articles/">All articles</a></p>
   </article>"""
@@ -1806,7 +1922,7 @@ def page_article(a):
 
 
 def page_advertise():
-    body = f"""{page_head("Advertise with us", "FindWell reaches people at the moment they are choosing a practitioner: comparing credentials, weighing cost, deciding who to call. If you serve that audience, we would like to hear from you.", [("Home", "/"), ("Advertise with us", None)])}
+    body = f"""{page_head("Advertise with us", "FindWell reaches people at the moment they are choosing a practitioner: comparing credentials, weighing cost, deciding who to call. If you serve that audience, we would like to hear from you.", [("Home", "/"), ("Advertise with us", None)], art="branch")}
   <section class="wrap page-body">
     <div class="fw-panel fw-panel-honey">
       <h2>What we will never sell</h2>
@@ -1829,7 +1945,7 @@ def page_advertise():
 
 
 def page_verification():
-    body = f"""{page_head("How we verify", "Every listing says plainly how its credentials were established. There are two states, and you will see one of them on every listing.", [("Home", "/"), ("How we verify", None)])}
+    body = f"""{page_head("How we verify", "Every listing says plainly how its credentials were established. There are two states, and you will see one of them on every listing.", [("Home", "/"), ("How we verify", None)], art="verify")}
   <section class="wrap page-body">
     <div class="fw-verify fw-verify-ok">{LEAF_ICON}<div>
       <p class="fw-verify-t">Confirmed with the Arizona Acupuncture Board of Examiners</p>
@@ -1864,7 +1980,7 @@ def page_verification():
 
 
 def page_404():
-    body = f"""{page_head("That page isn't here", "The link may be out of date, or the listing may have been removed.")}
+    body = f"""{page_head("That page isn't here", "The link may be out of date, or the listing may have been removed.", art="lost")}
   <section class="wrap page-body"><p><a class="btn btn-dark" href="/directory/">Find a practitioner</a> <a class="btn btn-ghost" href="/">Go to the home page</a></p></section>"""
     return shell("Page not found — FindWell Directory", "Page not found.", "/404", body)
 
@@ -1930,7 +2046,7 @@ def main():
             heading=state_name(ab),
             intro=f"{len(rows)} listed in {state_name(ab)} — {', '.join(cs)}.",
             trail=[("Home", "/"), ("Locations", "/locations/"), (state_name(ab), None)],
-            footer_link=("All locations", "/locations/"))))
+            footer_link=("All locations", "/locations/"), art="desert")))
 
     for p in PROVIDERS:
         written.append(write(f"provider/{p['slug']}/", page_provider(p)))

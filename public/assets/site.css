@@ -141,6 +141,16 @@ textarea.control{ min-height:110px; resize:vertical; }
 .pg-head{ background:var(--sage-bg); position:relative; overflow:hidden; }
 .pg-leaf{ position:absolute; right:-40px; top:-30px; width:360px; height:520px; color:var(--leaf-line); opacity:.6; pointer-events:none; }
 .pg-head-in{ position:relative; padding-block:1.6rem 3.2rem; }
+.pg-has-art{ min-height:300px; padding-right:min(330px, 34%); }
+.pg-art-wrap{ position:absolute; right:clamp(1rem, 4vw, 1.5rem); top:50%; transform:translateY(-50%); width:270px; height:270px; border-radius:50%; background:var(--sage); display:grid; place-items:center; color:#4f6b45; pointer-events:none; }
+.pg-art-wrap::after{ content:""; position:absolute; inset:-14px; border-radius:50%; border:1.5px dashed var(--leaf-line); opacity:.7; }
+.pg-art{ width:220px; height:220px; }
+@media (max-width:800px){
+  .pg-has-art{ min-height:0; padding-right:clamp(1rem, 4vw, 1.5rem); padding-top:1.4rem; }
+  .pg-art-wrap{ position:relative; right:auto; top:auto; transform:none; float:right; width:104px; height:104px; margin:.2rem 0 .8rem 1rem; }
+  .pg-art-wrap::after{ inset:-7px; }
+  .pg-art{ width:84px; height:84px; }
+}
 .crumb{ font-size:.92rem; color:var(--muted); margin:0 0 1rem; }
 .crumb a{ color:var(--muted); }
 .pg-head h1{ font-size:clamp(2.3rem, 5vw, 3.4rem); margin-bottom:.8rem; max-width:20ch; }

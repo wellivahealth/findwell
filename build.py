@@ -1341,7 +1341,7 @@ def page_provider(p):
       </section>
       <section><h2>Fees</h2>
         <div class="ha-fees">{fee_rows}
-          <div class="ha-fee-foot">Payment: {val(p['payments'])}. Insurance: {val(p['insurance'])}.</div></div>
+          <div class="ha-fee-foot">Payment: {val((p['payments'] or '').rstrip('. '))}. Insurance: {val((p['insurance'] or '').rstrip('. '))}.</div></div>
       </section>
       <section><h2>Practice record</h2>
         <dl class="fields ha-record">

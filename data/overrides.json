@@ -3,5 +3,17 @@
     "categories": [
       "Nutrition"
     ]
+  },
+  "steps-nutrition-group": {
+    "city": "Coral Springs",
+    "state": "FL",
+    "zip": "33065",
+    "address": "",
+    "lat": 26.2747,
+    "lng": -80.2733,
+    "credentials": "Certified Nutrition Specialist: CNS18274",
+    "licensure": "Licensed Dietitian-Nutritionist: Florida LDN10642",
+    "pricing": "Insurance-based practice. Cash-pay $450 for a comprehensive 90-minute initial consultation, $300 for a 60-minute follow-up, and $180 for a focused 30-minute check-in.",
+    "insurance": "Accepted: Aetna, Meritain, UnitedHealthcare, Cigna, Curative, Humana and Medicare. Verify your plan with the practice."
   }
 }

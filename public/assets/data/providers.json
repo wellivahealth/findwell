@@ -228,7 +228,13 @@
    "IntegrativeMedicine"
   ],
   "licensure": "Arizona registered nurse and licensed acupuncturist \u2014 numbers not provided",
-  "verification": null,
+  "verification": {
+   "what": "Arizona licensed acupuncturist",
+   "source": "the Arizona Acupuncture Board of Examiners",
+   "date": "19 Oct 2026",
+   "by": "admin",
+   "recorded_at": "2026-10-20T04:48:00.000Z"
+  },
   "seed": false
  },
  {
@@ -243,7 +249,13 @@
    "Naturopathy"
   ],
   "licensure": "California Acupuncture Board #AC-8645",
-  "verification": null,
+  "verification": {
+   "what": "California licensed acupuncturist, AC 8645",
+   "source": "the California Acupuncture Board, through the DCA licence search",
+   "date": "19 Oct 2026",
+   "by": "admin",
+   "recorded_at": "2026-10-20T04:48:00.000Z"
+  },
   "seed": false
  },
  {
@@ -763,6 +775,20 @@
    "Nutrition"
   ],
   "licensure": "State licensed \u2014 number not provided",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "sacred-circle-institute",
+  "name": "Sacred Circle Institute",
+  "person": "Desiree Maultsby",
+  "city": "Tucson",
+  "state": "AZ",
+  "categories": [
+   "EnergyMedicine",
+   "Bodywork"
+  ],
+  "licensure": "No state licensure exists for this discipline",
   "verification": null,
   "seed": false
  }

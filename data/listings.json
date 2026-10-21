@@ -29,7 +29,14 @@
     "insurance": "Not accepted",
     "blurb": "Network",
     "long": "findwelldirectory.com/provider/test-practice/",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Credentials confirmed",
+      "source": "Andrew Weil Center for Integrative Medicine",
+      "date": "21 Oct 2026",
+      "by": "admin",
+      "recorded_at": "2026-10-21T22:20:10.433Z"
+    }
   },
   {
     "slug": "civano-chiropractic-clinics",

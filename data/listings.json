@@ -1589,5 +1589,41 @@
     "blurb": "I am a culture-centered functional nutritionist who addresses for the root causes of your health conditions. My nutrition therapy plans are personalized and include a multifaceted approach combining applied clinical nutrition, clinical herbalism, nutrient deficiency analysis, functional lab testing, and lifestyle modifications (physical activity, stress management, and sleep quality).  I specialize in women's health (peri/menopause), autoimmune disease, metabolic disease (diabetes, cholesterol, hypertension), and GI conditions. Insurance accepted.",
     "long": "I am a board licensed Certified Nutrition Specialist and licensed dietitian nutritionist who provides a functional nutrition approach, sensitive to culture and race. I look for the root causes to your health issues through a multifactorial approach. I provide medical nutrition therapy for women's health, perimenopause/menopause, autoimmune disease, metabolic conditions like diabetes and hypertension, inflammation, and GI issues. My goal is to help you understand how to live an anti-inflammatory lifestyle and develop systems in your life to make optimized health sustainable.\r\n\r\nMy approach is multifactorial and I work with you to reduce inflammation, improve and optimize gut health, restore core metabolic imbalances and nutrient deficiencies, increase physical activity, improve sleep quality, and improve stress management. I provide personalized meal plans, clinical herbalism recommendations, functional lab testing, and more.\r\n\r\nI take Aetna, CareFirst BC/BS, Blue Cross Blue Shield, Sentara Health Plans, Cigna, United Healthcare, HSA, and self-pay.",
     "verified": false
+  },
+  {
+    "slug": "bespoke-health",
+    "name": "Bespoke Health",
+    "person": "Kim Mowbray",
+    "logo": "/assets/img/providers/bespoke-health.jpg",
+    "categories": [
+      "IntegrativeMedicine"
+    ],
+    "city": "Gilbert",
+    "state": "AZ",
+    "zip": "85295",
+    "address": "2162 e Williams field rd, Suite 111, Gilbert, AZ 85295",
+    "country": "United States",
+    "lat": 33.306844927421,
+    "lng": -111.753654630952,
+    "telehealth": true,
+    "phone": "4806795578",
+    "email": "kim@bespokehealthaz.com",
+    "website": "https://bespokehealthaz.com/",
+    "social": [
+      "https://www.instagram.com/mrs.integrativemedicine?vrfl=czhzdGdhZm5mdXFn&utm_source=qr",
+      "https://www.linkedin.com/in/kim-mowbray-435a4338b?utm_source=share_via&utm_content=profile&utm_medium=member_ios"
+    ],
+    "credentials": "Fellowship trained in Integrative Medicine through The University of Arizona, Andrew Weil Center for Integrative Medicine .\r\nMindfulness Based Stress Reduction (MBSR) certified",
+    "licensure": "Arizona, 3560",
+    "training": "Arizona State University \r\nBachelor of Science in Exercise Physiology\r\nPhiladelphia University\r\nMaster of Physician Assistant Studies",
+    "integrative_training": "Fellowship trained in integrative medicine\r\nthrough The University of Arizona, Andrew Weil Center for Integrative Medicine",
+    "since": 2006,
+    "affiliations": "Fellowship trained in Integrative Medicine through The University of Arizona, Andrew Weil Center for Integrative Medicine .\r\nMindfulness Based Stress Reduction (MBSR) certified",
+    "pricing": "Bespoke Health is a cash-pay practice offering flexible membership and fee-for-service options. Memberships provide ongoing, personalized care, continuity, and support for patients seeking a long-term partnership in optimizing their health. Fee-for-service visits are available for patients who prefer individual consultations without a membership commitment. Insurance is not accepted.",
+    "payments": "Cash, Credit Cards, HSA/FSA, Debit Cards, Venmo, Zelle",
+    "insurance": "Not accepted",
+    "blurb": "Bespoke Health is a personalized integrative, functional, and longevity medicine practice in Gilbert, Arizona, serving men and women seeking proactive, whole-person care. Founded by fellowship-trained Physician Assistant Kimberly Mowbray, PA-C, the practice combines evidence-based conventional medicine with integrative therapies to address hormone imbalances, perimenopause and menopause, metabolic health, chronic symptoms, and healthy aging. Comprehensive evaluations and individualized treatment plans focus on root causes, wellness optimization, and long-term healthspan.",
+    "long": "Bespoke Health is a personalized integrative, functional, and longevity medicine practice serving patients in Gilbert, Arizona, and surrounding communities. Led by fellowship-trained Physician Assistant Kimberly Mowbray, PA-C, Bespoke Health provides individualized, whole-person care for hormone health, perimenopause and menopause, metabolic wellness, chronic symptoms, and healthy aging. By combining evidence-based conventional medicine with integrative therapies, the practice looks beyond symptoms to better understand each patient’s unique health needs and goals. Through comprehensive evaluations and personalized treatment plans, Bespoke Health helps patients take a proactive approach to improving wellness, optimizing health, and supporting long-term vitality.",
+    "verified": false
   }
 ]

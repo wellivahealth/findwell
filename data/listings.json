@@ -1664,6 +1664,13 @@
     "insurance": "Accepted — verify your plan with the practice",
     "blurb": "My name is Tish Campbell, and I am very excited for the opportunity to help guide you on your healing—or health optimizing—journey! I am a long-time health and wellness enthusiast, researcher, and educator. I believe this unique combination provides an enormous benefit for my clients.",
     "long": "I whole-heartedly believe in the motto “You can’t change what you can’t measure” and I lean heavily on behavior change theory and S.M.A.R.T. goals to help my clients improve their health and their lives! I know that this is a bold claim, but I'm confident that by working with me you will feel better, be healthier, and thus happier. :-)",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Washington 61547953",
+      "source": "the Commission on Dietetic Registration, for RD or RDN",
+      "date": "25 Oct 2026",
+      "by": "admin",
+      "recorded_at": "2026-10-25T18:13:40.219Z"
+    }
   }
 ]

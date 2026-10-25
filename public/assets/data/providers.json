@@ -169,9 +169,7 @@
   "person": "Anita Kellman",
   "city": "Tucson",
   "state": "AZ",
-  "categories": [
-   "Coaching"
-  ],
+  "categories": [],
   "licensure": "No state licensure exists for doula practice; not a licensed counsellor",
   "verification": null,
   "seed": true
@@ -714,7 +712,7 @@
  {
   "slug": "love-light-palms",
   "name": "Love & Light Palms",
-  "person": "Charla Woods-FAvors",
+  "person": "Charla Woods-Favors",
   "city": "Columbus",
   "state": "OH",
   "categories": [
@@ -789,6 +787,47 @@
    "Bodywork"
   ],
   "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "chiropractic-first",
+  "name": "Chiropractic First",
+  "person": "Dr. TJ Gudilin",
+  "city": "Campbell",
+  "state": "CA",
+  "categories": [
+   "Massage",
+   "Chiropractic"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "lani-page-deguia-nutrition",
+  "name": "Lani Page deGuia Nutrition",
+  "person": "Marilaine deGuia",
+  "city": "Stone Ridge",
+  "state": "DC",
+  "categories": [
+   "Nutrition",
+   "Herbalism"
+  ],
+  "licensure": "Maryland, DX7150",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "bespoke-health",
+  "name": "Bespoke Health",
+  "person": "Kim Mowbray",
+  "city": "Gilbert",
+  "state": "AZ",
+  "categories": [
+   "IntegrativeMedicine"
+  ],
+  "licensure": "Arizona Medical Board #, 3560",
   "verification": null,
   "seed": false
  }

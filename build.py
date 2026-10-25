@@ -1011,11 +1011,16 @@ def console_html():
     </div>
   </form>"""
 
+def remote_label(p):
+    """What a listing's remote care is called. Most say Telehealth; a
+    practice can ask for its own wording (e.g. Distance Reiki)."""
+    return (p.get("remote_label") or "Telehealth").strip()
+
 def tags_html(p):
     t = "".join(f'<a class="tag" href="/practice-types/{disc(c)["slug"]}/">{E(friendly(c))}</a>'
                 for c in p["categories"])
     if p["telehealth"]:
-        t += '<span class="tag tag-tele">Telehealth</span>'
+        t += f'<span class="tag tag-tele">{E(remote_label(p))}</span>'
     return f'<div class="record-tags">{t}</div>'
 
 def initials(name):
@@ -1137,7 +1142,7 @@ def labels_html(p, cls="ha-chip"):
     """Discipline labels as plain text, for use inside a card that is itself a link."""
     t = "".join(f'<span class="{cls}">{E(disc(c)["label"])}</span>' for c in p["categories"])
     if p["telehealth"]:
-        t += f'<span class="{cls} {cls}-tele">Telehealth</span>'
+        t += f'<span class="{cls} {cls}-tele">{E(remote_label(p))}</span>'
     return t
 
 def verify_short(p):
@@ -1222,7 +1227,7 @@ def verify_tag(p):
 def chips_html(p, n=3):
     t = "".join(f'<span class="fw-tag">{E(friendly(c))}</span>' for c in p["categories"][:n])
     if p["telehealth"]:
-        t += '<span class="fw-tag">Telehealth</span>'
+        t += f'<span class="fw-tag">{E(remote_label(p))}</span>'
     return t
 
 
@@ -1372,7 +1377,7 @@ def page_directory(subset=None, title=None, desc=None, path="/directory/", headi
             <select class="control" id="f-state"><option value="">All states</option>{stateopts}</select>
           </fieldset>
           <fieldset><legend>Show only</legend>
-            <label class="check"><input type="checkbox" id="f-tele"> Offers telehealth</label>
+            <label class="check"><input type="checkbox" id="f-tele"> Offers telehealth or distance sessions</label>
           </fieldset>
           <button class="btn btn-ghost btn-sm" id="f-clear" type="button">Clear all filters</button>
         </div>
@@ -1502,7 +1507,8 @@ def page_provider(p):
     facts = [("In practice", years.split(" (")[0] if years != "—" else "Not given"),
              ("Fees", lead_fee),
              ("Insurance", "Accepted" if ins.lower().startswith("accepted") else (ins or "Not given")),
-             ("Telehealth", "Available" if p["telehealth"] else "In person only")]
+             (("Telehealth", "Available" if p["telehealth"] else "In person only") if not p.get("remote_label")
+              else ("Remote sessions", remote_label(p) + (" available" if p["telehealth"] else "")))]
     facts_html = "".join(f'<div class="fw-fact"><span class="k">{k}</span><span class="v">{E(v)}</span></div>'
                          for k, v in facts)
     v = p.get("verification")

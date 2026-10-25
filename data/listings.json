@@ -1632,5 +1632,38 @@
     "blurb": "Bespoke Health is a personalized integrative, functional, and longevity medicine practice in Gilbert, Arizona, serving men and women seeking proactive, whole-person care. Founded by fellowship-trained Physician Assistant Kimberly Mowbray, PA-C, the practice combines evidence-based conventional medicine with integrative therapies to address hormone imbalances, perimenopause and menopause, metabolic health, chronic symptoms, and healthy aging. Comprehensive evaluations and individualized treatment plans focus on root causes, wellness optimization, and long-term healthspan.",
     "long": "Bespoke Health is a personalized integrative, functional, and longevity medicine practice serving patients in Gilbert, Arizona, and surrounding communities. Led by fellowship-trained Physician Assistant Kimberly Mowbray, PA-C, Bespoke Health provides individualized, whole-person care for hormone health, perimenopause and menopause, metabolic wellness, chronic symptoms, and healthy aging. By combining evidence-based conventional medicine with integrative therapies, the practice looks beyond symptoms to better understand each patient’s unique health needs and goals. Through comprehensive evaluations and personalized treatment plans, Bespoke Health helps patients take a proactive approach to improving wellness, optimizing health, and supporting long-term vitality.",
     "verified": false
+  },
+  {
+    "slug": "tish-campbell-llc",
+    "name": "Tish Campbell, LLC",
+    "person": "Tish Campbell",
+    "logo": "/assets/img/providers/tish-campbell-llc.jpg",
+    "categories": [
+      "Nutrition"
+    ],
+    "city": "Seattle",
+    "state": "WA",
+    "zip": "98258-4727",
+    "address": "",
+    "country": "United States",
+    "lat": 47.6038321,
+    "lng": -122.330062,
+    "telehealth": true,
+    "phone": "15032604076",
+    "email": "tish@tishcampbell.com",
+    "website": "www.tishcampbell.com",
+    "social": [],
+    "credentials": "Certified Nutrition Specialist, CNS",
+    "licensure": "Washington 61547953",
+    "training": "Institute of Functional Medicine",
+    "integrative_training": "Institute of Functional Medicine Training\r\n\r\nApplying Functional Medicine in Clinical Practice (AFMCP)\t\tJune 2023\r\nEnvironmental Health (formerly Detox) Advanced Practice Module\tOctober 2023\r\nGI Advanced Practice Module\t\t\t\t\t\tOctober 2023\r\nImmune Advanced Practice Module\t\t\t\t\t\tMarch 2024\r\nHormone Module\t\t\t\t\t\t\t\tJuly 2024 \r\nBioenergetics\t\t\t\t\t\t\t\t\tAugust 2024\r\nCardiometabolic\t\t\t\t\t\t\t            Jan – Feb 2025",
+    "since": 2016,
+    "affiliations": "Certified Nutrition Specialist, CNS",
+    "pricing": "Initial visit 90 mins, $330\r\nOne hour follow-up $200\r\n30 minute follow-up $100",
+    "payments": "Insurance, Cash, Checks, Credit Cards, Debit Cards, HSA/FSA, Venmo, Crypto Wallet",
+    "insurance": "Accepted — verify your plan with the practice",
+    "blurb": "My name is Tish Campbell, and I am very excited for the opportunity to help guide you on your healing—or health optimizing—journey! I am a long-time health and wellness enthusiast, researcher, and educator. I believe this unique combination provides an enormous benefit for my clients.",
+    "long": "I whole-heartedly believe in the motto “You can’t change what you can’t measure” and I lean heavily on behavior change theory and S.M.A.R.T. goals to help my clients improve their health and their lives! I know that this is a bold claim, but I'm confident that by working with me you will feel better, be healthier, and thus happier. :-)",
+    "verified": false
   }
 ]

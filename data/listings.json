@@ -1712,5 +1712,38 @@
     "blurb": "Dr. Neetu Nebhwani is a board-certified Internal Medicine physician and Medical Director of LA ViE MD, a physician-led medical aesthetics and wellness center in Danville, California. LA ViE MD provides personalized aesthetic consultations, advanced skincare, laser treatments, and wellness services.",
     "long": "Dr. Neetu Nebhwani is a board-certified Internal Medicine physician and the Founder and Medical Director of LA ViE MD, a medical aesthetics, skincare, laser, and wellness center serving Danville and the surrounding San Francisco Bay Area.\r\n\r\nUnder her medical direction, LA ViE MD offers personalized aesthetic and wellness services, including HydraFacial, microneedling, laser hair removal, skin rejuvenation, neuromodulators, dermal fillers, IV therapy, and medical weight management.\r\n\r\nLA ViE MD emphasizes individualized consultations, professional care, and advanced aesthetic technologies in a welcoming clinical environment.\r\n\r\nLocated at 645 San Ramon Valley Blvd, Danville, CA 94526, the practice welcomes clients from San Ramon, Alamo, Walnut Creek, and nearby communities.\r\n\r\nFor more information or to schedule a consultation, visit https://laviemd.us/ or call 833-528-4310.",
     "verified": false
+  },
+  {
+    "slug": "sterling-counseling",
+    "name": "Sterling Counseling",
+    "person": "Olivia Sterling",
+    "logo": "/assets/img/providers/sterling-counseling.jpg",
+    "categories": [
+      "Counseling"
+    ],
+    "city": "Nyack",
+    "state": "NY",
+    "zip": "10960",
+    "address": "407 N Highland Avenue,, Nyack, NY 10960",
+    "country": "United States",
+    "lat": 41.106203774342,
+    "lng": -73.92708550084,
+    "telehealth": true,
+    "phone": "(347) 674-7873",
+    "email": "oliviasterlingcounseling@gmail.com",
+    "website": "https://www.sterling-counseling.com/",
+    "social": [],
+    "credentials": "—",
+    "licensure": "89877",
+    "training": "Olivia Sterling’s professional background reflects a commitment to supporting individuals through compassionate, client-centered counseling. Her training and educational experience inform her approach to understanding emotional challenges, promoting personal growth, and helping clients develop effective coping strategies. Her work emphasizes creating a supportive environment where clients can explore their concerns and work toward improved emotional well-being.",
+    "integrative_training": "",
+    "since": 2021,
+    "affiliations": "—",
+    "pricing": "Free 15-minute consultation via Telehealth video\r\nIntake session (20+ minutes): $250\r\nFollow-up sessions (55 minutes): $225",
+    "payments": "Cash, Checks",
+    "insurance": "Not accepted",
+    "blurb": "Olivia Sterling of Sterling Counseling offers trauma therapy, racial trauma counseling, CBT, anxiety, stress, burnout, and grief counseling.",
+    "long": "Olivia Sterling is the therapist behind Sterling Counseling, providing compassionate, personalized mental health support to individuals navigating life's challenges. Her areas of specialization include trauma therapy, racial trauma counseling, Cognitive Behavioral Therapy (CBT), and anxiety therapy. She helps clients manage anxiety, stress, and burnout while developing healthier coping strategies and emotional resilience. Sterling Counseling also offers grief counseling to support individuals processing loss and navigating difficult life transitions. Olivia is committed to creating a supportive, understanding environment where clients can explore their experiences, build self-awareness, and work toward meaningful personal growth, emotional well-being, and lasting positive change.",
+    "verified": false
   }
 ]

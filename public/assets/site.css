@@ -358,6 +358,9 @@ picture{ display:contents; }
 .fw-verify-t{ font-weight:700; color:var(--moss); }
 .fw-verify-d{ font-size:.97rem; color:var(--ink-soft); }
 .fw-verify-ok{ background:var(--honey-soft); }
+.fw-verify:has(.fw-verify-n){ align-items:center; }
+.fw-verify-n{ flex:0 0 auto; width:2.1rem; height:2.1rem; border-radius:50%; display:grid; place-items:center; background:var(--moss); color:#fff; font-family:var(--ff-head); font-size:1.05rem; line-height:1; }
+.fw-verify-ok .fw-verify-n{ background:#8a6414; }
 .fw-verify-ok .fw-verify-t{ color:#4d3608; }
 .fw-verify-ok .fw-verify-d, .fw-verify-ok .fw-verify-d a{ color:var(--honey-ink); }
 .fw-leaf-ic{ color:#a8761e; flex:none; }

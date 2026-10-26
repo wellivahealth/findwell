@@ -2020,7 +2020,7 @@ def page_verification():
     body = f"""{page_head("How we verify", "Every listing says plainly how its credentials were established.", [("Home", "/"), ("How we verify", None)], art="verify")}
   <section class="wrap page-body">
     <h2>What you'll see on a listing</h2>
-    <p>There are two states, and you will see one of them on every listing.</p>
+    <p>There are two kinds of listings, depending on how a practitioner's credentials were established.</p>
     <div class="fw-verify fw-verify-ok">{LEAF_ICON}<div>
       <p class="fw-verify-t">Confirmed with the Arizona Acupuncture Board of Examiners</p>
       <p class="fw-verify-d">License AC-4821, checked 25 Aug 2026.</p></div></div>
@@ -2028,7 +2028,7 @@ def page_verification():
     <div class="fw-verify"><div>
       <p class="fw-verify-t">As reported by the practitioner</p>
       <p class="fw-verify-d">We publish what the practitioner told us, and say so.</p></div></div>
-    <p>The practitioner told us their credentials and we published what they said. This is a normal, lasting state for a listing here, not a queue we are working through.</p>
+    <p>The practitioner told us their credentials and we published what they said. This is a normal, lasting kind of listing here, not a queue we are working through.</p>
 
     <h2>Three things people confuse</h2>
     <div class="fw-three fw-three-tight">

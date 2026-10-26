@@ -1307,10 +1307,6 @@ def page_home():
     </div>
   </section>
 
-  <section class="wrap fw-sec">
-    <div class="fw-head"><h2>Recently joined</h2><a href="/directory/">See all practitioners</a></div>
-    <div class="fw-cards">{"".join(wide_card(p) for p in recent)}</div>
-  </section>
 
   <section class="fw-band">
     <div class="wrap fw-promises">
@@ -1321,6 +1317,11 @@ def page_home():
       <div>{BUD}<h3>Nothing in between</h3>
         <p>You contact the practice directly. No commissions, no fees and no one paying for your details.</p></div>
     </div>
+  </section>
+
+  <section class="wrap fw-sec">
+    <div class="fw-head"><h2>Recently joined</h2><a href="/directory/">See all practitioners</a></div>
+    <div class="fw-cards">{"".join(wide_card(p) for p in recent)}</div>
   </section>
 
   <section class="wrap fw-sec">
@@ -1995,15 +1996,15 @@ def page_article(a):
 def page_advertise():
     body = f"""{page_head("Advertise with us", "FindWell reaches people at the moment they are choosing a practitioner: comparing credentials, weighing cost, deciding who to call. If you serve that audience, we would like to hear from you.", [("Home", "/"), ("Advertise with us", None)], art="branch")}
   <section class="wrap page-body">
-    <div class="fw-panel fw-panel-honey">
-      <h2>What we will never sell</h2>
-      <p>Placement in the directory. Listings are free, ordered by relevance and distance, and no practitioner can pay to rank higher, appear first, or be marked as recommended. We do not sell leads or share the contact details of people using the site. That rule is the reason the directory is worth advertising in at all, and it is not for sale.</p>
-    </div>
     <h2>What is available</h2>
     <div class="fw-three fw-three-tight">
       <div class="fw-panel"><h3>Sponsored articles</h3><p>Clearly labelled, editorially reviewed, and written to be useful rather than promotional.</p></div>
       <div class="fw-panel"><h3>Display placements</h3><p>On article pages and discipline pages, set apart from listings.</p></div>
       <div class="fw-panel"><h3>Partnerships</h3><p>Schools, professional associations, labs and insurers building something aligned with integrative care.</p></div>
+    </div>
+    <div class="fw-panel fw-panel-honey">
+      <h2>What we will never sell</h2>
+      <p>Placement in the directory. Listings are free, ordered by relevance and distance, and no practitioner can pay to rank higher, appear first, or be marked as recommended. We do not sell leads or share the contact details of people using the site. That rule is the reason the directory is worth advertising in at all, and it is not for sale.</p>
     </div>
     <h2>Get in touch</h2>
     <p>Tell us who you are trying to reach and we will tell you honestly whether our audience is a fit. Rates depend on placement and season.</p>
@@ -2016,8 +2017,10 @@ def page_advertise():
 
 
 def page_verification():
-    body = f"""{page_head("How we verify", "Every listing says plainly how its credentials were established. There are two states, and you will see one of them on every listing.", [("Home", "/"), ("How we verify", None)], art="verify")}
+    body = f"""{page_head("How we verify", "Every listing says plainly how its credentials were established.", [("Home", "/"), ("How we verify", None)], art="verify")}
   <section class="wrap page-body">
+    <h2>What you'll see on a listing</h2>
+    <p>There are two states, and you will see one of them on every listing.</p>
     <div class="fw-verify fw-verify-ok">{LEAF_ICON}<div>
       <p class="fw-verify-t">Confirmed with the Arizona Acupuncture Board of Examiners</p>
       <p class="fw-verify-d">License AC-4821, checked 25 Aug 2026.</p></div></div>

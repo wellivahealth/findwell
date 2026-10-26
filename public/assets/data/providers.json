@@ -830,5 +830,24 @@
   "licensure": "Arizona Medical Board #, 3560",
   "verification": null,
   "seed": false
+ },
+ {
+  "slug": "tish-campbell-llc",
+  "name": "Tish Campbell, LLC",
+  "person": "Tish Campbell",
+  "city": "Seattle",
+  "state": "WA",
+  "categories": [
+   "Nutrition"
+  ],
+  "licensure": "Washington 61547953",
+  "verification": {
+   "what": "Washington 61547953",
+   "source": "the Commission on Dietetic Registration, for RD or RDN",
+   "date": "25 Oct 2026",
+   "by": "admin",
+   "recorded_at": "2026-10-25T18:13:40.219Z"
+  },
+  "seed": false
  }
 ]

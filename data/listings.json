@@ -1672,5 +1672,45 @@
       "by": "admin",
       "recorded_at": "2026-10-25T18:13:40.219Z"
     }
+  },
+  {
+    "slug": "la-vie-md",
+    "name": "LA VIE MD",
+    "person": "Neetu Nebhwani",
+    "logo": "/assets/img/providers/la-vie-md.jpg",
+    "categories": [
+      "IntegrativeMedicine",
+      "Nutrition",
+      "Coaching",
+      "Massage"
+    ],
+    "city": "Danville",
+    "state": "CA",
+    "zip": "94526",
+    "address": "645 San Ramon Valley Blvd, Danville, CA 94526",
+    "country": "United States",
+    "lat": 37.813670327287,
+    "lng": -121.995948809865,
+    "telehealth": false,
+    "phone": "833-528-4310",
+    "email": "info@laviemd.us",
+    "website": "https://laviemd.us/",
+    "social": [
+      "https://www.facebook.com/LAVIEMD",
+      "https://www.instagram.com/laviemd_aesthetics/",
+      "https://www.linkedin.com/company/la-vie-md"
+    ],
+    "credentials": "Board-Certified in Internal Medicine — only after confirming current certification",
+    "licensure": "C 142075",
+    "training": "Doctor of MediciBachelor of Medicine, Bachelor of Surgery (MBBS) – Bharati Vidyapeeth Medical College, Pune, India (2005). Completed Internal Medicine residency training at Griffin Hospital, a Yale University-affiliated teaching hospital in Connecticut, USA (2010). Board-certified in Internal Medicine, with additional professional training in cosmetic and dermatologic procedures.ne (MD) — [Verified Institution]; Internal Medicine Residency — [Verified Program].",
+    "integrative_training": "",
+    "since": 2013,
+    "affiliations": "Board-Certified in Internal Medicine — only after confirming current certification",
+    "pricing": "Pricing varies depending on the consultation, treatment selected, and individual care plan. LA ViE MD offers personalized aesthetic and wellness services, with treatment costs and available packages discussed during consultation. Please contact our team at 833-528-4310 for current pricing and appointment information.",
+    "payments": "Cash, Checks, Credit Cards, Debit Cards, Paypal",
+    "insurance": "Not accepted",
+    "blurb": "Dr. Neetu Nebhwani is a board-certified Internal Medicine physician and Medical Director of LA ViE MD, a physician-led medical aesthetics and wellness center in Danville, California. LA ViE MD provides personalized aesthetic consultations, advanced skincare, laser treatments, and wellness services.",
+    "long": "Dr. Neetu Nebhwani is a board-certified Internal Medicine physician and the Founder and Medical Director of LA ViE MD, a medical aesthetics, skincare, laser, and wellness center serving Danville and the surrounding San Francisco Bay Area.\r\n\r\nUnder her medical direction, LA ViE MD offers personalized aesthetic and wellness services, including HydraFacial, microneedling, laser hair removal, skin rejuvenation, neuromodulators, dermal fillers, IV therapy, and medical weight management.\r\n\r\nLA ViE MD emphasizes individualized consultations, professional care, and advanced aesthetic technologies in a welcoming clinical environment.\r\n\r\nLocated at 645 San Ramon Valley Blvd, Danville, CA 94526, the practice welcomes clients from San Ramon, Alamo, Walnut Creek, and nearby communities.\r\n\r\nFor more information or to schedule a consultation, visit https://laviemd.us/ or call 833-528-4310.",
+    "verified": false
   }
 ]

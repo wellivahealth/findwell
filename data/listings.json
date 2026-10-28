@@ -1785,5 +1785,39 @@
       "by": "admin",
       "recorded_at": "2026-10-28T22:30:59.907Z"
     }
+  },
+  {
+    "slug": "phleblab-llc",
+    "name": "PhlebLab LLC",
+    "person": "Renee Blackmon",
+    "logo": "/assets/img/providers/phleblab-llc.jpg",
+    "categories": [
+      "Coaching",
+      "Counseling"
+    ],
+    "city": "Richmond Hts",
+    "state": "OH",
+    "zip": "44143",
+    "address": "464 Richmond Rd, Richmond Hts, OH 44143",
+    "country": "United States",
+    "lat": 41.552150367558,
+    "lng": -81.497172328659,
+    "telehealth": true,
+    "phone": "2162889433",
+    "email": "medicalprofessionals@phleblab.org",
+    "website": "renee-wellness-hub.lovable.app",
+    "social": [],
+    "credentials": "Board Certified Holistic Practitioner — American Association of Drugless Practitioners (AADP).\r\nCertified Functional and Nutritional Medicine Practitioner (CFNMP) — American Academy of Functional Health.\r\nCertified Functional Weight Loss Consultant — American Academy of Functional Health.\r\nCertified Nutrition Coach — International Association of Professions Career College.",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "Associate of Applied Science in Medical Assisting, Sawyer College of Business, 1992. Additional completed training includes nutrition coaching, functional weight loss consulting, and functional and nutritional medicine.",
+    "integrative_training": "Certified Functional and Nutritional Medicine Practitioner (CFNMP), American Academy of Functional Health, awarded July 20, 2026. Additional certification: Certified Functional Weight Loss Consultant. Board Certified Holistic Practitioner through the American Association of Drugless Practitioners (AADP).",
+    "since": 2024,
+    "affiliations": "Board Certified Holistic Practitioner — American Association of Drugless Practitioners (AADP).\r\nCertified Functional and Nutritional Medicine Practitioner (CFNMP) — American Academy of Functional Health.\r\nCertified Functional Weight Loss Consultant — American Academy of Functional Health.\r\nCertified Nutrition Coach — International Association of Professions Career College.",
+    "pricing": "BASIC WELLNESS PACKAGE — $475\r\nPackage value: $600\r\n\r\n• Initial wellness consultation\r\n• One follow-up visit — two visits total\r\n• Personalized nutrition and lifestyle wellness plan\r\n• Blood work included when needed\r\n\r\nSTANDARD WELLNESS PACKAGE — $575\r\n\r\n• Initial wellness consultation\r\n• Two follow-up visits — three visits total\r\n• Personalized nutrition and lifestyle wellness plan\r\n• Included blood work and supplements\r\n• Sauna blanket session if appropriate\r\n\r\nPREMIUM WELLNESS PACKAGE — $675\r\n\r\n• Initial wellness consultation\r\n• Three follow-up visits — four visits total\r\n• Personalized nutrition and lifestyle wellness plan\r\n• Included blood work and supplements\r\n• Telehealth option for consultations and follow-ups\r\n• Sauna blanket and compression boot sessions as appropriate",
+    "payments": "Cash",
+    "insurance": "Not accepted",
+    "blurb": "At Phleb Lab Wellness in Richmond Heights, Ohio, Renee Blackmon offers a functional medicine approach to health and wellness coaching, nutrition education, and weight management support. She provides personalized lifestyle guidance for people managing concerns such as ongoing pain and hormonal health, complementing care from their medical providers.",
+    "long": "Phleb Lab Wellness in Richmond Heights, Ohio, offers personalized wellness support with Renee Blackmon, a Certified Functional and Nutritional Medicine Practitioner, Certified Nutrition Coach, and Functional Weight Loss Consultant. Our functional medicine approach considers nutrition, lifestyle, and everyday habits that influence overall well-being.\r\n\r\nServices include health and wellness coaching, nutrition education, weight management support, and guidance on healthy lifestyle choices. We support adults seeking to improve their wellness while managing concerns such as ongoing pain, hormonal changes, and challenges with weight or energy.\r\n\r\nThrough individual consultations and follow-up visits, we help clients set realistic goals and develop practical habits they can maintain. Our coaching and education complement care from licensed medical providers. Services are available by appointment in a supportive setting where clients can ask questions, learn, and take an active role in their well-being.",
+    "verified": false
   }
 ]

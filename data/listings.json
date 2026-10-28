@@ -1819,5 +1819,39 @@
     "blurb": "At Phleb Lab Wellness in Richmond Heights, Ohio, Renee Blackmon offers a functional medicine approach to health and wellness coaching, nutrition education, and weight management support. She provides personalized lifestyle guidance for people managing concerns such as ongoing pain and hormonal health, complementing care from their medical providers.",
     "long": "Phleb Lab Wellness in Richmond Heights, Ohio, offers personalized wellness support with Renee Blackmon, a Certified Functional and Nutritional Medicine Practitioner, Certified Nutrition Coach, and Functional Weight Loss Consultant. Our functional medicine approach considers nutrition, lifestyle, and everyday habits that influence overall well-being.\r\n\r\nServices include health and wellness coaching, nutrition education, weight management support, and guidance on healthy lifestyle choices. We support adults seeking to improve their wellness while managing concerns such as ongoing pain, hormonal changes, and challenges with weight or energy.\r\n\r\nThrough individual consultations and follow-up visits, we help clients set realistic goals and develop practical habits they can maintain. Our coaching and education complement care from licensed medical providers. Services are available by appointment in a supportive setting where clients can ask questions, learn, and take an active role in their well-being.",
     "verified": false
+  },
+  {
+    "slug": "emily-laraine-wellness-llc",
+    "name": "Emily Laraine Wellness LLC",
+    "person": "Emily Carlile",
+    "logo": "/assets/img/providers/emily-laraine-wellness-llc.jpg",
+    "categories": [
+      "Nutrition",
+      "Coaching"
+    ],
+    "city": "St. Petersburg",
+    "state": "FL",
+    "zip": "33702",
+    "address": "",
+    "country": "United States",
+    "lat": 27.7712264,
+    "lng": -82.6340259,
+    "telehealth": true,
+    "phone": "(904) 990-4705",
+    "email": "emilylarainewellness@gmail.com",
+    "website": "https://emilylarainewellness.com/",
+    "social": [],
+    "credentials": "Certified Nutrition Specialist",
+    "licensure": "Florida ND 14489 Illinois 164.022755",
+    "training": "University of Bridgeport Masters of Science in Human Nutrition\r\nClinicians Incubator CNS Supervision 1000 hours",
+    "integrative_training": "",
+    "since": 2023,
+    "affiliations": "Certified Nutrition Specialist",
+    "pricing": "Hormone Harmony Method | Six-Month 1:1 PCOS/PMOS Program — $1,500\r\n\r\nA personalized, six-month virtual nutrition coaching program designed to help women with PCOS/PMOS better understand their symptoms and build a sustainable approach to hormonal health.\r\n\r\nYour investment includes:\r\n- 90-minute Deep Dive Assessment: Explore your health history, symptoms, nutrition, and lifestyle to identify potential contributing factors.\r\n- Personalized PCOS/PMOS Roadmap: Receive a science-informed plan tailored to your unique goals, needs, and lifestyle.\r\n- 12 biweekly 45-minute coaching sessions: Implement your plan, work through challenges, track progress, and make adjustments along the way.\r\n- Ongoing between-session support: Receive accountability, feedback, and guidance to help you stay consistent.\r\n- 15% discount on supplements through Fullscript: Access practitioner-recommended supplements at a discounted rate\r\n- Hormone Harmony Reference Guide: Receive a personalized resource summarizing your recommendations and key takeaways to revisit after completing the program.",
+    "payments": "Credit Cards, Debit Cards, Paypal",
+    "insurance": "Not accepted",
+    "blurb": "Emily provides personalized, functional and holistic nutrition counseling for women with PCOS/PMOS who want to better understand their symptoms and feel more confident managing their health. Through her 1:1 Hormone Harmony Method, she takes a root-cause approach that considers nutrition, lifestyle, stress, sleep, and mindset to support hormonal health and sustainable changes without restrictive diets or one-size-fits-all plans. Her virtual practice offers compassionate, individualized guidance, education, and accountability to help women work toward more regular menstrual cycles, clearer skin, and greater confidence in their health.",
+    "long": "Emily specializes in virtual nutrition counseling for women with PCOS/PMOS who are ready to take a more personalized approach to their health. Her practice combines functional and holistic nutrition with individualized lifestyle support to help women better understand their symptoms and identify factors that may be contributing to their hormonal concerns.\r\n\r\nThrough her signature 1:1 Hormone Harmony Method, Emily helps women build a stronger foundation for hormonal health by addressing nutrition, stress, sleep, digestion, movement, and mindset. Rather than relying on restrictive diets or quick fixes, she emphasizes sustainable, realistic changes tailored to each woman's unique needs, preferences, and goals. Emily believes women deserve to feel heard, supported, and empowered to make informed decisions about their health. Her compassionate, collaborative approach provides the education, guidance, and accountability women need to work toward more regular cycles, clearer skin, and a greater sense of confidence and control over their health.",
+    "verified": false
   }
 ]

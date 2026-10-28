@@ -1745,5 +1745,38 @@
     "blurb": "Olivia Sterling of Sterling Counseling offers trauma therapy, racial trauma counseling, CBT, anxiety, stress, burnout, and grief counseling.",
     "long": "Olivia Sterling is the therapist behind Sterling Counseling, providing compassionate, personalized mental health support to individuals navigating life's challenges. Her areas of specialization include trauma therapy, racial trauma counseling, Cognitive Behavioral Therapy (CBT), and anxiety therapy. She helps clients manage anxiety, stress, and burnout while developing healthier coping strategies and emotional resilience. Sterling Counseling also offers grief counseling to support individuals processing loss and navigating difficult life transitions. Olivia is committed to creating a supportive, understanding environment where clients can explore their experiences, build self-awareness, and work toward meaningful personal growth, emotional well-being, and lasting positive change.",
     "verified": false
+  },
+  {
+    "slug": "life-again-therapy-llc",
+    "name": "Life Again Therapy, LLC",
+    "person": "Denesia Joseph",
+    "logo": null,
+    "categories": [
+      "Counseling"
+    ],
+    "city": "Colorado Springs",
+    "state": "CO",
+    "zip": "80925",
+    "address": "",
+    "country": "United States",
+    "lat": 38.8339578,
+    "lng": -104.825348,
+    "telehealth": true,
+    "phone": "719-741-4008",
+    "email": "denesiajoseph@lifeagaintherapy.com",
+    "website": "https://www.lifeagaintherapy.com/",
+    "social": [],
+    "credentials": "—",
+    "licensure": "Colorado CSW.09933831",
+    "training": "Master of Social Work (MSW); Licensed Clinical Social Worker (LCSW).",
+    "integrative_training": "",
+    "since": 2019,
+    "affiliations": "—",
+    "pricing": "Private pay: therapy $150 for 55 minutes. Limited reduced-fee appointments may be available. Also accepts Cash App.",
+    "payments": "Cash, Debit Cards, Venmo, Zelle",
+    "insurance": "Not accepted",
+    "blurb": "Life Again Therapy provides virtual psychotherapy with compassionate, personalized support. Evening appointments are available.",
+    "long": "Life Again Therapy offers virtual psychotherapy in a supportive and welcoming environment. Denesia Joseph, MSW, LCSW, helps adults navigate concerns including anxiety, depression, trauma, stress and life transitions. Evening appointments are available. The practice is private pay and does not currently accept or bill insurance. Accepting new clients.",
+    "verified": false
   }
 ]

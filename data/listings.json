@@ -1777,6 +1777,13 @@
     "insurance": "Not accepted",
     "blurb": "Life Again Therapy provides virtual psychotherapy with compassionate, personalized support. Evening appointments are available.",
     "long": "Life Again Therapy offers virtual psychotherapy in a supportive and welcoming environment. Denesia Joseph, MSW, LCSW, helps adults navigate concerns including anxiety, depression, trauma, stress and life transitions. Evening appointments are available. The practice is private pay and does not currently accept or bill insurance. Accepting new clients.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Colorado CSW.09933831",
+      "source": "the Colorado mental health boards (LPC, LMFT, LCSW, psychologist), through the DORA licence lookup",
+      "date": "28 Oct 2026",
+      "by": "admin",
+      "recorded_at": "2026-10-28T22:30:59.907Z"
+    }
   }
 ]

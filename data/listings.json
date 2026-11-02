@@ -634,7 +634,14 @@
     "insurance": "Accepted — verify your plan with the practice",
     "blurb": "Therapy with Z, LLC provides inclusive, person-centered online psychotherapy for adolescents (13+), adults, and older adults. We specialize in anxiety, depression, trauma, chronic illness and pain, grief, and LGBTQIA+ affirming care, offering compassionate, evidence-based support tailored to each client's unique needs and goals. Telehealth services are available in Oklahoma, Florida, South Carolina, and Idaho.",
     "long": "Therapy with Z, LLC is an inclusive, person-centered online psychotherapy practice serving adolescents (13+), adults, and older adults. We specialize in anxiety, depression, trauma and PTSD, chronic illness and pain, grief and loss, stress and burnout, and LGBTQIA+ affirming care. Our integrative, trauma-informed approach combines evidence-based psychotherapy, mindfulness, self-compassion, and practical coping skills to support emotional well-being and personal growth. Telehealth services are available in Oklahoma, Florida, South Carolina, and Idaho.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Oklahoma (22645)",
+      "source": "Oklahoma State Board of Licensed Social Workers",
+      "date": "2 Nov 2026",
+      "by": "admin",
+      "recorded_at": "2026-11-02T22:50:08.373Z"
+    }
   },
   {
     "slug": "wholistic-medical-group",

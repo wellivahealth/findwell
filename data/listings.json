@@ -1962,6 +1962,13 @@
     "insurance": "Accepted — verify your plan with the practice",
     "blurb": "I hope to amaze you with your own personalized medical nutritional therapy protocol.  Adults are my focus.  Patients seek me for gut health (bloating, constipation, diarrhea), food sensitivities, hormone balancing (adrenal, perimenopause, menopause, andropause, thyroid), prediabetes and diabetes, bone density, lipid and hypertension concerns. Weight loss including GLP-1 support.",
     "long": "I help busy people make sense of nutrition by optimizing their digestion and healing their gut. I develop and recommend medical nutrition therapy plans that help revive your cells, restore your vitality, and inspire sustainable transformations.\r\nAppointments are a discovery process.  Who are you?  What are your goals?  Complaints?  What do you wish to change?  We discuss lifestyle:  sleep, digestion, exercise, medicine and supplement intake, and of course food:  what do you eat?  Layer in your latest blood labs, medical history and any current or previous diagnosis. I luv data to analyze.\r\nTo activate your insurance coverage please access the Berry Street link for scheduling your appointments. visit.berrystreet.co/providers/MaryJane-Bembenek",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "DX3614 for State of Maryland.",
+      "source": "the Commission on Dietetic Registration, for RD or RDN",
+      "date": "2 Nov 2026",
+      "by": "admin",
+      "recorded_at": "2026-11-02T22:38:37.224Z"
+    }
   }
 ]

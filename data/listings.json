@@ -1977,5 +1977,38 @@
       "by": "admin",
       "recorded_at": "2026-11-02T22:38:37.224Z"
     }
+  },
+  {
+    "slug": "robert-bremer",
+    "name": "Robert Bremer",
+    "person": "Robert Bremer",
+    "logo": null,
+    "categories": [
+      "Bodywork"
+    ],
+    "city": "Malinta",
+    "state": "OH",
+    "zip": "43535",
+    "address": "",
+    "country": "United States",
+    "lat": 41.3225503,
+    "lng": -84.0380003,
+    "telehealth": false,
+    "phone": "4197892463",
+    "email": "robertbremermarketing@gmail.com",
+    "website": "https://robertbremer.com",
+    "social": [],
+    "credentials": "Certified Hypnotherapist (C.Ht.); Certified Reflexologist (C.R.); professional member, American Hypnosis Association; Hypnotherapists Union Local 472.",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "Hypnosis Motivation Institute / HMI College of Hypnotherapy; Institute of Therapeutic Massage for reflexology training.",
+    "integrative_training": "",
+    "since": 2006,
+    "affiliations": "Certified Hypnotherapist (C.Ht.); Certified Reflexologist (C.R.); professional member, American Hypnosis Association; Hypnotherapists Union Local 472.",
+    "pricing": "Contact for pricing",
+    "payments": "Cash, Checks, Credit Cards",
+    "insurance": "Not accepted",
+    "blurb": "Robert Bremer, C.Ht., C.R., offers hypnotherapy and reflexology with a focus on personal growth, relaxation, and wellness.",
+    "long": "Robert Bremer is a certified hypnotherapist and certified reflexologist who offers individualized support for relaxation, personal growth, and wellness. Contact Robert to discuss his services and appointment availability.",
+    "verified": false
   }
 ]

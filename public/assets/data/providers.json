@@ -518,7 +518,7 @@
   "city": "Pontiac",
   "state": "MI",
   "categories": [
-   "Coaching"
+   "Nutrition"
   ],
   "licensure": "No state licensure exists for this discipline",
   "verification": null,
@@ -563,7 +563,7 @@
   "city": "Fountain City",
   "state": "IN",
   "categories": [
-   "Coaching"
+   "Counseling"
   ],
   "licensure": "No state licensure exists for this discipline",
   "verification": null,
@@ -1066,6 +1066,20 @@
   "state": "NJ",
   "categories": [
    "Homeopathy"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "sheri-goodman-graham-ms",
+  "name": "Sheri Goodman Graham, MS",
+  "person": "Sheri Graham Goodman",
+  "city": "Marshall",
+  "state": "AR",
+  "categories": [
+   "Nutrition",
+   "Coaching"
   ],
   "licensure": "No state licensure exists for this discipline",
   "verification": null,

@@ -44,7 +44,13 @@
   },
   "lotus-wellspring-healthcare": {
     "person": "Sybil Ihrig",
-    "postnominals": "DACM, L.Ac., CCH"
+    "postnominals": "DACM, L.Ac., CCH",
+    "categories": [
+      "Acupuncture",
+      "Herbalism",
+      "Naturopathy",
+      "Homeopathy"
+    ]
   },
   "tracy-villegas-lmt": {
     "postnominals": "LMT"

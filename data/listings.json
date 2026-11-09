@@ -2088,5 +2088,41 @@
       "by": "admin",
       "recorded_at": "2026-11-09T18:03:15.488Z"
     }
+  },
+  {
+    "slug": "jolly-druid",
+    "name": "Jolly Druid",
+    "person": "Rowan Figard",
+    "postnominals": "",
+    "logo": "/assets/img/providers/jolly-druid.png",
+    "categories": [
+      "EnergyMedicine"
+    ],
+    "city": "Dover",
+    "state": "PA",
+    "zip": "17315",
+    "address": "",
+    "country": "United States",
+    "lat": 40.0014489,
+    "lng": -76.8473307,
+    "telehealth": false,
+    "phone": "7179654661",
+    "email": "rowan@jollydruid.com",
+    "website": "https://www.jollydruid.com/",
+    "social": [
+      "https://www.facebook.com/jollydruid"
+    ],
+    "credentials": "—",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "I've spent more than 20 years exploring, studying, and practicing spirituality. For the past nine years, my work in spiritual care has centered on the relationships I've developed with plant spirits, a connection that grew naturally from my study and practice of herbalism and Druidry.",
+    "integrative_training": "",
+    "since": 2017,
+    "affiliations": "",
+    "pricing": "30 minute, remote session for $50",
+    "payments": "Credit Cards, Debit Cards",
+    "insurance": "Not accepted",
+    "blurb": "At Jolly Druid, I offer private, remote Spirit Healing sessions. I'm Rowan, a Druid, and I work with plant spirits and guide their soothing energy to you, to calm your mind and replenish your spirit while you rest comfortably at home.",
+    "long": "Hi, I'm Rowan, a Druid and the person behind Jolly Druid. I offer private, remote Spirit Healing devoted to helping you feel more at ease, clear your mind, and recharge your spirit.\r\n\r\nI work with plant spirits and guide their soothing energy to you, to calm your mind and replenish your spirit.\r\n\r\nDuring your session, you rest comfortably at home while I devote my attention and spiritual work entirely to you. There's no video call to attend, no exercises to follow, and nothing you need to do except relax.\r\n\r\nEach session is 30 minutes and costs $50. An optional brief phone or text introduction is available beforehand, and you'll receive a personalized written reflection within 24 hours afterward.\r\n\r\nMy practice is rooted in my lifelong connection with nature, my Druidic spirituality, and a sincere desire to offer others gentle, restorative spiritual care.",
+    "verified": false
   }
 ]

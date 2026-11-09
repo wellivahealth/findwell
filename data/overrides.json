@@ -206,5 +206,11 @@
       "Coaching",
       "EnergyMedicine"
     ]
+  },
+  "celia-hildebrand-acupuncture": {
+    "categories": [
+      "Acupuncture",
+      "Herbalism"
+    ]
   }
 }

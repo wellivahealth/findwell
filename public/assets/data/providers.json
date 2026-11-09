@@ -7,7 +7,6 @@
   "state": "AZ",
   "categories": [
    "Acupuncture",
-   "EnergyMedicine",
    "Herbalism"
   ],
   "licensure": "Arizona licensed acupuncturist \u2014 AZ LAC 001177",
@@ -1082,6 +1081,52 @@
   ],
   "licensure": "No state licensure exists for this discipline",
   "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "quiet-presence",
+  "name": "Quiet Presence",
+  "person": "Robert Fogerite",
+  "city": "Yelm",
+  "state": "WA",
+  "categories": [
+   "EnergyMedicine"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "beatrice-pouligny-phd-allowing-the-light-shaman-spiritual-he",
+  "name": "Beatrice Pouligny, PhD / Allowing The Light - Shaman, Spiritual Healer and Life Coach",
+  "person": "Beatrice Pouligny, PhD",
+  "city": "Takoma Park",
+  "state": "MD",
+  "categories": [
+   "Coaching",
+   "EnergyMedicine"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "metabridge-health-wellness",
+  "name": "Metabridge Health & Wellness",
+  "person": "Abimbola Abiodun",
+  "city": "Atlanta",
+  "state": "GA",
+  "categories": [
+   "IntegrativeMedicine"
+  ],
+  "licensure": "GA 4583, CO PA.0009627, UT 14265753-1206",
+  "verification": {
+   "what": "GA 4583, CO PA.0009627",
+   "source": "National NPI Registry",
+   "date": "9 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-09T22:02:16.149Z"
+  },
   "seed": false
  }
 ]

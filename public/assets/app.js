@@ -94,6 +94,32 @@
     });
   }
 
+  /* ---------- badge page ---------- */
+  (function () {
+    var pick = $('#badge-pick'), code = $('#badge-code');
+    if (!pick || !code) return;
+    var SITE = 'https://findwelldirectory.com';
+    function render() {
+      var slug = pick.value;
+      var href = slug ? SITE + '/provider/' + slug + '/' : SITE + '/';
+      code.value = '<a href="' + href + '" target="_blank" rel="noopener">' +
+        '<img src="' + SITE + '/assets/badge/findwell-badge.png" width="300" height="90" ' +
+        'alt="Find me on FindWell Directory" style="max-width:100%;height:auto"></a>';
+      $('#badge-link').href = slug ? '/provider/' + slug + '/' : '/';
+    }
+    var want = new URLSearchParams(location.search).get('p');
+    if (want && pick.querySelector('option[value="' + want.replace(/[^a-z0-9-]/g, '') + '"]')) pick.value = want;
+    pick.addEventListener('change', render);
+    render();
+    $('#badge-copy').addEventListener('click', function () {
+      var msg = $('#badge-msg');
+      if (!pick.value) { msg.textContent = 'Choose your practice first, so the badge links to your listing.'; pick.focus(); return; }
+      function done() { msg.textContent = 'Copied. Paste it into your website.'; }
+      if (navigator.clipboard) navigator.clipboard.writeText(code.value).then(done, function () { code.select(); document.execCommand('copy'); done(); });
+      else { code.select(); document.execCommand('copy'); done(); }
+    });
+  })();
+
   /* ---------- menu ---------- */
   var burger = $('#burger'), nav = $('#nav');
   if (burger && nav) {

@@ -86,7 +86,7 @@ DISCIPLINES = [
     dict(key="Nutrition", label="Nutritionists", slug="nutrition",
          note="Registered dietitians (RD, RDN) and nutritionists, including CNS and BCHN. Licensure varies by state.",
          img="/assets/img/disciplines/nutrition"),
-    dict(key="Homeopathy", label="Homeopaths", slug="homeopathy",
+    dict(key="Homeopathy", label="Homeopathic practitioners", slug="homeopathy",
          note="Classical and clinical homeopaths. CCH certification is shown where held; Arizona licenses homeopathic practitioners, and most states have no license.",
          img="/assets/img/disciplines/homeopathy"),
     dict(key="Herbalism", label="Herbology", slug="herbology",
@@ -991,6 +991,7 @@ def shell(title, desc, path, body, view="", extra_head=""):
     </div>
     <div class="foot-col">
       <a href="/join/">List your practice</a>
+      <a href="/badge/">Badge for your website</a>
       <a href="/about/">About us</a>
       <a href="/advertise/">Advertise with us</a>
       <a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a>
@@ -1385,8 +1386,27 @@ def crumbs_html(trail):
     parts = [f'<a href="{h}">{E(t)}</a>' if h else E(t) for t, h in trail]
     return '<p class="crumb">' + " / ".join(parts) + "</p>"
 
+# How each discipline is named in page titles and search results: the words
+# people type, e.g. "homeopathic practitioners", "nutritionists and dietitians".
+SEO_NAME = {
+    "Ayurveda": "Ayurvedic practitioners", "Acupuncture": "Licensed acupuncturists",
+    "TCM": "Traditional Chinese medicine practitioners",
+    "Naturopathy": "Licensed naturopathic doctors",
+    "IntegrativeMedicine": "Integrative and functional medicine practitioners",
+    "Counseling": "Holistic counselors and therapists",
+    "Coaching": "Health and wellness coaches", "Massage": "Massage therapists",
+    "Bodywork": "Bodywork practitioners", "EnergyMedicine": "Energy healing and Reiki practitioners",
+    "Chiropractic": "Chiropractors", "Nutrition": "Nutritionists and dietitians",
+    "Homeopathy": "Homeopathic practitioners", "Herbalism": "Herbalists",
+    "Farms": "Local farmers", "Grocers": "Local grocers",
+}
+
+def _clip(text, n):
+    text = " ".join(text.split())
+    return text if len(text) <= n else text[:n - 1].rsplit(" ", 1)[0].rstrip(",;:") + "…"
+
 def page_directory(subset=None, title=None, desc=None, path="/directory/", heading=None,
-                   intro="", trail=None, footer_link=None, current=None, art=None):
+                   intro="", trail=None, footer_link=None, current=None, art=None, list_name=None):
     rows = subset if subset is not None else PROVIDERS
     def _href(d):
         if not current:
@@ -1462,9 +1482,16 @@ def page_directory(subset=None, title=None, desc=None, path="/directory/", headi
         </div>
       </section>
   </div>"""
+    ld = {"@context": "https://schema.org", "@type": "ItemList",
+          "name": list_name or heading or "FindWell Directory practitioners",
+          "url": SITE + path, "numberOfItems": len(rows),
+          "itemListElement": [{"@type": "ListItem", "position": i + 1,
+                               "url": f"{SITE}/provider/{p['slug']}/", "name": p["name"]}
+                              for i, p in enumerate(sorted(rows, key=lambda r: r["name"].lower()))]}
     return shell(title or "Find care — FindWell Directory",
                  desc or "Every practitioner in the FindWell Directory, filterable by discipline, city, distance and telehealth availability.",
-                 path, body, view="directory")
+                 path, body, view="directory",
+                 extra_head=f'<script type="application/ld+json">{json.dumps(ld)}</script>')
 
 
 
@@ -2035,6 +2062,26 @@ def page_article(a):
 
 
 
+def page_badge():
+    opts = "".join(f'<option value="{E(p["slug"])}">{E(p["name"])}{" (" + E(p["person"]) + ")" if p.get("person") and p["person"] != p["name"] else ""}</option>'
+                   for p in sorted(PROVIDERS, key=lambda r: r["name"].lower()))
+    body = f"""{page_head("A badge for your website", "Listed on FindWell? Add the badge to your website so patients can see your credentials laid out plainly, and so search engines can find your listing.", [("Home", "/"), ("Badge for your website", None)], art="branch")}
+  <section class="wrap page-body">
+    <h2>1. Choose your listing</h2>
+    <select class="control" id="badge-pick" aria-label="Your listing" style="max-width:32rem">
+      <option value="">Choose your practice…</option>{opts}
+    </select>
+    <h2>2. Copy this into your website</h2>
+    <p>Most website builders (Squarespace, Wix, WordPress, Showit) have a block called <em>Code</em>, <em>Embed</em> or <em>Custom HTML</em>. Paste this into one, usually in the footer or on your About page.</p>
+    <div class="badge-preview"><a id="badge-link" href="/directory/"><img src="/assets/badge/findwell-badge.png" width="300" height="90" alt="Find me on FindWell Directory"></a></div>
+    <textarea class="control badge-code" id="badge-code" rows="4" readonly spellcheck="false"></textarea>
+    <p><button class="btn btn-dark btn-sm" id="badge-copy" type="button">Copy the code</button> <span class="hint" id="badge-msg" aria-live="polite"></span></p>
+    <p class="hint">Prefer to add it yourself? Save the image, then link it to your listing's page on findwelldirectory.com.</p>
+  </section>"""
+    return shell("A badge for your website — FindWell Directory",
+                 "Add the FindWell Directory badge to your website, linking to your listing.", "/badge/", body)
+
+
 def page_advertise():
     body = f"""{page_head("Advertise with us", "FindWell reaches people at the moment they are choosing a practitioner: comparing credentials, weighing cost, deciding who to call. If you serve that audience, we would like to hear from you.", [("Home", "/"), ("Advertise with us", None)], art="branch")}
   <section class="wrap page-body">
@@ -2127,6 +2174,7 @@ def main():
     written.append(write("about/", page_about()))
     written.append(write("articles/", page_articles()))
     written.append(write("advertise/", page_advertise()))
+    written.append(write("badge/", page_badge()))
     written.append(write("verification/", page_verification()))
     for a in ARTICLES:
         written.append(write(f"articles/{a['slug']}/", page_article(a)))
@@ -2144,8 +2192,9 @@ def main():
         rows = [p for p in PROVIDERS if d["key"] in p["categories"]]
         written.append(write(f"practice-types/{d['slug']}/", page_directory(
             subset=rows,
-            title=f"{d['label']} practitioners — FindWell Directory",
-            desc=f"{d['label']}: {d['note']}",
+            title=f"{SEO_NAME.get(d['key'], d['label'])} | FindWell Directory",
+            desc=_clip(f"Find {SEO_NAME.get(d['key'], d['label']).lower()} in the US and Canada, with credentials you can check. {d['note']}", 158),
+            list_name=SEO_NAME.get(d['key'], d['label']),
             path=f"/practice-types/{d['slug']}/",
             heading=friendly(d["key"]), intro=d["note"].replace(" \u2014 ", ", ").replace(" — ", ", "),
             trail=[("Home", "/"), ("Disciplines", "/practice-types/"), (friendly(d["key"]), None)],
@@ -2157,6 +2206,7 @@ def main():
         written.append(write(f"locations/{state_slug(ab)}/", page_directory(
             subset=rows,
             title=f"Holistic practitioners in {state_name(ab)} — FindWell Directory",
+            list_name=f"Holistic practitioners in {state_name(ab)}",
             desc=f"{len(rows)} holistic and integrative practitioners listed in {state_name(ab)}.",
             path=f"/locations/{state_slug(ab)}/",
             heading=state_name(ab),

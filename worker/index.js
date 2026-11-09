@@ -780,6 +780,11 @@ const publishedEmail = (s, url, joinUrl) => shell(`<h2 style="font-size:20px;mar
 <p><a href="${esc(url)}" style="display:inline-block;background:#c23a4b;color:#fff;text-decoration:none;padding:10px 18px;border-radius:6px;font-weight:600">View your listing</a></p>
 <p>Please take a look when you have a moment. If anything needs changing, whether a fee, the way a credential reads, or the photo, simply reply to this email and we will update it for you.</p>
 <p>We also confirm license numbers and certifications with the issuing board. That is usually quick, and we will only be in touch if we have a question.</p>
+<div style="margin:24px 0 0;padding:18px 20px;background:#f5f7f1;border-radius:8px">
+<p style="margin:0 0 8px;font-weight:600;font-size:17px">Add the badge to your website</p>
+<p style="margin:0 0 12px">A small "Find me on FindWell" badge links patients from your website to your listing, and helps both of us show up in search. It takes a minute to add.</p>
+<p style="margin:0"><a href="${esc(url.split('/provider/')[0] + '/badge/?p=' + (url.split('/provider/')[1] || '').replace(/\/.*$/, ''))}" style="display:inline-block;background:#2e5f5c;color:#fff;text-decoration:none;padding:10px 18px;border-radius:6px;font-weight:600">Get your badge</a></p>
+</div>
 <div style="margin:28px 0 8px;padding:18px 20px;background:#eff4f4;border-radius:8px">
 <p style="margin:0 0 8px;font-weight:600;font-size:17px">Know a practitioner who belongs here?</p>
 <p style="margin:0 0 12px">The directory becomes more useful to patients with every practitioner who joins, and the people who know good practitioners best are other practitioners. If there are colleagues whose work you trust, we would be grateful if you passed this along. Listing is free and always will be, with no paid placement and no leads sold, and the application takes about ten minutes.</p>

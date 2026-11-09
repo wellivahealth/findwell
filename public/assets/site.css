@@ -462,3 +462,7 @@ picture{ display:contents; }
 .prose p, .prose li{ font-size:1.1rem; line-height:1.75; color:var(--ink-soft); }
 .split-list{ padding-left:1.2rem; }
 .split-list li{ margin-bottom:.8rem; color:var(--ink-soft); }
+
+.badge-preview{ background:var(--sage-bg); border-radius:var(--r-lg); padding:1.6rem; margin:0 0 1rem; display:flex; justify-content:center; }
+.badge-preview img{ max-width:100%; height:auto; display:block; }
+.badge-code{ width:100%; font-family:ui-monospace, Menlo, Consolas, monospace; font-size:.86rem; line-height:1.5; resize:vertical; }

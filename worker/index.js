@@ -428,6 +428,128 @@ function preChecks(s, listing, existing) {
   return out;
 }
 
+
+// ---------------------------------------------------------------- NPI pre-check
+
+/** The national NPI Registry (CMS) is free and open. Clinicians report their
+ *  own licence numbers to it, so a match is strong evidence but not the
+ *  board's word: it decides how the email reads, never what is published. */
+const NPI_API = 'https://npiregistry.cms.hhs.gov/api/';
+const NPI_VIEW = 'https://npiregistry.cms.hhs.gov/provider-view/';
+
+const normLic = (v) => String(v || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+const licDigits = (v) => String(v || '').replace(/\D/g, '').replace(/^0+/, '');
+
+/** Licence numbers the applicant gave, in the forms worth comparing. */
+function licenceTokens(text) {
+  const out = new Set();
+  const plain = String(text || '').replace(/\b(since|from|in|year|years|est|established)\b/gi, ' ');
+  for (const m of plain.toUpperCase().matchAll(/(?<![A-Z])[A-Z]{0,6}[\s\-.#]*\d[\d\-.]{2,}[A-Z]?/g)) {
+    const n = normLic(m[0]);
+    if (/^(19[5-9]\d|20[0-3]\d)$/.test(n)) continue;      // a year, not a licence
+    if (licDigits(n).length >= 3) out.add(n);
+  }
+  return [...out];
+}
+
+function sameLicence(a, b) {
+  const x = normLic(a), y = normLic(b);
+  if (!x || !y) return false;
+  if (x === y) return true;
+  const [short, long] = x.length < y.length ? [x, y] : [y, x];
+  if (short.length >= 4 && long.endsWith(short)) return true;
+  const dx = licDigits(x), dy = licDigits(y);
+  return dx.length >= 3 && dx === dy;
+}
+
+function splitName(person) {
+  const clean = String(person || '')
+    .replace(/,.*$/, '')
+    .replace(/^(dr|doctor|mr|mrs|ms|mx)\.?\s+/i, '')
+    .replace(/\s+/g, ' ').trim();
+  const parts = clean.split(' ');
+  return { first: parts[0] || '', last: parts.length > 1 ? parts[parts.length - 1] : '' };
+}
+
+async function npiQuery(params) {
+  const q = new URLSearchParams({ version: '2.1', limit: '50', ...params });
+  const ctl = new AbortController();
+  const timer = setTimeout(() => ctl.abort(), 6000);
+  try {
+    const r = await fetch(`${NPI_API}?${q}`, { signal: ctl.signal, headers: { accept: 'application/json' } });
+    if (!r.ok) throw new Error(`NPI Registry answered ${r.status}`);
+    const data = await r.json();
+    return Array.isArray(data.results) ? data.results : [];
+  } finally { clearTimeout(timer); }
+}
+
+/** Decide from NPI results whether the name and licence line up. Pure, so it
+ *  can be tested without the network. */
+function npiVerdict(results, { first, last, state, licence }) {
+  const tokens = licenceTokens(licence);
+  const f = first.toLowerCase();
+  const people = results.filter((r) => {
+    const b = r.basic || {};
+    const fn = String(b.first_name || '').toLowerCase();
+    return fn && (fn === f || fn.startsWith(f.slice(0, 3)) || f.startsWith(fn.slice(0, 3)));
+  });
+  const describe = (r, t) => {
+    const b = r.basic || {};
+    const name = [b.first_name, b.last_name].filter(Boolean).join(' ')
+      .toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+    const cred = b.credential ? `, ${b.credential}` : '';
+    return `${name}${cred}, ${t.desc || 'no profession given'}, ${t.state || '??'} licence ${t.license || 'not given'} (NPI ${r.number})`;
+  };
+  for (const r of people) {
+    for (const t of r.taxonomies || []) {
+      if (t.license && tokens.some((x) => sameLicence(x, t.license)) && (!state || !t.state || t.state === state)) {
+        return { level: 'match', npi: r.number, url: NPI_VIEW + r.number, desc: t.desc || '',
+                 text: `NPI record matches: ${describe(r, t)}.` };
+      }
+    }
+  }
+  for (const r of people) {
+    for (const t of r.taxonomies || []) {
+      if (t.license && tokens.some((x) => sameLicence(x, t.license))) {
+        return { level: 'partial', npi: r.number, url: NPI_VIEW + r.number,
+                 text: `The licence number matches an NPI record, but in ${t.state}, not ${state}: ${describe(r, t)}.` };
+      }
+    }
+  }
+  const inState = people.filter((r) => (r.taxonomies || []).some((t) => t.state === state)
+    || (r.addresses || []).some((a) => a.state === state));
+  const pool = inState.length ? inState : people;
+  if (pool.length) {
+    const r = pool[0];
+    const t = (r.taxonomies || []).find((x) => x.primary) || (r.taxonomies || [])[0] || {};
+    const more = pool.length > 1 ? ` ${pool.length - 1} other record${pool.length > 2 ? 's' : ''} under this name too.` : '';
+    return { level: 'partial', npi: r.number, url: NPI_VIEW + r.number,
+             text: tokens.length
+               ? `An NPI record exists under this name, but its licence number differs from the one given: ${describe(r, t)}.${more} Check the number with the board.`
+               : `An NPI record exists under this name, with no licence number given to compare: ${describe(r, t)}.${more}` };
+  }
+  return { level: 'none',
+           text: 'No NPI record under this name. That is common for practitioners who do not bill insurance, '
+               + 'so on its own it is not a concern. Check with the board below.' };
+}
+
+/** Only clinicians with a licence are likely to hold an NPI. */
+function wantsNpi(listing, licenceText) {
+  return (listing.categories || []).some(isLicensed) || /\d{3,}/.test(String(licenceText || ''));
+}
+
+async function npiCheck(person, state, licence) {
+  const { first, last } = splitName(person);
+  if (!first || !last) return null;
+  try {
+    let results = await npiQuery({ first_name: first, last_name: last, enumeration_type: 'NPI-1' });
+    if (!results.length) results = await npiQuery({ last_name: last, state, enumeration_type: 'NPI-1' });
+    return npiVerdict(results, { first, last, state, licence });
+  } catch (err) {
+    return { level: 'error', text: `The NPI Registry could not be reached just now (${err.message}). Check with the board below.` };
+  }
+}
+
 // ---------------------------------------------------------------- helpers
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g,
@@ -658,10 +780,29 @@ const publishedEmail = (s, url, joinUrl) => shell(`<h2 style="font-size:20px;mar
 </div>
 <p style="margin-top:24px">Warmly,<br>Amita Nathwani, CEO<br>Emma Vasseur, Practitioner Liaison<br>FindWell Directory</p>`);
 
-function adminEmail(s, approveUrl, declineUrl, checks = [], places = []) {
+function npiBlock(npi) {
+  if (!npi) return '';
+  const look = {
+    match: ['#e9f4ee', '#2e7d4f', 'Licence pre-check'],
+    partial: ['#fbf3e2', '#9a6b1f', 'Licence pre-check'],
+    none: ['#f4f4f1', '#5f7473', 'Licence pre-check'],
+    error: ['#f4f4f1', '#5f7473', 'Licence pre-check'],
+  }[npi.level] || ['#f4f4f1', '#5f7473', 'Licence pre-check'];
+  return `<div style="margin:0 0 12px;padding:10px 12px;background:${look[0]};border-radius:6px;font-size:14px;line-height:1.45">
+<span style="color:${look[1]};font-weight:700">${look[2]}:</span> ${esc(npi.text)}
+${npi.url ? ` <a href="${esc(npi.url)}" style="color:${look[1]}">See the NPI record &#8599;</a>` : ''}
+<br><span style="font-size:12px;color:#5f7473">From the national NPI Registry, where clinicians report their own details. Strong evidence, but the board is still the word that counts.</span></div>`;
+}
+
+function adminEmail(s, approveUrl, declineUrl, checks = [], places = [], npi = null, confirm = null) {
   const tone = { flag: ['#c23a4b', 'Look at this'], note: ['#9a6b1f', 'Worth a look'], ok: ['#2e5f5c', 'Clear'] };
-  const block = checks.length ? `<div style="margin:0 0 20px;padding:14px 16px;background:#fbfaf7;border:1px solid #e6e1d7;border-radius:8px">
+  const confirmBlock = confirm ? `<div style="margin:14px 0 0;padding:12px 14px;background:#fff;border:1px solid #cfe4d8;border-radius:8px">
+<p style="margin:0 0 6px;font-weight:600;font-size:14px">Checked the board and it matches?</p>
+<p style="margin:0 0 10px;font-size:14px;line-height:1.5">Open <a href="${esc(confirm.boardUrl)}" style="color:#2e5f5c">${esc(confirm.board)} &#8599;</a>, look up the licence, then press this to publish the listing as <em>${esc(confirm.what)}, confirmed with ${esc(confirm.board)}</em>, dated the day you press it.</p>
+<a href="${esc(confirm.url)}" style="display:inline-block;background:#b45f3c;color:#fff;text-decoration:none;padding:10px 18px;border-radius:6px;font-weight:600">Approve &amp; mark licence confirmed</a></div>` : '';
+  const block = (checks.length || npi || confirm) ? `<div style="margin:0 0 20px;padding:14px 16px;background:#fbfaf7;border:1px solid #e6e1d7;border-radius:8px">
 <p style="margin:0 0 10px;font-weight:600">Before you approve</p>
+${npiBlock(npi)}
 ${checks.map((c) => `<p style="margin:0 0 8px;font-size:14px;line-height:1.45">
 <span style="color:${tone[c.level][0]};font-weight:600">${tone[c.level][1]}:</span> ${esc(c.text)}</p>`).join('')}
 ${places.length ? `<p style="margin:12px 0 4px;font-weight:600;font-size:14px">Where to check this one, in order</p>
@@ -672,6 +813,7 @@ ${[1, 2, 3].map((t) => {
 <p style="margin:0;font-size:14px;line-height:1.7">${group.map((p) =>
   `<a href="${esc(p.url)}" style="color:#2e5f5c">${esc(p.name)} &#8599;</a>`).join('<br>')}</p>`;
 }).join('')}` : ''}
+${confirmBlock}
 </div>` : '';
   return adminEmailBody(s, approveUrl, declineUrl, block);
 }
@@ -909,16 +1051,26 @@ async function handleApply(request, env) {
 
   // run the checks before the notification goes out, so the email arrives
   // with the homework done rather than just the answers the applicant gave
-  let checks = [], places = [];
+  let checks = [], places = [], npi = null, confirm = null;
   try {
     const preview = {
       slug: slugify(s.practice), state: s.state,
       categories: s.scope.map((x) => SCOPE_TO_KEY[x]).filter(Boolean),
+      credentials: s.certs, licensure: s.license, training: s.training,
     };
     const current = await readFile(env, 'data/listings.json');
     const existing = current ? JSON.parse(fromB64(current.content)) : [];
     checks = preChecks(s, preview, existing);
     places = sourcesFor(preview);
+    if (wantsNpi(preview, s.license)) npi = await npiCheck(`${s.first} ${s.last}`, s.state, s.license);
+    const board = boardFor(preview);
+    if (board && (preview.categories || []).some(isLicensed) && looksLikeLicence(s.license)) {
+      const csig = await hmac((env.SIGNING_SECRET || '').trim(), `${id}:confirm`);
+      confirm = {
+        board: board.name, boardUrl: board.url, what: confirmWhat(s, preview),
+        url: `${base}/api/approve?id=${encodeURIComponent(id)}&sig=${sig}&confirm=${csig}`,
+      };
+    }
   } catch { /* the notification matters more than the checks */ }
   await Promise.all([
     sendEmail(env, {
@@ -928,7 +1080,7 @@ async function handleApply(request, env) {
       html: adminEmail(s,
         `${base}/api/approve?id=${encodeURIComponent(id)}&sig=${sig}`,
         `${base}/api/decline?id=${encodeURIComponent(id)}&sig=${sig}`,
-        checks, places),
+        checks, places, npi, confirm),
     }),
     sendEmail(env, {
       to: s.email,
@@ -938,6 +1090,17 @@ async function handleApply(request, env) {
   ]);
 
   return json({ ok: true });
+}
+
+const STATE_FULL = Object.fromEntries(Object.entries(STATE_NAMES_TO_ABBR)
+  .map(([k, v]) => [v, k.replace(/\b\w/g, (c) => c.toUpperCase())]));
+
+/** The sentence a confirmed listing carries, e.g. "Arizona licensed
+ *  acupuncturist — licence AC-4821". */
+function confirmWhat(s, listing) {
+  const where = STATE_FULL[listing.state] || listing.state;
+  const lic = String(s.license || '').trim();
+  return `${where} license${lic ? ` ${lic}` : ''}`;
 }
 
 async function handleApprove(request, env) {
@@ -984,6 +1147,20 @@ async function handleApprove(request, env) {
   // disciplines corrected on the pending page win over what was ticked
   const chosen = cleanCats(url.searchParams.getAll('cats'));
   if (chosen.length) listing.categories = chosen;
+  // "Approve & mark licence confirmed": the admin checked the board before pressing
+  let confirmed = null;
+  const csig = (url.searchParams.get('confirm') || '').trim();
+  if (csig && safeEqual(csig, await hmac((env.SIGNING_SECRET || '').trim(), `${id}:confirm`))) {
+    const board = boardFor(listing);
+    if (board) {
+      confirmed = {
+        what: confirmWhat(s, listing), source: board.name,
+        date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'America/Phoenix' }),
+        by: 'admin', recorded_at: new Date().toISOString(),
+      };
+      listing.verification = confirmed;
+    }
+  }
   const idx = listings.findIndex((l) => l.slug === listing.slug);
   if (idx > -1) listings[idx] = listing; else listings.push(listing);
 
@@ -1006,12 +1183,15 @@ async function handleApprove(request, env) {
   return page('Published', `<h1>Published</h1>
 <p><strong>${esc(s.practice)}</strong> has been added and the site is rebuilding. It will be live at
 <a href="${esc(listingUrl)}">${esc(listingUrl)}</a> in about a minute.</p>
-<p>${esc(s.first)} has been emailed to say the listing is live and that credentials are still being verified.</p>
+${confirmed
+  ? `<p style="background:#eff6f2;border:1px solid #cfe4d8;border-radius:6px;padding:10px 12px">Published as <strong>${esc(confirmed.what)}</strong>, confirmed with ${esc(confirmed.source)}, ${esc(confirmed.date)}.</p>`
+  : ''}
+<p>${esc(s.first)} has been emailed to say the listing is live.</p>
 ${logoPath
   ? '<p>Their logo was published with it.</p>'
   : `<p style="color:#c23a4b">No logo was published. ${logoProblem}</p>`}
 ${coords.lat ? '' : '<p style="color:#c23a4b">The address could not be geocoded, so this listing will not appear in distance searches until coordinates are added by hand.</p>'}
-<p style="font-size:14px"><a href="${base}/api/review?key=${encodeURIComponent(env.SIGNING_SECRET)}">Mark it verified</a> once you have checked the licence number.</p>`);
+${confirmed ? '' : `<p style="font-size:14px"><a href="${base}/api/review?key=${encodeURIComponent(env.SIGNING_SECRET)}">Mark it verified</a> once you have checked the licence number.</p>`}`);
 }
 
 /** Why an application was declined, and the sentence the applicant reads.
@@ -1196,10 +1376,12 @@ async function handleReview(request, env) {
     const board = boardFor(l);
     const what = l.licensure && !/no state licensure/i.test(l.licensure)
       ? l.licensure : 'Credentials confirmed';
+    const npi = wantsNpi(l, l.licensure) ? await npiCheck(l.person, l.state, l.licensure) : null;
     return `<li style="padding:16px 0;border-top:1px solid #dbe3e3">
       <strong>${esc(l.name)}</strong> — ${esc(l.person)}, ${esc(l.city)}, ${esc(l.state)}<br>
       ${l.verification ? `<span style="font-size:13px;color:#c23a4b">Currently: ${esc(l.verification.what)} with ${esc(l.verification.source)}, ${esc(l.verification.date)}</span><br>` : ''}
       <span style="color:#5f7473;font-size:14px">${esc(l.licensure || '')}</span><br>
+      ${npi ? `<div style="margin:6px 0">${npiBlock(npi)}</div>` : ''}
       ${licenceOutstanding(l) ? `<div style="font-size:13px;color:#c23a4b;margin-bottom:6px">
         Licence outstanding: find the regulator for ${esc(l.state)} first. A certification or membership
         below does not settle it.</div>` : ''}
@@ -1232,6 +1414,29 @@ async function handleReview(request, env) {
 number, then press the button — the fields are already filled in.</p>
 <ul style="margin:1rem 0 0">${rows.join('') ||
   '<li style="padding:12px 0">Everything has been checked.</li>'}</ul>`);
+}
+
+/** /api/selftest?key=… reports whether the pieces the Worker depends on answer. */
+async function handleSelftest(request, env) {
+  const url = new URL(request.url);
+  if (!keyOk(url, env).ok) return page('Not authorised', '<h1>Not authorised</h1>', 403);
+  const rows = [];
+  rows.push(['Signing secret', env.SIGNING_SECRET ? 'set' : 'MISSING']);
+  rows.push(['Resend key', env.RESEND_API_KEY ? 'set' : 'MISSING']);
+  rows.push(['GitHub token', env.GH_TOKEN ? 'set' : 'MISSING']);
+  try {
+    const r = await npiQuery({ last_name: url.searchParams.get('last') || 'Smith', state: url.searchParams.get('state') || 'AZ', limit: '3' });
+    rows.push(['NPI Registry', `answering, ${r.length} sample record${r.length === 1 ? '' : 's'}`]);
+    const first = url.searchParams.get('first');
+    if (first) {
+      const v = await npiCheck(`${first} ${url.searchParams.get('last') || ''}`, url.searchParams.get('state') || '', url.searchParams.get('licence') || '');
+      rows.push(['NPI check', v ? `${v.level}: ${v.text}` : 'no name given']);
+    }
+  } catch (err) {
+    rows.push(['NPI Registry', `NOT reachable: ${err.message}`]);
+  }
+  return page('Self test', `<h1>Self test</h1><table style="border-collapse:collapse">${rows.map(([k, v]) =>
+    `<tr><td style="padding:6px 14px 6px 0;color:#5f7473">${esc(k)}</td><td style="padding:6px 0">${esc(v)}</td></tr>`).join('')}</table>`);
 }
 
 async function handleVerify(request, env) {

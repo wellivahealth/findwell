@@ -2080,6 +2080,13 @@
     "insurance": "Accepted — verify your plan with the practice",
     "blurb": "\"Driver Chiropractic is one of the most respected chiropractic care facilities in Columbus. We offer a wide range of services to help you get & stay healthy, including chiropractic, pediatric, & prenatal. Our experienced Columbus chiropractor will work with you to develop a treatment plan that meets your specific needs.\r\n\r\nOur chiropractor treats the following, but is not limited to:\r\n- Back Pain\r\n- Neck Pain\r\n- Sciatica\r\n- Headaches & Migraines\r\n- Herniated Discs\r\n- Auto Accidents\r\n- Sports Injuries\r\n- And more!\r\n\r\nWe also offer convenient walk-in hours so you can get the care you need when you need it. Contact us today to schedule your appointment!\"",
     "long": "Why Patients in Columbus, NE, Choose Driver Chiropractic\r\n\r\nAt Driver Chiropractic, every treatment plan is personalized to each patient’s condition, goals, and lifestyle. Dr. Driver listens to all your concerns and thoroughly evaluates your condition to design a treatment tailored to you.\r\n\r\nFurthermore, Dr. Driver’s experience and advanced knowledge, along with his patient-centered approach to care, enable him to deliver treatments that go beyond short-term pain relief and help maintain your spinal health for years to come.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Credentials confirmed",
+      "source": "Nebraska Dept. of Health & Human Services",
+      "date": "9 Nov 2026",
+      "by": "admin",
+      "recorded_at": "2026-11-09T18:03:15.488Z"
+    }
   }
 ]

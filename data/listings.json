@@ -2237,5 +2237,41 @@
     "blurb": "High touch personalized nutrition and lifestyle coaching. One on one phone consultations, and unlimited text support. Lose Body Fat Not Muscle. 12-24 week programs",
     "long": "Sheri Goodman Graham, MS 30 years nutritional coaching and 15 yrs plant based certified. Help women 45+ lose body fat not muscle.",
     "verified": false
+  },
+  {
+    "slug": "quiet-presence",
+    "name": "Quiet Presence",
+    "person": "Robert Fogerite",
+    "postnominals": "",
+    "logo": "/assets/img/providers/quiet-presence.png",
+    "categories": [
+      "EnergyMedicine"
+    ],
+    "city": "Yelm",
+    "state": "WA",
+    "zip": "98597",
+    "address": "",
+    "country": "United States",
+    "lat": 46.9413877,
+    "lng": -122.60639,
+    "telehealth": true,
+    "phone": "15188785276",
+    "email": "rfogerite5@gmail.com",
+    "website": "https://quietpresencehealing.carrd.co",
+    "social": [
+      "https://www.instagram.com/quietpresencehealing/"
+    ],
+    "credentials": "Certified in Arcturian Reiki through Udemy training with Pete Donarski (November 2025).",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "Doctor of Pharmacy (PharmD). Arcturian Reiki training completed through Udemy with Pete Donarski in November 2025. Additional energy-healing experience dating to 2018.",
+    "integrative_training": "",
+    "since": 2018,
+    "affiliations": "",
+    "pricing": "Distance Arcturian Reiki:\r\n30 minutes – $30\r\n60 minutes – $60\r\n\r\nSomatic Witnessing:\r\n60 minutes – $75",
+    "payments": "Credit Cards",
+    "insurance": "Not accepted",
+    "blurb": "Quiet Presence offers remote Arcturian Reiki and Somatic Witnessing sessions. Arcturian Reiki sessions are conducted silently, while Somatic Witnessing combines Reiki with simple verbal guidance to support present-moment awareness. Sessions provide space for relaxation, personal experience, and observation without interpretation or pressure to change anything.",
+    "long": "Quiet Presence offers remote Arcturian Reiki and Somatic Witnessing sessions for individuals seeking a quiet space for relaxation, awareness, and personal reflection.\r\n\r\nDistance Arcturian Reiki sessions are conducted remotely and silently, without conversation, hands-on contact, psychic readings, or practitioner interpretations.\r\n\r\nSomatic Witnessing combines Arcturian Reiki with simple verbal somatic guidance. The practice emphasizes noticing present-moment sensations and experiences without analyzing, explaining, fixing, or trying to change them.\r\n\r\nSessions are available online, allowing participants to choose a comfortable, private space of their own. There is nothing you need to perform, achieve, manage, or figure out. You can simply notice, allow, and stay present.\r\n\r\nQuiet Presence is a complementary experiential wellness practice, not a substitute for medical or mental health care.",
+    "verified": false
   }
 ]

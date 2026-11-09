@@ -2124,5 +2124,40 @@
     "blurb": "At Jolly Druid, I offer private, remote Spirit Healing sessions. I'm Rowan, a Druid, and I work with plant spirits and guide their soothing energy to you, to calm your mind and replenish your spirit while you rest comfortably at home.",
     "long": "Hi, I'm Rowan, a Druid and the person behind Jolly Druid. I offer private, remote Spirit Healing devoted to helping you feel more at ease, clear your mind, and recharge your spirit.\r\n\r\nI work with plant spirits and guide their soothing energy to you, to calm your mind and replenish your spirit.\r\n\r\nDuring your session, you rest comfortably at home while I devote my attention and spiritual work entirely to you. There's no video call to attend, no exercises to follow, and nothing you need to do except relax.\r\n\r\nEach session is 30 minutes and costs $50. An optional brief phone or text introduction is available beforehand, and you'll receive a personalized written reflection within 24 hours afterward.\r\n\r\nMy practice is rooted in my lifelong connection with nature, my Druidic spirituality, and a sincere desire to offer others gentle, restorative spiritual care.",
     "verified": false
+  },
+  {
+    "slug": "the-tigress-temple",
+    "name": "The Tigress Temple",
+    "person": "Sodie Bombard",
+    "postnominals": "",
+    "logo": null,
+    "categories": [
+      "EnergyMedicine",
+      "Bodywork"
+    ],
+    "city": "Peru",
+    "state": "NY",
+    "zip": "12972",
+    "address": "",
+    "country": "United States",
+    "lat": 44.578486,
+    "lng": -73.527031,
+    "telehealth": true,
+    "phone": "5185340882",
+    "email": "thetigresstemple@gmail.com",
+    "website": "www.thetigresstemple.com",
+    "social": [],
+    "credentials": "—",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "Trauma informed somatic bodywork therapy certification, Reiki Master Teacher Level and continuing education in Usui Ryoho Reiki certification, Sound healing Certification, Woman Healing and Feminine Embodiment certification.",
+    "integrative_training": "",
+    "since": 2025,
+    "affiliations": "",
+    "pricing": "30 minute session $55\r\n60 minute session $75",
+    "payments": "Credit Cards, Debit Cards, Venmo",
+    "insurance": "Not accepted",
+    "blurb": "I perform reiki, a gentle Japanese energy healing modality to bring calm, balance, and connection to the whole body. It can be used to help with pain, regulating the nervous system, and cleanse one’s energy.",
+    "long": "I can offer face to face virtual sessions over zoom. As well as perform a distant reiki healing session without zoom if you are busy and unable to meet.",
+    "verified": false
   }
 ]

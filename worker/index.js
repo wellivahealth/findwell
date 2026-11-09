@@ -1371,7 +1371,13 @@ async function handleReview(request, env) {
   const listings = current ? JSON.parse(fromB64(current.content)) : [];
   const everyone = await withSeeds(env, listings);
   const showAll = url.searchParams.get('all') === '1';
-  const waiting = showAll ? everyone : everyone.filter((l) => !l.verification);
+  const showAside = url.searchParams.get('aside') === '1';
+  const aside = (await readAside(env)).data;
+  const waiting = showAll ? everyone
+    : showAside ? everyone.filter((l) => aside[l.slug] && !l.verification)
+    : everyone.filter((l) => !l.verification && !aside[l.slug]);
+  const keyParam = encodeURIComponent((env.SIGNING_SECRET || '').trim());
+  const asideCount = everyone.filter((l) => aside[l.slug] && !l.verification).length;
   const base = env.SITE_URL || 'https://findwelldirectory.com';
   const today = new Date().toLocaleDateString('en-GB',
     { day: 'numeric', month: 'short', year: 'numeric' });
@@ -1411,14 +1417,32 @@ async function handleReview(request, env) {
         <input name="date" value="${esc(today)}" style="width:8rem;padding:6px 8px;border:1px solid #dbe3e3;border-radius:5px;font:inherit;font-size:14px">
         <button type="submit" style="background:#2e5f5c;color:#fff;border:0;padding:8px 14px;border-radius:5px;font:inherit;font-weight:600;cursor:pointer">Mark confirmed</button>
       </form>
+      <form method="POST" action="${base}/api/aside" style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+        <input type="hidden" name="slug" value="${esc(l.slug)}">
+        <input type="hidden" name="sig" value="${sig}">
+        <input type="hidden" name="key" value="${esc((env.SIGNING_SECRET || '').trim())}">
+        ${aside[l.slug]
+          ? `<span style="font-size:13px;color:#5f7473">Set aside ${esc(aside[l.slug].date)}${aside[l.slug].why ? `: ${esc(aside[l.slug].why)}` : ''}</span>
+             <input type="hidden" name="undo" value="1">
+             <button type="submit" style="font-size:13px;padding:6px 12px;border:1px solid #2e5f5c;background:#fff;color:#2e5f5c;border-radius:5px;cursor:pointer">Back to the to-do list</button>`
+          : `<input name="why" placeholder="Why it can't be verified (optional)" style="flex:1 1 16rem;padding:6px 8px;border:1px solid #dbe3e3;border-radius:5px;font:inherit;font-size:13px">
+             <button type="submit" style="font-size:13px;padding:6px 12px;border:1px solid #9a6b1f;background:#fff;color:#9a6b1f;border-radius:5px;cursor:pointer">Published but not verified</button>`}
+      </form>
     </li>`;
   }));
 
-  return page('Awaiting verification', `<h1>Awaiting verification</h1>
+  const intro = showAside
+    ? `<h1>Published but not verified</h1>
+<p>Listings you have set aside because they cannot be verified. They stay published as reported
+by the practitioner. <a href="${base}/api/review?key=${keyParam}">Back to the to-do list</a></p>`
+    : `<h1>Awaiting verification</h1>
 <p>Listings published as reported by the practitioner. Open the board, check the
-number, then press the button — the fields are already filled in.</p>
+number, then press the button — the fields are already filled in. If a listing can never be
+verified, press <em>Published but not verified</em> to take it off this list; it stays on the site as it is.</p>
+${asideCount ? `<p style="font-size:14px"><a href="${base}/api/review?key=${keyParam}&aside=1">${asideCount} set aside as published but not verified</a></p>` : ''}`;
+  return page(showAside ? 'Published but not verified' : 'Awaiting verification', `${intro}
 <ul style="margin:1rem 0 0">${rows.join('') ||
-  '<li style="padding:12px 0">Everything has been checked.</li>'}</ul>`);
+  `<li style="padding:12px 0">${showAside ? 'Nothing set aside.' : 'Everything has been checked.'}</li>`}</ul>`);
 }
 
 /** /api/selftest?key=… reports whether the pieces the Worker depends on answer. */
@@ -1442,6 +1466,41 @@ async function handleSelftest(request, env) {
   }
   return page('Self test', `<h1>Self test</h1><table style="border-collapse:collapse">${rows.map(([k, v]) =>
     `<tr><td style="padding:6px 14px 6px 0;color:#5f7473">${esc(k)}</td><td style="padding:6px 0">${esc(v)}</td></tr>`).join('')}</table>`);
+}
+
+async function readAside(env) {
+  const f = await readFile(env, 'data/unverifiable.json');
+  return f ? { data: JSON.parse(fromB64(f.content)) } : { data: {} };
+}
+
+/** "Published but not verified": takes a listing off the to-do list without
+ *  changing what the site says about it. Kept in its own file so the build
+ *  never reads it. */
+async function handleAside(request, env) {
+  if (request.method !== 'POST') return page('Not allowed', '<h1>Not allowed</h1>', 405);
+  const f = await request.formData();
+  const slug = (f.get('slug') || '').toString();
+  const sig = (f.get('sig') || '').toString().trim();
+  const undo = !!f.get('undo');
+  const why = (f.get('why') || '').toString().trim().slice(0, 300);
+  const expected = await hmac((env.SIGNING_SECRET || '').trim(), 'verify:' + slug);
+  if (!safeEqual(sig, expected)) return page('Invalid link', '<h1>That link is not valid</h1>', 403);
+
+  const aside = (await readAside(env)).data;
+  if (undo) delete aside[slug];
+  else aside[slug] = {
+    date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'America/Phoenix' }),
+    why, recorded_at: new Date().toISOString(),
+  };
+  await commitFiles(env, `${undo ? 'Back to verify list' : 'Published but not verified'}: ${slug}`,
+    [{ path: 'data/unverifiable.json', contentBase64: b64(JSON.stringify(aside, null, 2) + '\n') }]);
+
+  const base = env.SITE_URL || 'https://findwelldirectory.com';
+  const key = encodeURIComponent((env.SIGNING_SECRET || '').trim());
+  return page('Done', `<h1>${undo ? 'Back on the to-do list' : 'Set aside'}</h1>
+<p>${undo ? 'It is back on the list of listings awaiting verification.'
+          : 'It stays published as reported by the practitioner, and it is off the to-do list.'}</p>
+<p><a href="${base}/api/review?key=${key}">Back to the list</a></p>`);
 }
 
 async function handleVerify(request, env) {
@@ -1519,6 +1578,7 @@ export default {
       if (url.pathname === '/api/review') return await handleReview(request, env);
       if (url.pathname === '/api/categories') return await handleCategories(request, env);
       if (url.pathname === '/api/verify') return await handleVerify(request, env);
+      if (url.pathname === '/api/aside') return await handleAside(request, env);
     } catch (err) {
       console.error(err);
       if (url.pathname === '/api/apply') {

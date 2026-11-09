@@ -2312,5 +2312,39 @@
     "blurb": "I offer shamanic healing sessions and advanced life coaching for people navigating trauma, burnout, major transitions, and periods of uncertainty. With more than 40 years of international experience in trauma, resilience, leadership, and transformation, I blend powerful shamanic practices with research-grounded approaches to help clients release emotional and energetic blocks, reconnect with their deeper self and purpose, and move forward with greater clarity and grounded, sustainable change. I work with clients in person in Takoma Park, Maryland, serving DC, Maryland, and Virginia, as well as online worldwide",
     "long": "I offer shamanic healing sessions and advanced life coaching for people navigating trauma, burnout, major transitions, and periods of uncertainty. With more than 40 years of international experience in trauma, resilience, leadership, and transformation, I blend powerful shamanic practices with research-grounded approaches to help clients release emotional and energetic blocks, reconnect with their deeper self and purpose, and move forward with greater clarity and grounded, sustainable change. I work with clients in person in Takoma Park, Maryland, serving DC, Maryland, and Virginia, as well as online worldwide",
     "verified": false
+  },
+  {
+    "slug": "metabridge-health-wellness",
+    "name": "Metabridge Health & Wellness",
+    "person": "Abimbola Abiodun",
+    "postnominals": "",
+    "logo": "/assets/img/providers/metabridge-health-wellness.jpg",
+    "categories": [
+      "IntegrativeMedicine"
+    ],
+    "city": "Atlanta",
+    "state": "GA",
+    "zip": "30339",
+    "address": "4300 Paces Ferry Rd, Atlanta, GA 30339",
+    "country": "United States",
+    "lat": 33.865504296317,
+    "lng": -84.465600601883,
+    "telehealth": true,
+    "phone": "404-995-1560",
+    "email": "AbbyA@metabridgehealth.com",
+    "website": "www.metabridgehealth.com",
+    "social": [],
+    "credentials": "NCCPA\r\nGA state Medical board\r\nState of UTAH professional Medical Lic\r\nColorado Department of Regulatory Agency",
+    "licensure": "GA 4583, CO PA.0009627, UT 14265753-1206",
+    "training": "Medical College of GA Augusta.\r\nPhysician Assistant studies\r\nButler University \r\nDoctorate of Medical Science",
+    "integrative_training": "Psychiatry Redefined Functional Psychiatry.\r\nBHRT training Academy Hormone Training \r\nAmerican College of Lifestyle Medicine",
+    "since": 2006,
+    "affiliations": "",
+    "pricing": "Initial consult $395\r\nFollow up visit $295- $ 395",
+    "payments": "Cash, Credit Cards, Paypal, Venmo, Zelle",
+    "insurance": "Not accepted",
+    "blurb": "MetaBridge Health & Wellness is a clinician-led telehealth practice specializing in metabolic medicine, functional and metabolic psychiatry, and hormonal health for adults navigating midlife changes, weight challenges, and mood concerns. Our services include medical weight management, GLP-1 weight maintenance, hormone therapy, thyroid care, and treatment for depression and anxiety. We combine advanced testing, personalized treatment, nutrition, and lifestyle interventions to address underlying contributors to symptoms and support lasting health.",
+    "long": "At MetaBridge Health & Wellness, we believe your symptoms are clues—not the whole story.\r\n\r\nWe are a clinician-led telehealth practice specializing in metabolic medicine, functional and metabolic psychiatry, and hormonal health, connecting the dots between metabolism, hormones, brain function, and overall well-being.\r\n\r\nOur services include insulin resistance, prediabetes, metabolic syndrome, medical weight management, GLP-1 weight maintenance, perimenopause and menopause care, bioidentical hormone replacement therapy, thyroid disorders, depression, anxiety, ADHD, and medically supervised ketogenic metabolic therapy.\r\n\r\nWe go beyond conventional symptom management through comprehensive evaluations, advanced laboratory testing, personalized nutrition, lifestyle interventions, and individualized medication management when needed.\r\n\r\nOur goal is to uncover underlying contributors to chronic symptoms, restore metabolic balance, support mental well-being, and help patients achieve sustainable, long-term health.\r\n\r\nOur philosophy: We Investigate Before We Medicate®\r\n\r\nMetaBridge provides personalized virtual care to adults in Georgia, Utah, and Colorado",
+    "verified": false
   }
 ]

@@ -2345,6 +2345,13 @@
     "insurance": "Not accepted",
     "blurb": "MetaBridge Health & Wellness is a clinician-led telehealth practice specializing in metabolic medicine, functional and metabolic psychiatry, and hormonal health for adults navigating midlife changes, weight challenges, and mood concerns. Our services include medical weight management, GLP-1 weight maintenance, hormone therapy, thyroid care, and treatment for depression and anxiety. We combine advanced testing, personalized treatment, nutrition, and lifestyle interventions to address underlying contributors to symptoms and support lasting health.",
     "long": "At MetaBridge Health & Wellness, we believe your symptoms are clues—not the whole story.\r\n\r\nWe are a clinician-led telehealth practice specializing in metabolic medicine, functional and metabolic psychiatry, and hormonal health, connecting the dots between metabolism, hormones, brain function, and overall well-being.\r\n\r\nOur services include insulin resistance, prediabetes, metabolic syndrome, medical weight management, GLP-1 weight maintenance, perimenopause and menopause care, bioidentical hormone replacement therapy, thyroid disorders, depression, anxiety, ADHD, and medically supervised ketogenic metabolic therapy.\r\n\r\nWe go beyond conventional symptom management through comprehensive evaluations, advanced laboratory testing, personalized nutrition, lifestyle interventions, and individualized medication management when needed.\r\n\r\nOur goal is to uncover underlying contributors to chronic symptoms, restore metabolic balance, support mental well-being, and help patients achieve sustainable, long-term health.\r\n\r\nOur philosophy: We Investigate Before We Medicate®\r\n\r\nMetaBridge provides personalized virtual care to adults in Georgia, Utah, and Colorado",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "GA 4583, CO PA.0009627",
+      "source": "National NPI Registry",
+      "date": "9 Nov 2026",
+      "by": "admin",
+      "recorded_at": "2026-11-09T22:02:16.149Z"
+    }
   }
 ]

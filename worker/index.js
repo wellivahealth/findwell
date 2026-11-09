@@ -1197,6 +1197,9 @@ ${confirmed ? '' : `<p style="font-size:14px"><a href="${base}/api/review?key=${
 /** Why an application was declined, and the sentence the applicant reads.
  *  `advertise` adds the line pointing them to advertising instead. */
 const DECLINE_REASONS = {
+  business: { label: 'A business, not a practitioner',
+    text: 'FindWell lists individual practitioners rather than businesses, so that every listing can show one person\'s credentials. We would be glad to receive a new application with the practitioner\'s name and credentials that we can verify, such as a license number or a certification.',
+    advertise: false, resubmit: true },
   products: { label: 'A product, not a service',
     text: 'FindWell lists practitioners who offer services directly to clients, and we are not accepting products on our site.',
     advertise: true },
@@ -1213,6 +1216,8 @@ const declineEmail = (s, reason) => {
   return shell(`<p>Dear ${esc(s.first || 'applicant')},</p>
 <p>Thank you for applying to the FindWell Directory, and for your interest in our community.</p>
 <p>After reviewing your application, we are not able to publish a listing for <strong>${esc(s.practice)}</strong>. ${esc(r.text)}</p>
+${r.resubmit ? `<p><a href="https://findwelldirectory.com/join/" style="display:inline-block;background:#2e5f5c;color:#fff;text-decoration:none;padding:10px 18px;border-radius:6px;font-weight:600">Apply again</a></p>
+<p style="font-size:14px;color:#5f7473">Several practitioners from one practice are welcome, each with their own application.</p>` : ''}
 ${r.advertise ? '<p>Instead, please consider advertising your business on our website. To learn more, email us at <a href="mailto:findwelldirectory@gmail.com" style="color:#2e5f5c">findwelldirectory@gmail.com</a>.</p>' : ''}
 <p style="margin-top:24px">Warmly,<br>Amita Nathwani, CEO<br>Emma Vasseur, Practitioner Liaison<br>FindWell Directory</p>`);
 };

@@ -2043,5 +2043,43 @@
     "blurb": "I hold a degree in Health Sciences from James Madison University and am currently earning my Master of Arts in Counseling at Eastern Mennonite University, and I bring that training to every coaching relationship.\r\nI work alongside my clients, not over them. My style is direct: I ask a lot of questions and set goals we can actually measure, so progress is clear week to week. Whether you’re a student learning to manage your time, a parent supporting a teen, or an adult navigating a health condition or a big life change, we’ll build systems that fit your life and that you can own.",
     "long": "My own journey through significant chronic health challenges deeply shaped my understanding of healing, perseverance, and personal growth. It taught me that wellness is rarely a perfect or linear process. Often, meaningful breakthrough begins with small, intentional steps taken with courage, compassion, and grace.\r\n\r\nAt On Track Wellness Coaching, I strive to create a supportive space where clients feel heard, encouraged, and empowered as they navigate life’s challenges and pursue lasting, meaningful change.\r\n\r\nI believe meaningful change can begin with a single conversation. I specialize in coaching teens, college students, and adults with ADHD and executive function challenges. I also support clients who are:\r\n\r\nManaging a chronic health or neurological condition\r\nNavigating pregnancy or new parenthood\r\nGoing through a midlife transition\r\nFeeling stressed, stuck, or overwhelmed",
     "verified": false
+  },
+  {
+    "slug": "driver-chiropractic",
+    "name": "Driver Chiropractic",
+    "person": "Dylan Driver",
+    "postnominals": "",
+    "logo": "/assets/img/providers/driver-chiropractic.jpg",
+    "categories": [
+      "Coaching",
+      "Chiropractic"
+    ],
+    "city": "Columbus",
+    "state": "NE",
+    "zip": "68601",
+    "address": "2421 23rd St., Columbus, NE 68601",
+    "country": "United States",
+    "lat": 41.438531100345,
+    "lng": -97.357023372243,
+    "telehealth": true,
+    "phone": "(402) 270-1062",
+    "email": "driverchiropractic@gmail.com",
+    "website": "https://www.driverchiropractic.com/",
+    "social": [
+      "https://www.facebook.com/driverchiropractic/",
+      "https://www.instagram.com/driverchiropractic/"
+    ],
+    "credentials": "Board Certified by the National Board of Chiropractic Examiners (Parts I, II, III, and IV)\r\nBoard Certified in Physiotherapy, National Board of Chiropractic Examiners\r\nMember, Nebraska Chiropractic Physicians Association\r\nMember, American Chiropractic Association\r\nMember, SecureCare of Nebraska",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "Doctor of Chiropractic, Logan College of Chiropractic (St Louis, MO), 2013\r\nUndergraduate studies in Exercise Science and Human Nutrition, University of Nebraska-Lincoln\r\nBoard Certified by the National Board of Chiropractic Examiners (Parts I, II, III, and IV)\r\nBoard Certified in Physiotherapy, National Board of Chiropractic Examiners\r\nMember, Nebraska Chiropractic Physicians Association\r\nMember, American Chiropractic Association\r\nMember, SecureCare of Nebraska\r\nChiropractic seminar speaker",
+    "integrative_training": "",
+    "since": 2014,
+    "affiliations": "",
+    "pricing": "Treatment cost should be the least of your worries when you're recovering. For your peace of mind, Driver Chiropractic will help you deal with your chiropractic insurance claims to make care easier on your wallet. \r\n\r\nContact us to verify your coverage before your visit.",
+    "payments": "Insurance, Cash, HSA/FSA, Debit Cards",
+    "insurance": "Accepted — verify your plan with the practice",
+    "blurb": "\"Driver Chiropractic is one of the most respected chiropractic care facilities in Columbus. We offer a wide range of services to help you get & stay healthy, including chiropractic, pediatric, & prenatal. Our experienced Columbus chiropractor will work with you to develop a treatment plan that meets your specific needs.\r\n\r\nOur chiropractor treats the following, but is not limited to:\r\n- Back Pain\r\n- Neck Pain\r\n- Sciatica\r\n- Headaches & Migraines\r\n- Herniated Discs\r\n- Auto Accidents\r\n- Sports Injuries\r\n- And more!\r\n\r\nWe also offer convenient walk-in hours so you can get the care you need when you need it. Contact us today to schedule your appointment!\"",
+    "long": "Why Patients in Columbus, NE, Choose Driver Chiropractic\r\n\r\nAt Driver Chiropractic, every treatment plan is personalized to each patient’s condition, goals, and lifestyle. Dr. Driver listens to all your concerns and thoroughly evaluates your condition to design a treatment tailored to you.\r\n\r\nFurthermore, Dr. Driver’s experience and advanced knowledge, along with his patient-centered approach to care, enable him to deliver treatments that go beyond short-term pain relief and help maintain your spinal health for years to come.",
+    "verified": false
   }
 ]

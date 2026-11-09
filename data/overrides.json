@@ -142,5 +142,10 @@
   },
   "bespoke-health": {
     "postnominals": "PA-C"
+  },
+  "your-homeopathy": {
+    "categories": [
+      "Homeopathy"
+    ]
   }
 }

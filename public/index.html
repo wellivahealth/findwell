@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Young+Serif&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=7215015b30">
+<link rel="stylesheet" href="/assets/site.css?v=23d662aafb">
 <link rel="preload" as="image" href="/assets/img/hero-1400.webp?v=5db5d2ddfd" imagesrcset="/assets/img/hero-900.webp?v=5db5d2ddfd 900w, /assets/img/hero-1400.webp?v=5db5d2ddfd 1400w" imagesizes="(max-width:900px) 100vw, 470px" type="image/webp">
 </head>
 <body data-view="home">
@@ -39,7 +39,7 @@
            alt="FindWell Directory — a network of holistic health care providers"></a>
     <button class="burger" id="burger" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav" aria-label="Main">
-      <a href="/directory/">Find care</a><a href="/locations/">Locations</a><a href="/practice-types/">Disciplines</a><a href="/verification/">How we verify</a><a href="/about/">About us</a><a href="/articles/">Articles</a>
+      <div class="nav-drop"><button type="button" class="nav-drop-btn" id="find-toggle" aria-expanded="false" aria-controls="find-menu">Find care <svg class="nav-chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="nav-drop-menu" id="find-menu"><a href="/directory/">All practitioners</a><a href="/locations/">By location</a><a href="/practice-types/">By discipline</a></div></div><a href="/verification/">How we verify</a><a href="/about/">About us</a><a href="/articles/">Articles</a>
       <a class="cta" href="/join/">List your practice</a>
     </nav>
   </div>
@@ -58,11 +58,11 @@
           <span class="fw-search-div" aria-hidden="true"></span>
           <label class="fw-search-f"><span>Where?</span>
             <input id="c-loc" name="where" type="text" placeholder="City, state or ZIP" list="where-list"></label>
-          <datalist id="where-list"><option value="Arizona"><option value="British Columbia"><option value="California"><option value="Colorado"><option value="District of Columbia"><option value="Florida"><option value="Georgia"><option value="Idaho"><option value="Illinois"><option value="Indiana"><option value="Maryland"><option value="Massachusetts"><option value="Michigan"><option value="New Hampshire"><option value="New York"><option value="Ohio"><option value="Oklahoma"><option value="Tennessee"><option value="Texas"><option value="Utah"><option value="Virginia"><option value="Washington"><option value="Wisconsin"></datalist>
+          <datalist id="where-list"><option value="Arizona"><option value="British Columbia"><option value="California"><option value="Colorado"><option value="District of Columbia"><option value="Florida"><option value="Georgia"><option value="Idaho"><option value="Illinois"><option value="Indiana"><option value="Maryland"><option value="Massachusetts"><option value="Michigan"><option value="Nebraska"><option value="New Hampshire"><option value="New York"><option value="Ohio"><option value="Oklahoma"><option value="Tennessee"><option value="Texas"><option value="Utah"><option value="Virginia"><option value="Washington"><option value="Wisconsin"></datalist>
           <button class="fw-search-go" type="submit">Search</button>
         </form>
         <div class="fw-faces"><span class="fw-faces-row"><picture><source type="image/webp" srcset="/assets/img/providers/celia-hildebrand-acupuncture.webp?v=a00780472e"><img class="avatar" src="/assets/img/providers/celia-hildebrand-acupuncture.png?v=aff7d9c18e" alt="Celia Hildebrand Acupuncture logo" loading="lazy" decoding="async" width="200" height="200"></picture><picture><source type="image/webp" srcset="/assets/img/providers/hibiscus-acupuncture.webp?v=01eb2884f0"><img class="avatar" src="/assets/img/providers/hibiscus-acupuncture.png?v=af637a9267" alt="Hibiscus Acupuncture logo" loading="lazy" decoding="async" width="200" height="200"></picture><picture><source type="image/webp" srcset="/assets/img/providers/catalina-acupuncture.webp?v=00b2d66386"><img class="avatar" src="/assets/img/providers/catalina-acupuncture.png?v=f3fd73ba1f" alt="Catalina Acupuncture logo" loading="lazy" decoding="async" width="200" height="200"></picture><picture><source type="image/webp" srcset="/assets/img/providers/origins-health.webp?v=1529b7d6a9"><img class="avatar" src="/assets/img/providers/origins-health.png?v=ca35ec6226" alt="Origins Health logo" loading="lazy" decoding="async" width="200" height="200"></picture></span>
-          <span>61 practitioners in 23 states, and growing
+          <span>62 practitioners in 24 states, and growing
           &middot; <button type="button" class="fw-linkbtn" data-near="1" form="console">Use my location</button></span></div>
       </div>
       <div class="fw-hero-art rise rise-2">
@@ -100,7 +100,14 @@
 
   <section class="wrap fw-sec">
     <div class="fw-head"><h2>Recently joined</h2><a href="/directory/">See all practitioners</a></div>
-    <div class="fw-cards"><a class="fw-card" href="/provider/on-track-wellness-coaching/">
+    <div class="fw-cards"><a class="fw-card" href="/provider/driver-chiropractic/">
+        <img class="avatar" src="/assets/img/providers/driver-chiropractic.jpg?v=9aab5ef193" alt="Driver Chiropractic logo" loading="lazy" decoding="async" width="200" height="200">
+        <span class="fw-card-body">
+          <span class="fw-card-name">Driver Chiropractic</span>
+          <span class="fw-card-meta">Dylan Driver · Columbus, NE · Since 2014</span>
+          <span class="fw-tags"><span class="fw-tag">Health coaching</span><span class="fw-tag">Chiropractic</span><span class="fw-tag">Telehealth</span><span class="fw-tag fw-tag-ok">Credentials confirmed</span></span>
+        </span>
+      </a><a class="fw-card" href="/provider/on-track-wellness-coaching/">
         <img class="avatar" src="/assets/img/providers/on-track-wellness-coaching.jpg?v=c7b246827d" alt="On Track Wellness Coaching logo" loading="lazy" decoding="async" width="200" height="200">
         <span class="fw-card-body">
           <span class="fw-card-name">On Track Wellness Coaching</span>
@@ -134,13 +141,6 @@
           <span class="fw-card-name">Emily Laraine Wellness LLC</span>
           <span class="fw-card-meta">Emily Carlile, CNS · St. Petersburg, FL · Since 2023</span>
           <span class="fw-tags"><span class="fw-tag">Nutrition</span><span class="fw-tag">Health coaching</span><span class="fw-tag">Telehealth</span><span class="fw-tag fw-tag-ok">License confirmed</span></span>
-        </span>
-      </a><a class="fw-card" href="/provider/phleblab-llc/">
-        <img class="avatar" src="/assets/img/providers/phleblab-llc.jpg?v=e2e94eb747" alt="PhlebLab LLC logo" loading="lazy" decoding="async" width="200" height="200">
-        <span class="fw-card-body">
-          <span class="fw-card-name">PhlebLab LLC</span>
-          <span class="fw-card-meta">Renee Blackmon, CFNMP · Richmond Hts, OH · Since 2024</span>
-          <span class="fw-tags"><span class="fw-tag">Health coaching</span><span class="fw-tag">Counseling</span><span class="fw-tag">Telehealth</span></span>
         </span>
       </a></div>
   </section>

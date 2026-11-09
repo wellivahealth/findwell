@@ -70,6 +70,19 @@ main{ display:block; }
 .nav .cta{ background:var(--clay); color:#fff; padding:.75rem 1.35rem; border-radius:999px; font-weight:700; }
 .nav .cta:hover{ background:var(--clay-hover); color:#fff; }
 @media (max-width:1240px){ .nav{ gap:.4rem 1.15rem; } .nav a{ font-size:.96rem; } .nav .cta{ padding:.7rem 1.1rem; } }
+.nav-drop{ position:relative; }
+.nav-drop-btn{ display:inline-flex; align-items:center; gap:.35rem; background:none; border:0; padding:0; font:inherit; font-weight:500; font-size:1rem; color:var(--ink); cursor:pointer; }
+.nav-drop-btn:hover, .nav-drop.is-here .nav-drop-btn{ color:var(--moss); }
+.nav-drop.is-here .nav-drop-btn{ font-weight:700; }
+.nav-chev{ transition:transform .18s var(--ease); }
+.nav-drop-btn[aria-expanded="true"] .nav-chev{ transform:rotate(180deg); }
+.nav-drop-menu{ display:none; position:absolute; left:-1rem; top:calc(100% + .6rem); min-width:13rem; background:var(--surface); border-radius:var(--r-md, 18px); box-shadow:0 16px 36px rgba(31,61,43,.14); padding:.5rem; z-index:120; }
+.nav-drop-menu::before{ content:""; position:absolute; left:0; right:0; top:-.7rem; height:.7rem; }
+.nav-drop-menu a{ display:block; padding:.65rem .9rem; border-radius:10px; }
+.nav-drop-menu a:hover{ background:var(--sage-bg); }
+.nav-drop-btn[aria-expanded="true"] + .nav-drop-menu{ display:block; }
+@media (hover:hover) and (min-width:1021px){ .nav-drop:hover .nav-drop-menu{ display:block; } }
+@media (max-width:1240px){ .nav-drop-btn{ font-size:.96rem; } }
 .burger{ display:none; border:1.5px solid var(--line-strong); background:var(--surface); border-radius:999px; padding:.55rem 1.1rem; font-weight:600; cursor:pointer; }
 @media (max-width:1020px){
   .burger{ display:block; }
@@ -77,6 +90,13 @@ main{ display:block; }
   .nav.open{ display:flex; }
   .nav a{ padding:.8rem .2rem; border-bottom:1px solid var(--line); }
   .nav .cta{ margin-top:.8rem; text-align:center; border-bottom:0; }
+  .nav-drop-btn{ width:100%; justify-content:flex-start; padding:.8rem .2rem .3rem; font-weight:700; color:var(--moss); cursor:default; }
+  .nav-drop-btn .nav-chev{ display:none; }
+  .nav-drop-menu{ display:block; position:static; box-shadow:none; background:none; padding:0 0 .3rem; min-width:0; }
+  .nav-drop-menu::before{ display:none; }
+  .nav-drop-menu a{ padding:.65rem .2rem .65rem 1rem; border-radius:0; }
+  .nav-drop{ border-bottom:1px solid var(--line); }
+  .nav-drop-menu a:last-child{ border-bottom:0; }
   .masthead-in{ position:relative; }
 }
 

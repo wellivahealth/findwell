@@ -1011,5 +1011,25 @@
   "licensure": "No state licensure exists for this discipline",
   "verification": null,
   "seed": false
+ },
+ {
+  "slug": "driver-chiropractic",
+  "name": "Driver Chiropractic",
+  "person": "Dylan Driver",
+  "city": "Columbus",
+  "state": "NE",
+  "categories": [
+   "Coaching",
+   "Chiropractic"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": {
+   "what": "Credentials confirmed",
+   "source": "Nebraska Dept. of Health & Human Services",
+   "date": "9 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-09T18:03:15.488Z"
+  },
+  "seed": false
  }
 ]

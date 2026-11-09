@@ -905,13 +905,25 @@ DISC_DRAWING = {"Ayurveda": "mortar", "Herbalism": "mortar", "Acupuncture": "nee
 
 def shell(title, desc, path, body, view="", extra_head=""):
     """Wrap page content in the shared chrome. `path` is the canonical URL path."""
-    links = [("/directory/", "Find care"), ("/locations/", "Locations"), ("/practice-types/", "Disciplines"),
-             ("/verification/", "How we verify"), ("/about/", "About us"),
-             ("/articles/", "Articles")]
+    find_items = [("/directory/", "All practitioners"), ("/locations/", "By location"),
+                  ("/practice-types/", "By discipline")]
+    links = [("/verification/", "How we verify"), ("/about/", "About us"), ("/articles/", "Articles")]
     def cur(h):
+        return ' aria-current="page"' if path.startswith(h) else ""
+    find_here = path.startswith(("/directory/", "/provider/", "/locations/", "/practice-types/"))
+    def item_cur(h):
         hit = path.startswith(h) or (h == "/directory/" and path.startswith("/provider/"))
         return ' aria-current="page"' if hit else ""
-    navhtml = "".join(f'<a href="{h}"{cur(h)}>{t}</a>' for h, t in links)
+    chevron = ('<svg class="nav-chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">'
+               '<path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" '
+               'stroke-linecap="round" stroke-linejoin="round"/></svg>')
+    navhtml = (f'<div class="nav-drop{" is-here" if find_here else ""}">'
+               f'<button type="button" class="nav-drop-btn" id="find-toggle" aria-expanded="false" '
+               f'aria-controls="find-menu">Find care {chevron}</button>'
+               f'<div class="nav-drop-menu" id="find-menu">'
+               + "".join(f'<a href="{h}"{item_cur(h)}>{t}</a>' for h, t in find_items)
+               + '</div></div>'
+               + "".join(f'<a href="{h}"{cur(h)}>{t}</a>' for h, t in links))
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>

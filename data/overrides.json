@@ -2,7 +2,8 @@
   "basic-habits": {
     "categories": [
       "Nutrition"
-    ]
+    ],
+    "postnominals": "RDN"
   },
   "steps-nutrition-group": {
     "city": "Coral Springs",
@@ -15,7 +16,9 @@
     "licensure": "Licensed Dietitian-Nutritionist: Florida LDN10642",
     "pricing": "Insurance-based practice. Cash-pay $450 for a comprehensive 90-minute initial consultation, $300 for a 60-minute follow-up, and $180 for a focused 30-minute check-in.",
     "insurance": "Accepted: Aetna, Meritain, UnitedHealthcare, Cigna, Curative, Humana and Medicare. Verify your plan with the practice.",
-    "logo": "/assets/img/providers/steps-nutrition-group-photo.jpg"
+    "logo": "/assets/img/providers/steps-nutrition-group-photo.jpg",
+    "person": "Miriam Wiener",
+    "postnominals": "MS, MPH, CNS, LDN"
   },
   "anita-kellman-end-of-life-doula": {
     "categories": [
@@ -36,6 +39,74 @@
     "categories": [
       "Counseling",
       "Massage"
-    ]
+    ],
+    "postnominals": "LCSW, BC-TMH"
+  },
+  "lotus-wellspring-healthcare": {
+    "person": "Sybil Ihrig",
+    "postnominals": "DACM, L.Ac., CCH"
+  },
+  "tracy-villegas-lmt": {
+    "postnominals": "LMT"
+  },
+  "working-on-calm-llc": {
+    "postnominals": "NBC-HWC"
+  },
+  "wholistic-medical-group": {
+    "postnominals": "DOM, AP"
+  },
+  "spectrum-wellcare": {
+    "postnominals": "DTCM, MPH, AP"
+  },
+  "rocky-top-vitality": {
+    "postnominals": "APRN, FNP"
+  },
+  "my-healing-garden": {
+    "postnominals": "CBS"
+  },
+  "happy-belly-health-san-diego": {
+    "postnominals": "NBC-HWC"
+  },
+  "stone-spirit-healing-arts": {
+    "postnominals": "LCMHC, RM"
+  },
+  "anastasia-dosov-nutrition-and-wellness-consulting-llc": {
+    "postnominals": "MS, CNS, LDN"
+  },
+  "barefoot-nurse-nutritionist": {
+    "postnominals": "RN, CNS, LDN"
+  },
+  "emma-harvie-nutrition": {
+    "postnominals": "CNS"
+  },
+  "wildflower-nutrition-llc": {
+    "postnominals": "CNS, NBC-HWC"
+  },
+  "fuel-nourish-thrive": {
+    "postnominals": "CNS, LDN"
+  },
+  "the-whole-story-llc": {
+    "postnominals": "FMCHC"
+  },
+  "lani-page-deguia-nutrition": {
+    "postnominals": "CNS"
+  },
+  "tish-campbell-llc": {
+    "postnominals": "CNS"
+  },
+  "phleblab-llc": {
+    "postnominals": "CFNMP"
+  },
+  "emily-laraine-wellness-llc": {
+    "postnominals": "CNS"
+  },
+  "katy-slany": {
+    "postnominals": "RSMT/E"
+  },
+  "everyday-nutrition-llc": {
+    "postnominals": "CNS"
+  },
+  "robert-bremer": {
+    "postnominals": "C.Ht., C.R."
   }
 }

@@ -594,6 +594,10 @@ def _apply_corrections():
         v = p.get("verification")
         if bad and v and (v.get("source") or "").strip().lower() == bad.lower():
             p["verification"] = None
+        # older applications copied certifications into memberships too
+        if (p.get("affiliations") or "").strip() and \
+                (p.get("affiliations") or "").strip() == (p.get("credentials") or "").strip():
+            p["affiliations"] = ""
         # the same text given as both summary and description reads as a mistake
         if (p.get("long") or "").strip() and \
                 (p.get("long") or "").strip() == (p.get("blurb") or "").strip():
@@ -1011,6 +1015,12 @@ def console_html():
     </div>
   </form>"""
 
+def person_name(p):
+    """The practitioner's name with the letters they sign with."""
+    who = (p.get("person") or "").strip()
+    post = (p.get("postnominals") or "").strip().strip(",").strip()
+    return f"{who}, {post}" if who and post else who
+
 def remote_label(p):
     """What a listing's remote care is called. Most say Telehealth; a
     practice can ask for its own wording (e.g. Distance Reiki)."""
@@ -1111,12 +1121,12 @@ def val(x, dash="—"):
     return E(x) if x else dash
 
 def record_html(p):
-    hay = " ".join([p["name"], p["person"], p["city"], p["state"], p["zip"],
+    hay = " ".join([p["name"], person_name(p), p["city"], p["state"], p["zip"],
                     p["credentials"], p["training"], p["blurb"], p["licensure"]] +
                    [disc(c)["label"] for c in p["categories"]] +
                    [friendly(c) for c in p["categories"]]).lower()
     fee = fee_from(p)
-    meta = " · ".join(x for x in [E(p["person"]) if p["person"] and p["person"] != p["name"] else "",
+    meta = " · ".join(x for x in [E(person_name(p)) if p["person"] and (p["person"] != p["name"] or p.get("postnominals")) else "",
                                          f'{E(p["city"])}, {E(p["state"])}', since_txt(p)] if x)
     return f"""<li class="record" data-cats="{' '.join(p['categories'])}"
       data-city="{E(p['city'])}" data-state="{p['state']}" data-tele="{1 if p['telehealth'] else 0}"
@@ -1176,7 +1186,7 @@ def card_html(p):
     return f"""<a class="ha-card" href="/provider/{p['slug']}/">
         <div class="ha-card-head">{avatar(p)}<div class="ha-card-id">
           <span class="ha-card-name">{E(p['name'])}</span>
-          <span class="ha-card-person">{E(p['person'])}</span></div></div>
+          <span class="ha-card-person">{E(person_name(p))}</span></div></div>
         <div class="ha-chips">{labels_html(p)}</div>
         <div class="ha-card-meta"><span>{E(p['city'])}, {E(p['state'])}</span><span>{since_txt}</span></div>
         <div class="ha-card-verify">{verify_short(p)}</div>
@@ -1255,7 +1265,7 @@ def since_txt(p):
 
 
 def wide_card(p):
-    meta = " · ".join(x for x in [E(p["person"]) if p["person"] and p["person"] != p["name"] else "",
+    meta = " · ".join(x for x in [E(person_name(p)) if p["person"] and (p["person"] != p["name"] or p.get("postnominals")) else "",
                                          f'{E(p["city"])}, {E(p["state"])}', since_txt(p)] if x)
     return f"""<a class="fw-card" href="/provider/{p['slug']}/">
         {avatar(p)}
@@ -1557,7 +1567,7 @@ def page_provider(p):
         {avatar(p, True)}
         <div class="fw-prof-id">
           <h1>{E(p['name'])}</h1>
-          <p class="fw-prof-person">{E(p['person']) + ' &middot; ' if p['person'] and p['person'] != p['name'] else ''}{E(p['city'])}, {E(state_name(p['state']))}</p>
+          <p class="fw-prof-person">{E(person_name(p)) + ' &middot; ' if p['person'] and (p['person'] != p['name'] or p.get('postnominals')) else ''}{E(p['city'])}, {E(state_name(p['state']))}</p>
           <div class="fw-tags">{tags}</div>
         </div>
         <div class="fw-prof-actions">
@@ -1691,6 +1701,8 @@ def page_join():
           <div class="form-grid">
             <div class="field"><label for="j-first">First name *</label><input class="control" id="j-first" name="First name" autocomplete="given-name" required><p class="err">Required.</p></div>
             <div class="field"><label for="j-last">Last name *</label><input class="control" id="j-last" name="Last name" autocomplete="family-name" required><p class="err">Required.</p></div>
+            <div class="field full"><label for="j-post">Credentials after your name</label><input class="control" id="j-post" name="Credentials after your name" placeholder="e.g. L.Ac., ND, RDN, LMT, NBC-HWC" autocomplete="honorific-suffix">
+              <p class="hint">The letters you sign with, as they should appear after your name. Leave blank if you don't use any.</p></div>
             <div class="field full"><label for="j-practice">Practice or business name *</label><input class="control" id="j-practice" name="Practice or business name" required><p class="err">Required.</p></div>
             <div class="field"><label for="j-email">Email *</label><input class="control" id="j-email" name="email" type="email" autocomplete="email" required><p class="err">Enter a working email address.</p></div>
             <div class="field"><label for="j-phone">Phone *</label><input class="control" id="j-phone" name="Phone" type="tel" autocomplete="tel" required><p class="err">Required.</p></div>

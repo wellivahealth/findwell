@@ -681,7 +681,7 @@ function adminEmailBody(s, approveUrl, declineUrl, checkBlock) {
     ? `<tr><td style="padding:4px 12px 4px 0;color:#5f7473;vertical-align:top;white-space:nowrap">${esc(k)}</td><td style="padding:4px 0">${esc(v)}</td></tr>`
     : '';
   return shell(`<h2 style="font-size:20px;margin:0 0 4px">New application — ${esc(s.practice)}</h2>
-<p style="margin:0 0 16px;color:#5f7473">${esc(s.first)} ${esc(s.last)} · ${esc(s.city)}, ${esc(s.state)}</p>
+<p style="margin:0 0 16px;color:#5f7473">${esc(s.first)} ${esc(s.last)}${s.post ? ', ' + esc(s.post) : ''} · ${esc(s.city)}, ${esc(s.state)}</p>
 <p style="margin:0 0 20px">
 <a href="${esc(approveUrl)}" style="display:inline-block;background:#2e5f5c;color:#fff;text-decoration:none;padding:11px 20px;border-radius:6px;font-weight:600;margin-right:8px">Approve &amp; publish</a>
 <a href="${esc(declineUrl)}" style="display:inline-block;background:#fff;color:#c23a4b;border:1px solid #c23a4b;text-decoration:none;padding:10px 19px;border-radius:6px;font-weight:600">Decline</a></p>
@@ -757,7 +757,7 @@ function readForm(form) {
   const g = (k) => (form.get(k) || '').toString().trim();
   const split = (k) => g(k).split(',').map((s) => s.trim()).filter(Boolean);
   const s = {
-    first: g('First name'), last: g('Last name'), practice: g('Practice or business name'),
+    first: g('First name'), last: g('Last name'), post: g('Credentials after your name'), practice: g('Practice or business name'),
     email: g('email'), phone: g('Phone'), website: g('Website'), social: g('Social media'),
     physical: g('physical'), country: g('Country'),
     addr1: g('Address line 1'), addr2: g('Address line 2'),
@@ -808,6 +808,7 @@ function toListing(s, coords, logoPath) {
     slug: slugify(s.practice),
     name: s.practice,
     person: `${s.first} ${s.last}`.trim(),
+    postnominals: s.post || '',
     logo: logoPath || null,
     categories: s.scope.map((x) => SCOPE_TO_KEY[x]).filter(Boolean),
     city: s.city, state: s.state, zip: s.zip, address: s.address,
@@ -830,7 +831,7 @@ function toListing(s, coords, logoPath) {
     training: s.training || '—',
     integrative_training: s.integrative || '',
     since: Number.isFinite(years) && years > 0 && years < 90 ? year - years : null,
-    affiliations: s.certs || '—',
+    affiliations: '',
     pricing: s.pricing || '—',
     payments: s.payments.join(', ') || '—',
     insurance: s.payments.includes('Insurance')

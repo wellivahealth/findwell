@@ -108,5 +108,33 @@
   },
   "robert-bremer": {
     "postnominals": "C.Ht., C.R."
+  },
+  "civano-chiropractic-clinics": {
+    "postnominals": "DC"
+  },
+  "hudson-spine-health": {
+    "postnominals": "DC"
+  },
+  "chiropractic-first": {
+    "postnominals": "DC",
+    "person": "TJ Gudilin"
+  },
+  "common-roots-acupuncture": {
+    "postnominals": "L.Ac."
+  },
+  "chi-harmony-acupuncture": {
+    "postnominals": "L.Ac."
+  },
+  "natural-healing-acupuncture": {
+    "postnominals": "L.Ac., FABORM"
+  },
+  "la-vie-md": {
+    "postnominals": "MD"
+  },
+  "life-again-therapy-llc": {
+    "postnominals": "LCSW"
+  },
+  "bespoke-health": {
+    "postnominals": "PA"
   }
 }

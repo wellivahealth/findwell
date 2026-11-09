@@ -364,7 +364,7 @@ picture{ display:contents; }
 .fw-verify-ok .fw-verify-t{ color:#4d3608; }
 .fw-verify-ok .fw-verify-d, .fw-verify-ok .fw-verify-d a{ color:var(--honey-ink); }
 .fw-leaf-ic{ color:#a8761e; flex:none; }
-.fw-bio{ font-size:1.12rem; line-height:1.7; max-width:68ch; }
+.fw-bio{ font-size:1.12rem; line-height:1.7; max-width:68ch; margin:0 0 .8rem; }
 .fw-bio-soft{ color:var(--ink-soft); }
 .fw-fees{ background:var(--surface); border-radius:24px; padding:.4rem 1.5rem; }
 .fw-fee{ padding:.9rem 0; }

@@ -169,7 +169,9 @@
   "person": "Anita Kellman",
   "city": "Tucson",
   "state": "AZ",
-  "categories": [],
+  "categories": [
+   "Counseling"
+  ],
   "licensure": "No state licensure exists for doula practice; not a licensed counsellor",
   "verification": null,
   "seed": true
@@ -426,12 +428,17 @@
   "city": "Tulsa",
   "state": "OK",
   "categories": [
-   "EnergyMedicine",
    "Counseling",
-   "Coaching"
+   "Massage"
   ],
   "licensure": "Oklahoma (22645), Florida (TPSW7232), South Carolina (2089), and Idaho (9081435).",
-  "verification": null,
+  "verification": {
+   "what": "Oklahoma (22645)",
+   "source": "Oklahoma State Board of Licensed Social Workers",
+   "date": "2 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-02T22:50:08.373Z"
+  },
   "seed": false
  },
  {
@@ -848,6 +855,161 @@
    "by": "admin",
    "recorded_at": "2026-10-25T18:13:40.219Z"
   },
+  "seed": false
+ },
+ {
+  "slug": "la-vie-md",
+  "name": "LA VIE MD",
+  "person": "Neetu Nebhwani",
+  "city": "Danville",
+  "state": "CA",
+  "categories": [
+   "IntegrativeMedicine",
+   "Nutrition",
+   "Coaching",
+   "Massage"
+  ],
+  "licensure": "C 142075",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "sterling-counseling",
+  "name": "Sterling Counseling",
+  "person": "Olivia Sterling",
+  "city": "Nyack",
+  "state": "NY",
+  "categories": [
+   "Counseling"
+  ],
+  "licensure": "89877",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "life-again-therapy-llc",
+  "name": "Life Again Therapy, LLC",
+  "person": "Denesia Joseph",
+  "city": "Colorado Springs",
+  "state": "CO",
+  "categories": [
+   "Counseling"
+  ],
+  "licensure": "Colorado CSW.09933831",
+  "verification": {
+   "what": "Colorado CSW.09933831",
+   "source": "the Colorado mental health boards (LPC, LMFT, LCSW, psychologist), through the DORA licence lookup",
+   "date": "28 Oct 2026",
+   "by": "admin",
+   "recorded_at": "2026-10-28T22:30:59.907Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "phleblab-llc",
+  "name": "PhlebLab LLC",
+  "person": "Renee Blackmon",
+  "city": "Richmond Hts",
+  "state": "OH",
+  "categories": [
+   "Coaching",
+   "Counseling"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "emily-laraine-wellness-llc",
+  "name": "Emily Laraine Wellness LLC",
+  "person": "Emily Carlile",
+  "city": "St. Petersburg",
+  "state": "FL",
+  "categories": [
+   "Nutrition",
+   "Coaching"
+  ],
+  "licensure": "Florida Dietetics and Nutrition Practice Council #ND 14489 Illinois 164.022755",
+  "verification": {
+   "what": "Florida ND 14489 Illinois 164.022755",
+   "source": "the Florida Dietetics and Nutrition Practice Council, through the Department of Health licence search",
+   "date": "28 Oct 2026",
+   "by": "admin",
+   "recorded_at": "2026-10-28T23:18:46.048Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "katy-slany",
+  "name": "Katy Slany",
+  "person": "Katy Slany",
+  "city": "Nanoose Bay",
+  "state": "BC",
+  "categories": [
+   "Coaching",
+   "Bodywork"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "divine-ocatve",
+  "name": "Divine Ocatve",
+  "person": "Heidi Abreu",
+  "city": "Sandy",
+  "state": "UT",
+  "categories": [
+   "Coaching",
+   "EnergyMedicine"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "everyday-nutrition-llc",
+  "name": "Everyday Nutrition, LLC",
+  "person": "Mary Jane Bembenek",
+  "city": "Mt Airy",
+  "state": "MD",
+  "categories": [
+   "Nutrition"
+  ],
+  "licensure": "DX3614 for State of Maryland.  DN-0011413 for State of Delaware.",
+  "verification": {
+   "what": "DX3614 for State of Maryland.",
+   "source": "the Commission on Dietetic Registration, for RD or RDN",
+   "date": "2 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-02T22:38:37.224Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "robert-bremer",
+  "name": "Robert Bremer",
+  "person": "Robert Bremer",
+  "city": "Malinta",
+  "state": "OH",
+  "categories": [
+   "Bodywork"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "on-track-wellness-coaching",
+  "name": "On Track Wellness Coaching",
+  "person": "Ginny Bruno",
+  "city": "Charlottesville",
+  "state": "VA",
+  "categories": [
+   "Coaching"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
   "seed": false
  }
 ]

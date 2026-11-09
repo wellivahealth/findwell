@@ -1092,7 +1092,17 @@ def years_text(p, word="yrs"):
         return "—"
     if not (1900 < since <= YEAR):
         return "—"
-    return f"{YEAR - since} {word} (since {since})"
+    n = YEAR - since
+    month = (p.get("since_month") or "").strip()
+    start = f"{month} {since}" if month else str(since)
+    if n <= 0:
+        return f"Under a year (since {start})"
+    return f"{n} {word.rstrip('s') if n == 1 else word} (since {start})"
+
+def bio_paras(text, cls):
+    """Keep the practitioner's own paragraph breaks."""
+    parts = [x.strip() for x in re.split(r"\r?\n", text or "") if x.strip()]
+    return "".join(f'<p class="{cls}">{E(x)}</p>' for x in parts) or f'<p class="{cls}">—</p>'
 
 def val(x, dash="—"):
     """Never render an empty cell. A dash says 'nothing was given'; a blank
@@ -1505,7 +1515,8 @@ def page_provider(p):
     fees = fee_items(p)
     ins = (p.get("insurance") or "").strip()
     lead_fee = fees[0] if fees and len(fees[0]) <= 40 else ("See fees below" if fees else "Ask the practice")
-    facts = [("In practice", years.split(" (")[0] if years != "—" else "Not given"),
+    facts = [("In practice", ("Since " + years.split("(since ")[1].rstrip(")")) if years.startswith("Under")
+                             else years.split(" (")[0] if years != "—" else "Not given"),
              ("Fees", lead_fee),
              ("Insurance", "Accepted" if ins.lower().startswith("accepted") else (ins or "Not given")),
              (("Telehealth", "Available" if p["telehealth"] else "In person only") if not p.get("remote_label")
@@ -1562,8 +1573,8 @@ def page_provider(p):
     <div class="fw-prof-main">
       {verify_html}
       <section><h2>About the practice</h2>
-        <p class="fw-bio">{E(p['blurb'])}</p>
-        {f'<p class="fw-bio fw-bio-soft">{E(p["long"])}</p>' if p['long'] else ''}
+        {bio_paras(p['blurb'], "fw-bio")}
+        {bio_paras(p['long'], "fw-bio fw-bio-soft") if p['long'] else ''}
       </section>
       <section><h2>Fees</h2>
         <div class="fw-fees">{fee_rows}</div>

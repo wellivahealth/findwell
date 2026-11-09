@@ -92,6 +92,7 @@ const SCOPE_TO_KEY = {
   'Farmer': 'Farms',
   'Grocer': 'Grocers',
   'Nutrition (RD and Nutritionists)': 'Nutrition',
+  'Homeopathy': 'Homeopathy',
 };
 
 /** The issuing authority to check, by discipline and state. Extend as the
@@ -216,6 +217,13 @@ const SOURCES = {
     ['the National Board for Health & Wellness Coaching', 'https://members.nbhwc.org/search/custom.asp?id=6956', 2],
     ['the International Coaching Federation', 'https://coachingfederation.org/credentialing/icf-credentials-overview/compare-credentials/', 2],
   ] },
+  Homeopathy: { licensed: false,
+    // Arizona licenses homeopathic practitioners as well as MD(H) and DO(H)
+    // physicians; most states license neither, so CCH is the usual check.
+    stateAlso: { AZ: [['the Arizona Board of Homeopathic and Integrated Medicine Examiners', 'https://homeopath.az.gov/directory-homeopathic-practitioners']] },
+    also: [
+      ['the Council for Homeopathic Certification, for CCH', 'https://www.homeopathicdirectory.com/', 2],
+    ] },
   Herbalism: { licensed: false, also: [['the American Herbalists Guild', 'https://directory.americanherbalistsguild.com/support', 3]] },
   EnergyMedicine: { licensed: false },
   Farmer: { licensed: false },
@@ -229,7 +237,7 @@ const DISCIPLINE_LABELS = {
   Naturopathy: 'Naturopathy', IntegrativeMedicine: 'Integrative & functional medicine',
   Counseling: 'Counseling', Coaching: 'Health & wellness coaching',
   Massage: 'Massage therapy', Bodywork: 'Body work', EnergyMedicine: 'Energy work',
-  Chiropractic: 'Chiropractic', Herbalism: 'Herbology', Nutrition: 'Nutrition',
+  Chiropractic: 'Chiropractic', Herbalism: 'Herbology', Nutrition: 'Nutrition', Homeopathy: 'Homeopathy',
   Farmer: 'Local farms', Grocer: 'Local grocers',
 };
 

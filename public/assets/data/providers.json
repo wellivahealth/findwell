@@ -1031,5 +1031,45 @@
    "recorded_at": "2026-11-09T18:03:15.488Z"
   },
   "seed": false
+ },
+ {
+  "slug": "jolly-druid",
+  "name": "Jolly Druid",
+  "person": "Rowan Figard",
+  "city": "Dover",
+  "state": "PA",
+  "categories": [
+   "EnergyMedicine"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "the-tigress-temple",
+  "name": "The Tigress Temple",
+  "person": "Sodie Bombard",
+  "city": "Peru",
+  "state": "NY",
+  "categories": [
+   "EnergyMedicine",
+   "Bodywork"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "your-homeopathy",
+  "name": "Your Homeopathy",
+  "person": "Sheena Mansukhani",
+  "city": "Jamesburg",
+  "state": "NJ",
+  "categories": [
+   "Coaching"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
  }
 ]

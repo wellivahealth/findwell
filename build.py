@@ -86,6 +86,9 @@ DISCIPLINES = [
     dict(key="Nutrition", label="Nutritionists", slug="nutrition",
          note="Registered dietitians (RD, RDN) and nutritionists, including CNS and BCHN. Licensure varies by state.",
          img="/assets/img/disciplines/nutrition"),
+    dict(key="Homeopathy", label="Homeopaths", slug="homeopathy",
+         note="Classical and clinical homeopaths. CCH certification is shown where held; Arizona licenses homeopathic practitioners, and most states have no license.",
+         img="/assets/img/disciplines/homeopathy"),
     dict(key="Herbalism", label="Herbology", slug="herbology",
          note="Registered herbalists and educators.",
          img=SS + "0362a0ef-8a7e-4341-80ff-30549e3acff8/shutterstock_2299524247.jpg"),
@@ -755,6 +758,7 @@ DISC_ICONS = {
     "Bodywork": _ic('<path d="M7 11V6a2 2 0 0 1 4 0v5M11 10V5a2 2 0 0 1 4 0v6M15 10a2 2 0 0 1 4 0v3a8 8 0 0 1-8 8 7 7 0 0 1-6-4l-2-4a2 2 0 0 1 3-2l2 2"/>'),
     "EnergyMedicine": _ic('<circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>'),
     "Chiropractic": _ic('<path d="M12 3v18M8 7h8M7 12h10M8 17h8"/>'),
+    "Homeopathy": _ic('<path d="M9 3h6M10 3v4a5 5 0 0 0-3 4.6V19a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-7.4A5 5 0 0 0 14 7V3"/><circle cx="12" cy="15" r="1.4"/>'),
     "Farms": _ic('<path d="M3 20h18M6 20V10l6-5 6 5v10"/>'),
     "Grocers": _ic('<path d="M4 7h16l-1.5 11a2 2 0 0 1-2 1.7h-9a2 2 0 0 1-2-1.7Z"/><path d="M9 7a3 3 0 0 1 6 0"/>'),
 }
@@ -763,7 +767,7 @@ FRIENDLY = {"Ayurveda": "Ayurveda", "Acupuncture": "Acupuncture", "TCM": "Chines
             "Naturopathy": "Naturopathic doctors", "IntegrativeMedicine": "Integrative medicine",
             "Counseling": "Counseling", "Coaching": "Health coaching", "Nutrition": "Nutrition",
             "Massage": "Massage", "Bodywork": "Body work", "EnergyMedicine": "Energy work",
-            "Chiropractic": "Chiropractic", "Herbalism": "Herbal medicine",
+            "Chiropractic": "Chiropractic", "Homeopathy": "Homeopathy", "Herbalism": "Herbal medicine",
             "Farms": "Local farms", "Grocers": "Local grocers"}
 def friendly(key):
     return FRIENDLY.get(key) or next((d["label"] for d in DISCIPLINES if d["key"] == key), key)
@@ -773,6 +777,7 @@ DISC_BLURBS = {"Ayurveda": "training and certification shown", "Acupuncture": "l
                "Coaching": "board-certified coaches", "Nutrition": "dietitians and nutritionists",
                "Massage": "licensed massage therapists", "Bodywork": "craniosacral, tuina and more",
                "EnergyMedicine": "Reiki and biofield therapies", "Chiropractic": "licensed doctors of chiropractic",
+               "Homeopathy": "classical and clinical homeopaths",
                "Herbalism": "herbalists and educators", "Farms": "growers and CSAs", "Grocers": "local and co-op stores"}
 
 # ---------------------------------------------------------------------------
@@ -848,6 +853,8 @@ DRAWINGS = {
   "root": '<path d="M120 120C108 140 106 162 112 184C116 196 110 208 98 216M118 160C104 168 92 182 86 200M124 150C140 160 150 176 154 196M114 186C126 194 132 206 132 218"/>'
           '<path d="M120 120V40"/>' + _DLEAF(120, 74, -50, 1) + _DLEAF(120, 74, 50, 1) + _DLEAF(120, 74, 0, 1.1)
           + '<circle cx="120" cy="34" r="4"/><circle cx="112" cy="40" r="4"/><circle cx="128" cy="40" r="4"/>',
+  # Homeopathy: a remedy bottle, a tube of pillules and an arnica flower
+  "remedy": '<path d="M72 210V130C72 120 80 114 88 112V100H104V112C112 114 120 120 120 130V210Z"/><path d="M84 100H108V88H84Z"/><path d="M89 88C89 70 103 70 103 88"/><path d="M80 148H112V184H80Z"/><path d="M86 160H106M86 170H100"/><path d="M134 210V158C134 154 136 152 140 152H150C154 152 156 154 156 158V210Z"/><path d="M131 152H159V142H131Z"/><circle cx="167" cy="206" r="3.5"/><circle cx="176" cy="207" r="3.5"/><circle cx="171.5" cy="199" r="3.5"/><circle cx="160" cy="207" r="3"/><path d="M198 210C198 182 196 152 190 122"/><path d="M197 176C206 168 216 168 224 174C216 182 206 182 197 176Z"/><path d="M195 154C186 146 176 146 168 152C176 160 186 160 195 154Z"/><g transform="translate(190 108)"><ellipse cx="0" cy="-15" rx="4.2" ry="10" transform="rotate(0)"/><ellipse cx="0" cy="-15" rx="4.2" ry="10" transform="rotate(30)"/><ellipse cx="0" cy="-15" rx="4.2" ry="10" transform="rotate(60)"/><ellipse cx="0" cy="-15" rx="4.2" ry="10" transform="rotate(90)"/><ellipse cx="0" cy="-15" rx="4.2" ry="10" transform="rotate(120)"/><ellipse cx="0" cy="-15" rx="4.2" ry="10" transform="rotate(150)"/><ellipse cx="0" cy="-15" rx="4.2" ry="10" transform="rotate(180)"/><ellipse cx="0" cy="-15" rx="4.2" ry="10" transform="rotate(210)"/><ellipse cx="0" cy="-15" rx="4.2" ry="10" transform="rotate(240)"/><ellipse cx="0" cy="-15" rx="4.2" ry="10" transform="rotate(270)"/><ellipse cx="0" cy="-15" rx="4.2" ry="10" transform="rotate(300)"/><ellipse cx="0" cy="-15" rx="4.2" ry="10" transform="rotate(330)"/><circle r="7"/></g>',
   # Nutrition: a bowl of fruit and greens
   "bowl": '<path d="M36 128H204C204 174 168 200 120 200C72 200 36 174 36 128Z"/><path d="M96 200L92 212H148L144 200"/>'
           '<circle cx="84" cy="112" r="16"/><circle cx="116" cy="106" r="20"/><circle cx="154" cy="114" r="14"/>'
@@ -883,7 +890,7 @@ DRAWINGS = {
 
 DRAW_BASE = {"find": 200, "bundle": 214, "mortar": 216, "desert": 211, "verify": 216, "hands": 239,
              "book": 196, "branch": 204, "join": 213, "lost": 216, "needles": 206, "root": 220,
-             "bowl": 214, "stones": 216, "heart": 206, "sun": 215, "fern": 223, "path": 215, "basket": 204}
+             "bowl": 214, "remedy": 212, "stones": 216, "heart": 206, "sun": 215, "fern": 223, "path": 215, "basket": 204}
 
 def drawing(key, cls="pg-art"):
     vy = DRAW_BASE.get(key, 240) - 240
@@ -901,7 +908,7 @@ GROUND_SPRIGS = "".join(
 DISC_DRAWING = {"Ayurveda": "mortar", "Herbalism": "mortar", "Acupuncture": "needles", "TCM": "root",
                 "Naturopathy": "bundle", "IntegrativeMedicine": "heart", "Counseling": "hands",
                 "Coaching": "path", "Nutrition": "bowl", "Massage": "stones", "Bodywork": "stones",
-                "EnergyMedicine": "sun", "Chiropractic": "fern", "Farms": "basket", "Grocers": "basket"}
+                "EnergyMedicine": "sun", "Chiropractic": "fern", "Homeopathy": "remedy", "Farms": "basket", "Grocers": "basket"}
 
 def shell(title, desc, path, body, view="", extra_head=""):
     """Wrap page content in the shared chrome. `path` is the canonical URL path."""
@@ -1640,7 +1647,7 @@ PAYMENT_METHODS = ["Insurance", "Cash", "Checks", "Credit Cards", "Debit Cards",
 SCOPE_OPTIONS = ["Ayurveda", "Acupuncture", "Traditional Chinese Medicine",
                  "Naturopathic Medicine", "Chiropractic", "Massage Therapy", "Body Work", "Energy Work",
                  "Integrative / Functional Medicine (MD, DO, NP, PA, RN)", "Counseling",
-                 "Health & Wellness Coaching", "Nutrition (RD and Nutritionists)", "Herbalism", "Farmer", "Grocer"]
+                 "Health & Wellness Coaching", "Nutrition (RD and Nutritionists)", "Homeopathy", "Herbalism", "Farmer", "Grocer"]
 
 # FindWell lists practitioners in the United States and Canada only.
 COUNTRIES = ["United States", "Canada"]

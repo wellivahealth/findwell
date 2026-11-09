@@ -871,7 +871,13 @@
    "Massage"
   ],
   "licensure": "C 142075",
-  "verification": null,
+  "verification": {
+   "what": "C 142075",
+   "source": "the Medical Board of California, through the DCA licence search",
+   "date": "9 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-09T19:58:09.860Z"
+  },
   "seed": false
  },
  {

@@ -2159,5 +2159,39 @@
     "blurb": "I perform reiki, a gentle Japanese energy healing modality to bring calm, balance, and connection to the whole body. It can be used to help with pain, regulating the nervous system, and cleanse one’s energy.",
     "long": "I can offer face to face virtual sessions over zoom. As well as perform a distant reiki healing session without zoom if you are busy and unable to meet.",
     "verified": false
+  },
+  {
+    "slug": "your-homeopathy",
+    "name": "Your Homeopathy",
+    "person": "Sheena Mansukhani",
+    "postnominals": "",
+    "logo": null,
+    "categories": [
+      "Coaching"
+    ],
+    "city": "Jamesburg",
+    "state": "NJ",
+    "zip": "08831",
+    "address": "13 Antoinette Court, Jamesburg, NJ 08831",
+    "country": "United States",
+    "lat": 40.35041851035,
+    "lng": -74.445284712217,
+    "telehealth": true,
+    "phone": "732-734-1973",
+    "email": "sheena@yourhomeopathy.com",
+    "website": "https://www.homeopathnj.com",
+    "social": [],
+    "credentials": "DHM; AADP and National Center for Homeopathy affiliations.",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "Diploma in Homeopathy, British Institute of Homeopathy, 2006 (honors). Additional training in weight loss health coaching and mental health and wellness coaching.",
+    "integrative_training": "",
+    "since": 2006,
+    "affiliations": "",
+    "pricing": "Self-pay. Fees vary by age and visit type. Call 732-734-1973 for pricing.",
+    "payments": "Cash, Checks, Credit Cards, Venmo",
+    "insurance": "Not accepted",
+    "blurb": "Your Homeopathy offers wellness coaching and individualized homeopathy consultations in Monroe Township, NJ. In-person and virtual appointments and follow-up visits are available.",
+    "long": "Sheena Mansukhani, DHM, is a second-generation homeopathy practitioner and founder of Your Homeopathy. She offers wellness coaching and individual homeopathy consultations for families, with follow-up appointments available. Call 732-734-1973 for appointment options and pricing.",
+    "verified": false
   }
 ]

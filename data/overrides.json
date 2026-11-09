@@ -59,7 +59,14 @@
     "postnominals": "NBC-HWC"
   },
   "wholistic-medical-group": {
-    "postnominals": "DOM, AP"
+    "postnominals": "DOM, AP",
+    "categories": [
+      "Acupuncture",
+      "TCM",
+      "Naturopathy",
+      "IntegrativeMedicine",
+      "Ayurveda"
+    ]
   },
   "spectrum-wellcare": {
     "postnominals": "DTCM, MPH, AP"
@@ -74,7 +81,11 @@
     "postnominals": "NBC-HWC"
   },
   "stone-spirit-healing-arts": {
-    "postnominals": "LCMHC, RM"
+    "postnominals": "LCMHC, RM",
+    "categories": [
+      "EnergyMedicine",
+      "Counseling"
+    ]
   },
   "anastasia-dosov-nutrition-and-wellness-consulting-llc": {
     "postnominals": "MS, CNS, LDN"
@@ -104,10 +115,16 @@
     "postnominals": "CFNMP"
   },
   "emily-laraine-wellness-llc": {
-    "postnominals": "CNS"
+    "postnominals": "CNS",
+    "categories": [
+      "Nutrition"
+    ]
   },
   "katy-slany": {
-    "postnominals": "RSMT/E"
+    "postnominals": "RSMT/E",
+    "categories": [
+      "Bodywork"
+    ]
   },
   "everyday-nutrition-llc": {
     "postnominals": "CNS"
@@ -135,7 +152,12 @@
     "postnominals": "L.Ac., FABORM"
   },
   "la-vie-md": {
-    "postnominals": "MD"
+    "postnominals": "MD",
+    "categories": [
+      "IntegrativeMedicine",
+      "Nutrition",
+      "Massage"
+    ]
   },
   "life-again-therapy-llc": {
     "postnominals": "LCSW"
@@ -148,5 +170,20 @@
       "Homeopathy"
     ],
     "postnominals": "DHM"
+  },
+  "healing-options": {
+    "categories": [
+      "EnergyMedicine"
+    ]
+  },
+  "divine-ocatve": {
+    "categories": [
+      "EnergyMedicine"
+    ]
+  },
+  "driver-chiropractic": {
+    "categories": [
+      "Chiropractic"
+    ]
   }
 }

@@ -183,8 +183,7 @@
   "city": "Tucson",
   "state": "AZ",
   "categories": [
-   "EnergyMedicine",
-   "Coaching"
+   "EnergyMedicine"
   ],
   "licensure": "No state licensure exists for energy medicine",
   "verification": {
@@ -453,7 +452,6 @@
    "TCM",
    "Naturopathy",
    "IntegrativeMedicine",
-   "Coaching",
    "Ayurveda"
   ],
   "licensure": "Florida AP3763",
@@ -630,7 +628,6 @@
   "city": "Concord",
   "state": "NH",
   "categories": [
-   "Coaching",
    "EnergyMedicine",
    "Counseling"
   ],
@@ -867,7 +864,6 @@
   "categories": [
    "IntegrativeMedicine",
    "Nutrition",
-   "Coaching",
    "Massage"
   ],
   "licensure": "C 142075",
@@ -933,8 +929,7 @@
   "city": "St. Petersburg",
   "state": "FL",
   "categories": [
-   "Nutrition",
-   "Coaching"
+   "Nutrition"
   ],
   "licensure": "Florida Dietetics and Nutrition Practice Council #ND 14489 Illinois 164.022755",
   "verification": {
@@ -953,7 +948,6 @@
   "city": "Nanoose Bay",
   "state": "BC",
   "categories": [
-   "Coaching",
    "Bodywork"
   ],
   "licensure": "No state licensure exists for this discipline",
@@ -967,7 +961,6 @@
   "city": "Sandy",
   "state": "UT",
   "categories": [
-   "Coaching",
    "EnergyMedicine"
   ],
   "licensure": "No state licensure exists for this discipline",
@@ -1026,7 +1019,6 @@
   "city": "Columbus",
   "state": "NE",
   "categories": [
-   "Coaching",
    "Chiropractic"
   ],
   "licensure": "No state licensure exists for this discipline",

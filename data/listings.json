@@ -1113,7 +1113,14 @@
     "insurance": "Not accepted",
     "blurb": "Stone Spirit Healing Arts offers intuitive tarot readings, spiritual guidance, and a unique, experiential approach to Reiki energy healing that incorporates art, creativity, and self-expression. As a Reiki Master and licensed mental health counselor with over 20 years of experience, I blend intuition, spiritual wisdom, and creative exploration to support self-discovery, emotional balance, personal growth, and a deeper connection with your authentic self.",
     "long": "Stone Spirit Healing Arts offers intuitive tarot readings, spiritual guidance, and a unique, experiential approach to Reiki energy healing that incorporates art, creativity, and self-expression. As a Reiki Master and licensed mental health counselor with over 20 years of experience, I blend intuition, spiritual wisdom, and creative exploration to support self-discovery, emotional balance, personal growth, and a deeper connection with your authentic self.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "NH1211",
+      "source": "NPPES NPI Registry NPPES Downloads API Help",
+      "date": "11 Nov 2026",
+      "by": "admin",
+      "recorded_at": "2026-11-11T19:40:05.042Z"
+    }
   },
   {
     "slug": "anastasia-dosov-nutrition-and-wellness-consulting-llc",

@@ -1189,7 +1189,14 @@
     "insurance": "Accepted — verify your plan with the practice",
     "blurb": "We provide 1:1 nutritional counseling, meal planning, and supplement recommendations. Areas of focus include women’s health, perimenopause, and gut health.",
     "long": "We help women lose weight, beat the bloat, and eliminate fatigue by repairing your digestive tract and teaching you how to eat for your body.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Illinois RN: 041.374248; Illinois LDN: 164.009162",
+      "source": "Illinois Department of Financial and Professional Regulation",
+      "date": "11 Nov 2026",
+      "by": "admin",
+      "recorded_at": "2026-11-11T19:46:25.470Z"
+    }
   },
   {
     "slug": "emma-harvie-nutrition",

@@ -2398,5 +2398,47 @@
       "by": "admin",
       "recorded_at": "2026-11-11T19:19:19.000Z"
     }
+  },
+  {
+    "slug": "heather-m-hewett-llc",
+    "name": "Heather M. Hewett, LLC",
+    "person": "Heather M. Hewett",
+    "postnominals": "",
+    "logo": "/assets/img/providers/heather-m-hewett-llc.webp",
+    "categories": [
+      "Nutrition",
+      "Coaching"
+    ],
+    "city": "Aurora",
+    "state": "IL",
+    "zip": "60506",
+    "address": "",
+    "country": "United States",
+    "lat": 41.7571701,
+    "lng": -88.3147539,
+    "telehealth": true,
+    "phone": "815-782-2083",
+    "email": "heathermhewett@gmail.com",
+    "website": "https://heathermhewett.com/",
+    "social": [
+      "https://www.facebook.com/heather.hewett.2025/",
+      "https://www.instagram.com/heathermhewett/",
+      "https://www.linkedin.com/in/heather-hewett-nd-chp-cch-owner-of-heathermhewett-llc-788233287",
+      "https://www.youtube.com/@HeatherHewett-ns3zx",
+      "https://www.tiktok.com/@heathermhewett",
+      "https://www.pinterest.com/heathermhewettllc/"
+    ],
+    "credentials": "Board-Certified Traditional Naturopath; Clinical Nutritionist; Certified Alternative Medical Practitioner, American Alternative Medical Association (AAMA); Certified Holistic Health Practitioner, American Association of Drugless Practitioners (AADP); Somatic Trauma-Informed Therapy Certified; FARA Certified Food Addiction Support Specialist.",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "Professional background in clinical nutrition, traditional naturopathy, holistic health and wellness, and trauma-informed somatic practices. Heather's published professional qualifications include certification as an Alternative Medical Practitioner through AAMA and as a Holistic Health Practitioner through AADP.",
+    "integrative_training": "",
+    "since": 2003,
+    "affiliations": "",
+    "pricing": "Pricing varies depending on the coaching service, session type, and selected program. Please visit https://heathermhewett.com/ for current service options and pricing details.",
+    "payments": "Cash, Checks, Credit Cards, Debit Cards, Paypal",
+    "insurance": "Not accepted",
+    "blurb": "Heather M. Hewett offers virtual holistic wellness and nutrition coaching focused on emotional eating, mindful eating, stress management, and nervous system regulation. Her approach combines personalized wellness education, practical lifestyle guidance, and online EFT coaching to help clients build a healthier relationship with food and support their overall well-being.",
+    "long": "Heather M. Hewett, LLC is a virtual holistic wellness and nutrition coaching practice led by Heather M. Hewett, a Clinical Nutritionist and Board-Certified Traditional Naturopath with over 23 years of experience.\r\n\r\nHeather supports individuals navigating emotional eating, food cravings, stress, and challenges with their relationship with food. Her services include online EFT coaching, mindful eating guidance, holistic nutrition education, and nervous system regulation support.\r\n\r\nThrough a compassionate, personalized approach, Heather helps clients develop sustainable wellness habits, improve body awareness, and build greater confidence in their everyday choices.\r\n\r\nServices are offered online, making wellness coaching accessible from the comfort of home.",
+    "verified": false
   }
 ]

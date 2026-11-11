@@ -2353,5 +2353,43 @@
       "by": "admin",
       "recorded_at": "2026-11-09T22:02:16.149Z"
     }
+  },
+  {
+    "slug": "root-cause-health-coaching",
+    "name": "Root Cause Health Coaching",
+    "person": "Nancy Uston-John",
+    "postnominals": "NBC-HWC, FMCHC, CMBEC",
+    "logo": "/assets/img/providers/root-cause-health-coaching.png",
+    "categories": [
+      "Coaching"
+    ],
+    "city": "PERKIOMENVILLE",
+    "state": "PA",
+    "zip": "18074",
+    "address": "2580 Finn Rd, PERKIOMENVILLE, PA 18074",
+    "country": "United States",
+    "lat": 40.329027866099,
+    "lng": -75.518352234326,
+    "telehealth": true,
+    "phone": "12672272584",
+    "email": "nancy@rootcausehealthcoaching.com",
+    "website": "https://www.rootcausehealthcoaching.com/",
+    "social": [
+      "https://www.facebook.com/rootcausehealthcoach",
+      "https://www.linkedin.com/in/nancy-uston-john/",
+      "https://www.instagram.com/rootcausehealthcoach"
+    ],
+    "credentials": "National Board Certified Health & Wellness Coach (NBC-HWC)\r\nFunctional Medicine Certified Health Coach (FMCHC)\r\nCertified Mind Body Eating Coach (CMBEC)\r\nBiology of Trauma® Professional\r\nSomatic Experiencing® Training (Year 1 of 3)\r\nISSA Certified Elite Personal Trainer\r\nMBA & BS",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "Bachelor of Science, Elizabethtown College\r\nMaster of Business Administration, Temple University\r\nNational Board Certified Health & Wellness Coach (NBC-HWC)\r\nFunctional Medicine Certified Health Coach (FMCHC), Functional Medicine Coaching Academy (FMCA)\r\nCertified Mind-Body Eating Coach (CMBEC)\r\nSomatic Experiencing® training, Year 1 of 3 (in progress)",
+    "integrative_training": "Functional Medicine Certified Health Coach",
+    "since": 2018,
+    "affiliations": "",
+    "pricing": "Individual coaching packages:\r\nFunctional Medicine Health Coaching: 4 sessions – $495\r\nSomatic Coaching: 4 sessions – $595\r\nIntegrative Health Coaching: 4 sessions – $695\r\nA complimentary 20-minute consultation is available to discuss your goals and determine whether coaching is a good fit.",
+    "payments": "Credit Cards, Debit Cards",
+    "insurance": "Not accepted",
+    "blurb": "Root Cause Health Coaching brings together functional medicine, nervous system regulation, and somatic approaches to help you better understand the patterns influencing your health. Together, we look at the whole picture, including your physical health, everyday habits, stress, and life experiences, to help you create meaningful, sustainable change. Virtual coaching and in-person sessions in the 18074 area.",
+    "long": "Have you been doing all the right things for your health but still don't feel the way you want to? Or perhaps you sense that stress, life experiences, and nervous system patterns are playing a role in your health issues.\r\n\r\nAt Root Cause Health Coaching, I take an integrative approach that brings together functional medicine, nervous system regulation, and somatic practices. Rather than looking at symptoms or health habits in isolation, we'll explore how the different pieces of your life and health connect.\r\n\r\nMy goal is to help you better understand what's influencing your well-being and support you in making changes that feel realistic, meaningful, and sustainable. Our work is collaborative, individualized, and grounded in curiosity about you as a whole person.\r\n\r\nVirtual coaching and in-person sessions in the 18074 area.",
+    "verified": false
   }
 ]

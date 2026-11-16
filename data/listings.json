@@ -1853,7 +1853,14 @@
     "insurance": "Not accepted",
     "blurb": "At Phleb Lab Wellness in Richmond Heights, Ohio, Renee Blackmon offers a functional medicine approach to health and wellness coaching, nutrition education, and weight management support. She provides personalized lifestyle guidance for people managing concerns such as ongoing pain and hormonal health, complementing care from their medical providers.",
     "long": "Phleb Lab Wellness in Richmond Heights, Ohio, offers personalized wellness support with Renee Blackmon, a Certified Functional and Nutritional Medicine Practitioner, Certified Nutrition Coach, and Functional Weight Loss Consultant. Our functional medicine approach considers nutrition, lifestyle, and everyday habits that influence overall well-being.\r\n\r\nServices include health and wellness coaching, nutrition education, weight management support, and guidance on healthy lifestyle choices. We support adults seeking to improve their wellness while managing concerns such as ongoing pain, hormonal changes, and challenges with weight or energy.\r\n\r\nThrough individual consultations and follow-up visits, we help clients set realistic goals and develop practical habits they can maintain. Our coaching and education complement care from licensed medical providers. Services are available by appointment in a supportive setting where clients can ask questions, learn, and take an active role in their well-being.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Credentials confirmed",
+      "source": "American Association of Drugless Practitioners",
+      "date": "16 Nov 2026",
+      "by": "admin",
+      "recorded_at": "2026-11-16T20:10:41.740Z"
+    }
   },
   {
     "slug": "emily-laraine-wellness-llc",

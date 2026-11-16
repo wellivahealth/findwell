@@ -1659,7 +1659,14 @@
     "insurance": "Not accepted",
     "blurb": "Bespoke Health is a personalized integrative, functional, and longevity medicine practice in Gilbert, Arizona, serving men and women seeking proactive, whole-person care. Founded by fellowship-trained Physician Assistant Kimberly Mowbray, PA-C, the practice combines evidence-based conventional medicine with integrative therapies to address hormone imbalances, perimenopause and menopause, metabolic health, chronic symptoms, and healthy aging. Comprehensive evaluations and individualized treatment plans focus on root causes, wellness optimization, and long-term healthspan.",
     "long": "Bespoke Health is a personalized integrative, functional, and longevity medicine practice serving patients in Gilbert, Arizona, and surrounding communities. Led by fellowship-trained Physician Assistant Kimberly Mowbray, PA-C, Bespoke Health provides individualized, whole-person care for hormone health, perimenopause and menopause, metabolic wellness, chronic symptoms, and healthy aging. By combining evidence-based conventional medicine with integrative therapies, the practice looks beyond symptoms to better understand each patient’s unique health needs and goals. Through comprehensive evaluations and personalized treatment plans, Bespoke Health helps patients take a proactive approach to improving wellness, optimizing health, and supporting long-term vitality.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Arizona, 3560",
+      "source": "NPPES NPI Registry",
+      "date": "16 Nov 2026",
+      "by": "admin",
+      "recorded_at": "2026-11-16T20:17:23.396Z"
+    }
   },
   {
     "slug": "tish-campbell-llc",

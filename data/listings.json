@@ -1779,7 +1779,14 @@
     "insurance": "Not accepted",
     "blurb": "Olivia Sterling of Sterling Counseling offers trauma therapy, racial trauma counseling, CBT, anxiety, stress, burnout, and grief counseling.",
     "long": "Olivia Sterling is the therapist behind Sterling Counseling, providing compassionate, personalized mental health support to individuals navigating life's challenges. Her areas of specialization include trauma therapy, racial trauma counseling, Cognitive Behavioral Therapy (CBT), and anxiety therapy. She helps clients manage anxiety, stress, and burnout while developing healthier coping strategies and emotional resilience. Sterling Counseling also offers grief counseling to support individuals processing loss and navigating difficult life transitions. Olivia is committed to creating a supportive, understanding environment where clients can explore their experiences, build self-awareness, and work toward meaningful personal growth, emotional well-being, and lasting positive change.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Counseling License confirmed by",
+      "source": "NPPES NPI Registry",
+      "date": "16 Nov 2026",
+      "by": "admin",
+      "recorded_at": "2026-11-16T20:11:36.669Z"
+    }
   },
   {
     "slug": "life-again-therapy-llc",

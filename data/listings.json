@@ -1623,7 +1623,14 @@
     "insurance": "Accepted — verify your plan with the practice",
     "blurb": "I am a culture-centered functional nutritionist who addresses for the root causes of your health conditions. My nutrition therapy plans are personalized and include a multifaceted approach combining applied clinical nutrition, clinical herbalism, nutrient deficiency analysis, functional lab testing, and lifestyle modifications (physical activity, stress management, and sleep quality).  I specialize in women's health (peri/menopause), autoimmune disease, metabolic disease (diabetes, cholesterol, hypertension), and GI conditions. Insurance accepted.",
     "long": "I am a board licensed Certified Nutrition Specialist and licensed dietitian nutritionist who provides a functional nutrition approach, sensitive to culture and race. I look for the root causes to your health issues through a multifactorial approach. I provide medical nutrition therapy for women's health, perimenopause/menopause, autoimmune disease, metabolic conditions like diabetes and hypertension, inflammation, and GI issues. My goal is to help you understand how to live an anti-inflammatory lifestyle and develop systems in your life to make optimized health sustainable.\r\n\r\nMy approach is multifactorial and I work with you to reduce inflammation, improve and optimize gut health, restore core metabolic imbalances and nutrient deficiencies, increase physical activity, improve sleep quality, and improve stress management. I provide personalized meal plans, clinical herbalism recommendations, functional lab testing, and more.\r\n\r\nI take Aetna, CareFirst BC/BS, Blue Cross Blue Shield, Sentara Health Plans, Cigna, United Healthcare, HSA, and self-pay.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Maryland, DX7150",
+      "source": "the Commission on Dietetic Registration, for RD or RDN",
+      "date": "16 Nov 2026",
+      "by": "admin",
+      "recorded_at": "2026-11-16T20:18:47.854Z"
+    }
   },
   {
     "slug": "bespoke-health",

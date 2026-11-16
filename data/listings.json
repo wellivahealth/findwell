@@ -1586,7 +1586,14 @@
     "insurance": "Not accepted",
     "blurb": "Chiropractic First is the top chiropractor in Campbell, CA, providing personalized chiropractic care to help patients relieve pain, improve mobility, and support long-term wellness through natural, non-invasive treatments for patients of all ages.",
     "long": "Chiropractic First is the top chiropractor in Campbell, CA, helping patients achieve lasting pain relief, improved mobility, and better overall wellness. The practice provides personalized chiropractic care, spinal decompression, prenatal and pediatric chiropractic care, HEIT therapy, auto injury treatment, and athlete care. Their experienced team treats back pain, neck pain, sciatica, headaches, joint pain, sports injuries, and other musculoskeletal conditions using natural, non-invasive techniques tailored to each patient. With a patient-focused approach, comprehensive evaluations, and customized treatment plans, Chiropractic First is committed to restoring mobility, supporting long-term health, and helping individuals and families live healthier, more active lives.",
-    "verified": false
+    "verified": false,
+    "verification": {
+      "what": "Credentials confirmed",
+      "source": "the California Board of Chiropractic Examiners, through the DCA licence search",
+      "date": "16 Nov 2026",
+      "by": "admin",
+      "recorded_at": "2026-11-16T20:20:01.530Z"
+    }
   },
   {
     "slug": "lani-page-deguia-nutrition",

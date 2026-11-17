@@ -2641,5 +2641,44 @@
       "by": "admin",
       "recorded_at": "2026-11-17T22:32:16.189Z"
     }
+  },
+  {
+    "slug": "angel-light-reiki",
+    "name": "Angel Light Reiki",
+    "person": "Samantha Alexander",
+    "postnominals": "",
+    "logo": "/assets/img/providers/angel-light-reiki.png",
+    "categories": [
+      "Coaching",
+      "EnergyMedicine"
+    ],
+    "city": "Ocala",
+    "state": "FL",
+    "zip": "34470",
+    "address": "",
+    "country": "United States",
+    "lat": 29.1871986,
+    "lng": -82.1400923,
+    "telehealth": true,
+    "phone": "6475353197",
+    "email": "angellightreiki.contact@gmail.com",
+    "website": "https://angellightreiki.my.canva.site/",
+    "social": [
+      "https://www.instagram.com/angel.light.reiki/",
+      "https://www.facebook.com/share/1DYgZ6o2wF/?mibextid=wwXIfr",
+      "https://www.youtube.com/@angel.light.reiki.meditations"
+    ],
+    "credentials": "—",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "- Certified Mediumship\r\n- Certified Usui Reiki Healing\r\n- Master Reiki Therapist\r\n- Registered Yoga Teacher (RYT-200)\r\n- Angel Intuitive Healer\r\n- Angel Guidance Practitioner",
+    "integrative_training": "",
+    "since": 2023,
+    "affiliations": "",
+    "pricing": "Angel Guidance Consultation: $50 USD (15–20 minutes)\r\n\r\nPrivate Angel Guidance Session: $144 USD (40 minutes)\r\n\r\n3-Month Life Alignment Package: $1,444 USD (personalized ongoing guidance and support).\r\n\r\nOnline sessions available to clients throughout Canada and the United States. Consultation fees are credited toward the 3-month package when booked. Monthly payment plan available for packages.",
+    "payments": "Zelle, Paypal, Credit Cards, Debit Cards",
+    "insurance": "Not accepted",
+    "blurb": "Samantha offers private Angel Guidance sessions, helping women find clarity, reassurance, and direction during times of uncertainty, change, and personal transition. Through intuitive connection with Guardian Angels, spiritual insight, and compassionate guidance, she provides a supportive space to explore life’s questions, reconnect with inner wisdom, and move forward with greater confidence and peace.",
+    "long": "Samantha offers private Angel Guidance sessions for women seeking clarity, reassurance, and direction during times of uncertainty, change, and personal transition. Through intuitive connection with Guardian Angels, oracle card guidance, and spiritual insight, she helps clients gain a fresh perspective on life's challenges, reconnect with their inner wisdom, and move forward with greater confidence and clarity. Sessions are personalized, compassionate, and available online, allowing women across Canada and the United States to access guidance wherever they are.",
+    "verified": false
   }
 ]

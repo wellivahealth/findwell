@@ -212,5 +212,10 @@
       "Acupuncture",
       "Herbalism"
     ]
+  },
+  "angel-light-reiki": {
+    "categories": [
+      "EnergyMedicine"
+    ]
   }
 }

@@ -3,7 +3,13 @@
     "categories": [
       "Nutrition"
     ],
-    "postnominals": "RDN"
+    "postnominals": "RDN",
+    "address": "2515 Colorado St, Suite 2, Mission, TX 78572",
+    "city": "Mission",
+    "state": "TX",
+    "zip": "78572",
+    "lat": 26.216,
+    "lng": -98.325
   },
   "steps-nutrition-group": {
     "city": "Coral Springs",
@@ -199,7 +205,8 @@
   "sheri-goodman-graham-ms": {
     "categories": [
       "Nutrition"
-    ]
+    ],
+    "person": "Sheri Goodman Graham"
   },
   "beatrice-pouligny-phd-allowing-the-light-shaman-spiritual-he": {
     "categories": [
@@ -217,5 +224,8 @@
     "categories": [
       "EnergyMedicine"
     ]
+  },
+  "quiet-presence": {
+    "website": "https://quietpresencehealing.com"
   }
 }

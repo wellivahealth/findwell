@@ -552,7 +552,13 @@
    "IntegrativeMedicine"
   ],
   "licensure": "Tennessee -39347. Florida APRN9212764",
-  "verification": null,
+  "verification": {
+   "what": "Florida APRN9212764",
+   "source": "NPPES NPI Registry",
+   "date": "11 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-11T19:31:49.229Z"
+  },
   "seed": false
  },
  {
@@ -631,7 +637,13 @@
    "Counseling"
   ],
   "licensure": "NH1211",
-  "verification": null,
+  "verification": {
+   "what": "NH1211",
+   "source": "NPPES NPI Registry NPPES Downloads API Help",
+   "date": "11 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-11T19:40:05.042Z"
+  },
   "seed": false
  },
  {
@@ -658,7 +670,13 @@
    "Nutrition"
   ],
   "licensure": "Illinois RN: 041.374248; Illinois LDN: 164.009162",
-  "verification": null,
+  "verification": {
+   "what": "Illinois RN: 041.374248; Illinois LDN: 164.009162",
+   "source": "Illinois Department of Financial and Professional Regulation",
+   "date": "11 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-11T19:46:25.470Z"
+  },
   "seed": false
  },
  {
@@ -671,7 +689,13 @@
    "Nutrition"
   ],
   "licensure": "Minnestoa - N243, Florida - #406",
-  "verification": null,
+  "verification": {
+   "what": "Minnestoa - N243",
+   "source": "the Commission on Dietetic Registration, for RD or RDN",
+   "date": "16 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-16T23:19:00.837Z"
+  },
   "seed": false
  },
  {
@@ -684,7 +708,13 @@
    "Nutrition"
   ],
   "licensure": "No state licensure exists for this discipline",
-  "verification": null,
+  "verification": {
+   "what": "Credentials confirmed",
+   "source": "National Board for Health & Wellness Coaching",
+   "date": "16 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-16T23:21:55.971Z"
+  },
   "seed": false
  },
  {
@@ -764,14 +794,20 @@
    "Chiropractic"
   ],
   "licensure": "No state licensure exists for this discipline",
-  "verification": null,
+  "verification": {
+   "what": "Credentials confirmed",
+   "source": "Department of Safety and Professional Services, WI",
+   "date": "16 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-16T23:37:31.136Z"
+  },
   "seed": false
  },
  {
   "slug": "basic-habits",
   "name": "Basic Habits",
   "person": "Isbel Cano",
-  "city": "Pharr",
+  "city": "Mission",
   "state": "TX",
   "categories": [
    "Nutrition"
@@ -805,7 +841,13 @@
    "Chiropractic"
   ],
   "licensure": "No state licensure exists for this discipline",
-  "verification": null,
+  "verification": {
+   "what": "Credentials confirmed",
+   "source": "the California Board of Chiropractic Examiners, through the DCA licence search",
+   "date": "16 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-16T20:20:01.530Z"
+  },
   "seed": false
  },
  {
@@ -819,7 +861,13 @@
    "Herbalism"
   ],
   "licensure": "Maryland, DX7150",
-  "verification": null,
+  "verification": {
+   "what": "Maryland, DX7150",
+   "source": "the Commission on Dietetic Registration, for RD or RDN",
+   "date": "16 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-16T20:18:47.854Z"
+  },
   "seed": false
  },
  {
@@ -832,7 +880,13 @@
    "IntegrativeMedicine"
   ],
   "licensure": "Arizona Medical Board #, 3560",
-  "verification": null,
+  "verification": {
+   "what": "Arizona, 3560",
+   "source": "NPPES NPI Registry",
+   "date": "16 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-16T20:17:23.396Z"
+  },
   "seed": false
  },
  {
@@ -885,7 +939,13 @@
    "Counseling"
   ],
   "licensure": "89877",
-  "verification": null,
+  "verification": {
+   "what": "Counseling License confirmed by",
+   "source": "NPPES NPI Registry",
+   "date": "16 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-16T20:11:36.669Z"
+  },
   "seed": false
  },
  {
@@ -918,7 +978,13 @@
    "Counseling"
   ],
   "licensure": "No state licensure exists for this discipline",
-  "verification": null,
+  "verification": {
+   "what": "Credentials confirmed",
+   "source": "American Association of Drugless Practitioners",
+   "date": "16 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-16T20:10:41.740Z"
+  },
   "seed": false
  },
  {
@@ -1073,7 +1139,7 @@
  {
   "slug": "sheri-goodman-graham-ms",
   "name": "Sheri Goodman Graham, MS",
-  "person": "Sheri Graham Goodman",
+  "person": "Sheri Goodman Graham",
   "city": "Marshall",
   "state": "AR",
   "categories": [
@@ -1127,6 +1193,104 @@
    "by": "admin",
    "recorded_at": "2026-11-09T22:02:16.149Z"
   },
+  "seed": false
+ },
+ {
+  "slug": "root-cause-health-coaching",
+  "name": "Root Cause Health Coaching",
+  "person": "Nancy Uston-John",
+  "city": "PERKIOMENVILLE",
+  "state": "PA",
+  "categories": [
+   "Coaching"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": {
+   "what": "Credentials confirmed",
+   "source": "the National Board for Health & Wellness Coaching",
+   "date": "11 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-11T19:19:19.000Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "heather-m-hewett-llc",
+  "name": "Heather M. Hewett, LLC",
+  "person": "Heather M. Hewett",
+  "city": "Aurora",
+  "state": "IL",
+  "categories": [
+   "Nutrition",
+   "Coaching"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "lumora-health-health-and-wellness-coaching",
+  "name": "Lumora Health  - Health and wellness coaching",
+  "person": "Gurmanpreet Kaur",
+  "city": "Whitehorse",
+  "state": "YT",
+  "categories": [
+   "Coaching"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "emily-young-wright-pllc",
+  "name": "Emily Young Wright PLLC",
+  "person": "Emily Wright",
+  "city": "Houston",
+  "state": "TX",
+  "categories": [
+   "Counseling"
+  ],
+  "licensure": "Texas LPC Associate - 96287",
+  "verification": {
+   "what": "Texas LPC Associate - 96287",
+   "source": "NPPES NPI Registry",
+   "date": "16 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-16T02:10:57.621Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "happy-belly-health-by-shanti-pappas",
+  "name": "Happy Belly Health by Shanti Pappas",
+  "person": "Shanti Pappas",
+  "city": "San Francisco",
+  "state": "CA",
+  "categories": [
+   "Nutrition",
+   "Coaching"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": {
+   "what": "Credentials confirmed",
+   "source": "National Board for Health & Wellness Coaching",
+   "date": "17 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-17T22:32:16.189Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "angel-light-reiki",
+  "name": "Angel Light Reiki",
+  "person": "Samantha Alexander",
+  "city": "Ocala",
+  "state": "FL",
+  "categories": [
+   "EnergyMedicine"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
   "seed": false
  }
 ]

@@ -93,6 +93,7 @@ const SCOPE_TO_KEY = {
   'Grocer': 'Grocers',
   'Nutrition (RD and Nutritionists)': 'Nutrition',
   'Homeopathy': 'Homeopathy',
+  'Psychedelic Therapies & Coaching': 'Psychedelic',
 };
 
 /** The issuing authority to check, by discipline and state. Extend as the
@@ -224,6 +225,13 @@ const SOURCES = {
     also: [
       ['the Council for Homeopathic Certification, for CCH', 'https://www.homeopathicdirectory.com/', 2],
     ] },
+  Psychedelic: { licensed: false,
+    // Oregon and Colorado license psilocybin facilitators; elsewhere the
+    // practitioner's own clinical license (if any) and training are what to check.
+    stateAlso: {
+      OR: [['Oregon Psilocybin Services (Oregon Health Authority)', 'https://www.oregon.gov/oha/PH/PREVENTIONWELLNESS/Pages/Oregon-Psilocybin-Services.aspx']],
+      CO: [['the Colorado Natural Medicine Program, through the DORA license lookup', 'https://apps2.colorado.gov/dora/licensing/Lookup/LicenseLookup.aspx']],
+    } },
   Herbalism: { licensed: false, also: [['the American Herbalists Guild', 'https://directory.americanherbalistsguild.com/support', 3]] },
   EnergyMedicine: { licensed: false },
   Farmer: { licensed: false },
@@ -237,7 +245,7 @@ const DISCIPLINE_LABELS = {
   Naturopathy: 'Naturopathy', IntegrativeMedicine: 'Integrative & functional medicine',
   Counseling: 'Counseling', Coaching: 'Health & wellness coaching',
   Massage: 'Massage therapy', Bodywork: 'Body work', EnergyMedicine: 'Energy work',
-  Chiropractic: 'Chiropractic', Herbalism: 'Herbology', Nutrition: 'Nutrition', Homeopathy: 'Homeopathy',
+  Chiropractic: 'Chiropractic', Herbalism: 'Herbology', Nutrition: 'Nutrition', Homeopathy: 'Homeopathy', Psychedelic: 'Psychedelic therapies and coaching',
   Farmer: 'Local farms', Grocer: 'Local grocers',
 };
 

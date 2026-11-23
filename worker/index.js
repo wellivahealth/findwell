@@ -1005,6 +1005,408 @@ function toListing(s, coords, logoPath) {
   };
 }
 
+// ---------------------------------------------------------------- practitioner edits
+
+/* Practitioners change their own listing. A one-time link goes only to the
+ * email already on the listing, so only they can open the form. Most changes
+ * go live at once; adding a discipline waits for an admin, a new email
+ * address needs a click from that address, and a changed license or
+ * credentials takes the board confirmation off until it is checked again. */
+
+const EDIT_TTL_HOURS = 48;
+const EDIT_SECTIONS = [
+  ['About you', [
+    ['person', 'Your name', 'text'],
+    ['postnominals', 'Credentials after your name', 'text', 'The letters you sign with, e.g. L.Ac., CNS, LMT.'],
+    ['name', 'Practice name', 'text'],
+  ]],
+  ['About the practice', [
+    ['blurb', 'Short description', 'area', 'The first thing people read on your listing.'],
+    ['long', 'Longer description (optional)', 'area'],
+  ]],
+  ['Fees', [
+    ['pricing', 'Fees', 'area', 'One fee per line. Start a line with ## to make it a small heading.'],
+    ['payments', 'Payment methods', 'text', 'e.g. Cash, Credit Cards, HSA/FSA'],
+    ['insurance', 'Insurance', 'text', 'e.g. Not accepted, or which plans you take.'],
+  ]],
+  ['Contact and location', [
+    ['phone', 'Phone', 'text', 'Leave blank to keep your phone number off the listing.'],
+    ['website', 'Website', 'text'],
+    ['social', 'Social media links', 'area', 'One link per line.'],
+    ['address', 'Street address', 'text', 'Leave blank if you have no public premises.'],
+    ['city', 'City', 'text'],
+    ['state', 'State or province', 'text'],
+    ['zip', 'ZIP or postal code', 'text'],
+    ['location_note', 'Where you see people', 'area', 'Shown when there is no street address, e.g. "In-person sessions by appointment. Distance Reiki available."'],
+    ['telehealth', 'I offer telehealth or distance sessions', 'check'],
+  ]],
+  ['Training and credentials', [
+    ['credentials', 'Certifications', 'area'],
+    ['licensure', 'License (state and number)', 'area', 'If you change this, we confirm it with the board again.'],
+    ['training', 'Training and education', 'area'],
+    ['since', 'Year you began practicing', 'text'],
+    ['affiliations', 'Memberships', 'area'],
+  ]],
+];
+const EDIT_FIELD_KEYS = EDIT_SECTIONS.flatMap(([, f]) => f.map((x) => x[0]));
+const RECHECK_FIELDS = ['credentials', 'licensure'];
+const PLACE_FIELDS = ['address', 'city', 'state', 'zip'];
+
+const nowStamp = () => new Date().toISOString();
+const phxDate = () => new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'America/Phoenix' });
+
+async function editSig(env, slug, exp) {
+  return hmac((env.SIGNING_SECRET || '').trim(), `edit:${slug}:${exp}`);
+}
+
+async function publishedRecord(env, slug) {
+  if (!/^[a-z0-9-]{1,120}$/.test(slug || '')) return null;
+  const base = env.SITE_URL || 'https://findwelldirectory.com';
+  try {
+    const res = await env.ASSETS.fetch(new Request(`${base}/assets/data/p/${slug}.json`));
+    return res.ok ? await res.json() : null;
+  } catch { return null; }
+}
+
+function maskEmail(e) {
+  const [u, d] = String(e || '').split('@');
+  if (!d) return 'the email on your listing';
+  return `${u.slice(0, 1)}${'•'.repeat(Math.max(2, Math.min(u.length - 1, 6)))}@${d}`;
+}
+
+const fieldText = (k, v) => {
+  if (v === null || v === undefined || v === '—') return '';
+  if (Array.isArray(v)) return v.join('\n');
+  if (k === 'telehealth') return v ? 'yes' : '';
+  return String(v).replace(/\r\n/g, '\n').trim();
+};
+
+/** POST /api/edit-link  slug=…  → emails a one-time link to the listing's own address */
+async function handleEditLink(request, env) {
+  if (request.method !== 'POST') return json({ ok: false }, 405);
+  const form = await request.formData();
+  const slug = String(form.get('slug') || '');
+  const rec = await publishedRecord(env, slug);
+  if (!rec) return json({ ok: false, reason: 'notfound' }, 404);
+  const to = String(rec.email || '').trim();
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(to)) return json({ ok: false, reason: 'noemail' });
+
+  const exp = Date.now() + EDIT_TTL_HOURS * 3600 * 1000;
+  const base = env.SITE_URL || 'https://findwelldirectory.com';
+  const link = `${base}/api/edit?slug=${encodeURIComponent(slug)}&exp=${exp}&sig=${await editSig(env, slug, exp)}`;
+  await sendEmail(env, {
+    to, subject: `Update your FindWell listing: ${rec.name}`,
+    html: shell(`<h2 style="font-size:20px;margin:0 0 12px">Update your listing</h2>
+<p>Someone (we hope you) asked to update <strong>${esc(rec.name)}</strong> on FindWell Directory. This link opens your listing with everything filled in, ready to change:</p>
+<p><a href="${esc(link)}" style="display:inline-block;background:#2e5f5c;color:#fff;text-decoration:none;padding:11px 20px;border-radius:6px;font-weight:600">Update my listing</a></p>
+<p style="font-size:14px;color:#5f7473">The link works for ${EDIT_TTL_HOURS} hours. If you didn't ask for it, you can ignore this email and nothing will change.</p>`),
+  });
+  return json({ ok: true, to: maskEmail(to) });
+}
+
+function editFormPage(rec, slug, exp, sig, note = '') {
+  const field = ([k, label, type, hint]) => {
+    const v = fieldText(k, rec[k]);
+    const id = `e-${k}`;
+    if (type === 'check') {
+      return `<div class="field full"><label class="check"><input type="checkbox" name="${k}" value="yes"${v ? ' checked' : ''}> ${esc(label)}</label></div>`;
+    }
+    const control = type === 'area'
+      ? `<textarea class="control" id="${id}" name="${k}" rows="${k === 'blurb' || k === 'long' || k === 'pricing' ? 6 : 3}">${esc(v)}</textarea>`
+      : `<input class="control" id="${id}" name="${k}" value="${esc(v)}">`;
+    return `<div class="field${type === 'area' ? ' full' : ''}"><label for="${id}">${esc(label)}</label>${control}${hint ? `<p class="hint">${esc(hint)}</p>` : ''}</div>`;
+  };
+  const sections = EDIT_SECTIONS.map(([title, fields]) =>
+    `<fieldset class="ed-sec"><legend>${esc(title)}</legend><div class="grid2">${fields.map(field).join('')}</div></fieldset>`).join('');
+  const cats = Object.entries(DISCIPLINE_LABELS).map(([k, label]) =>
+    `<label class="check ed-cat"><input type="checkbox" name="cats" value="${k}"${(rec.categories || []).includes(k) ? ' checked' : ''}> ${esc(label)}</label>`).join('');
+  return new Response(`<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Update ${esc(rec.name)} — FindWell Directory</title>
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+body{background:var(--paper,#f7f6f0)}
+.ed{max-width:52rem;margin:0 auto;padding:2rem 1.2rem 4rem}
+.ed-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.5rem}
+.ed-top img{height:56px}
+.ed-sec{border:0;background:#fff;border-radius:22px;padding:1.4rem 1.5rem;margin:0 0 1.2rem}
+.ed-sec legend{font-family:'Young Serif',Georgia,serif;font-size:1.35rem;color:#1f3d2b;padding:0;float:left;width:100%;margin:0 0 .8rem}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(15rem,100%),1fr));gap:.9rem 1rem;clear:both}
+.ed input[type=file]{max-width:100%}
+.ed-sec{min-width:0}
+.ed-logo{flex-wrap:wrap}
+.ed-logo>div{min-width:0;flex:1 1 12rem}
+.grid2 .full{grid-column:1/-1}
+.field label{display:block;font-weight:600;margin:0 0 .3rem}
+.field .control{width:100%;box-sizing:border-box}
+.check{display:flex;gap:.5rem;align-items:center;font-weight:500}
+.ed-cats{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;clear:both}
+.ed-note{background:#fbefd4;border-radius:14px;padding:.9rem 1.1rem;margin:0 0 1.2rem}
+.ed-logo{display:flex;gap:1rem;align-items:center;clear:both}
+.ed-logo img{width:84px;height:84px;object-fit:contain;background:#f7f6f0;border-radius:16px}
+</style></head><body>
+<div class="ed">
+<div class="ed-top"><a href="/"><img src="/assets/img/logo-400.png" alt="FindWell Directory"></a><a href="/provider/${esc(slug)}/">See your listing</a></div>
+<h1 style="margin:0 0 .4rem">Update ${esc(rec.name)}</h1>
+<p style="margin:0 0 1.4rem;color:#4f5f55">Change anything below and press <strong>Save changes</strong>. Most changes are live within a couple of minutes.</p>
+${note ? `<div class="ed-note">${note}</div>` : ''}
+<form method="POST" action="/api/edit" enctype="multipart/form-data">
+<input type="hidden" name="slug" value="${esc(slug)}"><input type="hidden" name="exp" value="${esc(exp)}"><input type="hidden" name="sig" value="${esc(sig)}">
+${sections}
+<fieldset class="ed-sec"><legend>Disciplines</legend>
+<p class="hint" style="clear:both">Removing one takes effect at once. Adding one is checked by us first, so it appears once we've approved it.</p>
+<div class="ed-cats">${cats}</div></fieldset>
+<fieldset class="ed-sec"><legend>Logo or photo</legend>
+<div class="ed-logo">${rec.logo ? `<img src="${esc(rec.logo)}" alt="Current logo">` : ''}
+<div><input type="file" name="logo" accept="image/png,image/jpeg,image/webp"><p class="hint">PNG, JPG or WebP, up to 5 MB. Leave empty to keep the current one.</p></div></div></fieldset>
+<fieldset class="ed-sec"><legend>Email on your listing</legend>
+<div class="grid2"><div class="field full"><label for="e-email">Email</label><input class="control" id="e-email" name="email" type="email" value="${esc(rec.email || '')}">
+<p class="hint">This is also where update links are sent. If you change it, we'll email the new address to confirm before it takes effect.</p></div></div></fieldset>
+<p><button class="btn btn-primary" type="submit">Save changes</button></p>
+</form></div></body></html>`, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } });
+}
+
+async function checkEditToken(env, slug, exp, sig) {
+  if (!slug || !exp || !sig) return 'missing';
+  if (Number(exp) < Date.now()) return 'expired';
+  return safeEqual(String(sig), await editSig(env, slug, exp)) ? '' : 'invalid';
+}
+
+const linkProblem = (why) => page('Link problem', why === 'expired'
+  ? `<h1>That link has expired</h1><p>Links work for ${EDIT_TTL_HOURS} hours. <a href="/update/">Ask for a new one</a>.</p>`
+  : '<h1>That link is not valid</h1><p><a href="/update/">Ask for a new one</a>.</p>', 403);
+
+/** GET /api/edit?slug&exp&sig → the form; POST → apply the changes */
+async function handleEdit(request, env) {
+  const url = new URL(request.url);
+  if (request.method !== 'POST') {
+    const slug = url.searchParams.get('slug') || '';
+    const exp = url.searchParams.get('exp') || '';
+    const sig = url.searchParams.get('sig') || '';
+    const why = await checkEditToken(env, slug, exp, sig);
+    if (why) return linkProblem(why);
+    const rec = await publishedRecord(env, slug);
+    if (!rec) return page('Not found', '<h1>We could not find that listing</h1>', 404);
+    return editFormPage(rec, slug, exp, sig);
+  }
+
+  const form = await request.formData();
+  const slug = String(form.get('slug') || '');
+  const why = await checkEditToken(env, slug, String(form.get('exp') || ''), String(form.get('sig') || ''));
+  if (why) return linkProblem(why);
+  const rec = await publishedRecord(env, slug);
+  if (!rec) return page('Not found', '<h1>We could not find that listing</h1>', 404);
+
+  // ---- what changed
+  const changes = {};
+  for (const k of EDIT_FIELD_KEYS) {
+    const raw = k === 'telehealth' ? (form.get(k) ? 'yes' : '') : String(form.get(k) ?? '').replace(/\r\n/g, '\n').trim().slice(0, 6000);
+    if (raw === fieldText(k, rec[k])) continue;
+    if (k === 'name' && !raw) continue;                     // a listing always has a name
+    let v = raw;
+    if (k === 'telehealth') v = !!raw;
+    else if (k === 'social') v = raw.split(/[\s,]+/).filter((u) => /^https?:\/\//i.test(u));
+    else if (k === 'since') { const y = parseInt(raw, 10); v = y > 1900 && y <= new Date().getFullYear() ? y : null; }
+    else if (k === 'website' && v && !/^https?:\/\//i.test(v)) v = `https://${v}`;
+    changes[k] = v;
+  }
+  if ('state' in changes || 'zip' in changes) {
+    changes.state = normaliseState(changes.state ?? rec.state, changes.zip ?? rec.zip, 'United States') || (changes.state ?? rec.state);
+  }
+
+  // ---- disciplines: removals now, additions wait for an admin
+  const wanted = cleanCats(form.getAll('cats').map(String));
+  const current = rec.categories || [];
+  const added = wanted.filter((c) => !current.includes(c));
+  const kept = current.filter((c) => wanted.includes(c));
+  if (kept.length !== current.length && kept.length) changes.categories = kept;
+
+  // ---- logo
+  const files = [];
+  const logo = form.get('logo');
+  if (logo && typeof logo === 'object' && logo.size > 0) {
+    const ext = { 'image/png': 'png', 'image/jpeg': 'jpg', 'image/webp': 'webp' }[logo.type];
+    if (ext && logo.size <= 5 * 1024 * 1024) {
+      const stamp = nowStamp().replace(/[^0-9]/g, '').slice(0, 12);
+      const path = `public/assets/img/providers/${slug}-${stamp}.${ext}`;
+      files.push({ path, contentBase64: b64bytes(await logo.arrayBuffer()) });
+      changes.logo = path.replace(/^public/, '');
+    }
+  }
+
+  // ---- location: re-place the pin
+  if (PLACE_FIELDS.some((k) => k in changes)) {
+    const addr = changes.address ?? rec.address;
+    const city = changes.city ?? rec.city; const st = changes.state ?? rec.state; const zip = changes.zip ?? rec.zip;
+    const c = addr ? await geocode(`${addr}${/\d{5}/.test(addr) ? '' : `, ${city}, ${st} ${zip}`}`) : {};
+    changes.lat = c.lat ?? null; changes.lng = c.lng ?? null;   // none: the build uses the city centre
+  }
+
+  // ---- email: only after the new address confirms
+  const newEmail = String(form.get('email') || '').trim();
+  const emailChange = newEmail && newEmail.toLowerCase() !== String(rec.email || '').toLowerCase()
+    && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(newEmail);
+
+  const recheck = rec.verified && RECHECK_FIELDS.some((k) => k in changes);
+  const changedKeys = Object.keys(changes).filter((k) => !['lat', 'lng'].includes(k));
+  if (!changedKeys.length && !added.length && !emailChange) {
+    return page('No changes', `<h1>Nothing to change</h1><p>Everything matched your listing as it is. <a href="/provider/${esc(slug)}/">See your listing</a></p>`);
+  }
+
+  // ---- write
+  const overrides = await readFile(env, 'data/overrides.json');
+  const od = overrides ? JSON.parse(fromB64(overrides.content)) : {};
+  if (Object.keys(changes).length) {
+    od[slug] = { ...(od[slug] || {}), ...changes };
+    files.push({ path: 'data/overrides.json', contentBase64: b64(JSON.stringify(od, null, 2) + '\n') });
+  }
+  if (recheck) {
+    // the confirmation was for the old details: take it off until it is checked again
+    const vf = await readFile(env, 'data/verifications.json');
+    if (vf) {
+      const vd = JSON.parse(fromB64(vf.content));
+      if (vd[slug]) { delete vd[slug]; files.push({ path: 'data/verifications.json', contentBase64: b64(JSON.stringify(vd, null, 2) + '\n') }); }
+    }
+    const lf = await readFile(env, 'data/listings.json');
+    if (lf) {
+      const ld = JSON.parse(fromB64(lf.content));
+      const row = ld.find((l) => l.slug === slug);
+      if (row && row.verification) { row.verification = null; row.verified = false; files.push({ path: 'data/listings.json', contentBase64: b64(JSON.stringify(ld, null, 2) + '\n') }); }
+    }
+    const af = await readFile(env, 'data/unverifiable.json');
+    if (af) {
+      const ad = JSON.parse(fromB64(af.content));
+      if (ad[slug]) { delete ad[slug]; files.push({ path: 'data/unverifiable.json', contentBase64: b64(JSON.stringify(ad, null, 2) + '\n') }); }
+    }
+  }
+  let changeId = null;
+  if (added.length) {
+    changeId = `${nowStamp().slice(0, 10)}-${slug}`;
+    files.push({ path: `data/changes/${changeId}.json`, contentBase64: b64(JSON.stringify({
+      slug, name: rec.name, add: added, current: kept.length ? kept : current, requested_at: nowStamp(),
+    }, null, 2) + '\n') });
+  }
+  const logF = await readFile(env, 'data/edit-log.json');
+  const log = logF ? JSON.parse(fromB64(logF.content)) : [];
+  log.push({ slug, name: rec.name, at: nowStamp(), changed: changedKeys, added, email: emailChange ? 'pending' : '', recheck });
+  files.push({ path: 'data/edit-log.json', contentBase64: b64(JSON.stringify(log.slice(-500), null, 2) + '\n') });
+
+  await commitFiles(env, `Practitioner update: ${rec.name}`, files);
+
+  const base = env.SITE_URL || 'https://findwelldirectory.com';
+  if (added.length) {
+    const sig = await hmac((env.SIGNING_SECRET || '').trim(), `change:${changeId}`);
+    const yes = `${base}/api/change?id=${encodeURIComponent(changeId)}&sig=${sig}&do=approve`;
+    const no = `${base}/api/change?id=${encodeURIComponent(changeId)}&sig=${sig}&do=decline`;
+    await sendEmail(env, {
+      to: env.ADMIN_EMAIL, subject: `Discipline request: ${rec.name}`,
+      html: shell(`<h2 style="font-size:20px;margin:0 0 12px">${esc(rec.name)} asks to be listed under more disciplines</h2>
+<p>${esc(rec.person || '')} would like to add: <strong>${esc(added.map((c) => DISCIPLINE_LABELS[c]).join(', '))}</strong>.</p>
+<p>Listed now under: ${esc((current || []).map((c) => DISCIPLINE_LABELS[c]).join(', ') || 'none')}.</p>
+<p><strong>Training on the listing:</strong> ${esc(fieldText('training', changes.training ?? rec.training) || '—')}<br>
+<strong>Certifications:</strong> ${esc(fieldText('credentials', changes.credentials ?? rec.credentials) || '—')}<br>
+<strong>License:</strong> ${esc(fieldText('licensure', changes.licensure ?? rec.licensure) || '—')}</p>
+<p><a href="${yes}" style="display:inline-block;background:#2e5f5c;color:#fff;text-decoration:none;padding:10px 18px;border-radius:6px;font-weight:600">Approve</a>
+&nbsp; <a href="${no}" style="color:#9a6b1f">Decline</a></p>
+<p style="font-size:13px;color:#5f7473">Their other changes are already live.</p>`),
+    });
+  }
+  if (emailChange) {
+    const exp = Date.now() + EDIT_TTL_HOURS * 3600 * 1000;
+    const sig = await hmac((env.SIGNING_SECRET || '').trim(), `email:${slug}:${newEmail.toLowerCase()}:${exp}`);
+    const link = `${base}/api/edit-email?slug=${encodeURIComponent(slug)}&email=${encodeURIComponent(newEmail)}&exp=${exp}&sig=${sig}`;
+    await sendEmail(env, { to: newEmail, subject: 'Confirm the email for your FindWell listing',
+      html: shell(`<h2 style="font-size:20px;margin:0 0 12px">Confirm this email address</h2>
+<p>Please confirm that <strong>${esc(newEmail)}</strong> should be the email on <strong>${esc(rec.name)}</strong> in FindWell Directory. Update links will come here from now on.</p>
+<p><a href="${esc(link)}" style="display:inline-block;background:#2e5f5c;color:#fff;text-decoration:none;padding:11px 20px;border-radius:6px;font-weight:600">Confirm this email</a></p>
+<p style="font-size:14px;color:#5f7473">The link works for ${EDIT_TTL_HOURS} hours. If you didn't expect this, ignore it and nothing will change.</p>`) });
+  }
+
+  const items = [];
+  if (changedKeys.length) items.push(`<li>Your changes are saved and will be live in a couple of minutes.</li>`);
+  if (recheck) items.push('<li>Because your license or credentials changed, your listing shows them as reported until we confirm them with the board again.</li>');
+  if (added.length) items.push(`<li>We'll look at adding ${esc(added.map((c) => DISCIPLINE_LABELS[c]).join(', '))} and let you know.</li>`);
+  if (emailChange) items.push(`<li>We've sent a confirmation to ${esc(newEmail)}. The new email takes effect once you click it.</li>`);
+  return page('Saved', `<h1>Thank you</h1><ul style="padding-left:1.1rem;list-style:disc">${items.join('')}</ul>
+<p><a href="/provider/${esc(slug)}/">See your listing</a></p>`);
+}
+
+/** GET /api/edit-email: the new address confirms itself */
+async function handleEditEmail(request, env) {
+  const url = new URL(request.url);
+  const slug = url.searchParams.get('slug') || '';
+  const email = (url.searchParams.get('email') || '').trim();
+  const exp = url.searchParams.get('exp') || '';
+  const sig = url.searchParams.get('sig') || '';
+  if (!exp || Number(exp) < Date.now()) return linkProblem('expired');
+  if (!safeEqual(sig, await hmac((env.SIGNING_SECRET || '').trim(), `email:${slug}:${email.toLowerCase()}:${exp}`))) return linkProblem('invalid');
+  const rec = await publishedRecord(env, slug);
+  if (!rec) return page('Not found', '<h1>We could not find that listing</h1>', 404);
+  if (String(rec.email || '').toLowerCase() === email.toLowerCase()) {
+    return page('Done', `<h1>Already confirmed</h1><p>${esc(email)} is the email on your listing.</p>`);
+  }
+  const f = await readFile(env, 'data/overrides.json');
+  const od = f ? JSON.parse(fromB64(f.content)) : {};
+  od[slug] = { ...(od[slug] || {}), email };
+  const logF = await readFile(env, 'data/edit-log.json');
+  const log = logF ? JSON.parse(fromB64(logF.content)) : [];
+  log.push({ slug, name: rec.name, at: nowStamp(), changed: ['email'], added: [], email: 'confirmed', recheck: false });
+  await commitFiles(env, `Practitioner update: ${rec.name} (email)`, [
+    { path: 'data/overrides.json', contentBase64: b64(JSON.stringify(od, null, 2) + '\n') },
+    { path: 'data/edit-log.json', contentBase64: b64(JSON.stringify(log.slice(-500), null, 2) + '\n') },
+  ]);
+  if (rec.email) {
+    await sendEmail(env, { to: rec.email, subject: 'The email on your FindWell listing changed',
+      html: shell(`<p>The email on <strong>${esc(rec.name)}</strong> in FindWell Directory is now ${esc(email)}. If you didn't make this change, please reply to this email and we'll put it right.</p>`) });
+  }
+  return page('Confirmed', `<h1>Email confirmed</h1><p>${esc(email)} is now the email on ${esc(rec.name)}.</p><p><a href="/provider/${esc(slug)}/">See your listing</a></p>`);
+}
+
+/** GET /api/change?id&sig&do=approve|decline — an admin decides on added disciplines */
+async function handleChange(request, env) {
+  const url = new URL(request.url);
+  const id = url.searchParams.get('id') || '';
+  const sig = url.searchParams.get('sig') || '';
+  const act = url.searchParams.get('do');
+  if (!/^[a-z0-9-]+$/.test(id) || !safeEqual(sig, await hmac((env.SIGNING_SECRET || '').trim(), `change:${id}`))) {
+    return page('Invalid link', '<h1>That link is not valid</h1>', 403);
+  }
+  const f = await readFile(env, `data/changes/${id}.json`);
+  if (!f) return page('Done', '<h1>Already handled</h1><p>This request has already been approved or declined.</p>');
+  const req = JSON.parse(fromB64(f.content));
+  const files = [{ path: `data/changes/${id}.json`, remove: true }];
+  let cats = null;
+  if (act === 'approve') {
+    const of = await readFile(env, 'data/overrides.json');
+    const od = of ? JSON.parse(fromB64(of.content)) : {};
+    const rec = await publishedRecord(env, req.slug);
+    cats = cleanCats([...((rec && rec.categories) || req.current || []), ...req.add]);
+    od[req.slug] = { ...(od[req.slug] || {}), categories: cats };
+    files.push({ path: 'data/overrides.json', contentBase64: b64(JSON.stringify(od, null, 2) + '\n') });
+  }
+  await commitFiles(env, `${act === 'approve' ? 'Approved' : 'Declined'} discipline request: ${req.name}`, files);
+  return page('Done', act === 'approve'
+    ? `<h1>Approved</h1><p>${esc(req.name)} is now listed under ${esc(cats.map((c) => DISCIPLINE_LABELS[c]).join(', '))}. Live in about a minute.</p>`
+    : `<h1>Declined</h1><p>${esc(req.name)} stays under its current disciplines. If you'd like to tell them why, reply to their last email.</p>`);
+}
+
+/** Once a day: a short summary of what practitioners changed themselves */
+async function dailySummary(env) {
+  const f = await readFile(env, 'data/edit-log.json');
+  if (!f) return;
+  const since = Date.now() - 24 * 3600 * 1000;
+  const recent = JSON.parse(fromB64(f.content)).filter((e) => Date.parse(e.at) >= since);
+  if (!recent.length || !env.ADMIN_EMAIL) return;
+  const base = env.SITE_URL || 'https://findwelldirectory.com';
+  const rows = recent.map((e) => `<li style="margin:0 0 8px"><a href="${base}/provider/${esc(e.slug)}/" style="color:#2e5f5c">${esc(e.name)}</a>: ${
+    esc([e.changed.length ? `changed ${e.changed.join(', ')}` : '', e.added.length ? `asked to add ${e.added.map((c) => DISCIPLINE_LABELS[c] || c).join(', ')}` : '',
+      e.email === 'confirmed' ? 'confirmed a new email' : e.email === 'pending' ? 'new email awaiting confirmation' : ''].filter(Boolean).join('; '))}${
+    e.recheck ? ' <strong style="color:#9a6b1f">License or credentials changed: back on your verification list.</strong>' : ''}</li>`).join('');
+  await sendEmail(env, { to: env.ADMIN_EMAIL, subject: `FindWell: ${recent.length} listing update${recent.length === 1 ? '' : 's'} in the last day`,
+    html: shell(`<h2 style="font-size:20px;margin:0 0 12px">What practitioners changed</h2><ul style="padding-left:1.1rem">${rows}</ul>
+<p style="font-size:13px;color:#5f7473">These are already live. Discipline requests come separately, with an Approve button.</p>`) });
+}
+
 // ---------------------------------------------------------------- routes
 
 async function handleApply(request, env) {
@@ -1600,6 +2002,10 @@ export default {
       if (url.pathname === '/api/categories') return await handleCategories(request, env);
       if (url.pathname === '/api/verify') return await handleVerify(request, env);
       if (url.pathname === '/api/aside') return await handleAside(request, env);
+      if (url.pathname === '/api/edit-link') return await handleEditLink(request, env);
+      if (url.pathname === '/api/edit') return await handleEdit(request, env);
+      if (url.pathname === '/api/edit-email') return await handleEditEmail(request, env);
+      if (url.pathname === '/api/change') return await handleChange(request, env);
     } catch (err) {
       console.error(err);
       if (url.pathname === '/api/apply') {
@@ -1608,5 +2014,9 @@ export default {
       return page('Error', `<h1>Something went wrong</h1><p>${esc(err.message)}</p>`, 500);
     }
     return env.ASSETS.fetch(request);
+  },
+  // wrangler.jsonc triggers.crons: once a day, the practitioner-update summary
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(dailySummary(env).catch((err) => console.error(err)));
   },
 };

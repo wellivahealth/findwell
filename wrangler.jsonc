@@ -20,6 +20,9 @@
     "run_worker_first": ["/api/*"]
   },
 
+  // 15:00 UTC is 8am in Arizona: the daily summary of practitioner updates
+  "triggers": { "crons": ["0 15 * * *"] },
+
   "vars": {
     "SITE_URL": "https://findwelldirectory.com",
     "ADMIN_EMAIL": "info@findwelldirectory.com",

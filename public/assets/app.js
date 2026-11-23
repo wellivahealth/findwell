@@ -120,6 +120,32 @@
     });
   })();
 
+  /* ---------- update-your-listing page ---------- */
+  (function () {
+    var pick = $('#upd-pick'), send = $('#upd-send');
+    if (!pick || !send) return;
+    var msg = $('#upd-msg'), nameEl = $('#upd-name');
+    function sync() {
+      var o = pick.options[pick.selectedIndex];
+      nameEl.textContent = pick.value ? o.textContent : 'Choose your practice';
+    }
+    var want = new URLSearchParams(location.search).get('p');
+    if (want && pick.querySelector('option[value="' + want.replace(/[^a-z0-9-]/g, '') + '"]')) pick.value = want;
+    sync(); pick.addEventListener('change', function () { sync(); msg.textContent = ''; });
+    send.addEventListener('click', function () {
+      if (!pick.value) { msg.textContent = 'Choose your practice first.'; pick.focus(); return; }
+      send.disabled = true; msg.textContent = 'Sending…';
+      var fd = new FormData(); fd.append('slug', pick.value);
+      fetch('/api/edit-link', { method: 'POST', body: fd }).then(function (r) { return r.json(); }).then(function (d) {
+        send.disabled = false;
+        if (d.ok) msg.textContent = 'Sent. Check ' + d.to + ' for a link from FindWell. It works for 48 hours.';
+        else if (d.reason === 'noemail') msg.textContent = 'This listing has no email address on it, so we can’t send a link. Please write to info@findwelldirectory.com and we’ll help.';
+        else if (d.reason === 'wait') msg.textContent = 'We sent a link a few minutes ago. Please check that email, including spam.';
+        else msg.textContent = 'Something went wrong. Please write to info@findwelldirectory.com.';
+      }).catch(function () { send.disabled = false; msg.textContent = 'Something went wrong. Please write to info@findwelldirectory.com.'; });
+    });
+  })();
+
   /* ---------- menu ---------- */
   var burger = $('#burger'), nav = $('#nav');
   if (burger && nav) {

@@ -469,3 +469,8 @@ picture{ display:contents; }
 .badge-preview{ background:var(--sage-bg); border-radius:var(--r-lg); padding:1.6rem; margin:0 0 1rem; display:flex; justify-content:center; }
 .badge-preview img{ max-width:100%; height:auto; display:block; }
 .badge-code{ width:100%; font-family:ui-monospace, Menlo, Consolas, monospace; font-size:.86rem; line-height:1.5; resize:vertical; }
+
+.upd{ background:var(--surface); border-radius:var(--r-lg); padding:1.6rem 1.8rem; margin:0 0 2rem; max-width:40rem; }
+.upd-for{ margin:0 0 .8rem; }
+.upd-msg{ color:var(--ink-soft); margin:0; }
+.upd-msg:empty{ display:none; }

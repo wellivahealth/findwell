@@ -1676,7 +1676,7 @@ def page_provider(p):
         {f'<div class="fw-social">{social}</div>' if social else ""}
         <p class="fw-contact-note">FindWell takes no commission and receives nothing when you book.</p>
       </div>
-      <a class="fw-claim" href="mailto:{CONTACT_EMAIL}?subject={E(('Change to my listing: ' + p['name']).replace(' ', '%20'))}">Is this your practice? Ask us to update it</a>
+      <a class="fw-claim" href="/update/?p={E(p['slug'])}">Is this your practice? Update your listing</a>
     </aside>
   </div>"""
     head = f'<script type="application/ld+json">{json.dumps(ld)}</script>'
@@ -2100,6 +2100,39 @@ def page_badge():
                  "Add the FindWell Directory badge to your website, linking to your listing.", "/badge/", body)
 
 
+EDITABLE = ["name", "person", "postnominals", "blurb", "long", "pricing", "payments", "insurance",
+            "telehealth", "phone", "email", "website", "social", "address", "city", "state", "zip",
+            "location_note", "credentials", "licensure", "training", "since", "affiliations",
+            "categories", "logo"]
+
+def provider_record(p):
+    """What the update form starts from: the listing as published."""
+    rec = {k: p.get(k) for k in EDITABLE}
+    rec["slug"] = p["slug"]
+    rec["verified"] = bool(p.get("verification"))
+    return rec
+
+
+def page_update():
+    body = f"""{page_head("Update your listing", "Practitioners can change their own listing. We'll email a secure link to the address on the listing, so only you can open it.", [("Home", "/"), ("Update your listing", None)], art="branch")}
+  <section class="wrap page-body">
+    <div class="upd" id="upd">
+      <p class="upd-for">Listing: <strong id="upd-name">Choose your practice</strong></p>
+      <select class="control" id="upd-pick" aria-label="Your listing" style="max-width:32rem"><option value="">Choose your practice…</option>
+        {"".join(f'<option value="{E(p["slug"])}">{E(p["name"])}</option>' for p in sorted(PROVIDERS, key=lambda r: r["name"].lower()))}
+      </select>
+      <p><button class="btn btn-dark" id="upd-send" type="button">Email me a link to update it</button></p>
+      <p class="upd-msg" id="upd-msg" aria-live="polite"></p>
+    </div>
+    <h2>What happens next</h2>
+    <p>The link opens a form with your listing already filled in. Change what you need and press save. Most changes are live within a couple of minutes.</p>
+    <p>A few changes are checked by us first: adding a discipline, and changes to your license or credentials, which we confirm with the board again before your listing shows them as confirmed. Changing the email address on your listing needs a click from the new address.</p>
+    <p>No longer have access to the email on your listing? Write to us at <a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a>.</p>
+  </section>"""
+    return shell("Update your listing — FindWell Directory",
+                 "Practitioners can update their own FindWell listing through a secure link.", "/update/", body)
+
+
 def page_advertise():
     body = f"""{page_head("Advertise with us", "FindWell reaches people at the moment they are choosing a practitioner: comparing credentials, weighing cost, deciding who to call. If you serve that audience, we would like to hear from you.", [("Home", "/"), ("Advertise with us", None)], art="branch")}
   <section class="wrap page-body">
@@ -2193,6 +2226,15 @@ def main():
     written.append(write("articles/", page_articles()))
     written.append(write("advertise/", page_advertise()))
     written.append(write("badge/", page_badge()))
+    written.append(write("update/", page_update()))
+    # one small file per listing, so the update form starts from what is published
+    pdir = os.path.join(OUT, "assets", "data", "p")
+    if os.path.isdir(pdir):
+        shutil.rmtree(pdir)
+    os.makedirs(pdir, exist_ok=True)
+    for p in PROVIDERS:
+        with open(os.path.join(pdir, p["slug"] + ".json"), "w") as f:
+            json.dump(provider_record(p), f, ensure_ascii=False)
     written.append(write("verification/", page_verification()))
     for a in ARTICLES:
         written.append(write(f"articles/{a['slug']}/", page_article(a)))

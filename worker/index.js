@@ -786,7 +786,7 @@ const receivedEmail = (s) => shell(`<h2 style="font-size:20px;margin:0 0 12px">W
 const publishedEmail = (s, url, joinUrl) => shell(`<h2 style="font-size:20px;margin:0 0 12px">Your listing is live</h2>
 <p>Thank you for joining the FindWell Directory. Your listing for <strong>${esc(s.practice)}</strong> is now published:</p>
 <p><a href="${esc(url)}" style="display:inline-block;background:#c23a4b;color:#fff;text-decoration:none;padding:10px 18px;border-radius:6px;font-weight:600">View your listing</a></p>
-<p>Please take a look when you have a moment. If anything needs changing, whether a fee, the way a credential reads, or the photo, simply reply to this email and we will update it for you.</p>
+<p>Please take a look when you have a moment. If anything needs changing, now or later, whether a fee, your description, a credential or your photo, you can update it yourself. Go to <a href="${esc(url.split('/provider/')[0] + '/update/?p=' + (url.split('/provider/')[1] || '').replace(/\/.*$/, ''))}" style="color:#2e5f5c">findwelldirectory.com/update</a>, choose your practice, and we'll email a secure link to this address that opens your listing ready to edit. To change your name or your practice name, just reply to this email.</p>
 <p>We also confirm license numbers and certifications with the issuing board. That is usually quick, and we will only be in touch if we have a question.</p>
 <div style="margin:24px 0 0;padding:18px 20px;background:#f5f7f1;border-radius:8px">
 <p style="margin:0 0 8px;font-weight:600;font-size:17px">Add the badge to your website</p>

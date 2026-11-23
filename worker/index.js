@@ -1016,9 +1016,9 @@ function toListing(s, coords, logoPath) {
 const EDIT_TTL_HOURS = 48;
 const EDIT_SECTIONS = [
   ['About you', [
-    ['person', 'Your name', 'text'],
+    ['person', 'Your name', 'fixed'],
+    ['name', 'Practice name', 'fixed'],
     ['postnominals', 'Credentials after your name', 'text', 'The letters you sign with, e.g. L.Ac., CNS, LMT.'],
-    ['name', 'Practice name', 'text'],
   ]],
   ['About the practice', [
     ['blurb', 'Short description', 'area', 'The first thing people read on your listing.'],
@@ -1048,7 +1048,8 @@ const EDIT_SECTIONS = [
     ['affiliations', 'Memberships', 'area'],
   ]],
 ];
-const EDIT_FIELD_KEYS = EDIT_SECTIONS.flatMap(([, f]) => f.map((x) => x[0]));
+// names are shown but not editable here: a change of name comes to us by email
+const EDIT_FIELD_KEYS = EDIT_SECTIONS.flatMap(([, f]) => f.filter((x) => x[2] !== 'fixed').map((x) => x[0]));
 const RECHECK_FIELDS = ['credentials', 'licensure'];
 const PLACE_FIELDS = ['address', 'city', 'state', 'zip'];
 
@@ -1108,6 +1109,9 @@ function editFormPage(rec, slug, exp, sig, note = '') {
   const field = ([k, label, type, hint]) => {
     const v = fieldText(k, rec[k]);
     const id = `e-${k}`;
+    if (type === 'fixed') {
+      return `<div class="field"><span class="lbl-fixed">${esc(label)}</span><p class="fixed">${esc(v || '\u2014')}</p></div>`;
+    }
     if (type === 'check') {
       return `<div class="field full"><label class="check"><input type="checkbox" name="${k}" value="yes"${v ? ' checked' : ''}> ${esc(label)}</label></div>`;
     }
@@ -1117,7 +1121,8 @@ function editFormPage(rec, slug, exp, sig, note = '') {
     return `<div class="field${type === 'area' ? ' full' : ''}"><label for="${id}">${esc(label)}</label>${control}${hint ? `<p class="hint">${esc(hint)}</p>` : ''}</div>`;
   };
   const sections = EDIT_SECTIONS.map(([title, fields]) =>
-    `<fieldset class="ed-sec"><legend>${esc(title)}</legend><div class="grid2">${fields.map(field).join('')}</div></fieldset>`).join('');
+    `<fieldset class="ed-sec"><legend>${esc(title)}</legend><div class="grid2">${fields.map(field).join('')}${
+      fields.some((f) => f[2] === 'fixed') ? '<p class="fixed-note">To change your name or your practice name, please write to us at <a href="mailto:info@findwelldirectory.com">info@findwelldirectory.com</a>.</p>' : ''}</div></fieldset>`).join('');
   const cats = Object.entries(DISCIPLINE_LABELS).map(([k, label]) =>
     `<label class="check ed-cat"><input type="checkbox" name="cats" value="${k}"${(rec.categories || []).includes(k) ? ' checked' : ''}> ${esc(label)}</label>`).join('');
   return new Response(`<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
@@ -1140,6 +1145,9 @@ body{background:var(--paper,#f7f6f0)}
 .field label{display:block;font-weight:600;margin:0 0 .3rem}
 .field .control{width:100%;box-sizing:border-box}
 .check{display:flex;gap:.5rem;align-items:center;font-weight:500}
+.lbl-fixed{display:block;font-weight:600;margin:0 0 .3rem}
+.fixed{margin:0;padding:.7rem 0;color:#3f4f45}
+.fixed-note{grid-column:1/-1;margin:0;font-size:.9rem;color:#5f7473}
 .ed-cats{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;clear:both}
 .ed-note{background:#fbefd4;border-radius:14px;padding:.9rem 1.1rem;margin:0 0 1.2rem}
 .ed-logo{display:flex;gap:1rem;align-items:center;clear:both}

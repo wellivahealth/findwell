@@ -2721,5 +2721,41 @@
       "by": "admin",
       "recorded_at": "2026-11-23T18:37:53.017Z"
     }
+  },
+  {
+    "slug": "palate-to-plate",
+    "name": "Palate to Plate",
+    "person": "Tori Thompson",
+    "postnominals": "MS, RD, CSP",
+    "logo": null,
+    "categories": [
+      "Nutrition"
+    ],
+    "city": "EXETER",
+    "state": "NH",
+    "zip": "03833",
+    "address": "",
+    "country": "United States",
+    "lat": 42.981477,
+    "lng": -70.9478343,
+    "telehealth": true,
+    "phone": "14058087271",
+    "email": "itspalatetoplate@gmail.com",
+    "website": "www.palatetoplate.com",
+    "social": [
+      "https://www.instagram.com/itspalatetoplate/"
+    ],
+    "credentials": "Endorsed Fertility Dietitian through Early Life Nutrition Alliance",
+    "licensure": "State licensed — number not provided",
+    "training": "Bachelors of Science in Dietetics\r\nMasters in Nutrition Science\r\nRegistered Dietitian through Academy of Nutrition & Dieteticds",
+    "integrative_training": "",
+    "since": 2014,
+    "affiliations": "",
+    "pricing": "Packages available for cash pay",
+    "payments": "Insurance, Credit Cards",
+    "insurance": "Accepted — verify your plan with the practice",
+    "blurb": "Women's Health and Fertility Nutrition",
+    "long": "Specializing in women’s health and fertility, Tori works with individuals and couples trying to conceive, as well as women with PMOS, endometriosis, and those going through perimenopause or menopause. Her approach focuses on using targeted nutrition strategies to support hormone balance, improve egg and sperm quality, and address underlying factors such as insulin resistance, inflammation, and nutrient deficiencies.\r\n\r\nAppointments provided through telehealth.",
+    "verified": false
   }
 ]

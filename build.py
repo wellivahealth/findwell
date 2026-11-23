@@ -580,6 +580,15 @@ def _load_overrides():
     except (OSError, ValueError):
         return {}
 
+def _load_removed():
+    """Listings taken off the site with the staff Remove button. Their data
+    is kept, so a listing can be put back."""
+    try:
+        with open(os.path.join(ROOT, "data", "removed.json")) as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return {}
+
 def _apply_corrections():
     global PROVIDERS
     checks = _load_verifications()
@@ -587,7 +596,8 @@ def _apply_corrections():
     for p in PROVIDERS:
         if isinstance(checks.get(p["slug"]), dict):
             p["verification"] = checks[p["slug"]]
-    PROVIDERS[:] = [p for p in PROVIDERS if p["slug"] not in HIDDEN
+    removed = _load_removed()       # listings staff removed from the site
+    PROVIDERS[:] = [p for p in PROVIDERS if p["slug"] not in HIDDEN and p["slug"] not in removed
                     and (p.get("country") or "United States").lower() in LISTED_COUNTRIES]
     for p in PROVIDERS:
         fix = CORRECTIONS.get(p["slug"])

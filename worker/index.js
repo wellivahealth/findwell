@@ -1191,7 +1191,16 @@ ${sections}
 <p class="hint">${staff ? 'Staff edit: a new address takes effect at once.' : "This is also where update links are sent. If you change it, we'll email the new address to confirm before it takes effect."}</p></div></div></fieldset>
 ${staff && rec.verified ? `<fieldset class="ed-sec"><legend>Board confirmation</legend><label class="check" style="clear:both"><input type="checkbox" name="unverify" value="yes"> Take the board confirmation off this listing and put it back on the verification list</label><p class="hint">Use this if the license itself changed. Otherwise the confirmation stays.</p></fieldset>` : ''}
 <p><button class="btn btn-primary" type="submit">Save changes</button></p>
-</form></div></body></html>`, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } });
+</form>
+${staff ? `<form method="POST" action="/api/remove" class="ed-sec ed-remove" onsubmit="return confirm('Remove ${esc(rec.name).replace(/'/g, '&#39;')} from the site?')">
+<input type="hidden" name="slug" value="${esc(slug)}"><input type="hidden" name="exp" value="${esc(exp)}"><input type="hidden" name="sig" value="${esc(sig)}">
+<h2 style="font-family:'Young Serif',Georgia,serif;font-weight:400;font-size:1.35rem;color:#8a2f1f;margin:0 0 .4rem">Remove this listing</h2>
+<p style="margin:0 0 .8rem;color:#4f5f55">Takes ${esc(rec.name)} off the site within a couple of minutes. Everything on it is kept, so it can be put back later.</p>
+<div class="field" style="margin:0 0 .8rem"><label for="e-why">Reason (for our records, optional)</label><input class="control" id="e-why" name="why" style="width:100%;box-sizing:border-box"></div>
+<label class="check" style="margin:0 0 1rem"><input type="checkbox" name="sure" value="yes" required> Yes, remove this listing</label>
+<button class="btn" type="submit" style="background:#a63d2a;color:#fff">Remove listing</button>
+</form>` : ''}
+</div></body></html>`, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } });
 }
 
 async function checkEditToken(env, slug, exp, sig, mode = 'edit') {
@@ -1368,6 +1377,55 @@ async function handleEdit(request, env) {
   if (emailChange) items.push(`<li>We've sent a confirmation to ${esc(newEmail)}. The new email takes effect once you click it.</li>`);
   return page('Saved', `<h1>Thank you</h1><ul style="padding-left:1.1rem;list-style:disc">${items.join('')}</ul>
 <p><a href="/provider/${esc(slug)}/">See your listing</a></p>`);
+}
+
+async function readRemoved(env) {
+  const f = await readFile(env, 'data/removed.json');
+  return f ? JSON.parse(fromB64(f.content)) : {};
+}
+
+/** POST /api/remove (staff link) takes a listing off the site; GET with a
+ *  restore signature puts it back. */
+async function handleRemove(request, env) {
+  const url = new URL(request.url);
+  const base = env.SITE_URL || 'https://findwelldirectory.com';
+  if (request.method !== 'POST') {
+    const slug = url.searchParams.get('slug') || '';
+    const sig = url.searchParams.get('sig') || '';
+    if (!/^[a-z0-9-]{1,120}$/.test(slug) || !safeEqual(sig, await hmac((env.SIGNING_SECRET || '').trim(), `restore:${slug}`))) {
+      return page('Invalid link', '<h1>That link is not valid</h1>', 403);
+    }
+    const removed = await readRemoved(env);
+    if (!removed[slug]) return page('Done', '<h1>Already on the site</h1>');
+    const name = removed[slug].name || slug;
+    delete removed[slug];
+    await commitFiles(env, `Restored listing: ${name}`,
+      [{ path: 'data/removed.json', contentBase64: b64(JSON.stringify(removed, null, 2) + '\n') }]);
+    return page('Restored', `<h1>${esc(name)} is back</h1><p>It will be on the site again within a couple of minutes. <a href="${base}/provider/${esc(slug)}/">See the listing</a></p>`);
+  }
+  const form = await request.formData();
+  const slug = String(form.get('slug') || '');
+  const why = await checkEditToken(env, slug, String(form.get('exp') || ''), String(form.get('sig') || ''), 'staff');
+  if (why) return linkProblem(why);
+  if (!form.get('sure')) return page('Not removed', '<h1>Nothing removed</h1><p>Tick the box to confirm, then press Remove.</p>');
+  const rec = await publishedRecord(env, slug);
+  const removed = await readRemoved(env);
+  removed[slug] = { name: rec ? rec.name : slug, why: String(form.get('why') || '').trim().slice(0, 300), date: phxDate(), at: nowStamp() };
+  const logF = await readFile(env, 'data/edit-log.json');
+  const log = logF ? JSON.parse(fromB64(logF.content)) : [];
+  log.push({ slug, name: removed[slug].name, at: nowStamp(), changed: ['removed from the site'], added: [], email: '', recheck: false, by: 'staff' });
+  await commitFiles(env, `Removed listing: ${removed[slug].name}`, [
+    { path: 'data/removed.json', contentBase64: b64(JSON.stringify(removed, null, 2) + '\n') },
+    { path: 'data/edit-log.json', contentBase64: b64(JSON.stringify(log.slice(-500), null, 2) + '\n') },
+  ]);
+  const restore = `${base}/api/remove?slug=${encodeURIComponent(slug)}&sig=${await hmac((env.SIGNING_SECRET || '').trim(), `restore:${slug}`)}`;
+  await sendEmail(env, { to: staffInbox(env), subject: `Removed: ${removed[slug].name}`,
+    html: shell(`<p><strong>${esc(removed[slug].name)}</strong> was removed from FindWell Directory on ${esc(removed[slug].date)}${removed[slug].why ? `. Reason: ${esc(removed[slug].why)}` : ''}.</p>
+<p>Everything on the listing is kept. To put it back:</p>
+<p><a href="${esc(restore)}" style="display:inline-block;background:#2e5f5c;color:#fff;text-decoration:none;padding:10px 18px;border-radius:6px;font-weight:600">Restore this listing</a></p>`) });
+  return page('Removed', `<h1>${esc(removed[slug].name)} is being removed</h1>
+<p>It will be off the site within a couple of minutes. Everything on it is kept, and a <strong>Restore</strong> link has been sent to the FindWell inbox in case you need it back.</p>
+<p><a href="${esc(restore)}">Undo now</a></p>`);
 }
 
 /** GET /api/edit-email: the new address confirms itself */
@@ -1831,7 +1889,8 @@ async function handleReview(request, env) {
 
   const current = await readFile(env, 'data/listings.json');
   const listings = current ? JSON.parse(fromB64(current.content)) : [];
-  const everyone = await withSeeds(env, listings);
+  const gone = await readRemoved(env);
+  const everyone = (await withSeeds(env, listings)).filter((l) => !gone[l.slug]);
   const showAll = url.searchParams.get('all') === '1';
   const showAside = url.searchParams.get('aside') === '1';
   const aside = (await readAside(env)).data;
@@ -2045,6 +2104,7 @@ export default {
       if (url.pathname === '/api/edit') return await handleEdit(request, env);
       if (url.pathname === '/api/edit-email') return await handleEditEmail(request, env);
       if (url.pathname === '/api/change') return await handleChange(request, env);
+      if (url.pathname === '/api/remove') return await handleRemove(request, env);
     } catch (err) {
       console.error(err);
       if (url.pathname === '/api/apply') {

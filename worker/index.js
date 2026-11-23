@@ -1056,8 +1056,13 @@ const PLACE_FIELDS = ['address', 'city', 'state', 'zip'];
 const nowStamp = () => new Date().toISOString();
 const phxDate = () => new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'America/Phoenix' });
 
-async function editSig(env, slug, exp) {
-  return hmac((env.SIGNING_SECRET || '').trim(), `edit:${slug}:${exp}`);
+/* Staff links ("mode=staff") go to the FindWell inbox and can change
+ * everything at once, names and disciplines included. */
+const staffInbox = (env) => env.STAFF_EMAIL || 'findwelldirectory@gmail.com';
+const editMode = (m) => (m === 'staff' ? 'staff' : 'edit');
+
+async function editSig(env, slug, exp, mode = 'edit') {
+  return hmac((env.SIGNING_SECRET || '').trim(), `${editMode(mode)}:${slug}:${exp}`);
 }
 
 async function publishedRecord(env, slug) {
@@ -1089,6 +1094,19 @@ async function handleEditLink(request, env) {
   const slug = String(form.get('slug') || '');
   const rec = await publishedRecord(env, slug);
   if (!rec) return json({ ok: false, reason: 'notfound' }, 404);
+  if (form.get('staff')) {
+    const exp = Date.now() + EDIT_TTL_HOURS * 3600 * 1000;
+    const base = env.SITE_URL || 'https://findwelldirectory.com';
+    const link = `${base}/api/edit?mode=staff&slug=${encodeURIComponent(slug)}&exp=${exp}&sig=${await editSig(env, slug, exp, 'staff')}`;
+    await sendEmail(env, {
+      to: staffInbox(env), subject: `Staff edit: ${rec.name}`,
+      html: shell(`<h2 style="font-size:20px;margin:0 0 12px">Edit ${esc(rec.name)}</h2>
+<p>This link opens the listing for staff editing. Everything can be changed, including names, disciplines and the email on the listing, and it all goes live at once.</p>
+<p><a href="${esc(link)}" style="display:inline-block;background:#b45f3c;color:#fff;text-decoration:none;padding:11px 20px;border-radius:6px;font-weight:600">Edit this listing</a></p>
+<p style="font-size:14px;color:#5f7473">Works for ${EDIT_TTL_HOURS} hours. Don't forward it: anyone with the link can edit the listing.</p>`),
+    });
+    return json({ ok: true, to: maskEmail(staffInbox(env)), staff: true });
+  }
   const to = String(rec.email || '').trim();
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(to)) return json({ ok: false, reason: 'noemail' });
 
@@ -1105,9 +1123,10 @@ async function handleEditLink(request, env) {
   return json({ ok: true, to: maskEmail(to) });
 }
 
-function editFormPage(rec, slug, exp, sig, note = '') {
+function editFormPage(rec, slug, exp, sig, note = '', staff = false) {
   const field = ([k, label, type, hint]) => {
     const v = fieldText(k, rec[k]);
+    if (staff && type === 'fixed') type = 'text';
     const id = `e-${k}`;
     if (type === 'fixed') {
       return `<div class="field"><span class="lbl-fixed">${esc(label)}</span><p class="fixed">${esc(v || '\u2014')}</p></div>`;
@@ -1122,7 +1141,7 @@ function editFormPage(rec, slug, exp, sig, note = '') {
   };
   const sections = EDIT_SECTIONS.map(([title, fields]) =>
     `<fieldset class="ed-sec"><legend>${esc(title)}</legend><div class="grid2">${fields.map(field).join('')}${
-      fields.some((f) => f[2] === 'fixed') ? '<p class="fixed-note">To change your name or your practice name, please write to us at <a href="mailto:info@findwelldirectory.com">info@findwelldirectory.com</a>.</p>' : ''}</div></fieldset>`).join('');
+      !staff && fields.some((f) => f[2] === 'fixed') ? '<p class="fixed-note">To change your name or your practice name, please write to us at <a href="mailto:info@findwelldirectory.com">info@findwelldirectory.com</a>.</p>' : ''}</div></fieldset>`).join('');
   const cats = Object.entries(DISCIPLINE_LABELS).map(([k, label]) =>
     `<label class="check ed-cat"><input type="checkbox" name="cats" value="${k}"${(rec.categories || []).includes(k) ? ' checked' : ''}> ${esc(label)}</label>`).join('');
   return new Response(`<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
@@ -1159,25 +1178,26 @@ body{background:var(--paper,#f7f6f0)}
 <p style="margin:0 0 1.4rem;color:#4f5f55">Change anything below and press <strong>Save changes</strong>. Most changes are live within a couple of minutes.</p>
 ${note ? `<div class="ed-note">${note}</div>` : ''}
 <form method="POST" action="/api/edit" enctype="multipart/form-data">
-<input type="hidden" name="slug" value="${esc(slug)}"><input type="hidden" name="exp" value="${esc(exp)}"><input type="hidden" name="sig" value="${esc(sig)}">
+<input type="hidden" name="slug" value="${esc(slug)}"><input type="hidden" name="exp" value="${esc(exp)}"><input type="hidden" name="sig" value="${esc(sig)}"><input type="hidden" name="mode" value="${staff ? 'staff' : 'edit'}">
 ${sections}
 <fieldset class="ed-sec"><legend>Disciplines</legend>
-<p class="hint" style="clear:both">Removing one takes effect at once. Adding one is checked by us first, so it appears once we've approved it.</p>
+<p class="hint" style="clear:both">${staff ? 'Staff edit: additions and removals both take effect at once.' : "Removing one takes effect at once. Adding one is checked by us first, so it appears once we've approved it."}</p>
 <div class="ed-cats">${cats}</div></fieldset>
 <fieldset class="ed-sec"><legend>Logo or photo</legend>
 <div class="ed-logo">${rec.logo ? `<img src="${esc(rec.logo)}" alt="Current logo">` : ''}
 <div><input type="file" name="logo" accept="image/png,image/jpeg,image/webp"><p class="hint">PNG, JPG or WebP, up to 5 MB. Leave empty to keep the current one.</p></div></div></fieldset>
 <fieldset class="ed-sec"><legend>Email on your listing</legend>
 <div class="grid2"><div class="field full"><label for="e-email">Email</label><input class="control" id="e-email" name="email" type="email" value="${esc(rec.email || '')}">
-<p class="hint">This is also where update links are sent. If you change it, we'll email the new address to confirm before it takes effect.</p></div></div></fieldset>
+<p class="hint">${staff ? 'Staff edit: a new address takes effect at once.' : "This is also where update links are sent. If you change it, we'll email the new address to confirm before it takes effect."}</p></div></div></fieldset>
+${staff && rec.verified ? `<fieldset class="ed-sec"><legend>Board confirmation</legend><label class="check" style="clear:both"><input type="checkbox" name="unverify" value="yes"> Take the board confirmation off this listing and put it back on the verification list</label><p class="hint">Use this if the license itself changed. Otherwise the confirmation stays.</p></fieldset>` : ''}
 <p><button class="btn btn-primary" type="submit">Save changes</button></p>
 </form></div></body></html>`, { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } });
 }
 
-async function checkEditToken(env, slug, exp, sig) {
+async function checkEditToken(env, slug, exp, sig, mode = 'edit') {
   if (!slug || !exp || !sig) return 'missing';
   if (Number(exp) < Date.now()) return 'expired';
-  return safeEqual(String(sig), await editSig(env, slug, exp)) ? '' : 'invalid';
+  return safeEqual(String(sig), await editSig(env, slug, exp, mode)) ? '' : 'invalid';
 }
 
 const linkProblem = (why) => page('Link problem', why === 'expired'
@@ -1191,23 +1211,26 @@ async function handleEdit(request, env) {
     const slug = url.searchParams.get('slug') || '';
     const exp = url.searchParams.get('exp') || '';
     const sig = url.searchParams.get('sig') || '';
-    const why = await checkEditToken(env, slug, exp, sig);
+    const mode = editMode(url.searchParams.get('mode'));
+    const why = await checkEditToken(env, slug, exp, sig, mode);
     if (why) return linkProblem(why);
     const rec = await publishedRecord(env, slug);
     if (!rec) return page('Not found', '<h1>We could not find that listing</h1>', 404);
-    return editFormPage(rec, slug, exp, sig);
+    return editFormPage(rec, slug, exp, sig,
+      mode === 'staff' ? '<strong>Staff editing.</strong> Everything here can be changed, and it goes live at once.' : '', mode === 'staff');
   }
 
   const form = await request.formData();
   const slug = String(form.get('slug') || '');
-  const why = await checkEditToken(env, slug, String(form.get('exp') || ''), String(form.get('sig') || ''));
+  const staff = editMode(String(form.get('mode') || '')) === 'staff';
+  const why = await checkEditToken(env, slug, String(form.get('exp') || ''), String(form.get('sig') || ''), staff ? 'staff' : 'edit');
   if (why) return linkProblem(why);
   const rec = await publishedRecord(env, slug);
   if (!rec) return page('Not found', '<h1>We could not find that listing</h1>', 404);
 
   // ---- what changed
   const changes = {};
-  for (const k of EDIT_FIELD_KEYS) {
+  for (const k of staff ? [...EDIT_FIELD_KEYS, 'person', 'name'] : EDIT_FIELD_KEYS) {
     const raw = k === 'telehealth' ? (form.get(k) ? 'yes' : '') : String(form.get(k) ?? '').replace(/\r\n/g, '\n').trim().slice(0, 6000);
     if (raw === fieldText(k, rec[k])) continue;
     if (k === 'name' && !raw) continue;                     // a listing always has a name
@@ -1225,9 +1248,12 @@ async function handleEdit(request, env) {
   // ---- disciplines: removals now, additions wait for an admin
   const wanted = cleanCats(form.getAll('cats').map(String));
   const current = rec.categories || [];
-  const added = wanted.filter((c) => !current.includes(c));
+  let added = wanted.filter((c) => !current.includes(c));
   const kept = current.filter((c) => wanted.includes(c));
-  if (kept.length !== current.length && kept.length) changes.categories = kept;
+  if (staff) {
+    if (wanted.length && (added.length || kept.length !== current.length)) changes.categories = wanted;
+    added = [];
+  } else if (kept.length !== current.length && kept.length) changes.categories = kept;
 
   // ---- logo
   const files = [];
@@ -1252,10 +1278,11 @@ async function handleEdit(request, env) {
 
   // ---- email: only after the new address confirms
   const newEmail = String(form.get('email') || '').trim();
-  const emailChange = newEmail && newEmail.toLowerCase() !== String(rec.email || '').toLowerCase()
+  let emailChange = newEmail && newEmail.toLowerCase() !== String(rec.email || '').toLowerCase()
     && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(newEmail);
+  if (staff && emailChange) { changes.email = newEmail; emailChange = false; }
 
-  const recheck = rec.verified && RECHECK_FIELDS.some((k) => k in changes);
+  const recheck = rec.verified && (staff ? !!form.get('unverify') : RECHECK_FIELDS.some((k) => k in changes));
   const changedKeys = Object.keys(changes).filter((k) => !['lat', 'lng'].includes(k));
   if (!changedKeys.length && !added.length && !emailChange) {
     return page('No changes', `<h1>Nothing to change</h1><p>Everything matched your listing as it is. <a href="/provider/${esc(slug)}/">See your listing</a></p>`);
@@ -1296,10 +1323,10 @@ async function handleEdit(request, env) {
   }
   const logF = await readFile(env, 'data/edit-log.json');
   const log = logF ? JSON.parse(fromB64(logF.content)) : [];
-  log.push({ slug, name: rec.name, at: nowStamp(), changed: changedKeys, added, email: emailChange ? 'pending' : '', recheck });
+  log.push({ slug, name: rec.name, at: nowStamp(), changed: changedKeys, added, email: emailChange ? 'pending' : '', recheck, by: staff ? 'staff' : 'practitioner' });
   files.push({ path: 'data/edit-log.json', contentBase64: b64(JSON.stringify(log.slice(-500), null, 2) + '\n') });
 
-  await commitFiles(env, `Practitioner update: ${rec.name}`, files);
+  await commitFiles(env, `${staff ? 'Staff' : 'Practitioner'} update: ${rec.name}`, files);
 
   const base = env.SITE_URL || 'https://findwelldirectory.com';
   if (added.length) {
@@ -1331,6 +1358,10 @@ async function handleEdit(request, env) {
   }
 
   const items = [];
+  if (staff) {
+    return page('Saved', `<h1>Saved</h1><p>${esc(changedKeys.length ? `Changed: ${changedKeys.join(', ')}.` : '')}${recheck ? ' The board confirmation is off and the listing is back on the verification list.' : ''} Live in a couple of minutes.</p>
+<p><a href="/provider/${esc(slug)}/">See the listing</a></p>`);
+  }
   if (changedKeys.length) items.push(`<li>Your changes are saved and will be live in a couple of minutes.</li>`);
   if (recheck) items.push('<li>Because your license or credentials changed, your listing shows them as reported until we confirm them with the board again.</li>');
   if (added.length) items.push(`<li>We'll look at adding ${esc(added.map((c) => DISCIPLINE_LABELS[c]).join(', '))} and let you know.</li>`);
@@ -1406,7 +1437,7 @@ async function dailySummary(env) {
   const recent = JSON.parse(fromB64(f.content)).filter((e) => Date.parse(e.at) >= since);
   if (!recent.length || !env.ADMIN_EMAIL) return;
   const base = env.SITE_URL || 'https://findwelldirectory.com';
-  const rows = recent.map((e) => `<li style="margin:0 0 8px"><a href="${base}/provider/${esc(e.slug)}/" style="color:#2e5f5c">${esc(e.name)}</a>: ${
+  const rows = recent.map((e) => `<li style="margin:0 0 8px"><a href="${base}/provider/${esc(e.slug)}/" style="color:#2e5f5c">${esc(e.name)}</a>${e.by === 'staff' ? ' (staff)' : ''}: ${
     esc([e.changed.length ? `changed ${e.changed.join(', ')}` : '', e.added.length ? `asked to add ${e.added.map((c) => DISCIPLINE_LABELS[c] || c).join(', ')}` : '',
       e.email === 'confirmed' ? 'confirmed a new email' : e.email === 'pending' ? 'new email awaiting confirmation' : ''].filter(Boolean).join('; '))}${
     e.recheck ? ' <strong style="color:#9a6b1f">License or credentials changed: back on your verification list.</strong>' : ''}</li>`).join('');

@@ -132,10 +132,10 @@
     var want = new URLSearchParams(location.search).get('p');
     if (want && pick.querySelector('option[value="' + want.replace(/[^a-z0-9-]/g, '') + '"]')) pick.value = want;
     sync(); pick.addEventListener('change', function () { sync(); msg.textContent = ''; });
-    send.addEventListener('click', function () {
+    function request(staff) {
       if (!pick.value) { msg.textContent = 'Choose your practice first.'; pick.focus(); return; }
       send.disabled = true; msg.textContent = 'Sending…';
-      var fd = new FormData(); fd.append('slug', pick.value);
+      var fd = new FormData(); fd.append('slug', pick.value); if (staff) fd.append('staff', '1');
       fetch('/api/edit-link', { method: 'POST', body: fd }).then(function (r) { return r.json(); }).then(function (d) {
         send.disabled = false;
         if (d.ok) msg.textContent = 'Sent. Check ' + d.to + ' for a link from FindWell. It works for 48 hours.';
@@ -143,7 +143,10 @@
         else if (d.reason === 'wait') msg.textContent = 'We sent a link a few minutes ago. Please check that email, including spam.';
         else msg.textContent = 'Something went wrong. Please write to info@findwelldirectory.com.';
       }).catch(function () { send.disabled = false; msg.textContent = 'Something went wrong. Please write to info@findwelldirectory.com.'; });
-    });
+    }
+    send.addEventListener('click', function () { request(false); });
+    var staffBtn = $('#upd-staff');
+    if (staffBtn) staffBtn.addEventListener('click', function () { request(true); });
   })();
 
   /* ---------- menu ---------- */

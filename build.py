@@ -2123,6 +2123,7 @@ def page_update():
       </select>
       <p><button class="btn btn-dark" id="upd-send" type="button">Email me a link to update it</button></p>
       <p class="upd-msg" id="upd-msg" aria-live="polite"></p>
+      <p class="upd-staff"><button class="fw-linkbtn" id="upd-staff" type="button">FindWell staff: send an editing link to the FindWell inbox</button></p>
     </div>
     <h2>What happens next</h2>
     <p>The link opens a form with your listing already filled in. Change what you need and press save. Most changes are live within a couple of minutes.</p>

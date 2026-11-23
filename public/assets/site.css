@@ -474,3 +474,5 @@ picture{ display:contents; }
 .upd-for{ margin:0 0 .8rem; }
 .upd-msg{ color:var(--ink-soft); margin:0; }
 .upd-msg:empty{ display:none; }
+.upd-staff{ margin:1.2rem 0 0; font-size:.88rem; }
+.upd-staff .fw-linkbtn{ color:var(--ink-soft); }

@@ -26,6 +26,8 @@
   "vars": {
     "SITE_URL": "https://findwelldirectory.com",
     "ADMIN_EMAIL": "info@findwelldirectory.com",
+    // staff editing links ("FindWell staff" on /update/) go to this inbox
+    "STAFF_EMAIL": "findwelldirectory@gmail.com",
     // Must be on a domain verified in Resend. Sending as info@ rather than
     // noreply@ because the emails invite a reply.
     "MAIL_FROM": "FindWell Directory <info@findwelldirectory.com>",

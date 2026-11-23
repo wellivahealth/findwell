@@ -740,7 +740,13 @@
    "Nutrition"
   ],
   "licensure": "Massachusetts LDN5057",
-  "verification": null,
+  "verification": {
+   "what": "Massachusetts LDN5057",
+   "source": "the Commission on Dietetic Registration, for RD or RDN",
+   "date": "23 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-23T21:48:06.361Z"
+  },
   "seed": false
  },
  {
@@ -1310,6 +1316,51 @@
    "by": "admin",
    "recorded_at": "2026-11-23T18:37:53.017Z"
   },
+  "seed": false
+ },
+ {
+  "slug": "palate-to-plate",
+  "name": "Palate to Plate",
+  "person": "Tori Thompson",
+  "city": "EXETER",
+  "state": "NH",
+  "categories": [
+   "Nutrition"
+  ],
+  "licensure": "State licensed \u2014 number not provided",
+  "verification": {
+   "what": "State licensed \u2014 number not provided",
+   "source": "the Commission on Dietetic Registration, for RD or RDN",
+   "date": "23 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-23T21:36:45.175Z"
+  },
+  "seed": false
+ },
+ {
+  "slug": "akiva-benav-llc",
+  "name": "Akiva Benav LLC",
+  "person": "Akiva Benav",
+  "city": "Miami Beach",
+  "state": "FL",
+  "categories": [
+   "Coaching"
+  ],
+  "licensure": "No state licensure exists for this discipline",
+  "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "fueled-and-fed-nutrition",
+  "name": "Fueled and Fed Nutrition",
+  "person": "Alisha Temples",
+  "city": "Alexandria",
+  "state": "VA",
+  "categories": [
+   "Nutrition"
+  ],
+  "licensure": "DX4576 (Maryland), NU200000224 (Washington, DC)",
+  "verification": null,
   "seed": false
  }
 ]

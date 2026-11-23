@@ -2805,5 +2805,42 @@
     "blurb": "Akiva Benav is a Functional Integrative Medicine Practitioner specializing in Nervous System Regulation. He helps clients with stress and anxiety, gut and digestive issues, sleep problems, and fatigue through telehealth-based programs in nervous system regulation, gut–brain work, and breathwork therapy.",
     "long": "Akiva Benav is a Functional Integrative Medicine Practitioner specializing in Nervous System Regulation. He helps clients with stress and anxiety, heart rhythm and palpitations, gut and digestive issues, sleep problems, fatigue, and stress-related weight patterns through telehealth-based programs in nervous system regulation, gut–brain work, and breathwork therapy. Sessions in English, Spanish, and Portuguese. Telehealth only, by appointment. Apply at akivabenav.com.",
     "verified": false
+  },
+  {
+    "slug": "fueled-and-fed-nutrition",
+    "name": "Fueled and Fed Nutrition",
+    "person": "Alisha Temples",
+    "postnominals": "MS, CNS, LDN",
+    "logo": null,
+    "categories": [
+      "Nutrition"
+    ],
+    "city": "Alexandria",
+    "state": "VA",
+    "zip": "",
+    "address": "",
+    "country": "United States",
+    "lat": 38.804,
+    "lng": -77.081,
+    "telehealth": true,
+    "phone": "(872) 529-6420",
+    "email": "info@fueledfednutrition.com",
+    "website": "https://www.fueledfednutrition.com",
+    "social": [
+      "https://www.instagram.com/fueledfednutrition",
+      "https://www.facebook.com/alishatemplesnutrition"
+    ],
+    "credentials": "Certified Nutrition Specialist (CNS)",
+    "licensure": "DX4576 (Maryland), NU200000224 (Washington, DC)",
+    "training": "BS, Chemistry, Virginia Tech\nMS, Nutrition, Notre Dame of Maryland University\nMaster of Public Health (MPH), Georgia Southern University",
+    "integrative_training": "",
+    "since": 2018,
+    "affiliations": "",
+    "pricing": "Initial visit $225, follow up visits $80-115. In-network with Aetna, BCBS, and Cigna. Sliding scale available. Please inquire for workshop and webinar prices.",
+    "payments": "Insurance, Cash, Credit Cards, Debit Cards, HSA/FSA",
+    "insurance": "Accepted — verify your plan with the practice",
+    "blurb": "Alisha offers 1:1 nutrition counseling, family nutrition counseling, workshops and webinars. She specializes in GI health, nutrition for mental health, and sports nutrition. She is based in Alexandria VA and practices remotely across DC, VA and MD.",
+    "long": "The main force behind Fueled and Fed Nutrition is a deep desire to help you fuel your long-term performance, nutrition, and lifestyle goals through sustainable changes to your diet. We believe in client-driven care and will partner with you to determine a comprehensive plan based on your goals, lifestyle, and health status. Whether you’re looking for nutritious recipes or you need professional guidance in order to address a specific health issue, our nutritionists are ready to help you reach your dietary goals.",
+    "verified": false
   }
 ]

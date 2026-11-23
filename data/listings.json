@@ -2764,5 +2764,39 @@
       "by": "admin",
       "recorded_at": "2026-11-23T21:36:45.175Z"
     }
+  },
+  {
+    "slug": "akiva-benav-llc",
+    "name": "Akiva Benav LLC",
+    "person": "Akiva Benav",
+    "postnominals": "NBC-HWC",
+    "logo": "/assets/img/providers/akiva-benav-llc.jpg",
+    "categories": [
+      "Coaching"
+    ],
+    "city": "Miami Beach",
+    "state": "FL",
+    "zip": "33140",
+    "address": "",
+    "country": "United States",
+    "lat": 25.7929198,
+    "lng": -80.1353006,
+    "telehealth": true,
+    "phone": "(407) 486-9962",
+    "email": "akiva@akivabenav.com",
+    "website": "https://akivabenav.com",
+    "social": [],
+    "credentials": "NBC-HWC (National Board Certified Health & Wellness Coach), IFM (Institute for Functional Medicine)",
+    "licensure": "No state licensure exists for this discipline",
+    "training": "Master's in Nervous System Regulation from the Functional Integrative Medicine Institute; certification through the IFM and NBHWC, alongside advanced coaching certifications.",
+    "integrative_training": "IFM (Institute for Functional Medicine) training",
+    "since": 2020,
+    "affiliations": "",
+    "pricing": "Programs are priced after your assessment. Apply at akivabenav.com for details.",
+    "payments": "Credit Cards, Debit Cards",
+    "insurance": "Not accepted",
+    "blurb": "Akiva Benav is a Functional Integrative Medicine Practitioner specializing in Nervous System Regulation. He helps clients with stress and anxiety, gut and digestive issues, sleep problems, and fatigue through telehealth-based programs in nervous system regulation, gut–brain work, and breathwork therapy.",
+    "long": "Akiva Benav is a Functional Integrative Medicine Practitioner specializing in Nervous System Regulation. He helps clients with stress and anxiety, heart rhythm and palpitations, gut and digestive issues, sleep problems, fatigue, and stress-related weight patterns through telehealth-based programs in nervous system regulation, gut–brain work, and breathwork therapy. Sessions in English, Spanish, and Portuguese. Telehealth only, by appointment. Apply at akivabenav.com.",
+    "verified": false
   }
 ]

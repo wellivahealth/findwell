@@ -1283,6 +1283,12 @@ def fee_from(p):
     return m.group(0).replace(" ", "") if m else ""
 
 
+def _lowest_fee(p):
+    vals = [float(m.replace(",", "")) for m in re.findall(r"\$\s?(\d[\d,]*(?:\.\d\d)?)", p.get("pricing") or "")]
+    vals = [v for v in vals if v > 0]
+    return f"${min(vals):,.0f}" if vals else ""
+
+
 def since_txt(p):
     try:
         y = int(p.get("since"))
@@ -1578,7 +1584,9 @@ def page_provider(p):
     site_label = (p["website"] or "").split("//")[-1].replace("www.", "").rstrip("/")
     fees = fee_items(p)
     ins = (p.get("insurance") or "").strip()
-    lead_fee = fees[0] if fees and len(fees[0]) <= 40 else ("See fees below" if fees else "Ask the practice")
+    priced = [x for x in fees if not x.strip().startswith("##")]
+    lead_fee = (priced[0] if priced and len(priced[0]) <= 40 and not fees[0].strip().startswith("##")
+                else ("From " + _lowest_fee(p) if _lowest_fee(p) else "See fees below") if fees else "Ask the practice")
     facts = [("In practice", ("Since " + years.split("(since ")[1].rstrip(")")) if years.startswith("Under")
                              else years.split(" (")[0] if years != "—" else "Not given"),
              ("Fees", lead_fee),
@@ -1598,7 +1606,9 @@ def page_provider(p):
         verify_html = """<div class="fw-verify">
           <div><p class="fw-verify-t">As reported by the practitioner</p>
           <p class="fw-verify-d">We publish what the practitioner told us, and say so. <a href="/verification/">What this means</a></p></div></div>"""
-    fee_rows = "".join(f'<div class="fw-fee">{E(x)}</div>' for x in fees) or \
+    # a fee line written as "## Heading" becomes a small subheading
+    fee_rows = "".join(f'<div class="fw-fee fw-fee-h">{E(x.strip()[2:].strip())}</div>' if x.strip().startswith("##")
+                       else f'<div class="fw-fee">{E(x)}</div>' for x in fees) or \
         '<div class="fw-fee">Ask the practice about fees</div>'
     integ = ""
     if "IntegrativeMedicine" in p["categories"]:
@@ -1662,7 +1672,7 @@ def page_provider(p):
         {f'<div class="fw-c"><span class="k">Phone</span><a href="tel:{phone_digits}">{E(p["phone"])}</a></div>' if phone_digits else ""}
         {f'<div class="fw-c"><span class="k">Email</span><a href="mailto:{E(p["email"])}">{E(p["email"])}</a></div>' if p["email"] else ""}
         {f'<div class="fw-c"><span class="k">Website</span><a href="{E(p["website"])}" target="_blank" rel="noopener">{E(site_label)}</a></div>' if p["website"] else ""}
-        {f'<div class="fw-c"><span class="k">Address</span><span>{E(p["address"])}</span><a href="{maps}" target="_blank" rel="noopener">Open in Google Maps</a></div>' if p["address"] else '<div class="fw-c"><span class="k">Address</span><span>No public premises, visits by arrangement</span></div>'}
+        {f'<div class="fw-c"><span class="k">Address</span><span>{E(p["address"])}</span><a href="{maps}" target="_blank" rel="noopener">Open in Google Maps</a></div>' if p["address"] else (f'<div class="fw-c"><span class="k">Where</span><span>{E(p["location_note"])}</span></div>' if p.get("location_note") else '<div class="fw-c"><span class="k">Address</span><span>No public premises, visits by arrangement</span></div>')}
         {f'<div class="fw-social">{social}</div>' if social else ""}
         <p class="fw-contact-note">FindWell takes no commission and receives nothing when you book.</p>
       </div>

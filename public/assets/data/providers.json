@@ -855,7 +855,7 @@
   "name": "Lani Page deGuia Nutrition",
   "person": "Marilaine deGuia",
   "city": "Stone Ridge",
-  "state": "DC",
+  "state": "VA",
   "categories": [
    "Nutrition",
    "Herbalism"
@@ -1291,6 +1291,25 @@
   ],
   "licensure": "No state licensure exists for this discipline",
   "verification": null,
+  "seed": false
+ },
+ {
+  "slug": "de-la-garza-richard",
+  "name": "De La Garza Richard",
+  "person": "Richard De La Garza",
+  "city": "San Diego",
+  "state": "CA",
+  "categories": [
+   "Counseling"
+  ],
+  "licensure": "83253",
+  "verification": {
+   "what": "83253",
+   "source": "the California Board of Behavioral Sciences, through the DCA licence search",
+   "date": "23 Nov 2026",
+   "by": "admin",
+   "recorded_at": "2026-11-23T18:37:53.017Z"
+  },
   "seed": false
  }
 ]
